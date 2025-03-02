@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
 
-const kakaoInit = () => {
+interface Kakao {
+  init: (key: string) => void;
+  isInitialized: () => boolean;
+  Auth: {
+    login: () => void;
+  };
+}
+
+declare global {
+  interface Window {
+    Kakao: Kakao;
+  }
+}
+
+const kakaoInit = () : Promise<void> => {
   return new Promise((resolve, reject) => {
     if (!window.Kakao) {
       reject("Kakao SDK not loaded");
