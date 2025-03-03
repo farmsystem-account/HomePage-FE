@@ -34,6 +34,6 @@ enum ApiErrorMessages {
   }
   
   // blog에 POST 요청, POST 응답, GET요청 
-  export type ApplyPOSTRequest = ApiRequest;
-  export type ApplyGETResponse = BlogpageResquest;
-  export type ApplyPOSTResponse = ApiResponse<{ blogId: number }>;
+  export type blohPOSTRequest = ApiRequest;
+  export type blogGETResponse = BlogpageResquest;
+  export type blogPOSTResponse = ApiResponse<{ blogId: number }>;
