@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getApiBaseUrl = () => {
-  const baseUrl = import.meta.env.VITE_BASE_URL; // 운영 서버 URL
+  const baseUrl = import.meta.env.VITE_BASE_DEV_URL; // 개발 서버 URL
 
   // URL이 '/'로 끝나면 'api/', 아니면 '/api/'
   return baseUrl.endsWith('/') ? `${baseUrl}api/` : `${baseUrl}/api/`;
