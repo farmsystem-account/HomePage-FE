@@ -22,7 +22,6 @@ const LoginPageContent = () => {
   );
 };
 
-// 현재 `GoogleOAuthProvider`를 `LoginPage.tsx` 내부에서 직접 감싸도록 되어있으나 회원가입 페이지와 마찬가지로 추후 분리 예정
 const LoginPage = () => {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>

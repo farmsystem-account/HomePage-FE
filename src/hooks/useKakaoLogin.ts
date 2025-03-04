@@ -15,27 +15,34 @@ declare global {
   }
 }
 
-// 카카오 SDK 초기화 hook
-const kakaoInit = () : Promise<void> => {
-  return new Promise((resolve, reject) => {
-    if (!window.Kakao) {
-      reject("Kakao SDK not loaded");
-      return;
-    }
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init(import.meta.env.VITE_KAKAO_JS_KEY); 
-    }
-    resolve();
-  });
+// 카카오 SDK 초기화
+const kakaoInit = async (): Promise<void> => {
+  if (!window.Kakao) throw new Error("Kakao SDK not loaded");
+  if (!window.Kakao.isInitialized()) {
+    window.Kakao.init(import.meta.env.VITE_KAKAO_JS_KEY);
+  }
 };
 
-// 등록된 Redirect URI 사용하여 카카오 로그인 처리
-const handleKakaoLogin = () => {
-  console.log("Redirect URI:", import.meta.env.VITE_KAKAO_REDIRECT_URI);
+// Redirect URI 설정 함수
+const getRedirectUri = (): string => {
+  return import.meta.env.VITE_KAKAO_REDIRECT_URI;
+};
 
-  window.Kakao.Auth.authorize({
-    redirectUri: import.meta.env.VITE_KAKAO_REDIRECT_URI, 
-  });
+// 로그인 방식 결정 (웹: REST API, 앱: SDK)
+const handleKakaoLogin = () => {
+  const isMobileApp = /KAKAO/i.test(navigator.userAgent); // 앱 내 웹뷰 감지
+  // const isMobileBrowser = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const redirectUri = getRedirectUri();
+
+  if (isMobileApp) {
+    // 앱 환경에서는 SDK 활용
+    if (!window.Kakao) return;
+    window.Kakao.Auth.authorize({ redirectUri });
+  } else {
+    // 웹 환경에서는 REST API 방식 사용
+    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+  }
 };
 
 export const useKakaoLogin = () => {
@@ -44,20 +51,14 @@ export const useKakaoLogin = () => {
 
   useEffect(() => {
     kakaoInit()
-      .then(() => {
-        setIsKakaoInitialized(true);
-      })
-      .catch((error) => {
-        console.error("Kakao SDK initialization failed:", error);
-      });
+      .then(() => setIsKakaoInitialized(true))
+      .catch((error) => console.error("Kakao SDK initialization failed:", error));
   }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      setAuthCode(code);
-    }
+    const code = urlParams.get("code");
+    if (code) setAuthCode(code);
   }, []);
 
   return { isKakaoInitialized, authCode, handleKakaoLogin };
