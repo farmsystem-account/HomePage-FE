@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useVerifyStudent } from "../../hooks/useVerifyStudent";
+import { useAuthStore } from "../../store/authStore";
+import { useNavigate } from "react-router-dom";
 
 // QueryClient 인스턴스 생성
 const queryClient = new QueryClient();
@@ -9,11 +11,18 @@ const RegisterPageContent = () => {
   const [studentNumber, setStudentNumber] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { data, error, isLoading, refetch } = useVerifyStudent(studentNumber, false);
+  const setStudentInfo = useAuthStore((state) => state.setStudentInfo);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     setSubmitted(true);
-    refetch(); 
+    refetch();
   };
+
+  if (data && !isLoading && !error) {
+    setStudentInfo(studentNumber, data.data);
+    navigate("/login");
+  }
 
   return (
     <div>
@@ -39,7 +48,6 @@ const RegisterPageContent = () => {
   );
 };
 
-// 현재 `QueryClientProvider`를 `RegisterPage.tsx` 내에서 직접 감쌌지만, 구조 구상 후 분리 예정
 const RegisterPage = () => {
   return (
     <QueryClientProvider client={queryClient}>
