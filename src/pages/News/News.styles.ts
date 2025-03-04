@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,8 +36,9 @@ export const Message = styled.div<{$isMobile: boolean;}>`
 
 export const NewsContainer = styled.div`
   display: flex;
+  min-height: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: 40rpx;
+  row-gap: 40px;
 `;

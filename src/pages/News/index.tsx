@@ -2,6 +2,7 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNewsList } from '@/hooks/useNews';
 import Logger from '@/utils/Logger';
 import * as S from './News.styles';
+import NewsItem from './NewsItem';
 
 
 export default function News() {
@@ -27,13 +28,13 @@ export default function News() {
 
   return (
     <S.Container>
+      
       {newsData && newsData.length > 0 ? (
-        newsData.map((news, index) => (
-          <div key={index}>
-            <h2>{news.title}</h2>
-            <p>{news.content}</p>
-          </div>
-        ))
+        <S.NewsContainer>
+          {newsData.map((news, index) => (
+            <NewsItem key={index} newsData={news} />
+          ))}
+        </S.NewsContainer>
       ) : (
         <S.DescriptionContainer>
           <S.Message $isMobile={isMobile}>아직 등록된 소식이 없어요.</S.Message>

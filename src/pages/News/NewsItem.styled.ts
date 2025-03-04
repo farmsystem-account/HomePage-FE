@@ -30,7 +30,10 @@ export const NewsContent = styled.div`
 `;
 
 export const Title = styled.h2`
+  width: 100%;
+  height: auto;
   align-self: stretch;
+  text-align: start;
 
   color: var(--FarmSystem_Black, #191919);
   font-size: 24px;
@@ -41,9 +44,11 @@ export const Title = styled.h2`
 `;
 
 export const Content = styled.p`
+  width: 100%;
   height: 65px;
   flex-shrink: 0;
   align-self: stretch;
+  text-align: start;
 
   color: var(--FarmSystem_Black, #191919);
   font-size: 16px;
@@ -70,4 +75,12 @@ export const Tag = styled.div`
 
   border-radius: 15px;
   background: var(--FarmSystem_Green06, #006811);
+
+  color: var(--FarmSystem_White, #FCFCFC);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.24px;
 `;
