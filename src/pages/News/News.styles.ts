@@ -32,3 +32,11 @@ export const Message = styled.div<{$isMobile: boolean;}>`
     margin-top: 10px; 
   }
 `;
+
+export const NewsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 40rpx;
+`;
