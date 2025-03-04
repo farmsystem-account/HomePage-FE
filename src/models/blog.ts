@@ -19,12 +19,12 @@ enum ApiErrorMessages {
     data?: T;
   }
   
+  //blog 신청 요청 
   interface ApiRequest {
     title : string;
     description : string;
     track : Track[]; //트랙은 리스트
     link : string;
-    
   }
 
   interface BlogpageResquest {
@@ -34,6 +34,6 @@ enum ApiErrorMessages {
   }
   
   // blog에 POST 요청, POST 응답, GET요청 
-  export type blohPOSTRequest = ApiRequest;
-  export type blogGETResponse = BlogpageResquest;
-  export type blogPOSTResponse = ApiResponse<{ blogId: number }>;
+  export type BlogPOSTRequest = ApiRequest;
+  export type BlogGETResponse = BlogpageResquest;
+  export type BlogPOSTResponse = ApiResponse<{ blogId: number }>;
