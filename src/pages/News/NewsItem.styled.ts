@@ -20,10 +20,11 @@ export const Thumbnail = styled.img`
 
 export const NewsContent = styled.div`
   display: flex;
-  padding: 10px 0px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  padding: 10px 0px;
   gap: 20px;
   flex: 1 0 0;
   align-self: stretch;

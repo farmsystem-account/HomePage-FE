@@ -1,7 +1,7 @@
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNewsList } from '@/hooks/useNews';
 import Logger from '@/utils/Logger';
-import * as S from './News.styles';
+import * as S from './index.styled';
 import NewsItem from './NewsItem';
 
 
@@ -28,7 +28,7 @@ export default function News() {
 
   return (
     <S.Container>
-      
+      <S.NewsPageTitle>소식</S.NewsPageTitle>
       {newsData && newsData.length > 0 ? (
         <S.NewsContainer>
           {newsData.map((news, index) => (

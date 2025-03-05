@@ -1,12 +1,33 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 20px;
+  padding: 100px 0 30px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  text-align: center;
+
+  width: 100%;
+  position: relative;
+  overflow-y: auto;
+`;
+
+export const NewsPageTitle = styled.h2`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: var(--FarmSystem_Green01, #28723F);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 100% */
+
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 1100px;
+  margin-bottom: 70px;
+
+  
 `;
 
 export const DescriptionContainer = styled.div`
