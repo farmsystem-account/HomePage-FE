@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const NewsItem = styled.div`
+export const NewsItem = styled.button`
   display: flex;
   padding: 20px 30px;
   align-items: flex-start;
@@ -9,6 +9,7 @@ export const NewsItem = styled.div`
 
   border-radius: 10px;
   background: #F1F1F1;
+  cursor: pointer;
 `;
 
 export const Thumbnail = styled.img`

@@ -2,12 +2,14 @@ import * as S from './NewsItem.styled';
 import { newsData } from '@/models/news';
 import PlaceHolder from '@/assets/Images/news/PlaceHolder.png';
 import Logger from '@/utils/Logger';
+import { useNavigate } from 'react-router';
 
 const dummyTags = ['태그1', '태그2', '태그3'];
 
 export default function NewsItem({ newsData }: { newsData: newsData }) {
   Logger.log(newsData);
   const { title, content } = newsData;
+  const navigate = useNavigate();
   
   // 아직 썸네일과 태그 정보가 없으므로 placeholder와 dummyTags 사용
   const thumbnailSrc = PlaceHolder;
@@ -19,7 +21,7 @@ export default function NewsItem({ newsData }: { newsData: newsData }) {
     : content;
 
   return (
-    <S.NewsItem onClick={() => Logger.log('뉴스 클릭')}>
+    <S.NewsItem onClick={() => navigate(`/news/${newsData.newsId}`)}>
       <S.Thumbnail src={thumbnailSrc} alt={title} />
       <S.NewsContent>
         <S.Title>{title}</S.Title>

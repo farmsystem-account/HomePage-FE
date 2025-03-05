@@ -4,10 +4,11 @@ export const Container = styled.div`
   padding: 100px 0 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 
   width: 100%;
+  min-height: 100vh;
   position: relative;
   overflow-y: auto;
 `;
@@ -25,13 +26,17 @@ export const NewsPageTitle = styled.h2`
   padding: 10px 20px;
   width: 100%;
   max-width: 1100px;
-  margin-bottom: 70px;
-
-  
 `;
 
 export const DescriptionContainer = styled.div`
   width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   margin: 20px;
   display: block;
 `;
@@ -62,4 +67,18 @@ export const NewsContainer = styled.div`
   justify-content: center;
   align-items: center;
   row-gap: 40px;
+
+  margin-top: 70px;
+`;
+
+export const Line = styled.hr`
+  width: 100%;
+  height: 2px;
+  background-color: var(--FarmSystem_Green01, #28723F);
+  border: none;
+  
+  padding: 0 20px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 30px 0;
 `;
