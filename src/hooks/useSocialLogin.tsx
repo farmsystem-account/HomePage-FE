@@ -40,7 +40,7 @@ const initializeKakao = () => {
 };
 
 export const useSocialLogin = () => {
-  const [isKakaoInitialized, setIsKakaoInitialized] = useState(false);
+  const [, setIsKakaoInitialized] = useState(false);
 
   useEffect(() => {
     try {
