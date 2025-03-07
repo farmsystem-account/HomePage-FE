@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApplications } from "../../hooks/useApplications";
 import { Application } from "../../types/application";
+import { Link } from "react-router-dom"; 
 
 const AdminApplications = () => {
   const [track, setTrack] = useState<string | undefined>(undefined);
@@ -9,7 +10,7 @@ const AdminApplications = () => {
   if (isLoading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생: {(error as Error).message}</p>;
 
-const applicationList = applications ?? []; // ✅ undefined 체크 후 기본값 설정
+  const applicationList = applications ?? []; 
 
   return (
     <div>
@@ -39,7 +40,9 @@ const applicationList = applications ?? []; // ✅ undefined 체크 후 기본�
         <tbody>
           {applicationList.map((app: Application) => (
             <tr key={app.applyId}>
-              <td>{app.applyId}</td>
+              <td>
+                <Link to={`/admin/apply/${app.applyId}`}>{app.applyId}</Link>
+              </td>
               <td>{app.name}</td>
               <td>{app.track}</td>
               <td>{new Date(app.updatedAt).toLocaleString()}</td>

@@ -5,6 +5,7 @@ import LoginPage from './pages/Login/LoginPage';
 import RegisterPage from './pages/Register/RegisterPage';   
 import AuthCallback from './pages/Auth/AuthCallback';
 import AdminApplications from './pages/Admin/AdminApplications';
+import ApplicationDetail from './pages/Admin/ApplicationDetail'; 
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const AppRouter = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/api/auth/login" element={<AuthCallback />} />
           <Route path="/admin" element={<AdminApplications />} />
+          <Route path="/admin/apply/:applyId" element={<ApplicationDetail />} /> 
         </Routes>
       </Router>
     </QueryClientProvider>
