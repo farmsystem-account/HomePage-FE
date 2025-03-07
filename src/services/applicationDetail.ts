@@ -10,7 +10,6 @@ export const fetchApplicationDetail = async (applyId: string): Promise<Applicati
         Accept: "application/json",
       },
     });
-      console.log(response.data);
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "지원서 상세 조회 실패");
