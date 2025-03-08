@@ -9,30 +9,32 @@ interface Apply {
   updatedAt: string;
 }
 
-
 export const useApplyList = (track: string | null) => {
   const [applyList, setApplyList] = useState<Apply[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const accessToken = useAuthStore((state) => state.accessToken);
 
-  useEffect(() => {
-    const fetchList = async () => {
-      setLoading(true);
-      setError(null);
+useEffect(() => {
+  const fetchList = async () => {
+    if (!accessToken || !track) return; 
 
-      try {
-        const data = await fetchApplyList(accessToken, track);
-        setApplyList(data);
-      } catch (err) {
-        setError("지원서 목록을 조회하는 중 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    setLoading(true);
+    setError(null);
 
-    fetchList();
-  }, [track, accessToken]);
+    try {
+      const data = await fetchApplyList(accessToken, track);
+      setApplyList(data);
+    } catch (err) {
+      setError("지원서 목록을 조회하는 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchList();
+}, [track, accessToken]);
+
 
   return { applyList, loading, error };
 };
