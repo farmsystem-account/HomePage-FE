@@ -20,10 +20,6 @@ export const requestLogin = async (code: string, socialType: "KAKAO" | "GOOGLE")
 
       Cookies.set("refreshToken", refreshToken, { secure: true, sameSite: "Strict" });
 
-      // console.log("로그인 성공:", response.data.message);
-      // console.log("액세스 토큰:", accessToken);
-      // console.log("리프레시 토큰:", refreshToken);
-
       return { accessToken, refreshToken };
     } else {
       throw new Error(`로그인 실패: ${response.data.message}`);
