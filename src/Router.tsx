@@ -17,7 +17,7 @@ const AppRouter = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/api/auth/login" element={<AuthCallback />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/admin" element={<AdminApplications />} />
           <Route path="/admin/apply/:applyId" element={<ApplicationDetail />} /> 
         </Routes>

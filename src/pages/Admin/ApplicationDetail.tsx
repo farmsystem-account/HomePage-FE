@@ -1,41 +1,49 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchApplicationDetail } from "../../services/applicationDetail"; // 서비스에서 함수 가져오기
+import { fetchApplicationDetail } from "../../services/applicationDetail";
+import { Application, Answer } from "../../types/application";
 
 const ApplicationDetail = () => {
   const { applyId } = useParams<{ applyId: string }>();
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["applicationDetail", applyId],
-    queryFn: () => fetchApplicationDetail(applyId!),
-    enabled: !!applyId, 
+  const applicationId = applyId ? parseInt(applyId, 10) : undefined;
+
+  const { data, error, isLoading } = useQuery<Application>({
+    queryKey: ["applicationDetail", applicationId],
+    queryFn: () => fetchApplicationDetail(applicationId!.toString()),
+    enabled: !!applicationId, 
   });
 
   if (isLoading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생: {(error as Error).message}</p>;
-  console.log(data); //여기까지 데이터가 다 받아와지는데 왜 아래에서 호출하면 안보이는지 모르겠어요...
 
   return (
     <div>
       <h1>지원서 상세</h1>
       {data ? (
         <>
-          <p>ID: {data.applyId}</p>
-          <p>이름: {data.name}</p>
-          <p>전공: {data.major}</p>
-          <p>전화번호: {data.phoneNumber}</p>
-          <p>이메일: {data.email}</p>
-          <p>트랙: {data.track}</p>
-          <p>업데이트 날짜: {new Date(data.updatedAt).toLocaleString()}</p>
+          <p><strong>ID:</strong> {data.applyId}</p>
+          <p><strong>이름:</strong> {data.name}</p>
+          <p><strong>전공:</strong> {data.major}</p>
+          <p><strong>전화번호:</strong> {data.phoneNumber}</p>
+          <p><strong>이메일:</strong> {data.email}</p>
+          <p><strong>트랙:</strong> {data.track}</p>
+          <p><strong>업데이트 날짜:</strong> {new Date(data.updatedAt).toLocaleString()}</p>
+
           <h2>답변</h2>
-          <ul>
-            {data.answers && data.answers.map((answer: any) => (
-              <li key={answer.questionId}>
-                <p>질문 ID: {answer.questionId}</p>
-                <p>내용: {answer.content}</p>
-              </li>
-            ))}
-          </ul>
+          {data.answers && data.answers.length > 0 ? (
+            <ul>
+              {data.answers.map((answer: Answer) => (
+                <li key={answer.questionId}>
+                  <p><strong>질문 ID:</strong> {answer.questionId}</p>
+                  <p><strong>내용:</strong> {answer.content ?? "없음"}</p>
+                  <p><strong>선택한 옵션:</strong> {answer.choiceId.length > 0 ? answer.choiceId.join(", ") : "없음"}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>답변이 없습니다.</p>
+          )}
         </>
       ) : (
         <p>데이터가 없습니다.</p>

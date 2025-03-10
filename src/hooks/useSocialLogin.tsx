@@ -15,10 +15,10 @@ declare global {
 }
 
 // 환경별 리다이렉트 URI 가져오기
-const getRedirectUri = () => {
-  return import.meta.env.MODE === "development"
-    ? "http://localhost:5173/api/auth/login" // 로컬 환경
-    : "https://api.dev.farmsystem.kr/api/auth/login"; // 개발 서버 환경
+const getRedirectUri = (provider: "KAKAO" | "GOOGLE") => {
+  return provider === "KAKAO"
+    ? import.meta.env.VITE_KAKAO_REDIRECT_URI
+    : import.meta.env.VITE_GOOGLE_REDIRECT_URI;
 };
 
 // 환경 감지 (웹 vs 카카오 앱)
@@ -52,7 +52,7 @@ export const useSocialLogin = () => {
   }, []);
 
   const handleLogin = (provider: "KAKAO" | "GOOGLE") => {
-    const redirectUri = getRedirectUri();
+    const redirectUri = getRedirectUri(provider);
     const clientId =
       provider === "KAKAO"
         ? import.meta.env.VITE_KAKAO_CLIENT_ID
