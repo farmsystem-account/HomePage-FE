@@ -1,3 +1,9 @@
+export interface Answer {
+  questionId: number;
+  content: string | null; 
+  choiceId: number[];
+}
+
 export interface Application {
   applyId: number;
   name: string;
@@ -6,9 +12,5 @@ export interface Application {
   major?: string;
   phoneNumber?: string;
   email?: string;
-  answers?: {
-    questionId: number;
-    content: string;
-    choiceId: number[];
-  }[];
+  answers?: Answer[]; 
 }
