@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { useNewsDetail } from "@/hooks/useNews";
 import Logger from "@/utils/Logger";
- // 상위 디렉토리 인덱스랑 레이아웃 비슷할 거 같아서 끌고오기
-import * as S from "../index.styled";
+import * as S from "./index.styled";
+import GoBackArrow from "@/assets/LeftArrow.png";
 
 export default function NewsDetail() {
   const { newsId } = useParams<{ newsId: string }>();
@@ -33,9 +33,16 @@ export default function NewsDetail() {
   return (
     <S.Container>
       <S.NewsPageTitle>소식</S.NewsPageTitle>
-      <S.Line />
-      <h2>{newsData?.title}</h2>
-      <p>{newsData?.content}</p>
+      <S.NewsDetailCard>
+        <S.GoBackContainer>
+          <S.GoBackButton onClick={() => window.history.back()}>
+            <S.GoBackImg src={GoBackArrow} alt="Go back" />
+            <p>돌아가기</p>
+          </S.GoBackButton>
+        </S.GoBackContainer>
+        <h2>{newsData?.title}</h2>
+        <p>{newsData?.content}</p>
+      </S.NewsDetailCard>
     </S.Container>
   );
 }
