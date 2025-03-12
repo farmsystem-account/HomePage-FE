@@ -4,40 +4,6 @@ import * as S from './ProjectList.styles';
 // import ProjectItem, { ProjectItemProps } from './ProjectItem';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
-/** 샘플용 더미 데이터 */
-// const projectData: ProjectItemProps[] = [
-//   {
-//     title: '임시직 프로젝트 1',
-//     description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
-//     imageUrl: BlankImg,
-//   },
-//   {
-//     title: '임시직 프로젝트 2',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
-//     imageUrl: BlankImg,
-//   },
-//   {
-//     title: '임시직 프로젝트 3',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
-//     imageUrl: BlankImg,
-//   },
-//   {
-//     title: '임시직 프로젝트 1',
-//     description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
-//     imageUrl: BlankImg,
-//   },
-//   {
-//     title: '임시직 프로젝트 2',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
-//     imageUrl: BlankImg,
-//   },
-//   {
-//     title: '임시직 프로젝트 3',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
-//     imageUrl: BlankImg,
-//   },
-// ];
-
 /**
  * 드롭다운을 구분하기 위한 타입
  * - "grade" = 기수, "track" = 트랙
