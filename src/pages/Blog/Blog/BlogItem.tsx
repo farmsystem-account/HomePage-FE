@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './BlogItem.styles';
 import { useLinkPreview } from '@/hooks/useLinkPreview';
-import BlankImg from '../../assets/Images/Blog_Project/blank_img.svg';
+import BlankImg from '../../../assets/Images/Blog_Project/blank_img.svg';
 
 export enum BlogCategory {
   SEMINAR,
@@ -18,8 +18,6 @@ export interface BlogTag {
 }
 
 export interface BlogItemProps {
-  title: string;
-  description: string;
   blogUrl: string;
   tags: BlogTag[];
 }
@@ -46,32 +44,32 @@ const getCategoryName = (category: BlogCategory): string => {
   }
 };
 
-const BlogItem: React.FC<BlogItemProps> = ({
-  title,
-  description,
-  blogUrl,
-  tags,
-}) => {
-  //blogUrl에 대한 메타데이터를 fetching
-  const { metadata, loading } = useLinkPreview(blogUrl);
+const BlogItem: React.FC<BlogItemProps> = ({ blogUrl, tags }) => {
+  // blogUrl을 기반으로 메타데이터를 fetching
+  const { metadata, loading} = useLinkPreview(blogUrl);
 
-  // 메타데이터에서 가져온 이미지, 없으면 BlankImg
-  const previewImage = metadata?.image || BlankImg;
-
+  
+  // 메타데이터가 없는 경우 대비 기본값 설정
+  const title = metadata?.title || '제목이 없습니다';
+  const description = metadata?.description || '설명이 없습니다';
+  const previewImage =
+  metadata?.image && metadata?.image !== 'null' && !metadata.image.startsWith('/')
+    ? metadata.image
+    : BlankImg;
   return (
     <S.Card href={blogUrl} target="_blank">
-      {loading ? (
-          <S.Image>
-            <img src={previewImage} alt={title} />
-          </S.Image>
-      ) : (
-        <S.Image>
+      <S.Image>
+        {loading ? (
+          <img src={BlankImg} alt="로딩중..." />
+        ) : (
           <img src={previewImage} alt={title} />
-        </S.Image>
-      )}
+        )}
+      </S.Image>
       <S.Content>
-        <S.Title>{title}</S.Title>
-        <S.Description>{description}</S.Description>
+        <S.Title>{loading ? '로딩중...' : title}</S.Title>
+        <S.Description>
+          {loading ? '설명을 불러오는 중입니다...' : description}
+        </S.Description>
         <S.TagContainer>
           {tags.map((tag, index) => (
             <S.Tag key={index}>{getCategoryName(tag.category)}</S.Tag>

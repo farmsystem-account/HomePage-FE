@@ -1,42 +1,42 @@
 import { useState } from 'react';
 import * as S from './ProjectList.styles';
-import BlankImg from '../../assets/Images/Blog_Project/blank_img.svg';
-import ProjectItem, { ProjectItemProps } from './ProjectItem';
+// import BlankImg from '../../../assets/Images/Blog_Project/blank_img.svg';
+// import ProjectItem, { ProjectItemProps } from './ProjectItem';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 /** 샘플용 더미 데이터 */
-const projectData: ProjectItemProps[] = [
-  {
-    title: '임시직 프로젝트 1',
-    description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
-    imageUrl: BlankImg,
-  },
-  {
-    title: '임시직 프로젝트 2',
-    description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
-    imageUrl: BlankImg,
-  },
-  {
-    title: '임시직 프로젝트 3',
-    description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
-    imageUrl: BlankImg,
-  },
-  {
-    title: '임시직 프로젝트 1',
-    description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
-    imageUrl: BlankImg,
-  },
-  {
-    title: '임시직 프로젝트 2',
-    description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
-    imageUrl: BlankImg,
-  },
-  {
-    title: '임시직 프로젝트 3',
-    description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
-    imageUrl: BlankImg,
-  },
-];
+// const projectData: ProjectItemProps[] = [
+//   {
+//     title: '임시직 프로젝트 1',
+//     description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
+//     imageUrl: BlankImg,
+//   },
+//   {
+//     title: '임시직 프로젝트 2',
+//     description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
+//     imageUrl: BlankImg,
+//   },
+//   {
+//     title: '임시직 프로젝트 3',
+//     description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
+//     imageUrl: BlankImg,
+//   },
+//   {
+//     title: '임시직 프로젝트 1',
+//     description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
+//     imageUrl: BlankImg,
+//   },
+//   {
+//     title: '임시직 프로젝트 2',
+//     description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
+//     imageUrl: BlankImg,
+//   },
+//   {
+//     title: '임시직 프로젝트 3',
+//     description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
+//     imageUrl: BlankImg,
+//   },
+// ];
 
 /**
  * 드롭다운을 구분하기 위한 타입
@@ -61,7 +61,7 @@ const ProjectList: React.FC = () => {
     setOpenDropdown('');
   };
 
-  const { isTablet, isBig, isMobile } = useMediaQueries();
+  const { isTablet, isMobile } = useMediaQueries();
 
   return (
     <S.Container>
@@ -108,7 +108,7 @@ const ProjectList: React.FC = () => {
       {/* 프로젝트 카드 리스트 */}
       {/* 지금은 더미데이터의 갯수로 블로그가 있는지 없는지 판단합니다. 디버깅시 projectdata.length>6 이렇게 하면 아무 것도 없는 창 뜹니다.*/}
       <S.Wrapper>
-        {(projectData.length > 6) ? (
+        {/* {(projectData.length > 6) ? (
           <S.ListContainer $isTablet={isTablet} $isBig={isBig}>
             {projectData.map((item, index) => (
               <ProjectItem key={index} {...item} />
@@ -119,7 +119,11 @@ const ProjectList: React.FC = () => {
             아직 등록된 글이 없어요.
             <a>파밍로그를 통해 글을 작성해보세요!</a>
           </S.TextContainer>
-        )}
+        )} */}
+          <S.TextContainer $isMobile={isMobile}>
+            아직 등록된 글이 없어요.
+            <a>파밍로그를 통해 글을 작성해보세요!</a>
+          </S.TextContainer>
       </S.Wrapper>
     </S.Container>
   );

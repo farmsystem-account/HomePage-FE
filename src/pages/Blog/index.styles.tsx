@@ -39,8 +39,7 @@ export const ContentWrapper = styled.div`
 
 export const ActiveTabIndicator = styled.div<{$isTablet: boolean; $isMobile: boolean;}>`
   width: 100%;
-  max-width: 1200px;
-  height: 70vh;
+  min-height: 70vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

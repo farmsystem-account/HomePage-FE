@@ -1,71 +1,63 @@
+import React from 'react';
 import * as S from './BlogList.styles';
-// import BlogItem, { BlogItemProps } from './BlogItem';
-// import BlankImg from '../../assets/Images/Blog_Project/blank_img.svg';
+import BlogItem, { BlogItemProps, BlogCategory } from './BlogItem';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 /** 샘플용 더미 데이터 */
-// const blogData: BlogItemProps[] = [
-//   {
-//     title: '임시직 프로젝트 1',
-//     description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
-//     imageUrl: BlankImg,
-//     blogUrl: 'https://www.naver.com',
-//   },
-//   {
-//     title: '임시직 프로젝트 2',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
-//     imageUrl: BlankImg,
-//     blogUrl: 'https://www.naver.com',
-//   },
-//   {
-//     title: '임시직 프로젝트 3',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
-//     imageUrl: BlankImg,
-//     blogUrl: 'https://www.naver.com',
-//   },
-//   {
-//     title: '임시직 프로젝트 1',
-//     description: '팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-40 고정사이즈로써 2줄까지 소개가 가능하다.',
-//     imageUrl: BlankImg,
-//     blogUrl: 'https://www.naver.com',
-//   },
-//   {
-//     title: '임시직 프로젝트 2',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 2.',
-//     imageUrl: BlankImg,
-//     blogUrl: 'https://www.naver.com',
-//   },
-//   {
-//     title: '임시직 프로젝트 3',
-//     description: '백동민 최강 백동민 힘내 백동민 파이팅 3.',
-//     imageUrl: BlankImg,
-//     blogUrl: 'https://www.naver.com',
-//   },
-// ];
+const blogData: BlogItemProps[] = [
+  {
+    blogUrl: 'https://velog.io/',
+    tags: [{ category: BlogCategory.SEMINAR }],
+  },
+  {
+    blogUrl: 'https://blog.naver.com/educds/222797324049',
+    tags: [{ category: BlogCategory.PROJECT }],
+  },
+  {
+    blogUrl: 'https://blog.encrypted.gg/',
+    tags: [{ category: BlogCategory.STUDY }],
+  },
+  {
+    blogUrl: 'https://www.github.com',
+    tags: [{ category: BlogCategory.HACKATHON }],
+  },
+  {
+    blogUrl: 'https://ludeno-studying.tistory.com/82',
+    tags: [{ category: BlogCategory.REVIEW }],
+  },
+  {
+    blogUrl: 'https://toss.im/',
+    tags: [{ category: BlogCategory.LECTURE }],
+  },
+];
 
 const BlogList: React.FC = () => {
-  const { isMobile,isTablet } = useMediaQueries();
+  const { isMobile, isTablet } = useMediaQueries();
+  const isBig = !isMobile; // 모바일이 아닐 때 큰 화면 기준
 
   return (
     <S.Container>
       <S.TableContainer $isTablet={isTablet} $isMobile={isMobile}>
-        <S.SubDescription $isMobile={isMobile}> * 블로그 클릭 시 외부 링크로 연결돼요.</S.SubDescription>
+        <S.SubDescription $isMobile={isMobile}>
+          * 블로그 클릭 시 외부 링크로 연결돼요.
+        </S.SubDescription>
       </S.TableContainer>
 
-      {/* 프로젝트 카드 리스트 */}
-      {/* 지금은 더미데이터의 갯수로 블로그가 있는지 없는지 판단합니다. 디버깅시 projectdata.length>6 이렇게 하면 아무 것도 없는 창 뜹니다.*/}
-      {/* {(blogData.length > 5) ? (
-      <S.ListContainer $isTablet={isTablet} $isBig={isBig}>
-        {blogData.map((item, index) => (
-          <BlogItem key={index} {...item} />
-        ))}
-      </S.ListContainer>) : ( */}
+      {blogData.length <= 5 ? (
           <S.TextContainer $isMobile={isMobile}>
             아직 등록된 글이 없어요.
-            <a>파밍로그를 통해 글을 작성해보세요!</a>
+            <a href="/create">파밍로그를 통해 글을 작성해보세요!</a>
           </S.TextContainer>
-      {/* )
-      } */}
+
+      ) : (
+            <S.DescriptionContainer>
+              <S.ListContainer $isTablet={isTablet} $isBig={isBig}>
+                {blogData.map((item, index) => (
+                  <BlogItem key={index} {...item} />
+                ))}
+              </S.ListContainer>   
+            </S.DescriptionContainer>
+      )}
     </S.Container>
   );
 };
