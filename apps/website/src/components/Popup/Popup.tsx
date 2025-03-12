@@ -8,11 +8,11 @@ interface PopupProps {
   title: string;
   content: React.ReactNode;
   onConfirm?: () => void;
-}
+} 
 
 const Popup: React.FC<PopupProps> = ({ isOpen, onClose, title, content, onConfirm }) => {
+  const { isMobile, isTablet } = useMediaQueries();
   if (!isOpen) return null;
-  const { isMobile,isTablet } = useMediaQueries();
 
   return (
     <S.PopupOverlay onClick={onClose}>
@@ -21,7 +21,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, title, content, onConfir
         <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>{content}</S.PopupText>
         <S.ButtonContainer $isMobile={isMobile}>
           {onConfirm ? (
-            <>
+            <> 
               <S.PopupButton style={{backgroundColor: '#C1ECC1', color: '#006811', fontWeight: '500'}} onClick={onClose} $isMobile={isMobile} $isTablet={isTablet}>취소</S.PopupButton>
               <S.PopupButton onClick={() => { onConfirm(); onClose(); }} $isMobile={isMobile} $isTablet={isTablet} confirm>
                 제출
