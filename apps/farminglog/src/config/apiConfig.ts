@@ -3,7 +3,12 @@ import Cookies from "js-cookie";
 import { refreshAccessToken } from "../services/authService";
 
 const getApiBaseUrl = () => {
-  const baseUrl = import.meta.env.VITE_BASE_URL; 
+  /* 
+   * 일단 임시로 빈 문자열인 경우 localhost:8080으로 설정하게 했습니다.
+   * 이게 baseUrl이 비어있을 경우 endsWith() 메서드를 호출할 때 오류가 발생해서 렌더링이 안됩니당...
+   * 추후 프로덕션과 데브용 env 쪼개는거 설정하시면 바꿔주세요!
+   */
+  const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:8080"; 
   return baseUrl.endsWith("/") ? `${baseUrl}api/` : `${baseUrl}/api/`;
 };
 
