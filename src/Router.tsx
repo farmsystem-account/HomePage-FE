@@ -5,6 +5,7 @@ import Recruit from '@/pages/Apply';
 import Blog from '@/pages/Blog';
 import NotFound from '@/pages/NotFound';
 import News from '@/pages/News';
+import NewsDetail from '@/pages/News/NewsDetail';
 import FAQ from '@/pages/FAQ';
 import MaintainPage from '@/pages/MaintainPage';
 
@@ -24,6 +25,7 @@ export default function Router() {
         { path: '/recruit', element: <Recruit /> },
         { path: '/blog', element: <Blog /> },
         { path: '/news', element: <News /> },
+        { path: '/news/:newsId', element: <NewsDetail /> },
         { path: '/FAQ', element: <FAQ /> },
       ],
     },
