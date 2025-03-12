@@ -52,6 +52,9 @@ export default function Step2({ setStep, isFirst, onSubmit }: ApplyLoginProps) {
     }
   };
 
+  // 각 비밀번호 input에 대한 ref (포커스 이동용)
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+
   // 비밀번호 입력 핸들러
   const handlePasswordChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
@@ -131,7 +134,7 @@ export default function Step2({ setStep, isFirst, onSubmit }: ApplyLoginProps) {
             value={num}
             onChange={(e) => handlePasswordChange(index, e.target.value)}
             onKeyDown={(e) => handleKeyDown(index, e)}
-            ref={(el) => (inputRefs.current[index] = el)}
+            ref={(el) => { inputsRef.current[index] = el; }}
             maxLength={1}
             placeholder="_"
             // pattern="[0-9]*"

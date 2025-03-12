@@ -6,11 +6,11 @@ interface PopupProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: React.ReactNode;
+  content: string | React.JSX.Element;
   onConfirm?: () => void;
 } 
 
-const Popup: React.FC<PopupProps> = ({ isOpen, onClose, title, content, onConfirm }) => {
+const Popup = ({ isOpen, onClose, title, content, onConfirm }: PopupProps) => {
   const { isMobile, isTablet } = useMediaQueries();
   if (!isOpen) return null;
 
@@ -18,7 +18,9 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, title, content, onConfir
     <S.PopupOverlay onClick={onClose}>
       <S.PopupBox onClick={(e) => e.stopPropagation()} $isMobile={isMobile} $isTablet={isTablet}>
         <S.PopupTitle $isMobile={isMobile} $isTablet={isTablet}>{title}</S.PopupTitle>
-        <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>{content}</S.PopupText>
+        <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
+          {content}
+        </S.PopupText>
         <S.ButtonContainer $isMobile={isMobile}>
           {onConfirm ? (
             <> 
