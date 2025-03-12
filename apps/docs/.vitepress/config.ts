@@ -9,7 +9,7 @@ export default defineConfig({
   themeConfig: {
     sidebar: [
       {
-        text: '깃 깃허브 컨벤션',
+        text: '깃/깃허브 컨벤션',
         items: [
           { text: '커밋 메시지', link: '/git/commit-messeage' },
           { text: '브랜치와 브랜치 전략', link: '/git/branch' },

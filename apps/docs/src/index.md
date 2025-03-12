@@ -11,12 +11,13 @@ hero:
     decoding: async
     src: /images/FarmSystem_Logo.svg
     alt: Farmsystem Logo
-#   actions:
-#     - text: 좋은 코드의 기준 알아보기
-#       link: /code/
-#     - theme: alt
-#       text: 소통하기
-#       link: /code/community
+  actions:
+    - text: 온보딩 시작하기
+      # 일단은 커밋 메세지 문서로 이동... 나중에 수정
+      link: /git/commit-messeage
+    - theme: alt
+      text: Github
+      link: https://github.com/DguFarmSystem/HomePage-FE
 
 features:
   - icon: 📚
