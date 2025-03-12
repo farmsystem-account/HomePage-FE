@@ -4,6 +4,8 @@ import { useNewsDetail } from "@/hooks/useNews";
 import Logger from "@/utils/Logger";
 import * as S from "./index.styled";
 import GoBackArrow from "@/assets/LeftArrow.png";
+// import { newsData } from '@/models/news';
+// import PlaceHolder from '@/assets/Images/news/PlaceHolder.png';
 
 export default function NewsDetail() {
   const { newsId } = useParams<{ newsId: string }>();
@@ -40,7 +42,13 @@ export default function NewsDetail() {
             <p>돌아가기</p>
           </S.GoBackButton>
         </S.GoBackContainer>
-        <h2>{newsData?.title}</h2>
+        <S.TitleContainer>
+          <S.DateAndTagContainer>
+            <S.Date>{/*newsData?.date*/ "(임시)게시일자:  2025년 03월 13일"}</S.Date>
+            <S.Tag>{/*newsData?.tag*/ "(임시) 홍보용"}</S.Tag>
+          </S.DateAndTagContainer>
+          <S.Title>{newsData?.title}</S.Title>
+        </S.TitleContainer>
         <p>{newsData?.content}</p>
       </S.NewsDetailCard>
     </S.Container>
