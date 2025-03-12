@@ -25,6 +25,8 @@ export const Logo = styled.div`
   font-weight: bold;
   color:  #102C19;
   letter-spacing: -0.24px;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const NavWrapper = styled.div`

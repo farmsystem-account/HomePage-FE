@@ -96,7 +96,7 @@ export default function PersonalInfo({
           $isMobile={isMobile}
           type="text"
           name="phoneNumber"
-          placeholder="ex) 010-1234-5678"
+          placeholder="ex) 01012345678"
           value={phoneNumber}
           onChange={(e) => onPhoneNumberChange(
             e.target.value.replace(/\D/g, "").replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3").slice(0, 13)

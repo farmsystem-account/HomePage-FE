@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   useApplyQuestions, 
   useSaveApply, 
@@ -9,6 +10,7 @@ import { ApplyQuestion, ApplyAnswer, Answer, Track } from "@/models/apply";
 import { filterQuestionsByTrack, sortQuestionsByPriority } from "@/utils/apply";
 import ChoiceSelector from "./ChoiceSelector";
 import PersonalInfo from "./PersonalInfo";
+import Logger from "@/utils/Logger";
 
 const defaultTrack: Track = Track.UNION;
 type AnswerMap = Record<number, { content: string; choiceId: number[] }>;
@@ -28,6 +30,7 @@ const TrackKorean = {
 } as const;
 
 export default function ApplyBox({ propStudentNumber, propPassword }: ApplyBoxProps) {
+  const navigate = useNavigate();
   const { data: questionsData, loading: questionsLoading, error: questionsError } = useApplyQuestions();
   const { saveApply, loading: saveLoading, error: saveError } = useSaveApply();
   const { submitApply, loading: submitLoading, error: submitError } = useSubmitApply();
@@ -93,7 +96,7 @@ export default function ApplyBox({ propStudentNumber, propPassword }: ApplyBoxPr
           }
         })
         .catch((err) => {
-          console.error("지원서 로드 에러:", err);
+          Logger.error("지원서 로드 에러:", err);
         });
     }
   // loadApply 넣으면 무한 호출됨
@@ -113,9 +116,10 @@ export default function ApplyBox({ propStudentNumber, propPassword }: ApplyBoxPr
   const handleSave = async () => {
     try {
       const response = await saveApply(buildApplyData());
-      console.log("임시저장 성공:", response);
+      Logger.log("임시저장 성공:", response);
+      navigate('/'); 
     } catch (err) {
-      console.error("임시저장 에러:", err);
+      Logger.error("임시저장 에러:", err);
     }
   };
 
@@ -128,10 +132,11 @@ export default function ApplyBox({ propStudentNumber, propPassword }: ApplyBoxPr
     const submissionData = buildApplyData();
     try {
       const response = await submitApply(submissionData);
-      console.log("제출 성공:", response);
+      Logger.log("제출 성공:", response);
       setApplyStatus("SUBMITTED");
+      navigate('/'); 
     } catch (err) {
-      console.error("제출 에러:", err);
+      Logger.error("제출 에러:", err);
     }
   };
 

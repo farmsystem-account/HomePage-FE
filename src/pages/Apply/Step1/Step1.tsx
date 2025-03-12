@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router";
 import useMediaQueries from "@/hooks/useMediaQueries";
 import * as S from './Step1.styles';
 import FarmLogo_Black from '../../../assets/FarmLogo_Black.png';
 import RightArrow from '../../../assets/RightArrow.png';
 
 export default function Step1({ setStep }: { setStep: (step: number, isFirst?: boolean) => void }) {  const { isMobile } = useMediaQueries();
+  const navigate = useNavigate();
+
 
   const fadeInUp = (delay: number) => ({
     hidden: { opacity: 0, y: -20 },
@@ -15,6 +18,19 @@ export default function Step1({ setStep }: { setStep: (step: number, isFirst?: b
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.6, delay } }
   });
+
+  const handleNavigateToTracks = () => {
+    navigate("/"); // ✅ 홈 페이지로 이동
+    setTimeout(() => {
+      const targetElement = document.querySelector("#tracks");
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.getBoundingClientRect().top + window.scrollY - 50,
+          behavior: "smooth",
+        });
+      }
+    }, 300); // ✅ 페이지 전환 후 스크롤 이동
+  };
 
   return (
     <S.Container $isMobile={isMobile} id="applyStep1">
@@ -54,7 +70,7 @@ export default function Step1({ setStep }: { setStep: (step: number, isFirst?: b
 
       <motion.div initial="hidden" animate="visible" variants={fadeInSlow(2.3)}>
         <S.BottomTextContainer $isMobile={isMobile}>
-          <S.BottomText $isMobile={isMobile}>
+          <S.BottomText $isMobile={isMobile} onClick={handleNavigateToTracks}>
             트랙 선택이 고민된다면? <strong>트랙 소개 보러가기</strong>
           </S.BottomText>
           <S.Arrow src={RightArrow} alt="RightArrow" />

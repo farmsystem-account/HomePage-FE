@@ -185,6 +185,7 @@ export const ApplyButton = styled.button<{ $isMobile: boolean; $isTablet: boolea
     border-radius: 10px;
     font-size: ${({ $isMobile, $isTablet }) => ($isMobile ? "18px" : $isTablet ? "22px" : "24px")};
     margin-top: 20px;
+    cursor: pointer;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     
     &:hover {

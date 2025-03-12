@@ -98,7 +98,7 @@ export const TrackButton = styled.button<{ $isSelected: boolean; $isMobile: bool
   box-shadow: ${({ $isMobile }) => ($isMobile ? "none" : "4px 4px 4px 0px rgba(0, 0, 0, 0.25)")};
 
   transition: transform 0.3s ease, background 0.3s ease;
-
+  cursor: pointer;
   &:hover {
     transform: scale(1.05);
     background-color: var(--FarmSystem_Green05, #248634);

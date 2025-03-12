@@ -100,11 +100,11 @@ export const CheckboxLabel = styled.label<{ $isMobile: boolean }>`
 
 export const Checkbox = styled.input`
   margin-right: 8px;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   appearance: none; 
-  border: 2px solid #aaa;
+  border: 1px solid #aaa;
   border-radius: 4px;
   background-color: white;
   transition: all 0.2s ease-in-out;
@@ -114,14 +114,16 @@ export const Checkbox = styled.input`
     border-color: #006811; /* 체크된 테두리 */
   }
 
-  /* &:checked::before {
-    content: "✔";
+  &:checked::before {
+    content: "✓";
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     color: white !important;
-    font-size: 7.5px;
-  } */
+    font-weight: 700;
+    /* margin-top: -1; */
+    font-size: 13px;
+  }
 `;
 
 export const Textarea = styled.textarea<{ $isMobile: boolean; $error?: boolean }>`
@@ -135,7 +137,7 @@ export const Textarea = styled.textarea<{ $isMobile: boolean; $error?: boolean }
   resize: none;
   transition: border 0.3s ease-in-out;
   margin-top: -10px;
-  margin-bottom: -10px;
+  margin-bottom: 8px;
 
   &:focus {
     border: 1px solid #248634;

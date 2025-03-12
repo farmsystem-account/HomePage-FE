@@ -101,5 +101,11 @@ export const BottomTextContainer = styled.div<{ $isMobile: boolean }>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  transition: transform 0.2s ease;
+  /* background-color: orange; */
+
+  &:hover {
+    transform: scale(1.05);
+  }
   
 `;

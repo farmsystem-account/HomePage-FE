@@ -11,6 +11,7 @@ import {
 import { ApplyAnswer, Answer, Track } from "@/models/apply";
 import PersonalInfo from "./PersonInfo";
 import Popup from '@/components/Popup/Popup';
+import Logger from "@/utils/Logger";
 
 const defaultTrack: Track = Track.UNION;
 type AnswerMap = Record<number, { content: string; choiceId: number[] }>;
@@ -51,8 +52,8 @@ export default function Application({ setStep, propStudentNumber, propPassword }
   const [loadedData, setLoadedData] = useState<ApplyAnswer | null>(null);
   const [applyStatus, setApplyStatus] = useState<string>("");
 
-  console.log(studentNumber, password);
-  console.log("데이터"+ loadedData);
+  Logger.log(studentNumber, password);
+  Logger.log("데이터"+ loadedData);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -68,12 +69,16 @@ export default function Application({ setStep, propStudentNumber, propPassword }
 }, [setStep]);
 
   const buildApplyData = (): ApplyAnswer => {
-    console.log('학번'+loadedData);
+    Logger.log('학번'+loadedData);
     if (loadedData) {
       return {
         ...loadedData,
+        name,
+        major,
+        email,
+        phoneNumber,
         track: selectedTrack,
-        answers: transformAnswers(),
+        answers: Object.keys(answers).length > 0 ? transformAnswers() : [],
       };
     }
     throw new Error("지원서 데이터 구성 실패: 로드된 데이터가 없습니다.");
@@ -99,14 +104,12 @@ export default function Application({ setStep, propStudentNumber, propPassword }
     updateLoadedData();
     try {
       const response = await saveApply(buildApplyData());
-      console.log("임시저장 성공:", response);
+      Logger.log("임시저장 성공:", response);
       setSavePopupOpen(true); // 정상적으로 저장되었을 때 팝업
     } catch (err) {
-      console.error("임시저장 에러:", err);
+      Logger.error("임시저장 에러:", err);
   
-    //   if (err.response && err.response.status === 400) {
-        setSaveErrorPopupOpen(true); // 400 에러 발생 시 에러 팝업
-    //   }
+        setSaveErrorPopupOpen(true); 
     }
   };
   
@@ -115,29 +118,81 @@ export default function Application({ setStep, propStudentNumber, propPassword }
   const [isSuccessPopupOpen, setSuccessPopupOpen] = useState(false);
   const [isSavePopupOpen, setSavePopupOpen] = useState(false);
   const [isSaveErrorPopupOpen, setSaveErrorPopupOpen] = useState(false);
+  const [isSubmitErrorPopupOpen, setSubmitErrorPopupOpen] = useState(false);
+  const [isIncompleteInfoPopupOpen, setIncompleteInfoPopupOpen] = useState(false);
+  const [isIncompleteRequiredPopupOpen, setIncompleteRequiredPopupOpen] = useState(false);
+
+
+
 
   
   const handleConfirmSubmit = () => {
-    setConfirmPopupOpen(true); // 제출 확인 팝업 열기
-  };
+    // 개인정보 필수 입력 검사
+    if (!name.trim() || !major.trim() || !email.trim() || !phoneNumber.trim()) {
+      setIncompleteInfoPopupOpen(true);
+      return;
+    }
+
+    // 현재 선택된 트랙에 해당하는 필수 질문 필터링
+    const requiredQuestionsForTrack = (questionsData?.data ?? [])
+      .filter(q => q.track === selectedTrack && q.isRequired);
+
+    // 필수 질문(텍스트 입력 & 선택형) 중 하나라도 비어있는 경우 확인
+    const hasUnansweredRequiredQuestions = requiredQuestionsForTrack.some((q) => {
+      const answer = answers[q.questionId];
+
+      // 1️⃣ ESSAY(텍스트 입력형) 필수 질문이 비어있는 경우
+      if (q.type === "ESSAY" && (!answer || !answer.content.trim())) {
+        return true;
+      }
+
+      // 2️⃣ CHOICE(선택형) 필수 질문에서 아무것도 선택되지 않은 경우
+      if (q.type === "CHOICE" && (!answer || answer.choiceId.length === 0)) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (hasUnansweredRequiredQuestions) {
+      setIncompleteRequiredPopupOpen(true);
+      return;
+    }
+
+    // 모든 필수 사항이 채워졌다면 제출 확인 팝업 띄우기
+    setConfirmPopupOpen(true);
+};
+
+  
+  
+  
   
   const handleSubmit = async () => {
-    setConfirmPopupOpen(false); // 확인 팝업 닫기
+    setConfirmPopupOpen(false);
   
     try {
       const response = await submitApply(buildApplyData());
-      console.log("제출 성공:", response);
+      Logger.log("제출 성공:", response);
       setApplyStatus("SUBMITTED");
-      setSuccessPopupOpen(true); // 제출 완료 팝업 열기
+      setSuccessPopupOpen(true); 
     } catch (err) {
-      console.error("제출 에러:", err);
-      setSaveErrorPopupOpen(true);
+      Logger.error("제출 에러:", err);
+      setSubmitErrorPopupOpen(true);
     }
   };
-  
+
   const handleSuccessPopupClose = () => {
     setSuccessPopupOpen(false);
-    navigate("/"); // 홈으로 이동
+    navigate("/"); 
+    setTimeout(() => {
+      const targetElement = document.querySelector("#about");
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.getBoundingClientRect().top + window.scrollY,
+          behavior: "smooth",
+        });
+      }
+    }, 300);
   };
 
   const transformAnswers = (): Answer[] => {
@@ -150,11 +205,11 @@ export default function Application({ setStep, propStudentNumber, propPassword }
 
   useEffect(() => {
       if (studentNumber && password) {
-        console.log('안뇽');
+        Logger.log('안뇽');
         loadApply({ studentNumber, password })
           
           .then((res) => {
-            console.log('안뇽');
+            Logger.log('안뇽');
             if (res.data) {
               setLoadedData(res.data);
               setApplyStatus(res.data.status);
@@ -170,7 +225,7 @@ export default function Application({ setStep, propStudentNumber, propPassword }
             }
           })
           .catch((err) => {
-            console.error("지원서 로드 에러:", err);
+            Logger.error("지원서 로드 에러:", err);
           });
       }
     // loadApply 넣으면 무한 호출됨
@@ -215,19 +270,28 @@ export default function Application({ setStep, propStudentNumber, propPassword }
   
 
   // 체크박스 변경 핸들러 (CHOICE 타입)
-const handleCheckboxChange = (questionId: number, choiceId: number) => {
-  setAnswers(prev => {
-    const prevChoices = prev[questionId]?.choiceId || [];
-    const updatedChoices = prevChoices.includes(choiceId)
-      ? prevChoices.filter(c => c !== choiceId)
-      : [...prevChoices, choiceId];
-
-    return {
-      ...prev,
-      [questionId]: { ...prev[questionId], choiceId: updatedChoices }
-    };
-  });
-};
+  const handleCheckboxChange = (questionId: number, choiceId: number, isDuplicated: boolean) => {
+    setAnswers(prev => {
+      const prevChoices = prev[questionId]?.choiceId || [];
+  
+      let updatedChoices;
+      if (isDuplicated) {
+        // ✅ 중복 선택 가능 → 기존 방식 유지
+        updatedChoices = prevChoices.includes(choiceId)
+          ? prevChoices.filter(c => c !== choiceId)  // 선택 해제
+          : [...prevChoices, choiceId];  // 선택 추가
+      } else {
+        // ❌ 중복 선택 불가 → 한 개만 선택 가능 (라디오 버튼처럼 동작)
+        updatedChoices = [choiceId];
+      }
+  
+      return {
+        ...prev,
+        [questionId]: { ...prev[questionId], choiceId: updatedChoices }
+      };
+    });
+  };
+  
 
 
   // 개인정보 동의 체크박스 상태
@@ -236,7 +300,7 @@ const handleCheckboxChange = (questionId: number, choiceId: number) => {
 
   useEffect(() => {
     if (questionsData?.data) {
-      console.log("질문 데이터:", questionsData.data);
+      Logger.log("질문 데이터:", questionsData.data);
     }
   }, [questionsData]);
 
@@ -304,8 +368,9 @@ useEffect(() => {
             {question.isRequired && <S.Required>*</S.Required>}
           </S.Label>
           <S.SubLabel $isMobile={isMobile}>
-            {question.maxLength ? `(${question.maxLength}자 이내)` : "(중복 선택 가능)"}
+            {question.maxLength ? `(${question.maxLength}자 이내)` : (question.isDuplicated ? "(중복 선택 가능)" : "(하나만 선택 가능)")}
           </S.SubLabel>
+
 
           {/* ESSAY 타입: Textarea */}
           {question.type === "ESSAY" ? (
@@ -330,7 +395,7 @@ useEffect(() => {
                     name={`question-${question.questionId}`}
                     value={choice.content}
                     checked={answers[question.questionId]?.choiceId.includes(choice.choiceId) || false}
-                    onChange={() => handleCheckboxChange(question.questionId, choice.choiceId)}
+                    onChange={() => handleCheckboxChange(question.questionId, choice.choiceId, question.isDuplicated)}
                     disabled={applyStatus === "SUBMITTED"}
                   />
                   {choice.content}
@@ -352,37 +417,41 @@ useEffect(() => {
         {applyStatus !== "SUBMITTED" && (
         <>
             {/* 개인정보 동의 체크박스 */}
-            <S.AgreeContainer $isMobile={isMobile}>
-            <S.Checkbox type="checkbox" checked={agree1} onChange={() => setAgree1((prev) => !prev)} />
-            <S.AgreeText>개인정보 수집 및 이용에 동의합니다.</S.AgreeText>
+            <S.AgreeContainer $isMobile={isMobile} onChange={() => setAgree1((prev) => !prev)}>
+              <S.Checkbox type="checkbox" checked={agree1} style={agree1 ?  {} : {borderColor: '#FF1E1E'}} />
+              <S.AgreeText>개인정보 수집 및 이용에 동의합니다.</S.AgreeText>
             </S.AgreeContainer>
 
-            <S.AgreeContainer $isMobile={isMobile}>
-            <S.Checkbox type="checkbox" checked={agree2} onChange={() => setAgree2((prev) => !prev)} />
-            <S.AgreeText>지원서 제출 후, 수정 및 추가 제출이 불가능합니다.</S.AgreeText>
+            <S.AgreeContainer $isMobile={isMobile} onChange={() => setAgree2((prev) => !prev)}>
+              <S.Checkbox type="checkbox" checked={agree2} />
+              <S.AgreeText>지원서 제출 후, 수정 및 추가 제출이 불가능합니다.</S.AgreeText>
             </S.AgreeContainer>
 
             {/* 임시 저장 & 제출 버튼 */}
             <S.ButtonContainer $isMobile={isMobile}>
-            <S.Button $isMobile={isMobile} gray disabled={!agree1} onClick={handleSave}>
-                임시저장하기
-            </S.Button>
-            <S.Button $isMobile={isMobile} green disabled={!(agree1 && agree2)} onClick={handleConfirmSubmit}>
-                제출하기
-            </S.Button>
+              <S.Button $isMobile={isMobile} gray disabled={!agree1} onClick={handleSave}>
+                  임시저장하기
+              </S.Button>
+              <S.Button $isMobile={isMobile} green disabled={!(agree1 && agree2)} onClick={handleConfirmSubmit}>
+                  제출하기
+              </S.Button>
             </S.ButtonContainer>
         </>
         )}
 
      
         <Popup 
-        isOpen={isConfirmPopupOpen} 
-        onClose={() => setConfirmPopupOpen(false)} 
-        title="제출하시겠습니까?"
-        content="한번 제출하시면 수정이 불가합니다. 또한 동일한 학번으로 재제출도 불가합니다."
-        onConfirm={handleSubmit}
+            isOpen={isConfirmPopupOpen} 
+            onClose={() => setConfirmPopupOpen(false)} 
+            title={`${selectedTrackLabel === "트랙을 선택해주세요" ? "선택된 트랙이 없습니다." : `${selectedTrackLabel} 트랙에 지원하시겠습니까?`}`}
+            content={
+                <>
+                한번 제출하시면 수정이 불가합니다. <br />
+                또한 동일한 학번으로 재제출도 불가합니다.
+                </>
+            }
+            onConfirm={handleSubmit}
         />
-
         
         <Popup 
         isOpen={isSuccessPopupOpen} 
@@ -404,6 +473,30 @@ useEffect(() => {
         title="임시저장 실패"
         content="해당 학번으로 제출한 이력이 있어 저장이 불가능합니다."
         />
+
+        <Popup 
+        isOpen={isSubmitErrorPopupOpen} 
+        onClose={() => setSubmitErrorPopupOpen(false)} 
+        title="제출 실패"
+        content="해당 학번으로 제출한 이력이 있어 제출이 불가능합니다."
+        />
+
+        <Popup 
+        isOpen={isIncompleteInfoPopupOpen} 
+        onClose={() => setIncompleteInfoPopupOpen(false)} 
+        title="제출 실패"
+        content={
+            <>개인정보(이름, 학과, 이메일, 전화번호)를 <br/>모두 입력해야 제출이 가능합니다.</>}
+        />
+
+        <Popup 
+        isOpen={isIncompleteRequiredPopupOpen} 
+        onClose={() => setIncompleteRequiredPopupOpen(false)} 
+        title="제출 실패"
+        content={
+            <>현재 선택한 트랙의 필수 질문을 <br/>모두 작성해야 제출이 가능합니다.</>}
+        />
+
 
     </S.Container>
   );

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useCreateApply, useLoadApply } from '@/hooks/useApply';
+import Logger from '@/utils/Logger';
 
 interface ApplyLoginProps {
   isFirst: boolean;
@@ -42,21 +43,21 @@ export default function ApplyLogin({ isFirst, onSubmit }: ApplyLoginProps) {
       // 최초 지원서 작성: 계정 생성 요청
       createApply({ studentNumber, password })
         .then((applyId) => {
-          console.log("계정 생성 성공, applyId:", applyId);
+          Logger.log("계정 생성 성공, applyId:", applyId);
           onSubmit(studentNumber, password);
         })
         .catch((err) => {
-          console.error("계정 생성 에러:", err);
+          Logger.error("계정 생성 에러:", err);
         });
     } else {
       // 기존 계정: 로그인 요청 (loadApply 사용)
       loadApply({ studentNumber, password })
         .then((applyData) => {
-          console.log("로그인 성공:", applyData);
+          Logger.log("로그인 성공:", applyData);
           onSubmit(studentNumber, password);
         })
         .catch((err) => {
-          console.error("로그인 에러:", err);
+          Logger.error("로그인 에러:", err);
         });
     }
   };

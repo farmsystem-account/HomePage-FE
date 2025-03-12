@@ -6,7 +6,7 @@ interface PopupProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: string;
+  content: React.ReactNode;
   onConfirm?: () => void;
 }
 
@@ -19,10 +19,10 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, title, content, onConfir
       <S.PopupBox onClick={(e) => e.stopPropagation()} $isMobile={isMobile} $isTablet={isTablet}>
         <S.PopupTitle $isMobile={isMobile} $isTablet={isTablet}>{title}</S.PopupTitle>
         <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>{content}</S.PopupText>
-        <S.ButtonContainer>
+        <S.ButtonContainer $isMobile={isMobile}>
           {onConfirm ? (
             <>
-              <S.PopupButton onClick={onClose} $isMobile={isMobile} $isTablet={isTablet}>취소</S.PopupButton>
+              <S.PopupButton style={{backgroundColor: '#C1ECC1', color: '#006811', fontWeight: '500'}} onClick={onClose} $isMobile={isMobile} $isTablet={isTablet}>취소</S.PopupButton>
               <S.PopupButton onClick={() => { onConfirm(); onClose(); }} $isMobile={isMobile} $isTablet={isTablet} confirm>
                 제출
               </S.PopupButton>

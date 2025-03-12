@@ -16,7 +16,7 @@ export function Footer(){
                 <S.FooterText >
                     <S.FooterTitle $isMobile={isMobile}>
                         <S.Logo $isMobile={isMobile} src={Logo} alt="logo"/>
-                        FarmSystem
+                        Farm System
                     </S.FooterTitle>
                     <S.FooterDescription $isMobile={isMobile}>
                         미래를 준비하고 성장하는 여정, Farm System에서 함께하세요.
