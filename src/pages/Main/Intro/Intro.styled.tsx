@@ -59,10 +59,12 @@ export const IntroPhrase = styled.p`
     padding-bottom: 10px;
 `;
 
-export const AppApplyButton = styled.div`
+export const AppApplyButton = styled.div<{ isRecruit: boolean }>`
     width: 110px;
     height: 35px;
-    background-color: #28723F;
+    background-color: ${({ isRecruit }) => (isRecruit
+        ? "#28723F" : "var(--FarmSystem_DarkGrey, #999999)"
+    )};
     display: flex;
     align-items: center;
     justify-content: center;

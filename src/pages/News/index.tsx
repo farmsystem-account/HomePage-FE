@@ -1,6 +1,6 @@
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNewsList } from '@/hooks/useNews';
-import Logger from '@/utils/Logger';
+// import Logger from '@/utils/Logger';
 import * as S from './index.styled';
 import NewsItem from './NewsItem';
 
@@ -18,12 +18,19 @@ export default function News() {
   }
 
   if (newsError) {
-    Logger.error(newsError);
     return (
       <S.Container>
-        <S.Message $isMobile={isMobile}>뉴스를 불러오는 중 오류가 발생했습니다.</S.Message>
+        <S.DescriptionContainer>
+          <S.Message $isMobile={isMobile}>아직 등록된 소식이 없어요.</S.Message>
+        </S.DescriptionContainer>
       </S.Container>
     );
+    // Logger.error(newsError);
+    // return (
+    //   <S.Container>
+    //     <S.Message $isMobile={isMobile}>뉴스를 불러오는 중 오류가 발생했습니다.</S.Message>
+    //   </S.Container>
+    // );
   }
 
   return (

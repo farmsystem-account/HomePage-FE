@@ -26,9 +26,10 @@ const Intro = () => {
   const handleRecruitClick = () => {
     if (IS_RECRUIT) {
       navigate('/recruit');
-    } else {
-      setPopupOpen(true);
-    }
+    } 
+    // else {
+    //   setPopupOpen(true);
+    // }
   };
 
   if (isApp) {
@@ -123,7 +124,7 @@ const Intro = () => {
             transition={{ duration: 0.8, delay: 3.5, ease: "easeOut" }} 
             viewport={{ once: true }}
           >
-            <S.AppApplyButton onClick={handleRecruitClick}>
+            <S.AppApplyButton onClick={handleRecruitClick} isRecruit={IS_RECRUIT}>
               지원하기
             </S.AppApplyButton>
           </motion.div>

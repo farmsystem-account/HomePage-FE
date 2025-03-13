@@ -15,9 +15,10 @@ const BottomInfo = () => {
   const handleRecruitClick = () => {
     if (IS_RECRUIT) {
       navigate('/recruit');
-    } else {
-      setPopupOpen(true);
     }
+    // else {
+    //   setPopupOpen(true);
+    // }
   };
 
   return (
