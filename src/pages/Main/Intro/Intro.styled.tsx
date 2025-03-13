@@ -177,8 +177,14 @@ export const Apply = styled.div`
     
 `;
 
-export const ApplyButton = styled.button<{ $isMobile: boolean; $isTablet: boolean }>`
-    background-color: #4CAF50;
+export const ApplyButton = styled.button<{ 
+    $isMobile: boolean, 
+    $isTablet: boolean, 
+    isRecruit: boolean 
+}>`
+    background-color: ${({ isRecruit }) => (isRecruit
+        ? "#4CAF50" : "var(--FarmSystem_DarkGrey, #999999)"
+    )};
     color: white;
     border: none;
     padding: ${({ $isMobile, $isTablet }) => ($isMobile ? "10px 50px" : $isTablet ? "12px 65px" : "15px 80px")};
@@ -189,7 +195,9 @@ export const ApplyButton = styled.button<{ $isMobile: boolean; $isTablet: boolea
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     
     &:hover {
-        background-color: #388E3C;
+        background-color:${({ isRecruit }) => (isRecruit
+            ? "#388E3C" : "var(--FarmSystem_DarkGrey, #999999)"
+        )};
     }
 `;
 

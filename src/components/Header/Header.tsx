@@ -140,7 +140,7 @@ export default function Header() {
         isOpen={isPopupOpen} 
         onClose={() => setPopupOpen(false)} 
         title={"지금은 모집 기간이 아니에요."} 
-        content={"3월 4일부터 지원 가능해요."} 
+        content={"3월 13일까지 지원 가능해요."} 
       />
     </S.HeaderContainer>
   );
