@@ -37,8 +37,7 @@ export const DescriptionContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin: 20px;
-  display: block;
+  padding: 20px;
 `;
 
 export const Message = styled.div<{$isMobile: boolean;}>`
@@ -52,12 +51,12 @@ export const Message = styled.div<{$isMobile: boolean;}>`
   font-size: ${(props) => (props.$isMobile ? "20px" : "32px")};
   font-weight: 600;
   margin-bottom: 35px; 
+`;
 
-  a {
-    font-size: ${(props) => (props.$isMobile ? "10px" : "14px")};
-    font-weight: 300;
-    margin-top: 10px; 
-  }
+export const MiniMessage = styled.p<{$isMobile: boolean;}>`
+  font-size: ${(props) => (props.$isMobile ? "10px" : "14px")};
+  font-weight: 400;
+  margin-top: 10px;
 `;
 
 export const NewsContainer = styled.div`

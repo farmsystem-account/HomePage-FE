@@ -22,6 +22,7 @@ export default function News() {
       <S.Container>
         <S.DescriptionContainer>
           <S.Message $isMobile={isMobile}>아직 등록된 소식이 없어요.</S.Message>
+          <S.MiniMessage $isMobile={isMobile}>곧 FarmSystem의 다양한 소식을 알려드릴게요!</S.MiniMessage>
         </S.DescriptionContainer>
       </S.Container>
     );
@@ -45,7 +46,7 @@ export default function News() {
       ) : (
         <S.DescriptionContainer>
           <S.Message $isMobile={isMobile}>아직 등록된 소식이 없어요.</S.Message>
-          <a>곧 FarmSystem의 다양한 소식을 알려드릴게요!</a>
+          <S.MiniMessage $isMobile={isMobile}>곧 FarmSystem의 다양한 소식을 알려드릴게요!</S.MiniMessage>
         </S.DescriptionContainer>
       )}
     </S.Container>
