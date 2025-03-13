@@ -4,32 +4,38 @@ import BlogItem, { BlogItemProps, BlogCategory } from './BlogItem';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 /** 샘플용 더미 데이터 */
-const blogData: BlogItemProps[] = [
-  {
-    blogUrl: 'https://velog.io/',
-    tags: [{ category: BlogCategory.SEMINAR }],
-  },
-  {
-    blogUrl: 'https://blog.naver.com/educds/222797324049',
-    tags: [{ category: BlogCategory.PROJECT }],
-  },
-  {
-    blogUrl: 'https://blog.encrypted.gg/',
-    tags: [{ category: BlogCategory.STUDY }],
-  },
-  {
-    blogUrl: 'https://www.github.com',
-    tags: [{ category: BlogCategory.HACKATHON }],
-  },
-  {
-    blogUrl: 'https://ludeno-studying.tistory.com/82',
-    tags: [{ category: BlogCategory.REVIEW }],
-  },
-  {
-    blogUrl: 'https://toss.im/',
-    tags: [{ category: BlogCategory.LECTURE }],
-  },
-];
+let blogData: BlogItemProps[];
+// 개발 모드에서만 보이게 수정했습니다.
+if (import.meta.env.MODE === 'development' || window.location.hostname.startsWith('dev.')) {
+  blogData = [
+    {
+      blogUrl: 'https://velog.io/',
+      tags: [{ category: BlogCategory.SEMINAR }],
+    },
+    {
+      blogUrl: 'https://blog.naver.com/educds/222797324049',
+      tags: [{ category: BlogCategory.PROJECT }],
+    },
+    {
+      blogUrl: 'https://blog.encrypted.gg/',
+      tags: [{ category: BlogCategory.STUDY }],
+    },
+    {
+      blogUrl: 'https://www.github.com',
+      tags: [{ category: BlogCategory.HACKATHON }],
+    },
+    {
+      blogUrl: 'https://ludeno-studying.tistory.com/82',
+      tags: [{ category: BlogCategory.REVIEW }],
+    },
+    {
+      blogUrl: 'https://toss.im/',
+      tags: [{ category: BlogCategory.LECTURE }],
+    },
+  ];
+} else {
+  blogData = [];
+}
 
 const BlogList: React.FC = () => {
   const { isMobile, isTablet } = useMediaQueries();
