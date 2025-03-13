@@ -7,11 +7,16 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 
 const dummyTags = ['태그1'];
 
-export default function NewsItem({ newsData }: { newsData: newsData }) {
-  Logger.log(newsData);
-  const { title, content } = newsData;
+export default function NewsItem({ newsData }: { newsData?: newsData }) {
   const navigate = useNavigate();
   const isMobile = useMediaQueries().isMobile;
+
+  if (!newsData) {
+    return null;
+  }
+
+  Logger.log(newsData);
+  const { title = "", content = "" } = newsData;
   
   // 아직 썸네일과 태그 정보가 없으므로 placeholder와 dummyTags 사용
   const thumbnailSrc = PlaceHolder;
