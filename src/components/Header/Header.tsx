@@ -6,6 +6,8 @@ import Hamburger from '../../assets/Icons/Hamburger.png';
 import CloseIcon from '../../assets/Icons/Close2.png';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
+const IS_RECRUIT = false; // 모집 모드 ON/OFF 설정은 여기서 해주시면 됩니다.
+
 export default function Header() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -16,6 +18,15 @@ export default function Header() {
   const handleNavItemClick = (path?: string) => {
     if (path) navigate(path);
     setMenuOpen(false);
+  };
+
+  const handleRecruitClick = () => {
+    if (IS_RECRUIT) {
+      navigate('/recruit');
+    } 
+    // else {
+    //   setPopupOpen(true);
+    // }
   };
 
   return (
@@ -64,7 +75,12 @@ export default function Header() {
               </S.NavItem>
             </S.Nav>
           </S.NavWrapper>
-          <S.FarmingLogButton onClick={() => navigate('/recruit')} >지원하기</S.FarmingLogButton>
+          <S.FarmingLogButton
+            isRecruit={IS_RECRUIT}
+            onClick={handleRecruitClick}
+          >
+            지원하기
+          </S.FarmingLogButton>
         </>
       )}
 
@@ -110,8 +126,8 @@ export default function Header() {
               </S.NavItem>
               <S.NavItem 
                 $isTablet={isTablet} 
-                $isMobile={isMobile} 
-                onClick={() => handleNavItemClick('/recruit')}
+                $isMobile={isMobile}
+                onClick={handleRecruitClick}
                 isActive={false}
               >
                 지원하기
@@ -125,7 +141,7 @@ export default function Header() {
         isOpen={isPopupOpen} 
         onClose={() => setPopupOpen(false)} 
         title={"지금은 모집 기간이 아니에요."} 
-        content={"3월 4일부터 지원 가능해요."} 
+        content={"3월 13일까지 지원 가능해요."} 
       />
     </S.HeaderContainer>
   );

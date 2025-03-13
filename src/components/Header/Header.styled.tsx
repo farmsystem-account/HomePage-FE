@@ -77,11 +77,14 @@ export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActi
   `}
 `;
 
-export const FarmingLogButton = styled.button`
+export const FarmingLogButton = styled.button<{ isRecruit: boolean}>`
   width: 120px;
   height: 40px;
   border-radius: 10px;
-  background-color: #28723f;
+  background-color: ${({ isRecruit }) => (isRecruit
+    ? "var(--FarmSystem_Green01, #28723f)" 
+    : "var(--FarmSystem_DarkGrey, #999999)"
+  )};
   color: white;
   font-weight: 500;
   font-size: 16px;
