@@ -81,9 +81,12 @@ export const ButtonContainer = styled.div<{ $isApp: boolean; $isMobile: boolean 
   margin-top: ${({$isApp, $isMobile }) => ($isApp ? "10px" : $isMobile ? "20px" : "40px")};
 `;
 
-export const ApplyButton = styled.button<{ $isApp: boolean; $isMobile: boolean }>`
+export const ApplyButton = styled.button<{ $isApp: boolean; $isMobile: boolean, isRecruit: boolean }>`
   width: ${({ $isApp, $isMobile }) => ($isApp ? "110px" : $isMobile ? "180px" : "240px")};
-  background-color: #49aa59;
+  background-color: ${({ isRecruit }) => (isRecruit
+    ? "var(--FarmSystem_Green04, #49aa59) "
+    : "var(--FarmSystem_DarkGrey, #999999)"
+  )};
   color: #ffffff;
   font-size: ${({ $isApp, $isMobile }) => ($isApp ? "14px" : $isMobile ? "18px" : "20px")};
   padding: 12px 24px;
@@ -92,7 +95,9 @@ export const ApplyButton = styled.button<{ $isApp: boolean; $isMobile: boolean }
   cursor: pointer;
   box-shadow: 0px 2px 10px rgba(25, 25, 25, 0.2);
   &:hover {
-    background-color: #3b8a48;
+    background-color:${({ isRecruit }) => (isRecruit
+      ? "#3b8a48" : "var(--FarmSystem_DarkGrey, #999999)"
+    )};
   }
 `;
 

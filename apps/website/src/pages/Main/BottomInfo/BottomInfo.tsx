@@ -5,11 +5,21 @@ import Popup from '@/components/Popup/Popup';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 // const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSd1p3w5T1c1XFxM4lrqGxwCrW-L1f9Wm4bLmOmcAWcqSILpPw/viewform";
+const IS_RECRUIT = false; // 모집 중인지 여부
 
 const BottomInfo = () => {
   const navigate = useNavigate();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const { isApp, isMobile, isTablet } = useMediaQueries();
+
+  const handleRecruitClick = () => {
+    if (IS_RECRUIT) {
+      navigate('/recruit');
+    }
+    // else {
+    //   setPopupOpen(true);
+    // }
+  };
 
   return (
     <S.BottomInfoContainer id="eligibility" $isMobile={isMobile} $isTablet={isTablet}>
@@ -37,8 +47,8 @@ const BottomInfo = () => {
           <S.ApplyButton 
             $isApp={isApp}
             $isMobile={isMobile}
-            // 지원하기 url은 '/recruit'입니다!
-            onClick={() => navigate('/recruit')}
+            isRecruit={IS_RECRUIT}
+            onClick={handleRecruitClick}
           >
             지원하기
           </S.ApplyButton>
@@ -57,7 +67,7 @@ const BottomInfo = () => {
         isOpen={isPopupOpen} 
         onClose={() => setPopupOpen(false)} 
         title={"지금은 모집 기간이 아니에요."} 
-        content={"3월 4일부터 지원 가능해요."} 
+        content={"3월 13일까지 지원 가능해요."} 
       />
     </S.BottomInfoContainer>
   );
