@@ -40,5 +40,5 @@ jobs:
         run: pnpm turbo run build
         env:
           TURBO_API: 'http://127.0.0.1:9080'  # GitHub Artifacts 기반 TurboRepo 캐시 사용
-          TURBO_TOKEN: 'my-turbo-token'
+          TURBO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TURBO_TEAM: 'my-team'
