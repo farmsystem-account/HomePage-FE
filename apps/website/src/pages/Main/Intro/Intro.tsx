@@ -7,6 +7,8 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import { motion } from 'framer-motion';
 import IntroLogo from '../../../assets/Icons/IntroLogo.svg';
 
+const IS_RECRUIT = false; // 모집 기간 여부
+
 const Intro = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const { isApp, isMobile, isTablet } = useMediaQueries();
@@ -19,6 +21,15 @@ const Intro = () => {
       y: 0,
       transition: { delay: i * 0.3, duration: 0.6, ease: "easeOut" }
     }),
+  };
+
+  const handleRecruitClick = () => {
+    if (IS_RECRUIT) {
+      navigate('/recruit');
+    } 
+    // else {
+    //   setPopupOpen(true);
+    // }
   };
 
   if (isApp) {
@@ -113,7 +124,7 @@ const Intro = () => {
             transition={{ duration: 0.8, delay: 3.5, ease: "easeOut" }} 
             viewport={{ once: true }}
           >
-            <S.AppApplyButton onClick={() => navigate('/recruit')}>
+            <S.AppApplyButton onClick={handleRecruitClick} isRecruit={IS_RECRUIT}>
               지원하기
             </S.AppApplyButton>
           </motion.div>
@@ -124,7 +135,7 @@ const Intro = () => {
           isOpen={isPopupOpen} 
           onClose={() => setPopupOpen(false)} 
           title={"지금은 모집 기간이 아니에요."} 
-          content={"3월 4일부터 지원 가능해요."} 
+          content={"3월 13일까지 지원 가능해요."} 
         />
       </S.AppContainer>
     );
@@ -149,7 +160,14 @@ const Intro = () => {
       5가지 신기술 트랙을 제공하여 학습 경험을 통해 SW/AI 역량을 배양합니다.
       </S.TrackList>
       <S.Apply>
-        <S.ApplyButton $isMobile={isMobile} $isTablet={isTablet} onClick={() => navigate('/recruit')}> 지원하기 </S.ApplyButton>
+        <S.ApplyButton
+          $isMobile={isMobile}
+          $isTablet={isTablet}
+          onClick={handleRecruitClick}
+          isRecruit={IS_RECRUIT}
+        >
+          지원하기
+        </S.ApplyButton>
         <S.ApplyDescription $isMobile={isMobile}>2025년 3월 13일까지 모집 예정</S.ApplyDescription>
       </S.Apply>
 
@@ -160,7 +178,7 @@ const Intro = () => {
           isOpen={isPopupOpen} 
           onClose={() => setPopupOpen(false)}  
           title={"지금은 모집 기간이 아니에요."} 
-          content={"3월 4일부터 지원 가능해요."} 
+          content={"3월 13일까지 지원 가능해요."} 
         />
       )}
     </S.Container>

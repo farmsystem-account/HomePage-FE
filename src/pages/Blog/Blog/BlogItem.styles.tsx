@@ -41,12 +41,22 @@ export const Title = styled.h3`
    font-size: 24px;
    font-weight: 700;
 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
 `;
 
 export const Description = styled.p`
   font-size: 15px;
   line-height: 20px;
   font-weight: 300;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 export const TagContainer = styled.div`

@@ -43,7 +43,8 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean;}>`
 export const DescriptionContainer = styled.div`
   width: 100%;
   margin: 20px auto;
-  display: block;
+  display: flex;
+  margin-bottom: 100px; 
 `;
 
 /* 텍스트 컨테이너*/

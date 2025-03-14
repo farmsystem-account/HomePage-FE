@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import * as S from './index.styles';
 
-import BlogList from './BlogList';
-import ProjectList from './ProjectList';
+import BlogList from './Blog/BlogList';
+import ProjectList from './Project/ProjectList';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 const Blog: React.FC = () => {
