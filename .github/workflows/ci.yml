@@ -29,6 +29,7 @@ jobs:
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.GITHUB_TOKEN }}
 
       # 5. 의존성 설치
       - name: Install dependencies
@@ -39,4 +40,5 @@ jobs:
         run: pnpm turbo run build
         env:
           TURBO_API: 'http://127.0.0.1:9080'  # GitHub Artifacts 기반 TurboRepo 캐시 사용
+          TURBO_TOKEN: 'my-turbo-token'
           TURBO_TEAM: 'my-team'
