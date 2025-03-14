@@ -8,6 +8,10 @@
 (root)/
 ├─ .github/             # 깃허브 탬플릿, ci/cd를 위한 액션
 ├─ apps/                # 각 웹페이지가 들어있는 폴더
+│  ├─ admin/            # 관리자 전용 웹페이지
+│  ├─ docs/             # vitepress로 만든 내부 문서
+│  ├─ farminglog/       # 팜시스템 playground, 파밍로그!
+│  └─ website/          # 랜딩, 지원 등 팜시스템 대표 페이지
 └─ packages/            # 공통로직을 담아두는 폴더
 ```
 
