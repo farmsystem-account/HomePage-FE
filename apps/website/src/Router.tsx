@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from 'react-router';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from '@/pages/Layout';
 import Main from '@/pages/Main';
 import Recruit from '@/pages/Apply';

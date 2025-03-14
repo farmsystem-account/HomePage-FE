@@ -1,7 +1,7 @@
-import { Navigate } from 'react-router';
+import { Navigate } from 'react-router-dom'; 
 
 interface PrivateRouteProps {
-  children: JSX.Element; // 보호할 컴포넌트(페이지)
+  children: React.ReactNode; // 보호할 컴포넌트 페이지
   boolean: boolean; // 리다이렉트 여부
 }
 
