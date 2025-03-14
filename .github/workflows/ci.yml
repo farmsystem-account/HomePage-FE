@@ -1,4 +1,4 @@
-name: CI - Type Check, Build
+name: CI - Pre Build Test
 
 on:
   pull_request:
@@ -11,22 +11,34 @@ jobs:
     steps:
       # 1. 리포지토리 코드 체크아웃
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2. Node 버전 셋업
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      # 2. pnpm 설치
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 20  # 또는 22 (LTS 버전 사용)
+          version: 8  # 최신 안정 버전
 
-      # 3. 의존성 설치
+      # 3. Node 버전 셋업
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'  # pnpm 의존성 캐싱 (node_modules 캐시 최적화)
+
+      # 4. TurboRepo 캐시 서버 실행 (GitHub Artifacts 사용)
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 5. 의존성 설치
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      # 4. 타입 체크
-      - name: Type Check
-        run: npm run type-check
-
-      # 5. 빌드
+      # 6. 빌드 
       - name: Build
-        run: npm run build
+        run: pnpm turbo run build
+        env:
+          TURBO_API: 'http://127.0.0.1:9080'  # GitHub Artifacts 기반 TurboRepo 캐시 사용
+          TURBO_TEAM: 'my-team'
