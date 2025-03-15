@@ -10,7 +10,7 @@
           "apps/website/dist",
           "apps/farminglog/dist",
           "apps/admin/dist",
-          "**/.vitepress/dist/**"
+          "apps/docs/.vitepress/dist"
         ]
       },
       "lint": {
