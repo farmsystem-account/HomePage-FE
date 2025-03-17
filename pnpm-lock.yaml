@@ -7,6 +7,16 @@ settings:
 importers:
 
   .:
+    dependencies:
+      axios:
+        specifier: ^1.7.9
+        version: 1.8.2
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
+      zustand:
+        specifier: ^5.0.3
+        version: 5.0.3(@types/react@19.0.8)(react@19.0.0)
     devDependencies:
       eslint:
         specifier: ^8.57.0
