@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Home from './pages/home'; 
-import Auth from './pages/auth';
+import Auth from './pages/Auth';
 import Support from './pages/cheer';
 import View from './pages/farminglog/view';
 import Create from './pages/farminglog/create';
