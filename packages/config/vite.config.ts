@@ -10,8 +10,5 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "../utils"),
       "@shared": path.resolve(__dirname, "../shared"),
     },
-  },
-  server: {
-    port: 3000,
-  },
+  }
 });
