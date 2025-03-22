@@ -7,7 +7,7 @@ export const protectedLoader = async ({ request }: { request: Request }) => {
 
     if (!tokens?.accessToken) {
       const url = new URL(request.url);
-      return redirect(`/login?from=${url.pathname}`);
+      return redirect(`/?from=${url.pathname}`);
     }
   }
 
