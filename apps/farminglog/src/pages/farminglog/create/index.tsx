@@ -1,4 +1,5 @@
-const index = () => {
+
+export default function index() {
   return (
     <div>
       <h1>Farming Log Create Page</h1>
@@ -6,5 +7,3 @@ const index = () => {
     </div>
   );
 };
-
-export default index;

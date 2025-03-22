@@ -1,10 +1,25 @@
-const index = () => {
+import * as S from './index.styled';
+import GoBack from '@/assets/icons/corner-up-left.svg';
+// import BlankImage from '@/assets/images/blank-image.png';
+
+// const dummyData = [
+//   {
+//     title: '파밍 로그 제목',
+//     thumbnail: BlankImage,
+//   }
+// ];
+
+export default  function index() {
   return (
-    <div>
-      <h1 style={{ fontFamily: "Gwangyang Touching" }}>테스트Farming Log View Page</h1>
-      <p style={{fontFamily: "Pretendard Variable"}}>이 페이지는 파밍 로그 뷰를 위한 임시 페이지입니다.</p>
-    </div>
+    <S.FarmingLogContainer>
+      <S.FarmingLogContainerHeader>
+        <S.GoBackButton>
+          <img src={GoBack} alt="뒤로가기" />
+        </S.GoBackButton>
+        <S.FarmingLogContainerTitle>파밍 로그</S.FarmingLogContainerTitle>
+      </S.FarmingLogContainerHeader>
+      
+      <S.Thumbnail src="/images/" alt="썸네일" />
+    </S.FarmingLogContainer>  
   );
 };
-
-export default index;
