@@ -7,7 +7,7 @@ const dummyData = [
   {
     farmingLogId: 90,
     title: "string",
-    content: "팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. ...",
+    content: "팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다.",
     category: "string",
     createdAt: "string",
     author: "string",

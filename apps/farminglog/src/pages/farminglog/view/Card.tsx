@@ -26,12 +26,16 @@ interface CardProps {
 export default function Card({ data }: CardProps) {
   const [content, setContent] = useState('');
   const [viewDetail, setViewDetail] = useState(false);
+  const [showDetailButton, setShowDetailButton] = useState(false);
 
   useEffect(() => {
-    if(data.content.length > 150 && !viewDetail) {
-      setContent(data.content.slice(0, 150) + '...');
+    if (data.content.length > 150) {
+      setShowDetailButton(true);
+      if (viewDetail) setContent(data.content);
+      else setContent(data.content.slice(0, 150) + '...');
     } else {
       setContent(data.content);
+      setShowDetailButton(false);
     }
   }
   , [data.content, viewDetail]);
@@ -56,12 +60,14 @@ export default function Card({ data }: CardProps) {
         </S.InfoContainer>
         <S.Content>{content}</S.Content>
       </S.ContentContainer>
-      <S.DetailContainer>
-        <S.DetailButton onClick={() => setViewDetail(!viewDetail)}>
-          <S.DetailButtonText>{viewDetail ? '간략히' : '자세히'}</S.DetailButtonText>
-          <S.DetailButtonImage src={ChecvronRight} alt="더보기" />
-        </S.DetailButton>
-      </S.DetailContainer>
+      {showDetailButton && (
+        <S.DetailContainer>
+          <S.DetailButton onClick={() => setViewDetail(!viewDetail)}>
+            <S.DetailButtonText>{viewDetail ? '간략히' : '자세히'}</S.DetailButtonText>
+            <S.DetailButtonImage src={ChecvronRight} alt="더보기" />
+          </S.DetailButton>
+        </S.DetailContainer>
+      )}
     </S.FarmingLogCard>
   );
 }
