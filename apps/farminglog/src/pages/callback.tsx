@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useSocialLoginPostMutation } from "../../../../packages/auth/services/mutation/useSocialLoginPostMutation";
+import { useNavigate, useSearchParams } from "react-router";
+import { useSocialLoginPostMutation } from "@repo/auth/services/mutation/useSocialLoginPostMutation";
 
 const SocialCallback = () => {
   const [params] = useSearchParams();
