@@ -36,7 +36,8 @@ export const GoBackButton = styled.button`
   flex-shrink: 0;
 `;
 
-export const Thumbnail = styled.img`
-  width: 250px;
-  aspect-ratio: 250/167;
+export const FarmingLogCardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
