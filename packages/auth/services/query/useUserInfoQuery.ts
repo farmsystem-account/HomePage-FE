@@ -60,3 +60,5 @@ export const useUserInfoQuery = () => {
     retry: 1,
   });
 };
+
+//invalidateQueries를 활용하여 캐시를 갱신하는 기능 필요(씨앗, 개인정보 등 업데이트시)
