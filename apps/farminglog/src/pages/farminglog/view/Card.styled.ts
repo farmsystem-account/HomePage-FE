@@ -157,3 +157,42 @@ export const Content = styled.p`
   line-height: 20px; /* 166.667% */
   letter-spacing: -0.24px;
 `;
+
+export const DetailContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: stretch;
+  height: 20px;
+`;
+
+export const DetailButton = styled.button`
+  display: flex;
+  width: 60px;
+  padding: 0px 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+`;
+
+export const DetailButtonText = styled.span`
+  color: var(--FarmSystem_DarkGrey, #999);
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 200% */
+  letter-spacing: -0.24px;
+  line-height: 20px; /* 200% */
+  letter-spacing: -0.24px;
+`;
+
+export const DetailButtonImage = styled.img`
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+`;
