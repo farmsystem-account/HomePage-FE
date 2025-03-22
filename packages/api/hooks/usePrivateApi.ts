@@ -41,9 +41,12 @@ import { useNavigate } from 'react-router';
 import apiConfig from '../config/apiConfig';
 import { ApiResponse, STATUS, Tokens } from '../models/api';
 import { getClientSideTokens } from '../utils/getClientSideTokens';
+import { useReissueAccessTokenMutation } from "../services/mutation/useReissueAccessTokenMutation"; 
+
 
 export function useApi() {
   const navigate = useNavigate();
+  const reissueToken = useReissueAccessTokenMutation(); 
 
   const request = useCallback(
     async function <T>(
@@ -52,7 +55,7 @@ export function useApi() {
       tokens?: Tokens,
       hasRetried = false
     ): Promise<ApiResponse<T>> {
-      if (!tokens && typeof window !== 'undefined') {
+      if (!tokens && typeof window !== "undefined") {
         tokens = getClientSideTokens();
       }
 
@@ -63,7 +66,7 @@ export function useApi() {
           data: options.json,
           params: options.searchParams,
           headers: {
-            Authorization: tokens ? `Bearer ${tokens.accessToken}` : '',
+            Authorization: tokens ? `Bearer ${tokens.accessToken}` : "",
           },
         });
 
@@ -74,25 +77,36 @@ export function useApi() {
 
           if (status === STATUS.UNAUTHORIZED && tokens) {
             if (!hasRetried) {
-              return await request<T>(uri, options, tokens, true);
-            } else {
-              navigate('/?toast=401');
-              throw new Error('로그인이 필요합니다.');
+              try {
+                const newAccessToken = await reissueToken.mutateAsync();
+                return await request<T>(
+                  uri,
+                  options,
+                  { accessToken: newAccessToken, refreshToken: tokens.refreshToken },
+                  true
+                );
+              } catch {
+                // 엑세스 토큰 재발급 실패시 로직 추가 예정
+              }
             }
+
+            navigate("/?toast=401");
+            throw new Error("로그인이 필요합니다.");
           }
 
           if (status === STATUS.NOT_FOUND) {
-            navigate('/404');
+            navigate("/404");
           }
         }
 
         throw new Error(
-          `API 요청 실패: ${error.message || '알 수 없는 오류'}`
+          `API 요청 실패: ${error.message || "알 수 없는 오류가 발생했습니다."}`
         );
       }
     },
-    [navigate]
+    [navigate, reissueToken]
   );
+
 
   return {
     get: <T>(uri: string, params?: Record<string, string>, tokens?: Tokens) =>

@@ -1,8 +1,8 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export const getClientSideTokens = () => {
   return {
-    accessToken: Cookies.get('accessToken') || '',
-    refreshToken: Cookies.get('refreshToken') || '',
+    accessToken: localStorage.getItem("accessToken") || "",
+    refreshToken: Cookies.get("refreshToken") || "",
   };
 };
