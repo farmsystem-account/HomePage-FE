@@ -1,11 +1,29 @@
 import { create } from "zustand";
-import { UserState } from "../models/user"; 
+
+export interface UserInfo {
+  userId: number;
+  role: "USER" | "ADMIN";
+  name: string;
+  studentNumber: string;
+  major: string;
+  profileImageUrl: string;
+  phoneNumber: string;
+  notionAccount: string;
+  githubAccount: string;
+  track: string;
+  generation: number;
+  currentSeed: number;
+  totalSeed: number;
+}
+
+interface UserState {
+  user: UserInfo | null;
+  setUser: (user: UserInfo) => void;
+  clearUser: () => void;
+}
 
 export const useUserStore = create<UserState>((set) => ({
-  user: JSON.parse(localStorage.getItem("user") || "null"),
-
-  setUser: (user) => {
-    localStorage.setItem("studentNumber", user.studentNumber); // 리다이렉트 이후에도 학번이 남아 있도록 학번만 저장 -> 회원가입 페이지에만 유지 되도록 나중에 변경
-    set(() => ({ user }));
-  },
+  user: null,
+  setUser: (user) => set({ user }),
+  clearUser: () => set({ user: null }),
 }));
