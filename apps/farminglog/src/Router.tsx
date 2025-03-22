@@ -13,8 +13,8 @@ const AppRouter = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<Auth />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/support" element={<Support />} />
           <Route path="/farminglog/view" element={<View />} />
           <Route path="/farminglog/create" element={<Create />} />
