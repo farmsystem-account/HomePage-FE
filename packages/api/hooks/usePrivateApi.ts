@@ -76,7 +76,7 @@ export function useApi() {
             if (!hasRetried) {
               return await request<T>(uri, options, tokens, true);
             } else {
-              navigate('/login?toast=401');
+              navigate('/?toast=401');
               throw new Error('로그인이 필요합니다.');
             }
           }
