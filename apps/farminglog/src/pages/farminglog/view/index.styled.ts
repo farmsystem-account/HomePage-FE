@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
 export const FarmingLogContainer = styled.div`
-  width: 320px;
+  width: 290px;
   height: screen;
   padding: 20px 15px 0px 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  border-radius: 5px;
+  background: var(--FarmSystem_White, #FCFCFC);
 `;
 
 export const FarmingLogContainerHeader = styled.div`
