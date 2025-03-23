@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as S from './WebView.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import BackArrow from '../../../assets/Icons/BackArrow.png';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as S from './AppView.styles';
 import Notion from '../../../assets/Icons/Notion.png';
 import Github from '../../../assets/Icons/Github.png';
