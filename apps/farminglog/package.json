@@ -11,11 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "react-responsive": "^10.0.1",
-    "styled-components": "^6.1.16"
   },
   "devDependencies": {
-    "@types/react-responsive": "^9.0.0",
-    "@types/styled-components": "^5.1.34"
   }
 }
