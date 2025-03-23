@@ -1,6 +1,7 @@
 import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
 import Heart from '@/assets/icons/heart.svg';
+import HeartFill from '@/assets/icons/heart-fill.svg';
 import ChecvronRight from '@/assets/icons/chevron-right.svg';
 
 interface Data{
@@ -27,6 +28,18 @@ export default function Card({ data }: CardProps) {
   const [content, setContent] = useState('');
   const [viewDetail, setViewDetail] = useState(false);
   const [showDetailButton, setShowDetailButton] = useState(false);
+  const [liked, setLiked] = useState(data.isLiked);
+  const [likeCount, setLikeCount] = useState(data.likeCount);
+  const [clicked, setClicked] = useState(false);
+
+  const handleLikeClick = () => {
+    if (liked) return; // 이미 좋아요 눌렀으면 무시
+  
+    setLiked(true);
+    setLikeCount(prev => prev + 1);
+    setClicked(true);
+    setTimeout(() => setClicked(false), 300);
+  };
 
   useEffect(() => {
     if (data.content.length > 150) {
@@ -49,9 +62,14 @@ export default function Card({ data }: CardProps) {
         </S.CategoryContainer>
         <S.TitleContainer>
           <S.Title>{data.title}</S.Title>
-          <S.LikeContainer>
-            <S.LikeImage src={Heart} />
-            <S.LikeCount>{data.likeCount}</S.LikeCount>
+          <S.LikeContainer onClick={handleLikeClick}>
+          <S.LikeImage
+            src={liked ? HeartFill : Heart}
+            
+            clicked={!!clicked}
+            alt="좋아요"
+          />
+          <S.LikeCount>{likeCount}</S.LikeCount>
           </S.LikeContainer>
         </S.TitleContainer>
         <S.InfoContainer>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 export const FarmingLogCard = styled.div`
   display: flex;
@@ -74,6 +74,18 @@ export const Title = styled.h2`
   letter-spacing: -0.24px;
 `;
 
+const pop = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.6);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
 export const LikeContainer = styled.div`
   display: flex;
   width: 30px;
@@ -81,12 +93,20 @@ export const LikeContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+
+  cursor: pointer;
 `;
 
-export const LikeImage = styled.img`
+export const LikeImage = styled.img<{ clicked: boolean }>`
   width: 20px;
   height: 20px;
   aspect-ratio: 1/1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  ${({ clicked }) => clicked && css`
+    animation: ${pop} 0.3s ease;
+  `}
 `;
 
 export const LikeCount = styled.span`
