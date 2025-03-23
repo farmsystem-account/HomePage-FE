@@ -1,7 +1,10 @@
 import * as S from './index.styled';
-import GoBack from '@/assets/icons/corner-up-left.svg';
-import BlankImage from '@/assets/images/blank-image.png';
 import Card from './Card';
+import { useNavigate } from 'react-router';
+import GoBackImage from '@/assets/icons/corner-up-left.svg';
+import BlankImage from '@/assets/images/blank-image.png';
+import EditImage from '@/assets/icons/edit-3.svg';
+
 
 const dummyData = [
   {
@@ -35,12 +38,14 @@ const dummyData = [
   }
 ];
 
-export default  function index() {
+export default  function View() {
+  const navigate = useNavigate();
+
   return (
     <S.FarmingLogContainer>
       <S.FarmingLogContainerHeader>
         <S.GoBackButton>
-          <img src={GoBack} alt="뒤로가기" />
+          <img src={GoBackImage} alt="뒤로가기" />
         </S.GoBackButton>
         <S.FarmingLogContainerTitle>파밍 로그</S.FarmingLogContainerTitle>
       </S.FarmingLogContainerHeader>
@@ -49,6 +54,9 @@ export default  function index() {
           <Card key={idx} data={data} />
         ))}
       </S.FarmingLogCardContainer>
+      <S.FarmingLogWriteButton onClick={() => navigate('/farminglog/write')}>
+        <S.FarmingLogWriteButtonImage src={EditImage} alt="글쓰기" />
+      </S.FarmingLogWriteButton>
     </S.FarmingLogContainer>  
   );
 };

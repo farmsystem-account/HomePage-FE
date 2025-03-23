@@ -41,3 +41,28 @@ export const FarmingLogCardContainer = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+
+export const FarmingLogWriteButton = styled.button`
+  position: fixed;
+  bottom: 32px;
+  right: 10px;
+
+  display: flex;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+
+  border-radius: 35px;
+  background: #5CD282;
+`;
+
+export const FarmingLogWriteButtonImage = styled.img`
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+`;
