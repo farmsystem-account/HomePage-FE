@@ -1,42 +1,24 @@
-import { ReactNode } from 'react';
-import * as S from './styles/indexStyled';
-import useMediaQueries from '@/hooks/useMediaQueries';
+// pages/index.tsx
+import Auth from './components/index';
+import StepStart from './components/StepStart';
+// import StepInputStudentId from '@/components/StepInputStudentId';
+// import StepCheckName from '@/components/StepCheckName';
+// import StepErrorInvalidId from '@/components/StepErrorInvalidId';
+// import StepNotMember from '@/components/StepNotMember';
+// import StepAuthComplete from '@/components/StepAuthComplete';
 import { useAuthStore } from '@/stores/useAuthStore';
 
-interface AuthPageLayoutProps {
-  children: ReactNode;
-}
-
-const Auth = ({ children }: AuthPageLayoutProps) => {
-  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+export default function AuthPage() {
   const { step } = useAuthStore();
 
-  const isStart = step === 'start';
-
   return (
-    <S.Wrapper>
-      {isStart ? (
-        // StepStart인 경우: Box 없음
-        <S.FullscreenContainer
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isTablet={isTablet}
-          $isDesktop={isDesktop}
-        >
-          {children}
-        </S.FullscreenContainer>
-      ) : (
-        <S.Box
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isTablet={isTablet}
-          $isDesktop={isDesktop}
-        >
-          {children}
-        </S.Box>
-      )}
-    </S.Wrapper>
+    <Auth>
+      {step === 'start' && <StepStart />}
+      {/* {step === 'input' && <StepInputStudentId />}
+      {step === 'check-name' && <StepCheckName />}
+      {step === 'error' && <StepErrorInvalidId />}
+      {step === 'not-member' && <StepNotMember />}
+      {step === 'complete' && <StepAuthComplete />} */}
+    </Auth>
   );
-};
-
-export default Auth;
+}
