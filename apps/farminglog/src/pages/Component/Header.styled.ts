@@ -52,7 +52,7 @@ export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActi
   position: relative;
 
   &:hover {
-    color: #28723f;
+    color: #FFFAA4;
   }
 
   &::after {
@@ -64,6 +64,10 @@ export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActi
     height: 2px;
     background-color: white;
     padding: 0px 2px;
+  }
+
+  &:hover::after {
+    background-color: #FFFAA4; /* 호버 시 라인 색상 변경 */
   }
 `;
 
