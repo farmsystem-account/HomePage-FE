@@ -88,7 +88,7 @@ export const FarmingLogCard = styled.div`
 `;
 
 export const Thumbnail = styled.img`
-  width: 250px;
+  width: 100%;
   aspect-ratio: 250/167;
 `;
 
@@ -107,7 +107,7 @@ export const CategoryContainer = styled.div`
   justify-content: flex-start;
 `;
 
-export const Category = styled.div`
+export const CategorySelect = styled.div`
   display: flex;
   height: 20px;
   padding: 5px 10px;
@@ -116,6 +116,39 @@ export const Category = styled.div`
 
   border-radius: 10px;
   background: #5CD282;
+  cursor: pointer;
+`;
+
+export const CategoryOptionContainer = styled.ul`
+  position: absolute;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 66px;
+  z-index: 1;
+  padding: 5px 0px;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid var(--FarmSystem_LightGrey, #E5E5E5);
+  background: var(--FarmSystem_White, #FCFCFC);
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`;
+
+export const CategoryOption = styled.li`
+  align-self: stretch;
+  cursor: pointer;
+
+  color: #2E2E2E;
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px; /* 300% */
+  letter-spacing: -0.24px;
 `;
 
 export const CategoryText = styled.p`
@@ -126,5 +159,113 @@ export const CategoryText = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 200% */
+  letter-spacing: -0.24px;
+`;
+
+export const InputAndTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  align-self: stretch;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  width: 240px;
+  padding: 0px 5px;
+  align-items: flex-end;
+  gap: 170px;
+`;
+
+export const TitleText = styled.p`
+  color: #2E2E2E;
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: -0.24px;
+`;
+
+export const letterCount = styled.p`
+  display: flex;
+  width: 39px;
+  height: 20px;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 0;
+
+  color: var(--FarmSystem_DarkGrey2, #757575);
+  text-align: right;
+  font-family: "Pretendard Variable";
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 175% */
+  letter-spacing: -0.24px;
+`;
+
+export const InputBox = styled.input`
+  display: flex;
+  padding: 5px 5px 5px 10px;
+  align-items: center;
+  width: 100%;
+  outline: none;
+
+  border-radius: 5px;
+  border: 1px solid #5CD282;
+  background: var(--FarmSystem_White, #FCFCFC);
+  color: var(--FarmSystem_DarkGrey, #999);
+
+  font-family: "Pretendard Variable";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: -0.24px;
+`;
+
+export const DateContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 5px 0px;
+  align-items: center;
+  align-self: stretch;
+`;
+
+export const DateText = styled.p`
+  display: flex;
+  justify-content: center;
+
+  color: var(--FarmSystem_DarkGrey2, #757575);
+  font-family: "Pretendard Variable";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 200% */
+  letter-spacing: -0.24px;
+`;
+
+export const TextArea = styled.textarea`
+  display: flex;
+  width: 100%;
+  height: 100px;
+  padding: 5px 10px;
+  align-items: center;
+
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #5CD282;
+  background: var(--FarmSystem_White, #FCFCFC);
+
+  color: var(--FarmSystem_DarkGrey, #999);
+  font-family: "Pretendard Variable";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
   letter-spacing: -0.24px;
 `;
