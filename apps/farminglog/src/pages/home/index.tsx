@@ -1,9 +1,20 @@
-const index = () => {
-  return (
-    <div>
-      <h1>파밍로그 홈</h1>
-    </div>
-  );
-};
+import Harvest from "./Harvest/harvest";
+import Ranking from "./Ranking/ranking";
+import Cheer from "./Cheer/cheer";
+import Header from "../Component/Header";
+import * as S from "./index.styled";
+import useMediaQueries from "../../../../website/src/hooks/useMediaQueries";
 
-export default index;
+export default function Main() {
+  const { isApp, isMobile } = useMediaQueries();
+  return (
+    <>
+      <Header/>
+      <S.MainContainer $isApp={isApp} $isMobile={isMobile}>
+        <Harvest />
+        <Ranking />
+        <Cheer />
+      </S.MainContainer> 
+    </>
+  );
+}
