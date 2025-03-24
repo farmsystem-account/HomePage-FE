@@ -1,9 +1,9 @@
 import * as S from './index.styled';
 import Card from './Card';
 import { useNavigate } from 'react-router';
-import GoBackImage from '@/assets/icons/corner-up-left.svg';
+import GoBackImage from '@/assets/icons/corner-up-left.png';
 import BlankImage from '@/assets/images/blank-image.png';
-import EditImage from '@/assets/icons/edit-3.svg';
+import EditImage from '@/assets/icons/edit-3.png';
 
 
 const dummyData = [

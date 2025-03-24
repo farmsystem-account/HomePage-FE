@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import * as S from './index.styled';
-import PinIcon from '@/assets/icons/x.svg';
-import Polygon from '@/assets/icons/polygon-1.svg';
+import PinIcon from '@/assets/icons/x.png';
+import Polygon from '@/assets/icons/polygon-1.png';
+import FilePlus from '@/assets/icons/file-plus.png';
 
 const categoryList = ['세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'] as const;
 
@@ -50,14 +51,16 @@ export default function Editor() {
 
       {/* 에디터 섹션 */}
       <S.FarmingLogCard>
-        <S.Thumbnail alt="thumbnail" />
+        <S.Thumbnail>
+          <S.FilePlusIcon src={FilePlus} alt="file-plus" />
+        </S.Thumbnail>
 
         {/* 카테고리 */}
         <S.ContentContainer>
           <S.CategoryContainer onClick={toggleDropdown}>
             <S.CategorySelect>
               <S.CategoryText>{dropDownSelected}</S.CategoryText>
-              <img src={Polygon} alt="polygon" />
+              <img src={Polygon} alt="polygon" style={{width: "7px", height: "6px"}} />
             </S.CategorySelect>
             {isDropDownOpen && (
               <S.CategoryOptionContainer>

@@ -1,8 +1,8 @@
 import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
-import Heart from '@/assets/icons/heart.svg';
-import HeartFill from '@/assets/icons/heart-fill.svg';
-import ChecvronRight from '@/assets/icons/chevron-right.svg';
+import Heart from '@/assets/icons/heart.png';
+import HeartFill from '@/assets/icons/heart-fill.png';
+import ChecvronRight from '@/assets/icons/chevron-right.png';
 
 interface Data{
   farmingLogId: number,

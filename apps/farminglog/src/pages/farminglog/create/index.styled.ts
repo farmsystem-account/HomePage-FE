@@ -87,9 +87,22 @@ export const FarmingLogCard = styled.div`
   border: 1px solid #DBDBDB;
 `;
 
-export const Thumbnail = styled.img`
+export const Thumbnail = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   aspect-ratio: 250/167;
+
+  border-radius: 5px;
+  background: #E5E5E5;
+`;
+
+export const FilePlusIcon = styled.img`
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
 `;
 
 export const ContentContainer = styled.div`
