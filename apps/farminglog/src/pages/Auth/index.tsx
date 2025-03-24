@@ -1,16 +1,41 @@
-import { Container, StyledButton } from './styles';
-import { useSocialLogin } from '../../hooks/useSocialLogin';
+import { ReactNode } from 'react';
+import * as S from './styles/indexStyled';
+import useMediaQueries from '@/hooks/useMediaQueries';
+import { useAuthStore } from '@/stores/useAuthStore';
 
-const Auth = () => {
-  const { handleLogin } = useSocialLogin();
+interface AuthPageLayoutProps {
+  children: ReactNode;
+}
+
+const Auth = ({ children }: AuthPageLayoutProps) => {
+  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const { step } = useAuthStore();
+
+  const isStart = step === 'start';
 
   return (
-    <Container>
-      <h1>Auth Page</h1>
-      <p>이 페이지는 인증 관련 작업을 위한 임시 페이지입니다.</p>
-      <StyledButton onClick={() => handleLogin("GOOGLE")}>Google 로그인</StyledButton>
-      <StyledButton onClick={() => handleLogin("KAKAO")}>Kakao 로그인</StyledButton>
-    </Container>
+    <S.Wrapper>
+      {isStart ? (
+        // StepStart인 경우: Box 없음
+        <S.FullscreenContainer
+          $isApp={isApp}
+          $isMobile={isMobile}
+          $isTablet={isTablet}
+          $isDesktop={isDesktop}
+        >
+          {children}
+        </S.FullscreenContainer>
+      ) : (
+        <S.Box
+          $isApp={isApp}
+          $isMobile={isMobile}
+          $isTablet={isTablet}
+          $isDesktop={isDesktop}
+        >
+          {children}
+        </S.Box>
+      )}
+    </S.Wrapper>
   );
 };
 
