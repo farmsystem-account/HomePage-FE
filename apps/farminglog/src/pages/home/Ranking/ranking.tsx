@@ -1,12 +1,9 @@
-// src/pages/RankingPage.tsx
-import React, { useState, useEffect } from 'react';
-import * as S from '@/styles/RankingPage.styles'; // 실제 경로에 맞게 수정
+import { useState, useEffect } from 'react';
+import * as S from './ranking.styled'; // 실제 경로에 맞게 수정
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 // 이미지 경로도 실제 경로에 맞게 import
-import BackArrowImg from '@/assets/Icons/BackArrow.png';
-import PhraseImg from '@/assets/Images/RankingPhrase.png';
-import PhraseImg_App from '@/assets/Images/RankingPhrase_App.png';
+import UpArrowImg from '@/assets/Icons/UpArrow.png';
 import FarmLogoImg from '@/assets/Icons/FarmSystem_Logo.png';
 import CrownImg from '@/assets/Icons/crown.png';
 import BalloonImg from '@/assets/Images/Balloon.png';
@@ -29,7 +26,7 @@ const rankingData: RankingData[] = [
 ];
 
 export default function RankingPage() {
-  const { isMobile, isApp } = useMediaQueries();
+  const { isMobile, isApp, isTablet} = useMediaQueries();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const getBgColor = (rank: number) => {
@@ -53,16 +50,20 @@ export default function RankingPage() {
   }, []);
 
   return (
-    <S.MyPageContainer>
-      <S.ProfileWrapper isMobile={isMobile}>
+    <S.MyPageContainer $isMobile={isMobile} $isTablet={isTablet}>
+      <S.ProfileWrapper $isMobile={isMobile} $isTablet={isTablet}>
         {/* 상단 영역 */}
-        <S.TitleBox isMobile={isMobile}>
-          <S.BackArrow src={BackArrowImg} alt="뒤로가기" />
+        <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title>랭킹</S.Title>
+          <S.BackArrow src={UpArrowImg} alt="확대하기" />
         </S.TitleBox>
 
-        {/* 문구 이미지 */}
-        <S.Phrase isApp={isApp} src={isApp ? PhraseImg_App : PhraseImg} alt="랭킹 문구" />
+        {/* 랭킹 문구 */}
+        <S.PhaseDesc>
+          · 랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.<br />
+          · 씨앗은 트랙별 우수활동자 심사에 반영돼요.
+        </S.PhaseDesc>
+
 
         {/* 헤더 영역 (순위, 이름/전공, 누적 씨앗 개수) */}
         <S.RankingTitle isApp={isApp}>
