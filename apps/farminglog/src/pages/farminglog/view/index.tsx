@@ -63,7 +63,7 @@ export default  function View() {
         $isApp={isApp}
         $isMobile={isMobile}
         $isDesktop={isDesktop}
-        onClick={() => navigate('/farminglog/write')}
+        onClick={() => navigate('/farminglog/create')}
       >
         <S.FarmingLogWriteButtonImage 
           $isApp={isApp}

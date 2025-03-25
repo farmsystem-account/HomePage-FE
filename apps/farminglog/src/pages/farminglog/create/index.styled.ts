@@ -1,22 +1,34 @@
 import styled from "styled-components";
 
-export const FarmingLogEditorContainer = styled.div`
-  width: 290px;
+interface ResponsiveProps {
+  $isApp?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+  $isDesktop?: boolean;
+}
+
+
+export const FarmingLogEditorContainer = styled.div<ResponsiveProps>`
+  width: ${({ 
+    $isApp, $isMobile, 
+    $isTablet, $isDesktop 
+  }) => ($isApp ? '290px' : $isMobile ? '400' : $isTablet ? '800px' : $isDesktop ? '800px' : '1200px')};
   height: screen;
   padding: 15px 12px 0px 13px;
+  // padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
-
+  gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
+ 
   border-radius: 5px;
   background: var(--FarmSystem_White, #FCFCFC);
 `;
 
-export const FarmingLogEditorContainerHeader = styled.div`
-  width: 220px;
-  height: 60px;
+export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '220px' : $isMobile ? '400px' : '550px')};
+  height: ${({ $isApp }) => ($isApp ? '60px' : '130px')};
   flex-shrink: 0;
 
   border-radius: 5px;
@@ -28,7 +40,7 @@ export const FarmingLogEditorContainerHeader = styled.div`
   flex-direction: column;
 `;
 
-export const HeaderPinContainer = styled.div`
+export const HeaderPinContainer = styled.div<ResponsiveProps>`
   width: 100%;
   height: 5px;
   display: flex;
@@ -38,10 +50,10 @@ export const HeaderPinContainer = styled.div`
   z-index: 1;
 `;
 
-export const HeaderPin = styled.div`
+export const HeaderPin = styled.div<ResponsiveProps>`
   display: flex;
-  width: 11px;
-  height: 11px;
+  width: ${({ $isApp }) => ($isApp ? '11px' : '20px')};
+  height: ${({ $isApp }) => ($isApp ? '11px' : '20px')};
   padding: 2px;
   justify-content: center;
   align-items: center;
@@ -49,26 +61,27 @@ export const HeaderPin = styled.div`
   aspect-ratio: 1/1;
   margin: 3px 6px 0px 6px;
 
-  border-radius: 6px;
+  border-radius: ${({ $isApp }) => ($isApp ? '6px' : '100px')};
   background: #FF9A4D;
   box-shadow: 0px 2px 2px 0px #FF6F00 inset;
 `;
 
-export const HeaderPinIcon = styled.img`
-  width: 7px;
-  height: 7px;
+export const HeaderPinIcon = styled.img<ResponsiveProps>`
+  width: ${({ $isApp }) => ($isApp ? '7px' : '10px')};
+  height: ${({ $isApp }) => ($isApp ? '7px' : '10px')};
   flex-shrink: 0;
   aspect-ratio: 1/1;
 `;
 
-export const HeaderContext = styled.h3`
+export const HeaderContext = styled.h3<ResponsiveProps>`
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 10px;
+  font-size: ${({ $isApp }) => ($isApp ? '10px' : '20px')};
   font-style: normal;
   font-weight: 500;
-  line-height: 16px; /* 160% */
+  line-height: ${({ $isApp }) => ($isApp ? '16px' : '24px')}; 
+  margin-top: ${({ $isApp }) => ($isApp ? '5px' : '23px')};
   letter-spacing: -0.24px;
 `;
 
@@ -76,10 +89,10 @@ export const HeaderContextBold = styled.span`
   font-weight: 700;
 `;
 
-export const FarmingLogCard = styled.div`
+export const FarmingLogCard = styled.div<ResponsiveProps>`
   display: flex;
-  width: 260px;
-  padding: 10px 5px;
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '260px' : $isMobile ? '420px' : '700px')};
+  padding: ${({ $isApp }) => ($isApp ? '10px 5px' : '20px 10px')};
   flex-direction: column;
   align-items: center;
 
@@ -87,7 +100,7 @@ export const FarmingLogCard = styled.div`
   border: 1px solid #DBDBDB;
 `;
 
-export const Thumbnail = styled.div`
+export const Thumbnail = styled.div<ResponsiveProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,39 +118,39 @@ export const FilePlusIcon = styled.img`
   aspect-ratio: 1/1;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<ResponsiveProps>`
   display: flex;
   padding: 10px 5px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5px;
+  gap: ${({ $isApp }) => ($isApp ? '5px' : '30px')};
   align-self: stretch;
 `;
 
-export const CategoryContainer = styled.div`
+export const CategoryContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 100%;
   justify-content: flex-start;
 `;
 
-export const CategorySelect = styled.div`
+export const CategorySelect = styled.div<ResponsiveProps>`
   display: flex;
   height: 20px;
-  padding: 5px 10px;
+  padding: ${({ $isApp }) => ($isApp ? '5px 10px' : '10px 15px')};
   align-items: center;
   gap: 5px;
 
-  border-radius: 10px;
+  border-radius: ${({ $isApp }) => ($isApp ? '10px' : '20px')};
   background: #5CD282;
   cursor: pointer;
 `;
 
-export const CategoryOptionContainer = styled.ul`
+export const CategoryOptionContainer = styled.ul<ResponsiveProps>`
   position: absolute;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  width: 66px;
+  width: ${({ $isApp }) => ($isApp ? '66px' : '130px')};
   z-index: 1;
   padding: 5px 0px;
   align-items: center;
@@ -150,71 +163,71 @@ export const CategoryOptionContainer = styled.ul`
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
-export const CategoryOption = styled.li`
+export const CategoryOption = styled.li<ResponsiveProps>`
   align-self: stretch;
   cursor: pointer;
 
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 10px;
+  font-size: ${({ $isApp }) => ($isApp ? '10px' : '16px')};
   font-style: normal;
   font-weight: 500;
   line-height: 30px; /* 300% */
   letter-spacing: -0.24px;
 `;
 
-export const CategoryText = styled.p`
+export const CategoryText = styled.p<ResponsiveProps>`
   color: var(--FarmSystem_White, #FCFCFC);
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 10px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '10px' : $isMobile ? '12px' : '15px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 200% */
   letter-spacing: -0.24px;
 `;
 
-export const InputAndTextContainer = styled.div`
+export const InputAndTextContainer = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
   align-items: center;
-  gap: 5px;
+  gap: ${({ $isApp }) => ($isApp ? '5px' : '15px')};
   align-self: stretch;
 `;
 
-export const TitleContainer = styled.div`
+export const TitleContainer = styled.div<ResponsiveProps>`
   display: flex;
-  width: 240px;
+  width: 100%;
   padding: 0px 5px;
-  align-items: flex-end;
-  gap: 170px;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-export const TitleText = styled.p`
+export const TitleTextContainer = styled.div<ResponsiveProps>`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const TitleText = styled.p<ResponsiveProps>`
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 12px;
+  font-size: ${({ $isApp }) => ($isApp ? '12px' : '20px')};
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 166.667% */
   letter-spacing: -0.24px;
 `;
 
-export const letterCount = styled.p`
-  display: flex;
-  width: 39px;
-  height: 20px;
-  flex-direction: column;
-  justify-content: flex-end;
-  flex-shrink: 0;
-
+export const SmallText = styled.p<ResponsiveProps>`
   color: var(--FarmSystem_DarkGrey2, #757575);
-  text-align: right;
+  text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 8px;
+  font-size: ${({ $isApp }) => ($isApp ? '8px' : '12px')};
   font-style: normal;
   font-weight: 500;
   line-height: 14px; /* 175% */
@@ -241,7 +254,7 @@ export const InputBox = styled.input`
   letter-spacing: -0.24px;
 `;
 
-export const DateContainer = styled.div`
+export const DateContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 100%;
   padding: 5px 0px;
