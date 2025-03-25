@@ -11,5 +11,5 @@ export const MainContainer = styled.div<{$isApp: boolean, $isMobile: boolean }>`
     align-items: flex-start;
     gap: 72px;
 
-    background: linear-gradient(270deg, #29D4A7 0%, #5CD282 100%);
+    background: gray;
 `;
