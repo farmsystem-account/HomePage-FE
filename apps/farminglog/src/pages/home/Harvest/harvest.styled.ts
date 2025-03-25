@@ -1,34 +1,23 @@
-// harvest.styled.ts
-import styled from "styled-components";
-
-/**
- * 모바일/태블릿/데스크톱 여부를 구분하는 prop
- *  - $isMobile: 768px 이하
- *  - $isTablet: 769px ~ 1024px 이하
- *  - 나머지: 데스크톱
- */
+import styled, { keyframes } from "styled-components";
 
 /** 메인 컨테이너 */
 export const HarvestContainer = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
+  position: relative; /* 추가: 절대 위치 자식 요소의 기준 */
   width: 100%;
-  /* 화면 크기에 따라 최대 너비 변경 */
   max-width: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "90%" : $isTablet ? "90%" : "1200px"};
   min-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "40%" : $isTablet ? "40%" : "400px"};
   margin: 0 auto;
   padding: 20px;
-
-  /* 모바일일 때만 배경색 변경 */
   background-color: ${({ $isMobile }) => ($isMobile ? "#f9f9f9" : "#fff")};
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* 화면 크기에 따라 컨테이너 내부 간격 변경 */
   gap: ${({ $isMobile }) => ($isMobile ? "10px" : "20px")};
 `;
 
@@ -37,17 +26,12 @@ export const MainText = styled.h1<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  /* 모바일 / 태블릿 / 데스크톱에 따라 글자 크기 조절 */
-  font-size: 1.5rem;
-  font-weight: 700;
-
-  /* 모바일 / 태블릿 / 데스크톱에 따라 줄간격 조절 */
+  font-size: 36px;
+  font-weight: 600;
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "34px" : $isTablet ? "38px" : "42px"};
   letter-spacing: -0.24px;
-
   margin-bottom: 12px;
-  /* 모바일에서 위쪽 여백 축소 */
   padding-top: ${({ $isMobile }) => ($isMobile ? "20px" : "40px")};
   text-align: center;
 `;
@@ -72,35 +56,34 @@ export const SubText = styled.p<{
 export const ButtonContainer = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
+  $anyCleared: boolean;
 }>`
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 12px;
 
-  /* 모바일/태블릿에서 간격 축소 */
-  gap: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "20px" : $isTablet ? "25px" : "30px"};
-
-  /* 화면이 좁으면 자동 줄바꿈 */
+  /* anyCleared가 true면 gap을 줄이고, 아니면 기존 로직 */
+  gap: ${({ $isMobile, $isTablet, $anyCleared }) => {
+    if ($anyCleared) return $isMobile ? "10px" : $isTablet ? "15px" : "20px";
+    return $isMobile ? "20px" : $isTablet ? "25px" : "30px";
+  }};
+  
   flex-wrap: wrap;
 `;
 
-/** 스테이지(단계) 버튼 */
+/** 기존(원형+텍스트) 스테이지 버튼 */
 export const StageButton = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
   display: flex;
-  flex-direction: column; /* 아이콘 위, 텍스트 아래 배치 */
+  flex-direction: column;
   align-items: center;
-  /* 모바일/태블릿에서 버튼 간격 축소 */
   gap: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "8px" : $isTablet ? "10px" : "12px"};
 
   cursor: pointer;
-
-  /* 폰트 크기 반응형 */
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
   font-weight: 700;
@@ -117,16 +100,12 @@ export const ButtonIcon = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  /* 모바일/태블릿/데스크톱에 따라 아이콘 크기 조절 */
   width: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
   height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
-
   background-color: #4caf50;
   border-radius: 50%;
-
-  /* 내부 이미지 중앙 정렬 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,7 +117,6 @@ export const IconImg = styled.img<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  /* 모바일/태블릿/데스크톱에 따라 이미지 크기 조절 */
   width: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "20px" : $isTablet ? "25px" : "30px"};
   height: ${({ $isMobile, $isTablet }) =>
@@ -153,4 +131,105 @@ export const ButtonLabel = styled.div<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "14px" : $isTablet ? "15px" : "16px"};
   text-align: center;
+`;
+
+/** 평행사변형 버튼 */
+export const ParallelogramBox = styled.div<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+  $isActive: boolean; // 현재 버튼이 클리어인지
+}>`
+  position: relative;
+  width: ${({ $isMobile, $isTablet }) =>
+    $isMobile ? "60px" : $isTablet ? "70px" : "80px"};
+  height: ${({ $isMobile, $isTablet }) =>
+    $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
+
+  /* 평행사변형 효과 */
+  transform: skewX(-10deg);
+
+  /* isActive(true)면 주황색, false면 회색 */
+  background-color: ${({ $isActive }) => ($isActive ? "#FFA500" : "gray")};
+  border-radius: 10px;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+box-shadow: ${({ $isActive }) =>
+  $isActive
+    ? "inset 5px 5px rgba(243, 106, 21, 1)"
+    : "none"};
+
+  /* 평행사변형 안의 실제 컨텐츠를 다시 skewX(10deg)로 보정 */
+  .content {
+    transform: skewX(10deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    font-weight: bold;
+    color: #fff;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+/** 평행사변형 + 라벨 감싸는 컨테이너 */
+export const Stage = styled.div<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+}>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  font-size: ${({ $isMobile, $isTablet }) =>
+  $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.24px;
+`;
+
+
+/* 새싹 애니메이션: 중앙에서 시작해 CSS 변수(--tx, --ty) 만큼 이동하며 커졌다가 사라짐 */
+const sproutExplosion = keyframes`
+  0% {
+    transform: translate(0, 0) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--tx) / 2), calc(var(--ty) / 2)) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(1.5);
+    opacity: 0;
+  }
+`;
+
+export const GlobalSproutAnimation = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+
+  .sprout {
+    position: absolute;
+    font-size: 30px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    animation: ${sproutExplosion} 1s forwards;
+  }
 `;
