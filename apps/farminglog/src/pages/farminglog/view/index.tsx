@@ -42,10 +42,10 @@ const dummyData = [
 
 export default  function View() {
   const navigate = useNavigate();
-  const { isApp, isMobile, isDesktop } = useMediaQueries();
+  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
 
   return (
-    <S.FarmingLogContainer $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+    <S.FarmingLogContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
       <S.FarmingLogContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
         <S.GoBackButton $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
           <img src={GoBackImage} alt="뒤로가기" />

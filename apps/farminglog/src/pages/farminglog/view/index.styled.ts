@@ -3,11 +3,16 @@ import styled from 'styled-components';
 interface ResponsiveProps {
   $isApp?: boolean;
   $isMobile?: boolean;
+  $isTablet?: boolean;
   $isDesktop?: boolean;
 }
 
 export const FarmingLogContainer = styled.div<ResponsiveProps>`
-  width: ${({ $isApp, $isMobile }) => ($isApp ? '290px' : $isMobile ? '400' : '800px')};
+  // 살려줘요... 반응형 너무 싫어요...
+  width: ${({ 
+    $isApp, $isMobile, 
+    $isTablet, $isDesktop 
+  }) => ($isApp ? '290px' : $isMobile ? '400' : $isTablet ? '800px' : $isDesktop ? '800px' : '1200px')};
   height: screen;
   padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
   display: flex;
@@ -50,7 +55,7 @@ export const GoBackButton = styled.button<ResponsiveProps>`
   width: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
   height: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
   flex-shrink: 0;
-  margin-left: ${({ $isApp }) => ($isApp ? '15px' : '25px')};
+  margin-left: ${({ $isApp }) => ($isApp ? '0px' : '25px')};
 `;
 
 export const FarmingLogCardContainer = styled.div<ResponsiveProps>`
@@ -61,8 +66,8 @@ export const FarmingLogCardContainer = styled.div<ResponsiveProps>`
 
 export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
   position: fixed;
-  bottom: 32px;
-  right: 10px;
+  bottom: 40px;
+  right: 32px;
   // bottom: ${({ $isApp, $isMobile }) => ($isApp ? '32px' : $isMobile ? '50px' : '70px')};
   // right: ${({ $isApp, $isMobile }) => ($isApp ? '25px' : $isMobile ? '90px' : '180px')};
 
