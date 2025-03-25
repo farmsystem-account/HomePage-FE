@@ -50,7 +50,6 @@ export default function RankingPage() {
   }, []);
 
   return (
-    <S.MyPageContainer $isMobile={isMobile} $isTablet={isTablet}>
       <S.ProfileWrapper $isMobile={isMobile} $isTablet={isTablet}>
         {/* 상단 영역 */}
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
@@ -59,7 +58,7 @@ export default function RankingPage() {
         </S.TitleBox>
 
         {/* 랭킹 문구 */}
-        <S.PhaseDesc>
+        <S.PhaseDesc $isMobile={isMobile}>
           · 랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.<br />
           · 씨앗은 트랙별 우수활동자 심사에 반영돼요.
         </S.PhaseDesc>
@@ -106,6 +105,5 @@ export default function RankingPage() {
           ))}
         </S.RankingList>
       </S.ProfileWrapper>
-    </S.MyPageContainer>
   );
 }

@@ -7,7 +7,6 @@ export const MyPageContainer = styled.div<{
 }>`
   /* 화면 전체 너비로 그라디언트 배경을 깔기 위해 width: 100% */
   width: 100%;
-  background: linear-gradient(90deg, #5cd282, #29d4a7);
 
   /* 상하 여백(패딩)을 주어 흰색 박스를 가운데 띄우기 */
   display: flex;
@@ -36,6 +35,7 @@ export const ProfileWrapper = styled.div<{
   align-items: center; /* 중앙 정렬 */
   color: black;
   position: relative;
+  margin: 0 auto;
 `;
 
 /** 상단 영역: 뒤로가기 아이콘, 제목(랭킹) 등 */
@@ -67,8 +67,8 @@ export const BackArrow = styled.img`
 
 /** 제목 */
 export const Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 36px;
+  font-weight: 600;
   margin: 0; /* 기본 margin 제거 */
 `;
 
@@ -198,17 +198,13 @@ export const Balloon = styled.img`
   z-index: 10;
 `;
 
-export const PhaseDesc = styled.div`
+export const PhaseDesc = styled.div<{ $isMobile: boolean }>`
   display: inline-flex;
   margin: 0 auto;
   justify-content: flex-start;
-  .a{
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 30px; /* 150% */
-      letter-spacing: -0.24px;
-      text-align: center; /* 필요 시 가운데 정렬 */
-      margin-top: 16px;   /* 위쪽 여백 (원하는 대로 조정) */
-  }
+  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
+  font-weight: 400;
+  line-height: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
+  letter-spacing: ${({ $isMobile }) => ($isMobile ? '-0.12px' : '-0.24px')};
 
 `;
