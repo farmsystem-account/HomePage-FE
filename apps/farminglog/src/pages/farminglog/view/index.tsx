@@ -11,9 +11,9 @@ import EditImage from '@/assets/icons/edit-3.png';
 const dummyData = [
   {
     farmingLogId: 90,
-    title: "string",
+    title: "제제제제제제제제제목",
     content: "팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다.",
-    category: "string",
+    category: "프로젝트",
     createdAt: "string",
     author: "string",
     profileImageUrl: "string",
@@ -25,10 +25,10 @@ const dummyData = [
   },
   {
     farmingLogId: 80,
-    title: "string",
+    title: "",
     thumbnail: BlankImage,
     content: "팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. ...팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. ...",
-    category: "string",
+    category: "해커톤",
     createdAt: "string",
     author: "string",
     profileImageUrl: "string",

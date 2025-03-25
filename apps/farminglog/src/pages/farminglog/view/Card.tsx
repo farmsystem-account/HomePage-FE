@@ -1,5 +1,7 @@
 import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
+import useMediaQueries from '@/hooks/useMediaQueries';
+
 import Heart from '@/assets/icons/heart.png';
 import HeartFill from '@/assets/icons/heart-fill.png';
 import ChecvronRight from '@/assets/icons/chevron-right.png';
@@ -7,7 +9,7 @@ import ChecvronRight from '@/assets/icons/chevron-right.png';
 interface Data{
   farmingLogId: number,
   title: string,
-  thumbnail?: string,
+  // thumbnail?: string,
   content: string,
   category: string,
   createdAt: string,
@@ -32,6 +34,8 @@ export default function Card({ data }: CardProps) {
   const [likeCount, setLikeCount] = useState(data.likeCount);
   const [clicked, setClicked] = useState(false);
 
+  const { isApp, isMobile, isDesktop } = useMediaQueries();
+
   const handleLikeClick = () => {
     if (liked) return; // 이미 좋아요 눌렀으면 무시
   
@@ -54,11 +58,16 @@ export default function Card({ data }: CardProps) {
   , [data.content, viewDetail]);
 
   return (
-    <S.FarmingLogCard>
-      <S.Thumbnail src={data.thumbnail} alt="썸네일" />
+    <S.FarmingLogCard $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+      {/** 
+        *  우선 이미지 없이 진행
+        * <S.Thumbnail src={data.thumbnail} alt="썸네일" />
+        */}
       <S.ContentContainer>
         <S.CategoryContainer>
-          <S.Category>{data.category}</S.Category>
+          <S.Category $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+            {data.category}
+          </S.Category>
         </S.CategoryContainer>
         <S.TitleContainer>
           <S.Title>{data.title}</S.Title>

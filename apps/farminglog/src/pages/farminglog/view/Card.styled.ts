@@ -1,9 +1,15 @@
 import styled, { keyframes, css } from "styled-components";
 
-export const FarmingLogCard = styled.div`
+interface ResponsiveProps {
+  $isApp?: boolean;
+  $isMobile?: boolean;
+  $isDesktop?: boolean;
+}
+
+export const FarmingLogCard = styled.div<ResponsiveProps>`
   display: flex;
-  width: 260px;
-  padding: 10px 5px;
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '260px' : $isMobile ? '420px' : '700px')};
+  padding: ${({ $isApp }) => ($isApp ? '10px 5px' : '20px 10px')};
   flex-direction: column;
   align-items: center;
 
@@ -11,12 +17,13 @@ export const FarmingLogCard = styled.div`
   border: 1px solid #DBDBDB;
 `;
 
+// 일단 사진 없이
 export const Thumbnail = styled.img`
   width: 250px;
   aspect-ratio: 250/167;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<ResponsiveProps>`
   display: flex;
   padding: 10px 5px;
   flex-direction: column;
@@ -25,35 +32,37 @@ export const ContentContainer = styled.div`
   align-self: stretch;
 `;
 
-export const CategoryContainer = styled.div`
+export const CategoryContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 100%;
   justify-content: flex-start;
 `;
 
-export const Category = styled.div`
+export const Category = styled.div<ResponsiveProps>`
   display: flex;
-  padding: 0px 10px;
+  padding: ${({ $isApp }) => ($isApp ? '0px 10px' : '5px 15px')};
   justify-content: center;
   align-items: center;
   gap: 10px;
 
-  border-radius: 10px;
+  border-radius: ${({ $isApp }) => ($isApp ? '10px' : '20px')};
   background: #5CD282;
 
   color: var(--FarmSystem_White, #FCFCFC);
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 10px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '10px' : $isMobile ? '12px' : '15px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 200% */
   letter-spacing: -0.24px;
 `;
 
-export const TitleContainer = styled.div`
+export const TitleContainer = styled.div<ResponsiveProps>`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
   gap: 5px;
   align-self: stretch;
 `;
@@ -86,7 +95,7 @@ const pop = keyframes`
   }
 `;
 
-export const LikeContainer = styled.div`
+export const LikeContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 30px;
   flex-direction: column;
@@ -126,7 +135,7 @@ export const LikeCount = styled.span`
   letter-spacing: -0.24px;
 `;
 
-export const InfoContainer = styled.div`
+export const InfoContainer = styled.div<ResponsiveProps>`
   display: flex;
   padding: 5px 0px;
   align-items: center;
@@ -178,7 +187,7 @@ export const Content = styled.p`
   letter-spacing: -0.24px;
 `;
 
-export const DetailContainer = styled.div`
+export const DetailContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 100%;
   flex-direction: column;
