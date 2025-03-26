@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 export default function StepNotMember() {
-  const { setStep } = useAuthStore();
+  const { setStep, errorMessage } = useAuthStore();
   const { isMobile } = useMediaQueries();
 
   return (
@@ -11,8 +11,12 @@ export default function StepNotMember() {
       <S.LogoIcon $isMobile={isMobile} />
       <S.Title $isMobile={isMobile}>Farm System <br />회원이 아닙니다.</S.Title>
       <S.SubTitle $isMobile={isMobile}>
-        해당 학번으로 등록된 회원이 없습니다. <br />
-        운영진에게 문의해주세요.
+        {errorMessage.split('\n').map((line: string, idx: number) => (
+          <span key={idx}>
+            {line}
+            <br />
+          </span>
+        ))}
       </S.SubTitle>
       <S.Button $isMobile={isMobile} onClick={() => setStep('input')}>
         다시 시도하기
