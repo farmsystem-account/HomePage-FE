@@ -3,9 +3,9 @@ import Auth from './components/index';
 import StepStart from './components/StepStart';
 import StepInputStudentId from './components/StepInputStudentId';
 import StepCheckName from './components/StepCheckName';
+import StepAuthComplete from './components/StepAuthComplete';
 // import StepErrorInvalidId from '@/components/StepErrorInvalidId';
 // import StepNotMember from '@/components/StepNotMember';
-// import StepAuthComplete from '@/components/StepAuthComplete';
 import { useAuthStore } from '@/stores/useAuthStore';
 
 export default function AuthPage() {
@@ -16,11 +16,11 @@ export default function AuthPage() {
       {step === 'start' && <StepStart />}
       {step === 'input' && <StepInputStudentId />}
       {step === 'check-name' && <StepCheckName />}
-
+      {step === 'complete' && <StepAuthComplete />}
       {/* 
       {step === 'error' && <StepErrorInvalidId />}
       {step === 'not-member' && <StepNotMember />}
-      {step === 'complete' && <StepAuthComplete />} */}
+       */}
     </Auth>
   );
 }
