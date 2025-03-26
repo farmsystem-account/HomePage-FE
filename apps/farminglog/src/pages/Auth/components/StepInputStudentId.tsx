@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 export default function StepInputStudentId() {
-  const { setStep, setStudentId } = useAuthStore();
+  const { setStep, setStudentId, errorMessage } = useAuthStore();
   const [input, setInput] = useState('');
   const { isMobile } = useMediaQueries();
 
@@ -32,7 +32,7 @@ export default function StepInputStudentId() {
           $isMobile={isMobile}
         />
       </S.InputWrapper>
-
+        {errorMessage && <S.ErrorMessage $isMobile={isMobile}>{errorMessage}</S.ErrorMessage>}
       <S.Button onClick={handleNext} $isMobile={isMobile}>
         인증하기
       </S.Button>

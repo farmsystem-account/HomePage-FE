@@ -8,7 +8,7 @@ interface ResponsiveProps {
 export const Container = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
-  gap: ${({ $isMobile }) => ($isMobile ? '1.25rem' : '2.5rem')};
+  gap: ${({ $isMobile }) => ($isMobile ? '0.8rem' : '1.7rem')};
   align-items: center;
   width: 100%;
 `;
@@ -96,4 +96,11 @@ export const Back = styled.div<ResponsiveProps>`
   color: #999;
   text-decoration: underline;
   cursor: pointer;
+`;
+
+export const ErrorMessage = styled.p<ResponsiveProps>`
+  color: #ff4d4f;
+  font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '12px')};
+  font-family: 'Pretendard Variable';
+  text-align: left;
 `;

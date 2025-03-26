@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 export default function StepCheckName() {
-  const { userName, setStep } = useAuthStore();
+  const { userName, setStep,setErrorMessage } = useAuthStore();
   const { isMobile } = useMediaQueries();
 
   const handleConfirm = () => {
@@ -12,6 +12,7 @@ export default function StepCheckName() {
   };
 
   const handleBack = () => {
+    setErrorMessage('인증 실패! 입력한 정보를 확인해주세요.');
     setStep('input');
   };
 
