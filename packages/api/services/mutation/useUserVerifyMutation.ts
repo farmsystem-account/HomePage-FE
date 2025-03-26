@@ -16,7 +16,7 @@ export const useUserVerifyMutation = () => {
 
   return useMutation<UserVerifyResponse, Error, UserVerifyRequest>({
     mutationFn: async (body) => {
-      const { data, status } = await post<UserVerifyResponse>('/api/user/verify', body);
+      const { data, status } = await post<UserVerifyResponse>('/user/verify', body);
 
       if (status !== 200) {
         throw new Error('회원 인증에 실패했습니다.');
