@@ -19,7 +19,7 @@ export const FloatingBackgroundTop = styled.div<ResponsiveProps>`
   top: 0;
   left: 0;
   height: 100px;
-  width: 200%; 
+  width: 100%; 
   display: flex;
   flex-direction: row;
   animation: ${floatScroll} 20s linear infinite;
