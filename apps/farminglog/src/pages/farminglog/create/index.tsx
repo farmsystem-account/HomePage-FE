@@ -3,8 +3,8 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './index.styled';
 
 
-import PinIcon from '@/assets/icons/x.png';
-import Polygon from '@/assets/icons/polygon-1.png';
+import PinIcon from '@/assets/Icons/x.png';
+import Polygon from '@/assets/Icons/polygon-1.png';
 // import FilePlus from '@/assets/icons/file-plus.png';
 
 const categoryList = ['세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'] as const;

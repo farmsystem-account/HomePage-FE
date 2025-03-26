@@ -3,9 +3,9 @@ import Card from './Card';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
-import GoBackImage from '@/assets/icons/corner-up-left.png';
-import BlankImage from '@/assets/images/blank-image.png';
-import EditImage from '@/assets/icons/edit-3.png';
+import GoBackImage from '@/assets/Icons/corner-up-left.png';
+// import BlankImage from '@/assets/images/blank-image.png';
+import EditImage from '@/assets/Icons/edit-3.png';
 
 
 const dummyData = [
@@ -26,7 +26,7 @@ const dummyData = [
   {
     farmingLogId: 80,
     title: "",
-    thumbnail: BlankImage,
+    // thumbnail: BlankImage,
     content: "팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. ...팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. 팜시스템에 필요한 모든 정보를 담은 앱! W-300 H-HugContents로 5줄까지 소개가 가능하다. 5줄을 적으면 150자이다. ...",
     category: "해커톤",
     createdAt: "string",

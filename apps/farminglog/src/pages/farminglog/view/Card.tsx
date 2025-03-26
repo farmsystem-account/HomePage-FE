@@ -2,9 +2,9 @@ import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
-import Heart from '@/assets/icons/heart.png';
-import HeartFill from '@/assets/icons/heart-fill.png';
-import ChecvronRight from '@/assets/icons/chevron-right.png';
+import Heart from '@/assets/Icons/heart.png';
+import HeartFill from '@/assets/Icons/heart-fill.png';
+import ChecvronRight from '@/assets/Icons/chevron-right.png';
 
 interface Data{
   farmingLogId: number,
