@@ -1,5 +1,5 @@
 import * as S from '../styles/StepCheckName.styled';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@repo/auth/stores/useAuthStore';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 export default function StepCheckName() {

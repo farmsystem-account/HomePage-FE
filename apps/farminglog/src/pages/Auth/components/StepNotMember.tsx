@@ -1,5 +1,5 @@
 import * as S from '../styles/StepNotMember.styled'; // 기존 스타일 재사용
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@repo/auth/stores/useAuthStore'; 
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 export default function StepNotMember() {

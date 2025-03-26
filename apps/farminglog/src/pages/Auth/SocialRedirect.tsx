@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { useSocialLoginPostMutation } from "@repo/auth/services/mutation/useSocialLoginPostMutation";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthStore } from "@repo/auth/stores/useAuthStore";
 
 export default function SocialRedirect() {
   const [params] = useSearchParams();
@@ -28,32 +28,27 @@ export default function SocialRedirect() {
         onSuccess: () => {
           navigate("/home");
         },
-        onError: (error: any) => {
-          const status = error?.response?.status;
-          // const message = error?.response?.data?.message;
+       onError: (error: any) => {
+  const status = error?.response?.status;
+  const message = error?.response?.data?.message;
 
-          if (status === 404) {
-            // alert("회원 인증이 실패했습니다.\n입력한 학번을 다시 확인해주세요.");
-            setStep("not-member");
-            navigate("/");
-            setErrorMessage('해당 학번으로 등록된 회원이 없습니다.<br>운영진에게 문의해주세요.');
-          } else if (status === 409) {
-            // alert("이미 다른 소셜 계정으로 가입된 사용자입니다.\n다른 계정으로 로그인해주세요.");
-            setStep("not-member");
-            navigate("/");
-            setErrorMessage('이미 다른 소셜 계정으로 가입된 사용자입니다.<br>다른 계정으로 로그인해주세요.');
-          } else if (status === 500) {
-            // alert("소셜 로그인 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.");
-            setStep("not-member");
-            navigate("/");
-            setErrorMessage('해당 학번으로 등록된 회원이 없습니다.<br>운영진에게 문의해주세요.');
-          } else {
-            // alert(message || "알 수 없는 오류가 발생했습니다.");
-            setStep("not-member");
-            navigate("/");
-            setErrorMessage('해당 학번으로 등록된 회원이 없습니다.<br>운영진에게 문의해주세요.');
-          }
-        },
+  if (status === 404) {
+    setStep("not-member");
+    setErrorMessage("해당 학번으로 등록된 회원이 없습니다.<br>운영진에게 문의해주세요.");
+    navigate("/", { replace: true }); 
+  } else if (status === 409) {
+    setStep("not-member");
+    setErrorMessage("이미 다른 소셜 계정으로 가입된 사용자입니다.<br>다른 계정으로 로그인해주세요.");
+  } else if (status === 500) {
+    setStep("not-member");
+    setErrorMessage("소셜 로그인 중 오류가 발생했습니다.<br>운영진에게 문의해주세요.");
+    navigate("/", { replace: true }); 
+  } else {
+    setStep("not-member");
+    setErrorMessage(message || "알 수 없는 오류가 발생했습니다.<br>운영진에게 문의해주세요.");
+  }
+},
+
       }
     );
   }, [params, login, navigate]);

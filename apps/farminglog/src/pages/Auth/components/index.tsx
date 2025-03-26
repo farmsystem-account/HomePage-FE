@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import * as S from '../styles/indexStyled';
 import useMediaQueries from '@/hooks/useMediaQueries';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@repo/auth/stores/useAuthStore';
 import bgImage from '@/assets/logos/FarmingLog FarmingLog.png';
 
 //상태 확인용 추후 삭제 필요

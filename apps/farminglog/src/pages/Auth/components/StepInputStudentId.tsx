@@ -1,5 +1,5 @@
 import * as S from '../styles/StepInputStudentId.styled';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@repo/auth/stores/useAuthStore';
 import { useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useUserVerifyMutation } from '@repo/api/services/mutation/useUserVerifyMutation';

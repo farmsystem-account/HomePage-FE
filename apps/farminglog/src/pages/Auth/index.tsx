@@ -6,7 +6,7 @@ import StepCheckName from './components/StepCheckName';
 import StepAuthComplete from './components/StepAuthComplete';
 // import StepErrorInvalidId from '@/components/StepErrorInvalidId';
 import StepNotMember from './components/StepNotMember';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@repo/auth/stores/useAuthStore';
 
 export default function AuthPage() {
   const { step } = useAuthStore();
