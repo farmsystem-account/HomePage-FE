@@ -11,12 +11,7 @@ export default function StepNotMember() {
       <S.LogoIcon $isMobile={isMobile} />
       <S.Title $isMobile={isMobile}>Farm System <br />회원이 아닙니다.</S.Title>
       <S.SubTitle $isMobile={isMobile}>
-        {errorMessage.split('\n').map((line: string, idx: number) => (
-          <span key={idx}>
-            {line}
-            <br />
-          </span>
-        ))}
+        {errorMessage}
       </S.SubTitle>
       <S.Button $isMobile={isMobile} onClick={() => setStep('input')}>
         다시 시도하기

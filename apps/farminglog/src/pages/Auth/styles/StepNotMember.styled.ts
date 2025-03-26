@@ -39,6 +39,7 @@ export const SubTitle = styled.p<ResponsiveProps>`
   line-height: ${({ $isMobile }) => ($isMobile ? '18px' : '36px')};
   word-wrap: break-word;
   text-align: center;
+  white-space: pre-wrap;
 `;
 
 export const Button = styled.button<ResponsiveProps>`
