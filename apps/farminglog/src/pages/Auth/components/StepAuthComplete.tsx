@@ -1,7 +1,7 @@
 import * as S from '../styles/StepInputStudentId.styled'; // 기존 스타일 재사용 나중에 공통으로 뺄 필요 있음
 import useMediaQueries from '@/hooks/useMediaQueries';
 import AuthButton from './AuthButton';
-import { useSocialLogin } from '@/hooks/useSocialLogin';
+import { useSocialLogin } from '@repo/auth/hooks/useSocialLogin';
 
 
 export default function StepAuthComplete() {

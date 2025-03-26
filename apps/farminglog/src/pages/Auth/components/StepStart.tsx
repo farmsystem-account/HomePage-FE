@@ -1,7 +1,7 @@
 import * as S from '../styles/StepStartStyled';
 import AuthButton from './AuthButton';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useSocialLogin } from '@/hooks/useSocialLogin';
+import { useSocialLogin } from '@repo/auth/hooks/useSocialLogin';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 export default function StepStart() {

@@ -1,10 +1,32 @@
 import { useEffect } from "react";
 
-const isKakaoApp = () => navigator.userAgent.toLowerCase().includes("kakaotalk");
+declare global {
+  interface Window {
+    Kakao?: {
+      init: (key: string) => void;
+      isInitialized: () => boolean;
+      Auth: {
+        authorize: (options: { redirectUri: string }) => void;
+      };
+    };
+  }
+}
 
+// 환경 감지 (웹 vs 카카오 앱)
+const isKakaoApp = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  return ua.includes("kakaotalk");
+};
+
+// 카카오 SDK 초기화
 const initializeKakao = () => {
   if (window.Kakao && !window.Kakao.isInitialized()) {
-    window.Kakao.init(import.meta.env.VITE_KAKAO_JS_KEY);
+    const appKey = import.meta.env.VITE_KAKAO_JS_KEY;
+    if (appKey) {
+      window.Kakao.init(appKey);
+    } else {
+      console.error("Kakao SDK 초기화 실패: 앱 키가 설정되지 않았습니다.");
+    }
   }
 };
 
