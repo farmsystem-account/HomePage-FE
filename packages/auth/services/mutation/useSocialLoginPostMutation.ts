@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { usePublicApi } from "../../../api/hooks/usePublicApi";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/useAuthStore";
 import Cookies from "js-cookie";
 
 interface SocialLoginRequest {
@@ -15,14 +15,15 @@ interface TokenResponse {
 
 export const useSocialLoginPostMutation = () => {
   const { post } = usePublicApi();
-  const { studentNumber, setToken } = useAuthStore();
+const { studentId, setToken } = useAuthStore();
 
   const mutation = useMutation<TokenResponse, Error, SocialLoginRequest>({
     mutationFn: async ({ code, socialType }) => {
+
       const { data, status } = await post<TokenResponse>("/auth/login", {
         code,
         socialType,
-        studentNumber,
+        studentNumber: studentId, 
       });
 
       if (status !== 200) throw new Error("로그인 실패");

@@ -3,6 +3,7 @@ import { protectedLoader } from "../../../../packages/router/protectedLoader";
 
 import Home from "../pages/home";
 import Auth from "../pages/Auth";
+import SocialRedirect from "@/pages/Auth/SocialRedirect";
 import Support from "../pages/cheer";
 import View from "../pages/farminglog/view";
 import Create from "../pages/farminglog/create";
@@ -32,4 +33,8 @@ export const router = createBrowserRouter([
     loader: protectedLoader,
     element: <Create />,
   },
+  {
+    path: '/auth/redirect',
+    element: <SocialRedirect />,
+ },
 ]);
