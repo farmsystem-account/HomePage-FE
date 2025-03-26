@@ -7,7 +7,6 @@ export default function StepCheckName() {
   const { isMobile } = useMediaQueries();
 
   const handleConfirm = () => {
-    // 백엔드 인증 처리 후
     setStep('complete');
   };
 

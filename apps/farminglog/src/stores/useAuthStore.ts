@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, combine } from 'zustand/middleware';
 
 type AuthStep =
   | 'start'
@@ -8,33 +9,39 @@ type AuthStep =
   | 'not-member'
   | 'complete';
 
-interface AuthStore {
+interface AuthState {
   step: AuthStep;
   studentId: string;
   userName: string;
   errorMessage: string | null;
-  setStep: (step: AuthStep) => void;
-  setStudentId: (id: string) => void;
-  setUserName: (name: string) => void;
-  setErrorMessage: (msg: string | null) => void;
-  reset: () => void;
 }
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  step: 'start',
-  studentId: '',
-  userName: '',
-  errorMessage: null,
-  setStep: (step) => set({ step }),
-  setStudentId: (studentId) => set({ studentId }),
-  setUserName: (userName) => set({ userName }),
-  setErrorMessage: (msg) => set({ errorMessage: msg }),
-  reset: () =>
-    set({
-      step: 'start',
-      studentId: '',
-      userName: '',
-      errorMessage: null,
-    }),
-}));
-
+export const useAuthStore = create(
+  persist(
+    combine<AuthState, any>(
+      {
+        step: 'start',
+        studentId: '',
+        userName: '',
+        errorMessage: null,
+      },
+      (set) => ({
+        setStep: (step: AuthStep) => set({ step }),
+        setStudentId: (studentId: string) => set({ studentId }),
+        setUserName: (userName: string) => set({ userName }),
+        setErrorMessage: (msg: string | null) => set({ errorMessage: msg }),
+        reset: () =>
+          set({
+            step: 'start',
+            studentId: '',
+            userName: '',
+            errorMessage: null,
+          }),
+      })
+    ),
+    {
+      name: 'auth-storage', 
+      partialize: (state) => ({ studentId: state.studentId }), 
+    }
+  )
+);
