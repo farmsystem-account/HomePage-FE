@@ -14,6 +14,7 @@ interface AuthState {
   studentId: string;
   userName: string;
   errorMessage: string | null;
+  errorTitle: string | null; 
 }
 
 export const useAuthStore = create(
@@ -24,12 +25,14 @@ export const useAuthStore = create(
         studentId: '',
         userName: '',
         errorMessage: null,
+        errorTitle: null,
       },
       (set) => ({
         setStep: (step: AuthStep) => set({ step }),
         setStudentId: (studentId: string) => set({ studentId }),
         setUserName: (userName: string) => set({ userName }),
         setErrorMessage: (msg: string | null) => set({ errorMessage: msg }),
+        setErrorTitle: (title: string | null) => set({ errorTitle: title }),
         reset: () =>
           set({
             step: 'start',
