@@ -1,7 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import { protectedLoader } from "../../../../packages/router/protectedLoader";
-// import { protectedLoader } from "@/repo/router/protectedLoader";-> 왜 안되는 것이냐
-
+import { protectedLoader } from "@repo/router/protectedLoader";
 
 import Layout from "@/components/Layout";
 
