@@ -52,8 +52,6 @@ export const Wrapper = styled.div`
   position: relative; 
   align-items: center;
   justify-content: center;
-  //백그라운드 컬러 없애기
-  background: linear-gradient(135deg, #4ade80, #14b8a6);
 `;
 
 

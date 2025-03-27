@@ -113,6 +113,9 @@ importers:
       '@repo/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@repo/router':
+        specifier: workspace:*
+        version: link:../../packages/router
 
   apps/website:
     dependencies:
@@ -197,6 +200,12 @@ importers:
         version: link:../config
 
   packages/config: {}
+
+  packages/router:
+    devDependencies:
+      '@repo/config':
+        specifier: workspace:*
+        version: link:../config
 
 packages:
 

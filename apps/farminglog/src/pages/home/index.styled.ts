@@ -10,6 +10,4 @@ export const MainContainer = styled.div<{$isApp: boolean, $isMobile: boolean }>`
     justify-content: flex;
     align-items: flex-start;
     gap: 72px;
-
-    background: gray;
-`;
+    `;

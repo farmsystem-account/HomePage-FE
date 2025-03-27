@@ -21,9 +21,8 @@ export const FarmingLogEditorContainer = styled.div<ResponsiveProps>`
   justify-content: center;
   align-items: center;
   gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
- 
+  // background: linear-gradient(135deg, #4ade80, #14b8a6);
   border-radius: 5px;
-  background: var(--FarmSystem_White, #FCFCFC);
 `;
 
 export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
