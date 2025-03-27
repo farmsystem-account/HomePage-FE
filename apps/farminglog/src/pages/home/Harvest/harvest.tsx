@@ -1,3 +1,46 @@
+// 출석 API 훅 사용 방법 입니다!!
+//   참고해서 코드 다시 수정해주세요! 
+// import { useAttendMutation } from '../../../services/mutation/useAttendMutation'; 
+
+// export default function Harvest() {
+//   const { isMobile, isTablet } = useMediaQueries();
+
+//   const { mutate: attend, isSuccess, isError } = useAttendMutation();
+
+//   ...
+
+//   // 버튼 클릭 시 상태 토글 + 출석 API 호출
+//   const toggleClear = (index: number) => {
+//     // index가 0번이면 출석 버튼 → 출석 API 호출
+//     if (index === 0) {
+//       attend(); // 출석하기 API 호출
+//     }
+
+//     setClearStates((prev) => {
+//       const newState = [...prev];
+//       const newVal = !newState[index];
+//       newState[index] = newVal;
+
+//       if (newVal) {
+//         setAnimateSprouts((prevSprouts) => {
+//           const newSprouts = [...prevSprouts];
+//           newSprouts[index] = true;
+//           return newSprouts;
+//         });
+//         setTimeout(() => {
+//           setAnimateSprouts((prevSprouts) => {
+//             const newSprouts = [...prevSprouts];
+//             newSprouts[index] = false;
+//             return newSprouts;
+//           });
+//         }, 1000);
+//       }
+
+//       return newState;
+//     });
+//   };
+
+
 import { useState } from "react";
 import useMediaQueries from "../../../../../website/src/hooks/useMediaQueries";
 import terminal from "@/assets/home/terminal.png";
