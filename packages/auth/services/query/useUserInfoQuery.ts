@@ -10,7 +10,7 @@ export const useUserInfoQuery = () => {
   return useQuery({
     queryKey: ['userInfo'],
     queryFn: async () => {
-      const res: ApiResponse<UserInfo> = await get('/api/user/mypage');
+      const res: ApiResponse<UserInfo> = await get('/user/mypage');
       setUser(res.data); 
       return res.data;
     },
