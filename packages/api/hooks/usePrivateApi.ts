@@ -44,7 +44,7 @@ import { getClientSideTokens } from '../utils/getClientSideTokens';
 import { useReissueAccessTokenMutation } from "../services/mutation/useReissueAccessTokenMutation"; 
 
 
-export function useApi() {
+export function usePrivateApi() {
   const navigate = useNavigate();
   const reissueToken = useReissueAccessTokenMutation(); 
 

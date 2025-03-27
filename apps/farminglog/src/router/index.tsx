@@ -4,12 +4,12 @@ import { protectedLoader } from "@repo/router/protectedLoader";
 import Layout from "@/components/Layout";
 
 import Home from "@/pages/home";
-import Auth from "@/pages/Auth";
-import SocialRedirect from "@/pages/Auth/SocialRedirect";
+import Auth from "@/pages/auth";
+import SocialRedirect from "@/pages/auth/SocialRedirect";
 import Cheer from "@/pages/cheer";
 import View from "@/pages/farminglog/view";
 import Create from "@/pages/farminglog/create";
-import Mypage from "@/pages/MyPage";
+import Mypage from "@/pages/myPage";
 import Ranking from "@/pages/home/Ranking/ranking";
 
 export const router = createBrowserRouter([
