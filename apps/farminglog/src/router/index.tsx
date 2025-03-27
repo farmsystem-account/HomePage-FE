@@ -4,9 +4,11 @@ import { protectedLoader } from "../../../../packages/router/protectedLoader";
 import Home from "../pages/home";
 import Auth from "../pages/Auth";
 import SocialRedirect from "@/pages/Auth/SocialRedirect";
-import Support from "../pages/cheer";
+import Cheer from "../pages/cheer";
 import View from "../pages/farminglog/view";
 import Create from "../pages/farminglog/create";
+import Mypage from "../pages/MyPage";
+import Ranking from "@/pages/home/Ranking/ranking";
 
 export const router = createBrowserRouter([
   {
@@ -14,14 +16,18 @@ export const router = createBrowserRouter([
     element: <Auth />, 
   },
   {
+    path: '/auth/redirect',
+    element: <SocialRedirect />,
+ },
+  {
     path: "/home",
     loader: protectedLoader,
     element: <Home />,
   },
   {
-    path: "/support",
+    path: "/cheer",
     loader: protectedLoader,
-    element: <Support />,
+    element: <Cheer />,
   },
   {
     path: "/farminglog/view",
@@ -34,7 +40,13 @@ export const router = createBrowserRouter([
     element: <Create />,
   },
   {
-    path: '/auth/redirect',
-    element: <SocialRedirect />,
- },
+    path: "/mypage",
+    loader: protectedLoader,
+    element: <Mypage />,
+  }, 
+  {
+    path: "/ranking",
+    loader: protectedLoader,
+    element: <Ranking />,
+  },
 ]);
