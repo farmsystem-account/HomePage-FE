@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import styled from "styled-components";
 import useMediaQueries from "@/hooks/useMediaQueries";
-import Header from "./HeaderVar/Header";
+import Header from "./Header/Header";
 
 export default function Layout() {
   const { isMobile } = useMediaQueries();
