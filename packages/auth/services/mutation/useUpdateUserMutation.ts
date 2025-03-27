@@ -1,3 +1,5 @@
+// 마이페이지 사용자 정보 수정 api
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePrivateApi } from '@repo/api/hooks/usePrivateApi';
 import { useUserStore, UserInfo } from '../../stores/userStore';
@@ -17,7 +19,7 @@ export const useUpdateUserMutation = () => {
 
   return useMutation({
     mutationFn: async (payload: UpdateUserPayload) => {
-      const res = await patch<ApiResponse<UserInfo>>('/api/user/mypage', payload);
+      const res = await patch<ApiResponse<UserInfo>>('user/mypage', payload);
       return res.data; 
     },
     onSuccess: (updatedUser) => {
