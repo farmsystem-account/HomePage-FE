@@ -198,9 +198,6 @@ importers:
 
   packages/auth:
     devDependencies:
-      '@repo/api':
-        specifier: workspace:*
-        version: link:../api
       '@repo/config':
         specifier: workspace:*
         version: link:../config
