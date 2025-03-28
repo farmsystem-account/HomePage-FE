@@ -14,7 +14,7 @@ export default function Main() {
 
   return (
     <>
-      <DebugUser /> {/* ✅ 콘솔 디버깅용 */}
+      <DebugUser /> {/* 콘솔 디버깅용 */}
       {isApp ? <AppView /> : <WebView />}
     </>
   );
