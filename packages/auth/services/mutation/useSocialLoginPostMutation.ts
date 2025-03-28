@@ -15,24 +15,25 @@ interface TokenResponse {
 
 export const useSocialLoginPostMutation = () => {
   const { post } = usePublicApi();
-const { studentId, setToken } = useAuthStore();
+  const studentId = useAuthStore((state) => state.studentId);
+  const setToken = useAuthStore((state) => state.setToken);
 
   const mutation = useMutation<TokenResponse, Error, SocialLoginRequest>({
     mutationFn: async ({ code, socialType }) => {
-
       const { data, status } = await post<TokenResponse>("/auth/login", {
         code,
         socialType,
-        studentNumber: studentId, 
+        studentNumber: studentId,
       });
 
       if (status !== 200) throw new Error("로그인 실패");
 
       const { accessToken, refreshToken } = data;
 
-          setToken(accessToken);
-          
+      setToken(accessToken); // 여기서 더 이상 에러 안 남
+      
       //refreshToken: js-cookie 저장 (HttpOnly 아니여서 추후에 보안 조치 필요)
+
       Cookies.set("refreshToken", refreshToken, {
         secure: true,
         sameSite: "Strict",
