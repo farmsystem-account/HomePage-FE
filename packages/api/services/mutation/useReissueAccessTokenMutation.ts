@@ -1,5 +1,5 @@
 import { useMutation,UseMutationResult } from "@tanstack/react-query";
-import { useAuthStore } from "../../../auth/stores/authStore";
+import { useAuthStore } from "@repo/auth/stores/useAuthStore";
 import { usePublicApi } from "../../hooks/usePublicApi";
 import { getClientSideTokens } from "../../utils/getClientSideTokens";
 

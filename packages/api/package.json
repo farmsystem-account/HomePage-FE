@@ -7,6 +7,7 @@
         "access": "public"
     },
     "devDependencies": {
-        "@repo/config": "workspace:*"
+        "@repo/config": "workspace:*",
+        "@repo/auth": "workspace:*"
     }
 }

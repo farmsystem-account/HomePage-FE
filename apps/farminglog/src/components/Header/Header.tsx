@@ -6,11 +6,14 @@ import CloseIcon from "../../assets/react.svg";
 import ProfileImage from "../../assets/home/default_profile.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
 
-const SeedCount = 678;
-const user = {
-  name: "팜하니",
-  profileImage: ProfileImage,
-};
+import { useUserStore } from "@repo/auth/stores/userStore"; // 사용자 상태 가져오기
+
+// 더미 데이터 (주석 처리했습니다!)
+// const SeedCount = 678;
+// const user = {
+//   name: "팜하니",
+//   profileImage: ProfileImage,
+// };
 
 const navItems = [
   { label: "홈", path: "/home" },
@@ -25,6 +28,8 @@ export default function Header() {
   const location = useLocation();
   const { isMobile, isTablet } = useMediaQueries();
 
+  const user = useUserStore((s) => s.user); // Zustand에서 유저 상태 가져오기
+
   const handleNavItemClick = (path?: string) => {
     if (path) navigate(path);
     setMenuOpen(false);
@@ -33,12 +38,18 @@ export default function Header() {
   const ProfileAndSeed = (
     <S.ProfileAndSeedContainer $isMobile={isMobile}>
       <S.ProfileContainer $isMobile={isMobile}>
-        <S.ProfileImage src={user.profileImage} alt={user.name} $isMobile={isMobile} />
-        <S.ProfileName $isMobile={isMobile}>{user.name}</S.ProfileName>
+        <S.ProfileImage
+          src={user?.profileImageUrl || ProfileImage} // 프로필 이미지 fallback 처리
+          alt={user?.name || "사용자"}
+          $isMobile={isMobile}
+        />
+        <S.ProfileName $isMobile={isMobile}>
+          {user?.name || "로그인 중..."}
+        </S.ProfileName>
       </S.ProfileContainer>
       <S.RecordCount $isMobile={isMobile}>
         <span className="seed-text">내 씨앗</span>
-        <span className="seed-count">{SeedCount}</span>
+        <span className="seed-count">{user?.totalSeed ?? 0}</span>
       </S.RecordCount>
     </S.ProfileAndSeedContainer>
   );
@@ -50,9 +61,7 @@ export default function Header() {
       </S.Logo>
 
       {isMobile ? (
-        <S.MobileHeader>
-          {ProfileAndSeed}
-        </S.MobileHeader>
+        <S.MobileHeader>{ProfileAndSeed}</S.MobileHeader>
       ) : (
         <>
           <S.NavWrapper>
@@ -78,7 +87,11 @@ export default function Header() {
       <S.MobileNavWrapper $isMenuOpen={isMenuOpen}>
         {isMobile && (
           <>
-            <S.CloseButton src={CloseIcon} alt="Close" onClick={() => setMenuOpen(false)} />
+            <S.CloseButton
+              src={CloseIcon}
+              alt="Close"
+              onClick={() => setMenuOpen(false)}
+            />
             <S.MobileNav>
               {navItems.map(({ label, path }) => (
                 <S.NavItem
