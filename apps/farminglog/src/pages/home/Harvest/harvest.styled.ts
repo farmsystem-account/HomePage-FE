@@ -28,6 +28,7 @@ export const MainText = styled.h1<{
 }>`
   font-size: 36px;
   font-weight: 600;
+  font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "34px" : $isTablet ? "38px" : "42px"};
   letter-spacing: -0.24px;
@@ -44,6 +45,7 @@ export const SubText = styled.p<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "14px" : $isTablet ? "15px" : "16px"};
   font-weight: 400;
+  font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "24px" : $isTablet ? "26px" : "30px"};
   letter-spacing: -0.24px;
@@ -87,6 +89,7 @@ export const StageButton = styled.div<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
   font-weight: 700;
+  font-family: "Pretendard Variable";
   line-height: 26px;
   letter-spacing: -0.24px;
 
@@ -131,6 +134,7 @@ export const ButtonLabel = styled.div<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "14px" : $isTablet ? "15px" : "16px"};
   text-align: center;
+  font-family: "Pretendard Variable";
 `;
 
 /** 평행사변형 버튼 */
@@ -172,6 +176,7 @@ box-shadow: ${({ $isActive }) =>
     gap: 6px;
 
     font-weight: bold;
+    font-family: "Pretendard Variable";
     color: #fff;
   }
 
@@ -193,6 +198,7 @@ export const Stage = styled.div<{
   font-size: ${({ $isMobile, $isTablet }) =>
   $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
   font-weight: 700;
+  font-family: "Pretendard Variable";
   line-height: 26px;
   letter-spacing: -0.24px;
 `;
@@ -226,6 +232,7 @@ export const GlobalSproutAnimation = styled.div`
   .sprout {
     position: absolute;
     font-size: 30px;
+    font-family: "Pretendard Variable";
     line-height: 30px;
     width: 30px;
     height: 30px;

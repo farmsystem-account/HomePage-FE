@@ -23,6 +23,7 @@ export const CheerContainer = styled.div<{
 export const CheerTitle = styled.h2`
   font-size: 36px;
   font-weight: 600;
+  font-family: "Pretendard Variable";
   margin-bottom: 24px;
 `;
 
@@ -89,15 +90,18 @@ export const CheerAvatar = styled.img<{$isMobile: boolean;}>`
 export const CheerReceiverText = styled.span<{$isMobile: boolean;}>`
   font-weight: 400;
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "18px")};
+  font-family: "Pretendard Variable";
   a{
     font-size: ${({ $isMobile }) => ($isMobile ? "18px" : "24px")};
     font-weight: 700;
+    font-family: "Pretendard Variable";
   }
 `;
 
 /** 중단 */
 export const CheerContent = styled.div<{$isMobile: boolean;}>`
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
+  font-family: "Pretendard Variable";
   color: #333;
   margin: ${({ $isMobile }) => ($isMobile ? "20px auto" : "50px auto")};
 
@@ -112,6 +116,7 @@ export const CheerContent = styled.div<{$isMobile: boolean;}>`
 /** 하단: 발신자 */
 export const CheerFooter = styled.div<{$isMobile: boolean;}>`
   font-size: 16px;
+  font-family: "Pretendard Variable";
   font-weight: 500;
   color: #999;
   text-align: center;
@@ -122,11 +127,13 @@ export const CheerFooter = styled.div<{$isMobile: boolean;}>`
   a{
     font-size: 16px;
     font-weight: 600;
+    font-family: "Pretendard Variable";
   }
 `;
 
 export const CheerColorText = styled.span<{ categoryColor?: string, $isMobile: boolean; }>`
   font-weight: 700;
+  font-family: "Pretendard Variable";
   font-size: ${({ $isMobile }) => ($isMobile ? "18px" : "24px")};
   color: ${({ categoryColor }) => categoryColor || "#333"};
 `;
