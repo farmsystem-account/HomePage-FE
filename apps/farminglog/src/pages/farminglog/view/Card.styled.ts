@@ -8,7 +8,13 @@ interface ResponsiveProps {
 
 export const FarmingLogCard = styled.div<ResponsiveProps>`
   display: flex;
-  width: ${({ $isApp, $isMobile }) => ($isApp ? '260px' : $isMobile ? '420px' : '700px')};
+
+  width: 100%;
+  max-width: ${({ $isApp, $isMobile }) =>
+    $isApp ? '260px' :
+    $isMobile ? '420px' :
+    '700px'};
+
   padding: ${({ $isApp }) => ($isApp ? '10px 5px' : '20px 10px')};
   flex-direction: column;
   align-items: center;
@@ -16,6 +22,7 @@ export const FarmingLogCard = styled.div<ResponsiveProps>`
   border-radius: 5px;
   border: 1px solid #DBDBDB;
 `;
+
 
 // 일단 사진 없이
 export const Thumbnail = styled.img`

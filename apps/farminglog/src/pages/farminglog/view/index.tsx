@@ -45,34 +45,36 @@ export default  function View() {
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
 
   return (
-    <S.FarmingLogContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-      <S.FarmingLogContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-        <S.GoBackButton $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-          <img src={GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton>
-        <S.FarmingLogContainerTitle  $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-          파밍 로그
-          </S.FarmingLogContainerTitle>
-      </S.FarmingLogContainerHeader>
-      <S.FarmingLogCardContainer  $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-        {dummyData.map((data, idx) => (
-          <Card key={idx} data={data} />
-        ))}
-      </S.FarmingLogCardContainer>
-      <S.FarmingLogWriteButton
-        $isApp={isApp}
-        $isMobile={isMobile}
-        $isDesktop={isDesktop}
-        onClick={() => navigate('/farminglog/create')}
-      >
-        <S.FarmingLogWriteButtonImage 
+    <S.MainContainer>
+      <S.FarmingLogContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+        <S.FarmingLogContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+          <S.GoBackButton $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+            <img src={GoBackImage} alt="뒤로가기" />
+          </S.GoBackButton>
+          <S.FarmingLogContainerTitle  $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+            파밍 로그
+            </S.FarmingLogContainerTitle>
+        </S.FarmingLogContainerHeader>
+        <S.FarmingLogCardContainer  $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+          {dummyData.map((data, idx) => (
+            <Card key={idx} data={data} />
+          ))}
+        </S.FarmingLogCardContainer>
+        <S.FarmingLogWriteButton
           $isApp={isApp}
           $isMobile={isMobile}
           $isDesktop={isDesktop}
-          src={EditImage} 
-          alt="글쓰기" 
-        />
-      </S.FarmingLogWriteButton>
-    </S.FarmingLogContainer>  
+          onClick={() => navigate('/farminglog/create')}
+        >
+          <S.FarmingLogWriteButtonImage 
+            $isApp={isApp}
+            $isMobile={isMobile}
+            $isDesktop={isDesktop}
+            src={EditImage} 
+            alt="글쓰기" 
+          />
+        </S.FarmingLogWriteButton>
+      </S.FarmingLogContainer>  
+    </S.MainContainer>
   );
 };

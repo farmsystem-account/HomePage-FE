@@ -1,29 +1,14 @@
 import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import { FarmingLog } from '@/models/farminglog';
 
 import Heart from '@/assets/Icons/heart.png';
 import HeartFill from '@/assets/Icons/heart-fill.png';
 import ChecvronRight from '@/assets/Icons/chevron-right.png';
 
-interface Data{
-  farmingLogId: number,
-  title: string,
-  // thumbnail?: string,
-  content: string,
-  category: string,
-  createdAt: string,
-  author: string,
-  profileImageUrl: string,
-  track: string,
-  generation: number,
-  isOwner: boolean,
-  isLiked: boolean,
-  likeCount: number
-}
-
 interface CardProps {
-  data: Data
+  data: FarmingLog;
 }
 
 export default function Card({ data }: CardProps) {
@@ -37,11 +22,13 @@ export default function Card({ data }: CardProps) {
   const { isApp, isMobile, isDesktop } = useMediaQueries();
 
   const handleLikeClick = () => {
-    if (liked) return; // 이미 좋아요 눌렀으면 무시
-  
-    setLiked(true);
-    setLikeCount(prev => prev + 1);
+    setLiked(prev => !prev);
     setClicked(true);
+    if (liked) {
+      setLikeCount(prev => prev - 1);
+    } else { 
+      setLikeCount(prev => prev + 1);
+    }
     setTimeout(() => setClicked(false), 300);
   };
 
