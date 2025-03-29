@@ -1,29 +1,9 @@
 import styled from "styled-components";
 
-// 전체 컨테이너
-export const CheerContainer = styled.div<{
-  $isMobile: boolean;
-  $isTablet: boolean;
-}>`
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 가운데 정렬 */
-
-  width: 100%;
-  max-width: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "90%" : $isTablet ? "90%" : "1200px"};
-  margin: 0 auto;
-  padding-top: 30px;
-  padding-bottom: 30px;
-
-  background: white;
-`;
-
 // 타이틀
 export const CheerTitle = styled.h2`
   font-size: 36px;
   font-weight: 600;
-  font-family: "Pretendard Variable";
   margin-bottom: 24px;
 `;
 
@@ -61,8 +41,8 @@ export const CheerCard = styled.div<{
 
   background-color: ${({ bgColor }) => bgColor || "#ffffff"};
   border-radius: 10px;
-  width: ${({ $isMobile }) => ($isMobile ? "320px" : "400px")};
-  height: ${({ $isMobile }) => ($isMobile ? "240px" : "300px")};
+  width: ${({ $isMobile }) => ($isMobile ? "320px" : "420px")};
+  height: ${({ $isMobile }) => ($isMobile ? "240px" : "280px")};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   overflow: hidden;
@@ -88,20 +68,19 @@ export const CheerAvatar = styled.img<{$isMobile: boolean;}>`
 
 /** 상단 텍스트 */
 export const CheerReceiverText = styled.span<{$isMobile: boolean;}>`
+  font-family: "Pretendard Variable";
   font-weight: 400;
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "18px")};
-  font-family: "Pretendard Variable";
   a{
     font-size: ${({ $isMobile }) => ($isMobile ? "18px" : "24px")};
     font-weight: 700;
-    font-family: "Pretendard Variable";
   }
 `;
 
 /** 중단 */
 export const CheerContent = styled.div<{$isMobile: boolean;}>`
-  font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
   font-family: "Pretendard Variable";
+  font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
   color: #333;
   margin: ${({ $isMobile }) => ($isMobile ? "20px auto" : "50px auto")};
 
@@ -116,8 +95,8 @@ export const CheerContent = styled.div<{$isMobile: boolean;}>`
 /** 하단: 발신자 */
 export const CheerFooter = styled.div<{$isMobile: boolean;}>`
   font-size: 16px;
-  font-family: "Pretendard Variable";
   font-weight: 500;
+  font-family: "Pretendard Variable";
   color: #999;
   text-align: center;
 

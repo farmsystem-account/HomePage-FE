@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router";
 import * as S from './ranking.styled'; // 실제 경로에 맞게 수정
 import useMediaQueries from '@/hooks/useMediaQueries';
 
@@ -6,7 +7,7 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import UpArrowImg from '@/assets/Icons/UpArrow.png';
 import FarmLogoImg from '@/assets/Icons/FarmSystem_Logo.png';
 import CrownImg from '@/assets/Icons/crown.png';
-import BalloonImg from '@/assets/Images/Balloon.png';
+// import BalloonImg from '@/assets/Images/Balloon.png';
 
 interface RankingData {
   rank: number;
@@ -26,6 +27,7 @@ const rankingData: RankingData[] = [
 ];
 
 export default function RankingPage() {
+  const navigate = useNavigate();
   const { isMobile, isApp, isTablet} = useMediaQueries();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -54,7 +56,7 @@ export default function RankingPage() {
         {/* 상단 영역 */}
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title>랭킹</S.Title>
-          <S.BackArrow src={UpArrowImg} alt="확대하기" />
+          <S.BackArrow src={UpArrowImg} alt="확대하기" onClick={() => navigate("/rankingDetail")}/>
         </S.TitleBox>
 
         {/* 랭킹 문구 */}
@@ -84,7 +86,7 @@ export default function RankingPage() {
             >
               {/* 선택된 아이템에만 풍선 표시 */}
               {selectedIndex === index && (
-                <S.Balloon src={BalloonImg} alt="말풍선" />
+                <></>
               )}
 
               <S.RankBox>

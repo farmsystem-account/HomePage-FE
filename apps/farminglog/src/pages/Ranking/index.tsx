@@ -1,12 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import * as S from './index.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import BackArrow from '../../assets/Icons/BackArrow.png';
-import Phrase from '../../assets/Images/RankingPhrase.png';
-import Phrase_App from '../../assets/Images/RankingPhrase_App.png';
+// import Phrase from '../../assets/Images/RankingPhrase.png';
+// import Phrase_App from '../../assets/Images/RankingPhrase_App.png';
 import FarmLogo from '../../assets/Icons/FarmSystem_Logo.png';
 import Crown from '../../assets/Icons/crown.png';
-import Balloon from '../../assets/Images/Balloon.png';
+// import Balloon from '../../assets/Images/Balloon.png';
+import Sign from '@/components/Ranking/sign';
+import CheerBalloon from './components/CheerBalloon';
+
+const headerTexts = [
+  '랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.',
+  '씨앗은 트랙별 우수활동자 심사에 반영돼요.',
+  '친구의 프로필을 눌러 응원할 수 있어요!'
+];
 
 const rankingData = [
   { rank: 4, name: '박파밍', track: '3기 보안/웹', score: 678, isMe: true },
@@ -20,6 +29,9 @@ const rankingData = [
 export default function Main() {
     const { isMobile, isApp } = useMediaQueries();
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
+    const balloonRef = useRef<HTMLDivElement>(null);
+
     // const listRef = useRef<HTMLDivElement>(null);
 
     const getBgColor = (rank: number) => {
@@ -30,17 +42,23 @@ export default function Main() {
     };
 
     useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-          const target = e.target as HTMLElement;
-          // 랭킹 아이템 내부에 'ranking-item' 클래스가 없으면 닫음
-          if (!target.closest('.ranking-item')) {
-            setSelectedIndex(null);
-          }
-        };
-      
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-      }, []);
+      const handleClickOutside = (e: MouseEvent) => {
+        console.log('클릭한 곳:', e.target);
+        const target = e.target as HTMLElement;
+    
+        // ranking-item도 아니고, cheer-balloon도 아니면 닫기
+        if (
+          !target.closest('.ranking-item') &&
+          !target.closest('.cheer-balloon')
+        ) {
+          setSelectedIndex(null);
+          setBalloonPosition(null); 
+        }
+      };
+    
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
       
   
     return (
@@ -50,7 +68,8 @@ export default function Main() {
             <S.BackArrow src={BackArrow} />
             <S.Title>랭킹</S.Title>
           </S.TitleBox>
-          <S.Phrase isApp={isApp} src={isApp ? Phrase_App : Phrase} />
+          <Sign isApp={isApp} isMobile={isMobile} texts={headerTexts} />
+          {/* <S.Phrase isApp={isApp} src={isApp ? Phrase_App : Phrase} /> */}
   
           <S.RankingTitle isApp={isApp}>
             <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>
@@ -66,12 +85,16 @@ export default function Main() {
                 bgColor={getBgColor(item.rank)}
                 isMe={item.isMe}
                 isApp={isApp}
-                onClick={() => setSelectedIndex(index)}
+                onClick={(e) => {
+                  setSelectedIndex(index);
+                  setBalloonPosition({
+                    x: e.pageX - 105,
+                    y: e.pageY - 115,
+                  });
+                }}                
               >
-                {/* 풍선 이미지 조건부 렌더링 */}
-                {selectedIndex === index && (
-                  <S.Balloon src={Balloon} alt="말풍선" />
-                )}
+                
+
   
                 <S.RankBox>
                   <S.RankNumber isApp={isApp}>{item.rank}</S.RankNumber>
@@ -90,6 +113,26 @@ export default function Main() {
               </S.RankingItem>
             ))}
           </S.RankingList>
+          {/* 풍선 이미지 조건부 렌더링 */}
+          <AnimatePresence>
+          {selectedIndex !== null && balloonPosition && (
+                  <CheerBalloon
+                    ref={balloonRef} 
+                    isApp={isApp}
+                    x={balloonPosition.x}
+                    y={balloonPosition.y}
+                    onClose={() => setSelectedIndex(null)}
+                    onCheerClick={() => {
+                      console.log('응원하기 클릭');
+                      setSelectedIndex(null);
+                    }}
+                    onProfileClick={() => {
+                      console.log('프로필 보기 클릭');
+                      setSelectedIndex(null);
+                    }}
+                  />
+                )}
+          </AnimatePresence>
         </S.ProfileWrapper>
       </S.MyPageContainer>
     );

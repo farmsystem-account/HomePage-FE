@@ -7,10 +7,12 @@ import Home from "@/pages/home";
 import Auth from "@/pages/auth";
 import SocialRedirect from "@/pages/auth/SocialRedirect";
 import Cheer from "@/pages/cheer";
+import CheerWrite from "@/pages/cheer/write/";
 import View from "@/pages/farminglog/view";
 import Create from "@/pages/farminglog/create";
 import Mypage from "@/pages/myPage";
 import Ranking from "@/pages/home/Ranking/ranking";
+import RankingDetail from "@/pages/Ranking";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,11 @@ export const router = createBrowserRouter([
         element: <Cheer />,
       },
       {
+        path: "/cheer/write",
+        loader: protectedLoader,
+        element: <CheerWrite />,
+      },
+      {
         path: "/farminglog/view",
         loader: protectedLoader,
         element: <View />,
@@ -54,6 +61,11 @@ export const router = createBrowserRouter([
         path: "/ranking",
         loader: protectedLoader,
         element: <Ranking />,
+      },
+      {
+        path: "/rankingDetail",
+        loader: protectedLoader,
+        element: <RankingDetail />,
       },
     ],
   },
