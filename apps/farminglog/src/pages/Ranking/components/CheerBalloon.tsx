@@ -15,12 +15,13 @@ interface CheerBalloonProps {
 
 // forwardRef 사용!
 const CheerBalloon = forwardRef<HTMLDivElement, CheerBalloonProps>(
-  ({ x, y, isApp, onClose, onCheerClick, onProfileClick }, ref) => {
+  ({ x, y, isApp, onCheerClick, onProfileClick }, ref) => {
     return (
       <S.BalloonWrapper
         as={motion.div}
         ref={ref}
         isApp={isApp}
+        isVisible={true} // or provide a dynamic value based on your logic
         style={{ top: y, left: x }}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

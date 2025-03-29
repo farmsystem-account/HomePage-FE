@@ -19,7 +19,7 @@ const navItems = [
   { label: "홈", path: "/home" },
   { label: "응원하기", path: "/cheer" },
   { label: "파밍로그", path: "/farminglog/view" },
-  { label: "랭킹", path: "/ranking" },
+  { label: "랭킹", path: "/rankingDetail" },
 ];
 
 export default function Header() {
@@ -42,6 +42,7 @@ export default function Header() {
           src={user?.profileImageUrl || ProfileImage} // 프로필 이미지 fallback 처리
           alt={user?.name || "사용자"}
           $isMobile={isMobile}
+          onClick={() => navigate("/mypage")}
         />
         <S.ProfileName $isMobile={isMobile}>
           {user?.name || "로그인 중..."}

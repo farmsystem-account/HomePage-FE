@@ -115,7 +115,7 @@ export default function Main() {
           </S.RankingList>
           {/* 풍선 이미지 조건부 렌더링 */}
           <AnimatePresence>
-          {balloonPosition && (
+          {selectedIndex !== null && balloonPosition && (
                   <CheerBalloon
                     ref={balloonRef} 
                     isApp={isApp}

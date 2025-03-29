@@ -8,7 +8,6 @@ import UpArrowImg from '@/assets/Icons/UpArrow.png';
 import FarmLogoImg from '@/assets/Icons/FarmSystem_Logo.png';
 import CrownImg from '@/assets/Icons/crown.png';
 // import BalloonImg from '@/assets/Images/Balloon.png';
-import CheerBalloon from '../../Ranking/components/CheerBalloon';
 
 interface RankingData {
   rank: number;
@@ -86,9 +85,9 @@ export default function RankingPage() {
               onClick={() => setSelectedIndex(index)}
             >
               {/* 선택된 아이템에만 풍선 표시 */}
-              {/* {selectedIndex === index && (
-                <S.Balloon src={BalloonImg} alt="말풍선" />
-              )} */}
+              {selectedIndex === index && (
+                <></>
+              )}
 
               <S.RankBox>
                 <S.RankNumber isApp={isApp}>{item.rank}</S.RankNumber>
