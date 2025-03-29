@@ -57,7 +57,7 @@ export default function Header() {
 
   return (
     <S.HeaderContainer $isMobile={isMobile}>
-      <S.Logo onClick={() => navigate("/")} $isMobile={isMobile} $isTablet={isTablet}>
+      <S.Logo onClick={() => navigate("/home")} $isMobile={isMobile} $isTablet={isTablet}>
         <img src={LogoImage} alt="파밍로그" />
       </S.Logo>
 
