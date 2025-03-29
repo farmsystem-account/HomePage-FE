@@ -76,6 +76,7 @@ const Logo = styled.img<{ $isMobile: boolean }>`
 `;
 
 const Text = styled.span<{ $isMobile: boolean }>`
+ font-family: 'Pretendard Variable';
   font-size: ${({ $isMobile }) => ($isMobile ? '13px' : '14px')};
   font-weight: 500;
 `;

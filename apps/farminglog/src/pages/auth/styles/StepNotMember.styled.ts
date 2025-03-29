@@ -34,6 +34,7 @@ export const Title = styled.h2<ResponsiveProps>`
 export const SubTitle = styled.p<ResponsiveProps>`
   color: #2e2e2e;
   font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
+  margin-top: 0.7rem;
   font-family: 'Pretendard Variable';
   font-weight: 500;
   line-height: ${({ $isMobile }) => ($isMobile ? '18px' : '36px')};
@@ -54,7 +55,7 @@ export const Button = styled.button<ResponsiveProps>`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: ${({ $isMobile }) => ($isMobile ? '20px' : '25px')};
+  margin-top: ${({ $isMobile }) => ($isMobile ? '30px' : '48px')};
 `;
 
 export const ErrorMessage = styled.p<ResponsiveProps>`

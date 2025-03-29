@@ -8,7 +8,7 @@ interface ResponsiveProps {
 export const Container = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
-  gap: ${({ $isMobile }) => ($isMobile ? '2.2rem' : '4rem')};
+  gap: ${({ $isMobile }) => ($isMobile ? '0.2rem' : '1.5rem')};
   align-items: center;
   width: 100%;
 `;
@@ -31,6 +31,7 @@ export const Title = styled.h2<ResponsiveProps>`
 `;
 
 export const SubTitle = styled.p<ResponsiveProps>`
+  margin-top: 1.5rem;
   color: #2e2e2e;
   font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
   font-family: 'Pretendard Variable';
@@ -40,30 +41,11 @@ export const SubTitle = styled.p<ResponsiveProps>`
   text-align: center;
 `;
 
-export const ButtonGroup = styled.div<ResponsiveProps>`
+export const ButtonContainer = styled.div<ResponsiveProps>`
   display: flex;
-  flex-direction: row;
-  gap: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
-  justify-content: center;
+  flex-direction: column;
+  gap: ${({ $isMobile }) => ($isMobile ? '1rem' : '1.2rem')};
+  justify-content: space-between;
   align-items: center;
-  margin-top: ${({ $isMobile }) => ($isMobile ? '1rem' : '2rem')};
-`;
-
-
-export const ConfirmButton = styled.button<ResponsiveProps>`
-  width: ${({ $isMobile }) => ($isMobile ? '200px' : '360px')};
-  height: ${({ $isMobile }) => ($isMobile ? '36px' : '50px')};
-  background-color: #29d4a7;
-  color: #fcfcfc;
-  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '18px')};
-  font-family: 'Pretendard Variable';
-  font-weight: 700;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-export const CancelButton = styled(ConfirmButton)`
-  background-color: #e0e0e0;
-  color: #333;
-`;
+  margin-top: ${({ $isMobile }) => ($isMobile ? '1.5rem' : '3rem')};
+`
