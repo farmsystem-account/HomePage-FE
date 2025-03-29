@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { usePrivateApi } from '@repo/api/hooks/usePrivateApi';
+import { usePrivateApi } from "@repo/api/hooks/usePrivateApi";
 
 export interface UserInfo {
   userId: number;
@@ -21,10 +21,10 @@ export const useUserSuggestQuery = (query: string) => {
   return useQuery<SuggestResponse>({
     queryKey: ["user-suggest", query],
     queryFn: async (): Promise<SuggestResponse> => {
-      const { data, status } = await get<SuggestResponse>("/user/suggest", { query }); // ✅ 타입 지정
+      const { data, status } = await get<SuggestResponse>("/user/suggest", { query });
       if (status !== 200) throw new Error("추천 실패");
       return data;
     },
-    enabled: !!query,
+    enabled: Boolean(query),
   });
 };
