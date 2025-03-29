@@ -31,19 +31,19 @@ export const CheerContainer = styled.div<ResponsiveProps>`
   margin: 0 auto;
 
   /* 앱인 경우 padding을 추가로 주고 싶다면 */
-  padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
+  padding: ${({ $isMobile }) => ($isMobile ? '20px 15px 0px 15px' : '')};
 `;
 
 /* ====== 헤더 ====== */
 export const CheerContainerHeader = styled.div<ResponsiveProps>`
   width: 100%;
-  height: ${({ $isApp }) => ($isApp ? '40px' : '80px')};
+  height: ${({ $isMobile }) => ($isMobile ? '40px' : '80px')};
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
 
-  ${({ $isApp }) =>
-    !$isApp &&
+  ${({ $isMobile }) =>
+    !$isMobile &&
     `
     background: #FCFCFC;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -135,9 +135,9 @@ interface CategoryItemProps {
 
 export const CategoryItem = styled.div<CategoryItemProps & ResponsiveProps>`
 
-  width: 90px;
+  width: ${({ $isApp }) => ($isApp ? '50px' : '90px')};
   text-align: center;
-  padding: ${({ $isApp }) => ($isApp ? '5px 8px' : '10px 15px')};
+  padding: ${({ $isApp }) => ($isApp ? '2px 4px' : '10px 15px')};
   border-radius: ${({ $isApp }) => ($isApp ? '10px' : '20px')};
   cursor: pointer;
 
