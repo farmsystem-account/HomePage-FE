@@ -1,19 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import Cookies from 'js-cookie';
-
+import { usePublicApi } from '@repo/api/hooks/usePublicApi';
 import { useAuthStore } from '@repo/auth/stores/useAuthStore';
-import { useSocialLoginApi } from '@/services/api/socialLogin'; 
-
 import LoadingSkeleton from '@/components/Skeleton/LoadingSkeleton';
 
 export default function SocialRedirect() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { loginWithSocial } = useSocialLoginApi(); 
-  const { studentId, setToken } = useAuthStore((s) => s);
+  const { post } = usePublicApi();
+  const { studentId, setToken } = useAuthStore();
+  const hasCalled = useRef(false); //중복 호출 제발 그만 멈춰
 
   useEffect(() => {
+    if (hasCalled.current) return;
+    hasCalled.current = true;
+
     const code = params.get('code');
     const provider = (params.get('state') || params.get('provider'))?.toUpperCase();
 
@@ -24,14 +26,19 @@ export default function SocialRedirect() {
 
     const login = async () => {
       try {
-        const { accessToken, refreshToken } = await loginWithSocial({
+        const { data, status } = await post<{ accessToken: string; refreshToken: string }>('/auth/login', {
           code,
           socialType: provider,
           studentNumber: studentId,
         });
 
-        setToken(accessToken);
-        Cookies.set('refreshToken', refreshToken, {
+        if (status !== 200) {
+          navigate('/?error=login_failed');
+          return;
+        }
+
+        setToken(data.accessToken);
+        Cookies.set('refreshToken', data.refreshToken, {
           secure: true,
           sameSite: 'Strict',
         });
@@ -39,35 +46,32 @@ export default function SocialRedirect() {
         navigate('/home');
       } catch (err: any) {
         const status = err?.response?.status;
-        switch (status) {
-          case 404:
-            navigate('/?error=not-found');
-            break;
-          case 409:
-            navigate('/?error=conflict');
-            break;
-          case 500:
-            navigate('/?error=server-error');
-            break;
-          default:
-            navigate('/?error=unknown');
+
+        if (status === 404) {
+          navigate('/?status=not-member');
+        } else if (status === 409) {
+          navigate('/?error=conflict');
+        } else if (status === 500) {
+          alert("로그인 중 문제가 발생했습니다.\n다시 로그인 해주세요.");
+          navigate('/');
+        } else {
+          alert("로그인 중 문제가 발생했습니다.\n계속 안되면 운영진에게 문의해주세요!");
+          navigate('/');
         }
       }
     };
 
     login();
-  }, [params, navigate, loginWithSocial, setToken, studentId]);
+  }, [params, navigate, post, setToken, studentId]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        width: '100%',
-      }}
-    >
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100%',
+    }}>
       <LoadingSkeleton />
     </div>
   );
