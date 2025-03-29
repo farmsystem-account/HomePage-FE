@@ -2,6 +2,7 @@ import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { FarmingLog } from '@/models/farminglog';
+import { useToggleLikeMutation } from '@/services/mutation/FarmingLog';
 
 import Heart from '@/assets/Icons/heart.png';
 import HeartFill from '@/assets/Icons/heart-fill.png';
@@ -20,10 +21,13 @@ export default function Card({ data }: CardProps) {
   const [clicked, setClicked] = useState(false);
 
   const { isApp, isMobile, isDesktop } = useMediaQueries();
+  const { mutate: toggleLikeMutate } = useToggleLikeMutation();
 
   const handleLikeClick = () => {
     setLiked(prev => !prev);
     setClicked(true);
+    toggleLikeMutate(data.farmingLogId);
+
     if (liked) {
       setLikeCount(prev => prev - 1);
     } else { 

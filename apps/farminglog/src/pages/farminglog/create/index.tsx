@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './index.styled';
+import { FarmingLogCategory } from '@/models/farminglog';
 
 
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
 // import FilePlus from '@/assets/icons/file-plus.png';
 
-const categoryList = ['세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'] as const;
+const categoryList = ['세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'];
 
 export default function Editor() {
   const [titleInput, setTitleInput] = useState('');
@@ -16,7 +17,7 @@ export default function Editor() {
   const [contentCount, setContentCount] = useState(0);
 
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [dropDownSelected, setDropDownSelected] = useState<'카테고리' | typeof categoryList[number]>('카테고리');
+  const [dropDownSelected, setDropDownSelected] = useState<'카테고리' | FarmingLogCategory | string>('카테고리');
 
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
 

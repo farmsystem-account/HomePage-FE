@@ -1,8 +1,12 @@
+export enum FarmingLogCategory {
+  '세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'
+}
+
 export interface FarmingLog {
   farmingLogId: number,
   title: string,
   content: string,
-  category: string,
+  category: FarmingLogCategory,
   createdAt: string,
   author: string,
   profileImageUrl: string,
