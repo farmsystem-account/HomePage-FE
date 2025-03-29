@@ -7,21 +7,30 @@ interface ResponsiveProps {
   $isDesktop?: boolean;
 }
 
+export const MainContainer = styled.div<ResponsiveProps>`
+  display: flex;
+  padding-top: 50px;
+  padding-bottom: 100px;
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 export const FarmingLogEditorContainer = styled.div<ResponsiveProps>`
   width: ${({ 
     $isApp, $isMobile, 
     $isTablet, $isDesktop 
   }) => ($isApp ? '290px' : $isMobile ? '400' : $isTablet ? '800px' : $isDesktop ? '800px' : '1200px')};
-  height: screen;
+  height: 90vh;
   padding: 15px 12px 0px 13px;
   // padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
-  // background: linear-gradient(135deg, #4ade80, #14b8a6);
+  background: var(--FarmSystem_White, #FCFCFC);
   border-radius: 5px;
 `;
 
@@ -291,6 +300,49 @@ export const TextArea = styled.textarea`
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: -0.24px;
+`;
+
+export const ButtonContainer = styled.div<ResponsiveProps>`
+  max-width: 100%;
+  display: flex;
+  width: 100%;
+  padding: 5px 0px;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
+`;
+
+export const GoBackButton = styled.button<ResponsiveProps>`
+  display: flex;
+  padding: 5px 18.5px 5px 20.5px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  background: var(--FarmSystem_DarkGrey, #999);
+  box-shadow: 0px 2px 10px 0px rgba(25, 25, 25, 0.20);
+`;
+
+export const CreateButton = styled.button<ResponsiveProps>`
+  display: flex;
+  padding: 5px 17.5px 5px 18.5px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  background: #5CD282;
+  box-shadow: 0px 2px 10px 0px rgba(25, 25, 25, 0.20);
+`;
+
+export const ButtonEnnerText = styled.p<ResponsiveProps>`
+  color: var(--FarmSystem_White, #FCFCFC);
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
   line-height: 20px; /* 166.667% */
   letter-spacing: -0.24px;
 `;

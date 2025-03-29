@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './index.styled';
 import { FarmingLogCategory } from '@/models/farminglog';
+import { useCreateFarmingLogMutation } from '@/services/mutation/FarmingLog';
 
 
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
-// import FilePlus from '@/assets/icons/file-plus.png';
 
 const categoryList = ['세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'];
 
@@ -19,7 +20,39 @@ export default function Editor() {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [dropDownSelected, setDropDownSelected] = useState<'카테고리' | FarmingLogCategory | string>('카테고리');
 
+  const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const { mutate: createFarmingLogMutate } = useCreateFarmingLogMutation();
+
+  const handleCreateFarmingLog = () => {
+    console.log('제목:', titleInput);
+    console.log('내용:', contentInput);
+    console.log('카테고리:', dropDownSelected);
+    if (titleCount < 0 || titleCount > 20) {
+      alert('제목은 1자 이상 20자 이하로 작성해주세요.');
+      return;
+    }
+    if ((contentCount < 100 && contentCount > 0) || contentCount > 300) {
+      alert('내용은 100자 이상, 300자 이하로 작성해주세요.');
+      return;
+    }
+
+    if (dropDownSelected === '카테고리') {
+      alert('카테고리를 선택해주세요.');
+      return;
+    }
+
+    createFarmingLogMutate({
+      title: titleInput,
+      content: contentInput,
+      category: dropDownSelected as FarmingLogCategory,
+    });
+  navigate('/farminglog/view');
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   const toggleDropdown = () => {
     setIsDropDownOpen((prev) => !prev);
@@ -37,6 +70,7 @@ export default function Editor() {
   }
 
   return (
+    <S.MainContainer>
     <S.FarmingLogEditorContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
       {/* Header 섹션 */}
       <S.FarmingLogEditorContainerHeader $isApp={isApp} $isMobile={isMobile}>
@@ -126,6 +160,15 @@ export default function Editor() {
           </S.InputAndTextContainer>
         </S.ContentContainer>
       </S.FarmingLogCard>
+      <S.ButtonContainer $isApp={isApp} $isMobile={isMobile}>
+        <S.GoBackButton onClick={handleGoBack}>
+          <S.ButtonEnnerText>돌아가기</S.ButtonEnnerText>
+        </S.GoBackButton>
+        <S.CreateButton onClick={handleCreateFarmingLog}>
+          <S.ButtonEnnerText>작성 완료</S.ButtonEnnerText>
+        </S.CreateButton>
+      </S.ButtonContainer>
     </S.FarmingLogEditorContainer>
+    </S.MainContainer>
   );
 };
