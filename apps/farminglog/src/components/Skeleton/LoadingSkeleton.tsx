@@ -33,8 +33,3 @@ const SpinningLogo = styled.img`
   animation: ${rotate} 2s linear infinite;
 `;
 
-const Text = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-  color: #666;
-`;
