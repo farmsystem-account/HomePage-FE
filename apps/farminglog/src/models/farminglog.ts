@@ -1,6 +1,23 @@
 export enum FarmingLogCategory {
-  '세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'
+  SEMINAR = '세미나',
+  PROJECT = '프로젝트',
+  STUDY = '스터디',
+  HACKATHON = '해커톤',
+  REVIEW = '후기',
+  LECTURE = '강연',
+  ETC = '기타',
 }
+
+export const FarmingLogCategoryLabel: Record<FarmingLogCategory, string> = {
+  [FarmingLogCategory.SEMINAR]: '세미나',
+  [FarmingLogCategory.PROJECT]: '프로젝트',
+  [FarmingLogCategory.STUDY]: '스터디',
+  [FarmingLogCategory.HACKATHON]: '해커톤',
+  [FarmingLogCategory.REVIEW]: '후기',
+  [FarmingLogCategory.LECTURE]: '강연',
+  [FarmingLogCategory.ETC]: '기타',
+};
+
 
 export interface FarmingLog {
   farmingLogId: number,

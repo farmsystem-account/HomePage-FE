@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './index.styled';
-import { FarmingLogCategory } from '@/models/farminglog';
+import { FarmingLogCategory, FarmingLogCategoryLabel } from '@/models/farminglog';
 import { useCreateFarmingLogMutation } from '@/services/mutation/FarmingLog';
 
 
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
 
-const categoryList = ['세미나', '프로젝트', '스터디', '해커톤', '후기', '강연'];
+const categoryList = Object.values(FarmingLogCategory);
 
 export default function Editor() {
   const [titleInput, setTitleInput] = useState('');
@@ -18,7 +18,7 @@ export default function Editor() {
   const [contentCount, setContentCount] = useState(0);
 
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [dropDownSelected, setDropDownSelected] = useState<'카테고리' | FarmingLogCategory | string>('카테고리');
+  const [dropDownSelected, setDropDownSelected] = useState<FarmingLogCategory | null>(null);
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
@@ -27,17 +27,17 @@ export default function Editor() {
   const handleCreateFarmingLog = () => {
     console.log('제목:', titleInput);
     console.log('내용:', contentInput);
-    console.log('카테고리:', dropDownSelected);
+    console.log('카테고리:', dropDownSelected as FarmingLogCategory);
     if (titleCount < 0 || titleCount > 20) {
       alert('제목은 1자 이상 20자 이하로 작성해주세요.');
       return;
     }
-    if ((contentCount < 100 && contentCount > 0) || contentCount > 300) {
+    if (contentCount < 100 || contentCount > 300) {
       alert('내용은 100자 이상, 300자 이하로 작성해주세요.');
       return;
     }
 
-    if (dropDownSelected === '카테고리') {
+    if (dropDownSelected === null) {
       alert('카테고리를 선택해주세요.');
       return;
     }
@@ -99,18 +99,22 @@ export default function Editor() {
         <S.ContentContainer $isApp={isApp} $isMobile={isMobile}>
           <S.CategoryContainer onClick={toggleDropdown}>
             <S.CategorySelect $isApp={isApp}>
-              <S.CategoryText $isApp={isApp} $isMobile={isMobile}>{dropDownSelected}</S.CategoryText>
+              <S.CategoryText $isApp={isApp} $isMobile={isMobile}>
+                {dropDownSelected ? FarmingLogCategoryLabel[dropDownSelected] : '카테고리'}
+              </S.CategoryText>
               <img src={Polygon} alt="polygon" style={{width: "7px", height: "6px"}} />
             </S.CategorySelect>
             {isDropDownOpen && (
               <S.CategoryOptionContainer  $isApp={isApp}>
-                {categoryList.map((category, idx) => (
+                {categoryList.map((categoryKey) => (
                   <S.CategoryOption
-                    key={idx}
-                    onClick={() => setDropDownSelected(category)}
+                    key={categoryKey}
+                    onClick={() => {
+                      setDropDownSelected(categoryKey as FarmingLogCategory);
+                    }}
                     $isApp={isApp}
                   >
-                    {category}
+                    {FarmingLogCategoryLabel[categoryKey as FarmingLogCategory]}
                   </S.CategoryOption>
                 ))}
               </S.CategoryOptionContainer>
