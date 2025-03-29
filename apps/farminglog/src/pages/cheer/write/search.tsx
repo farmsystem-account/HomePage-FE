@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries'; 
 import * as S from './search.styled';
 import GoBackImage from '@/assets/Icons/corner-up-left.png'; 
-import searchIcon from '@/assets/icons/search_icon.png';
+import searchIcon from '../../../assets/Icons/search_icon.png';
 import profileIcon from '@/assets/icons/Seed.png';
 
 /** 검색 결과 항목 예시 인터페이스 */
