@@ -3,7 +3,7 @@ import * as S from './AppView.styles';
 import Notion from '../../../assets/Icons/Notion.png';
 import Github from '../../../assets/Icons/Github.png';
 import Seed from '../../../assets/Icons/Seed.png';
-import BackArrow from '../../../assets/Icons/BackArrow.png'; // ← 뒤로가기 아이콘
+import BackArrow from '../../../assets/Icons/BackArrow.png';
 
 export default function Main() {
   const [isEditView, setIsEditView] = useState(false);

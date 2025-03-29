@@ -11,6 +11,7 @@ import View from "@/pages/farminglog/view";
 import Create from "@/pages/farminglog/create";
 import Mypage from "@/pages/myPage";
 import Ranking from "@/pages/home/Ranking/ranking";
+import RankingDetail from "@/pages/Ranking";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,11 @@ export const router = createBrowserRouter([
         path: "/ranking",
         loader: protectedLoader,
         element: <Ranking />,
+      },
+      {
+        path: "/rankingDetail",
+        loader: protectedLoader,
+        element: <RankingDetail />,
       },
     ],
   },

@@ -116,6 +116,9 @@ importers:
       '@repo/router':
         specifier: workspace:*
         version: link:../../packages/router
+      framer-motion:
+        specifier: ^12.4.3
+        version: 12.5.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   apps/website:
     dependencies:
