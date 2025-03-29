@@ -5,6 +5,7 @@ import BackArrow from '../../../assets/Icons/BackArrow.png';
 import Notion from '../../../assets/Icons/Notion.png';
 import Github from '../../../assets/Icons/Github.png';
 import PhoneIcon from '../../../assets/Icons/PhoneIcon.png';
+import DefaultProfile from '../../../assets/home/default_profile.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
@@ -56,14 +57,17 @@ export default function WebView() {
         </S.SectionTitleBox>
 
         <S.ProfileCard isMobile={isMobile}>
-          <S.ProfileImage />
-          <S.ProfileInfo>
-            <S.RoleBox>
-              <S.Role>{user?.role}</S.Role>
-            </S.RoleBox>
-            <S.Name>{user?.name}</S.Name>
-          </S.ProfileInfo>
-        </S.ProfileCard>
+  <S.ProfileImage
+    src={user?.profileImageUrl || DefaultProfile}
+    alt={user?.name || "사용자"}
+  />
+  <S.ProfileInfo>
+    <S.RoleBox>
+      <S.Role>{user?.role}</S.Role>
+    </S.RoleBox>
+    <S.Name>{user?.name}</S.Name>
+  </S.ProfileInfo>
+</S.ProfileCard>
 
         {isEditing ? (
           <>

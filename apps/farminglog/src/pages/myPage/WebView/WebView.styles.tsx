@@ -86,14 +86,14 @@ export const ProfileCard = styled.div<{ isMobile: boolean }>`
   padding: 20px 40px;
 `;
 
-export const ProfileImage = styled.div`
+export const ProfileImage = styled.img`
   width: 84px;
   height: 84px;
-  background-color: #f0f0f0;
+  object-fit: cover;
   border-radius: 50%;
-  background-image: url('/plant-icon.png');
-  background-size: cover;
+  background-color: #f0f0f0;
 `;
+
 
 export const ProfileInfo = styled.div`
   display: flex;
