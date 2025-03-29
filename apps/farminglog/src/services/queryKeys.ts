@@ -30,9 +30,11 @@ export const queryKeys = {
 
     // 사용자 검색 쿼리 키 (동적 키)
     search: (query: string) => ["user", "search", query] as const,
+    // 사용자 추천 쿼리 키 (동적 키)
+    suggest: (query: string) => ['user', 'suggest', query]as const,
+
   },
   auth: {
-    // 인증 관련 쿼리 키 (동적 키)
     verify: (studentNumber: string) => ["auth", "verify", studentNumber] as const,
   },
 };
