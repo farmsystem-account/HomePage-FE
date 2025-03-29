@@ -30,7 +30,7 @@ export const useSocialLoginPostMutation = () => {
 
       const { accessToken, refreshToken } = data;
 
-      setToken(accessToken); // 여기서 더 이상 에러 안 남
+      setToken(accessToken); 
       
       //refreshToken: js-cookie 저장 (HttpOnly 아니여서 추후에 보안 조치 필요)
 
