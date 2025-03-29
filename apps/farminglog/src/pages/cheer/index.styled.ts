@@ -7,12 +7,11 @@ interface ResponsiveProps {
   $isDesktop?: boolean;
 }
 
-export const FarmingLogContainer = styled.div<ResponsiveProps>`
-  // 살려줘요... 반응형 너무 싫어요...
+export const CheerContainer = styled.div<ResponsiveProps>`
   width: ${({ 
     $isApp, $isMobile, 
     $isTablet, $isDesktop 
-  }) => ($isApp ? '290px' : $isMobile ? '400' : $isTablet ? '800px' : $isDesktop ? '800px' : '1200px')};
+  }) => ($isApp ? '290px' : $isMobile ? '400px' : $isTablet ? '780px' : $isDesktop ? '1000px' : '1200px')};
   height: screen;
   padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
   display: flex;
@@ -23,9 +22,10 @@ export const FarmingLogContainer = styled.div<ResponsiveProps>`
 
   border-radius: 5px;
   background: var(--FarmSystem_White, #FCFCFC);
+  margin: 0 auto;
 `;
 
-export const FarmingLogContainerHeader = styled.div<ResponsiveProps>`
+export const CheerContainerHeader = styled.div<ResponsiveProps>`
   width: 100%;
   height: ${({ $isApp }) => ($isApp ? '40px' : '80px')};
   display: grid;
@@ -38,7 +38,7 @@ export const FarmingLogContainerHeader = styled.div<ResponsiveProps>`
   `)}
 `;
 
-export const FarmingLogContainerTitle = styled.h1<ResponsiveProps>`
+export const CheerContainerTitle = styled.h1<ResponsiveProps>`
   grid-column: 2;
   color: #2E2E2E;
   text-align: center;
@@ -58,18 +58,32 @@ export const GoBackButton = styled.button<ResponsiveProps>`
   margin-left: ${({ $isApp }) => ($isApp ? '0px' : '25px')};
 `;
 
-export const FarmingLogCardContainer = styled.div<ResponsiveProps>`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
+export const CheerCardContainer = styled.div<ResponsiveProps>`
+  display: ${({ $isDesktop, $isTablet }) => ($isDesktop || $isTablet ? 'flex' : 'flex')};
+  flex-direction: ${({ $isDesktop, $isTablet }) =>
+    $isDesktop || $isTablet ? 'row' : 'column'};
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 30px;
 
-export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
+  & > * {
+    width: ${({ $isDesktop, $isTablet }) =>
+      $isDesktop || $isTablet ? '48%' : '100%'};
+  }
+  padding: ${({ $isDesktop, $isTablet }) =>
+      $isDesktop || $isTablet ? '0px 60px' : '0px 40px'};
+  padding-bottom: 40px;
+`;
+export const CheerWriteButton = styled.button<ResponsiveProps>`
   position: fixed;
   bottom: 40px;
-  right: 32px;
-  // bottom: ${({ $isApp, $isMobile }) => ($isApp ? '32px' : $isMobile ? '50px' : '70px')};
-  // right: ${({ $isApp, $isMobile }) => ($isApp ? '25px' : $isMobile ? '90px' : '180px')};
+  right: ${({ $isApp, $isMobile, $isTablet, $isDesktop }) => {
+  if ($isApp) return '16px';
+  if ($isMobile) return '24px';
+  if ($isTablet) return 'calc((100vw - 780px) / 2 + 20px)';
+  if ($isDesktop) return 'calc((100vw - 980px) / 2 + 20px)';
+  return '32px';
+}};
 
   display: flex;
   width: ${({ $isApp, $isMobile }) => ($isApp ? '45px' : $isMobile ? '55px' : '70px')};
@@ -84,7 +98,7 @@ export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
   background: #5CD282;
 `;
 
-export const FarmingLogWriteButtonImage = styled.img<ResponsiveProps>`
+export const CheerWriteButtonImage = styled.img<ResponsiveProps>`
   width: 20px;
   height: 20px;
   flex-shrink: 0;

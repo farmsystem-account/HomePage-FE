@@ -2,9 +2,9 @@ import * as S from './index.styled';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import CheerCard from './CheerCard';
-import Image from '../../../assets/Icons/FarmSystem_Logo.png';
+import Image from '../../assets/Icons/FarmSystem_Logo.png';
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
-import EditImage from '@/assets/Icons/edit-3.png';
+import Thumb from '@/assets/home/thumbs-up.png';
 
 export interface CheerData {
   id: number;
@@ -29,7 +29,7 @@ const cheerData: CheerData[] = [
       "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
     s_profile: Image,
     sender: "백합",
-    bgColor: "#FFF8E1", // 노란색 계열
+    bgColor: "#FFF9A5", // 노란색 계열
     fontColor: "#A49900", // '칭찬해요!' 폰트색
   },
   {
@@ -41,7 +41,7 @@ const cheerData: CheerData[] = [
       "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
     s_profile: Image,
     sender: "팜하니",
-    bgColor: "#E3F2FD", // 파란색 계열
+    bgColor: "#8FB7F2", // 파란색 계열
     fontColor: "#1D5AB2", // '감사해요!' 폰트색
   },
   {
@@ -60,6 +60,30 @@ const cheerData: CheerData[] = [
     id: 4,
     r_profile: Image,
     receiver: "이소은",
+    category: "칭찬해요!",
+    content:
+      "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
+    s_profile: Image,
+    sender: "백합",
+    bgColor: "#FFF9A5", // 노란색 계열
+    fontColor: "#A49900", // '칭찬해요!' 폰트색
+  },
+  {
+    id: 5,
+    r_profile: Image,
+    receiver: "이소은",
+    category: "감사해요!",
+    content:
+      "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
+    s_profile: Image,
+    sender: "팜하니",
+    bgColor: "#8FB7F2", // 파란색 계열
+    fontColor: "#1D5AB2", // '감사해요!' 폰트색
+  },
+  {
+    id: 6,
+    r_profile: Image,
+    receiver: "이소은",
     category: "응원해요!",
     content:
       "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
@@ -75,14 +99,14 @@ export default function Cheer() {
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
 
   return (
-    <S.FarmingLogContainer 
+    <S.CheerContainer 
       $isApp={isApp} 
       $isMobile={isMobile} 
       $isTablet={isTablet} 
       $isDesktop={isDesktop}
     >
       {/* 헤더 영역 */}
-      <S.FarmingLogContainerHeader 
+      <S.CheerContainerHeader 
         $isApp={isApp} 
         $isMobile={isMobile} 
         $isDesktop={isDesktop}
@@ -94,17 +118,17 @@ export default function Cheer() {
         >
           <img src={GoBackImage} alt="뒤로가기" />
         </S.GoBackButton>
-        <S.FarmingLogContainerTitle 
+        <S.CheerContainerTitle 
           $isApp={isApp} 
           $isMobile={isMobile} 
           $isDesktop={isDesktop}
         >
-          파밍 로그
-        </S.FarmingLogContainerTitle>
-      </S.FarmingLogContainerHeader>
+          응원하기
+        </S.CheerContainerTitle>
+      </S.CheerContainerHeader>
 
       {/* CheerCard 목록 */}
-      <S.FarmingLogCardContainer 
+      <S.CheerCardContainer 
         $isApp={isApp} 
         $isMobile={isMobile} 
         $isDesktop={isDesktop}
@@ -112,23 +136,23 @@ export default function Cheer() {
         {cheerData.map((cheer) => (
           <CheerCard key={cheer.id} cheer={cheer} />
         ))}
-      </S.FarmingLogCardContainer>
+      </S.CheerCardContainer>
 
       {/* 글쓰기 버튼 */}
-      <S.FarmingLogWriteButton
+      <S.CheerWriteButton
         $isApp={isApp}
         $isMobile={isMobile}
         $isDesktop={isDesktop}
-        onClick={() => navigate('/farminglog/create')}
+        onClick={() => navigate('/cheer/write')}
       >
-        <S.FarmingLogWriteButtonImage 
+        <S.CheerWriteButtonImage 
           $isApp={isApp}
           $isMobile={isMobile}
           $isDesktop={isDesktop}
-          src={EditImage} 
+          src={Thumb} 
           alt="글쓰기" 
         />
-      </S.FarmingLogWriteButton>
-    </S.FarmingLogContainer>  
+      </S.CheerWriteButton>
+    </S.CheerContainer>  
   );
 }
