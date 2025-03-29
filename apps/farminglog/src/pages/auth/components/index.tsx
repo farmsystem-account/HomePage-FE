@@ -2,10 +2,7 @@ import { ReactNode } from 'react';
 import * as S from '../styles/indexStyled';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useAuthStore } from '@repo/auth/stores/useAuthStore';
-import bgImage from '@/assets/logos/FarmingLog FarmingLog.png';
-
-//상태 확인용 추후 삭제 필요
-import { useEffect } from 'react';
+import bgImage from '@/assets/logos/FarmingLog.png';
 
 
 interface AuthPageLayoutProps {
@@ -18,33 +15,46 @@ const Auth = ({ children }: AuthPageLayoutProps) => {
 
   const isStart = step === 'start';
 
-  ////// 상태 확인용 추후 삭제 필요
-
-  const { setStep } = useAuthStore();
-
-  useEffect(() => {
-    setStep('start'); // 여기서 원하는 스텝으로 설정
-  }, []);
-
-  /////////
-
   return (
     <S.Wrapper>
-
       {!isStart && (
         <>
-  <S.FloatingBackgroundTop $isMobile={isMobile}>
-   <img src={bgImage} alt="loop-top-1" />
-   <img src={bgImage} alt="loop-top-2" />
-  </S.FloatingBackgroundTop>
+          <S.MovingTextBackground>
+            <S.ScrollingText $isMobile={isMobile}>
+              {Array.from({ length: 1000 }).map((_, i) => (
+                <img
+                  key={i}
+                  src={bgImage}
+                  alt="logo"
+                  style={{
+                    width: isMobile ? '180px' : '630px',
+                    marginRight: '40px',
+                    opacity: 0.8,
+                  }}
+                />
+              ))}
+            </S.ScrollingText>
+          </S.MovingTextBackground>
 
-  <S.FloatingBackgroundBottom $isMobile={isMobile}>
-   <img src={bgImage} alt="loop-btm-1" />
-   <img src={bgImage} alt="loop-btm-2" />
-  </S.FloatingBackgroundBottom>
-
+          <S.MovingTextBottom>
+            <S.ScrollingTextReverse $isMobile={isMobile}>
+              {Array.from({ length: 1000 }).map((_, i) => (
+                <img
+                  key={i}
+                  src={bgImage}
+                  alt="logo"
+                  style={{
+                    width: isMobile ? '180px' : '630px',
+                    marginRight: '40px',
+                    opacity: 0.8,
+                  }}
+                />
+              ))}
+            </S.ScrollingTextReverse>
+          </S.MovingTextBottom>
         </>
       )}
+  
 
       {isStart ? (
         // StepStart인 경우: Box 없음

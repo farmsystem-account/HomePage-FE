@@ -11,7 +11,7 @@ export default function StepCheckName() {
   };
 
   const handleBack = () => {
-    setErrorMessage('인증 실패! 입력한 정보를 확인해주세요.');
+    setErrorMessage('입력한 정보를 확인해주세요.');
     setStep('input');
   };
 

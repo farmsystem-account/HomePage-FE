@@ -4,6 +4,8 @@ import { useAuthStore } from '@repo/auth/stores/useAuthStore';
 import { useSocialLogin } from '@repo/auth/hooks/useSocialLogin';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
+import signIn from '@/assets/Icons/signIn.png';
+
 export default function StepStart() {
   const { setStep } = useAuthStore();
   const { handleLogin } = useSocialLogin();
@@ -29,6 +31,7 @@ export default function StepStart() {
         <S.Text $isMobile={isMobile}>회원인증 후 서비스를 이용할 수 있어요!</S.Text>
         <S.LinkWrapper onClick={() => setStep('input')} $isMobile={isMobile}>
           회원 인증하기
+            <img src={signIn} alt="signIn icon" style={{ width: isMobile ? '6.5px' : '9px', height: 'auto' }} />
         </S.LinkWrapper>
       </S.GapWrapper>
     </S.Container>
