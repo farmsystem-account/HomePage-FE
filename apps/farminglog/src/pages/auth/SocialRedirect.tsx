@@ -1,76 +1,74 @@
-import { useRef, useEffect, useMemo } from "react";
-import { useNavigate, useSearchParams } from "react-router";
-import { useSocialLoginPostMutation } from "@repo/auth/services/mutation/useSocialLoginPostMutation";
+import { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import Cookies from 'js-cookie';
 
-import LoadingSkeleton from "@/components/Skeleton/LoadingSkeleton";
+import { useAuthStore } from '@repo/auth/stores/useAuthStore';
+import { useSocialLoginApi } from '@/services/api/socialLogin'; 
+
+import LoadingSkeleton from '@/components/Skeleton/LoadingSkeleton';
 
 export default function SocialRedirect() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { mutate: login } = useSocialLoginPostMutation();
-
-    const isCalled = useRef(false); // 한 번만 호출되도록
-
-
-  const code = useMemo(() => params.get("code"), [params]);
-  const provider = useMemo(() => {
-    const raw = params.get("state") || params.get("provider");
-    return raw?.toUpperCase() as "KAKAO" | "GOOGLE" | undefined;
-  }, [params]);
+  const { loginWithSocial } = useSocialLoginApi(); 
+  const { studentId, setToken } = useAuthStore((s) => s);
 
   useEffect(() => {
-    if (!code || (provider !== "KAKAO" && provider !== "GOOGLE")) {
-      // console.error("소셜 로그인 파라미터 누락 또는 잘못됨");
-      navigate("/?error=invalid_params");
+    const code = params.get('code');
+    const provider = (params.get('state') || params.get('provider'))?.toUpperCase();
+
+    if (!code || (provider !== 'KAKAO' && provider !== 'GOOGLE')) {
+      navigate('/?error=invalid_params');
       return;
     }
 
-    isCalled.current = true;
+    const login = async () => {
+      try {
+        const { accessToken, refreshToken } = await loginWithSocial({
+          code,
+          socialType: provider,
+          studentNumber: studentId,
+        });
 
-    login(
-      { code, socialType: provider },
-      {
-        onSuccess: () => {
-          navigate("/home");
-        },
-        onError: (error: any) => {
-          const status = error?.response?.status;
-          // console.error("소셜 로그인 에러:", error);
+        setToken(accessToken);
+        Cookies.set('refreshToken', refreshToken, {
+          secure: true,
+          sameSite: 'Strict',
+        });
 
-          if (!status) {
-            navigate("/?error=network_or_unknown", { replace: true });
-            return;
-          }
-
-          switch (status) {
-            case 404:
-              navigate("/?error=not-found", { replace: true });
-              break;
-            case 409:
-              navigate("/?error=conflict", { replace: true });
-              break;
-            case 500:
-              navigate("/?error=server-error", { replace: true });
-              break;
-            default:
-              navigate("/?error=unknown", { replace: true });
-          }
-        },
+        navigate('/home');
+      } catch (err: any) {
+        const status = err?.response?.status;
+        switch (status) {
+          case 404:
+            navigate('/?error=not-found');
+            break;
+          case 409:
+            navigate('/?error=conflict');
+            break;
+          case 500:
+            navigate('/?error=server-error');
+            break;
+          default:
+            navigate('/?error=unknown');
+        }
       }
-    );
-  }, [code, provider, login, navigate]); 
+    };
+
+    login();
+  }, [params, navigate, loginWithSocial, setToken, studentId]);
 
   return (
-     <div
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-      width: "100%",
-    }}
-  >
-    <LoadingSkeleton />
-  </div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100%',
+      }}
+    >
+      <LoadingSkeleton />
+    </div>
   );
 }
