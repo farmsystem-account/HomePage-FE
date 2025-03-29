@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react';
 import * as S from './WebView.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
+
 import BackArrow from '../../../assets/Icons/BackArrow.png';
-import Notion from '../../../assets/Icons/Notion.png';
-import Github from '../../../assets/Icons/Github.png';
+import NotionIcon from '../../../assets/Icons/Notion.png';
+import GithubIcon from '../../../assets/Icons/Github.png';
 import PhoneIcon from '../../../assets/Icons/PhoneIcon.png';
 import DefaultProfile from '../../../assets/home/default_profile.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
+import { useUserStore } from '@repo/auth/stores/userStore';
 
 export default function WebView() {
   const { isMobile } = useMediaQueries();
-  const { data: user } = useUserInfoQuery();
+  const { data: user, refetch } = useUserInfoQuery();
   const { mutate: updateUserInfo } = useUpdateUserMutation();
+  const setUser = useUserStore((s) => s.setUser);
 
   const [isEditing, setIsEditing] = useState(false);
-
-  // 상태 초기값은 user로부터
   const [mobile, setMobile] = useState('');
   const [notion, setNotion] = useState('');
   const [github, setGithub] = useState('');
@@ -30,14 +31,24 @@ export default function WebView() {
     }
   }, [user]);
 
-  const handleEditComplete = () => {
-    updateUserInfo({
-      phoneNumber: mobile,
-      notionAccount: notion,
-      githubAccount: github,
-    });
-    setIsEditing(false);
+  const handleEditComplete = async () => {
+    updateUserInfo(
+      { phoneNumber: mobile, notionAccount: notion, githubAccount: github },
+      {
+        onSuccess: async () => {
+          const { data: updatedUser } = await refetch();
+          if (updatedUser) setUser(updatedUser);
+          setIsEditing(false);
+        },
+      }
+    );
   };
+
+  const accountFields = [
+    { label: '전화번호', icon: PhoneIcon, value: mobile, onChange: setMobile },
+    { label: 'Notion', icon: NotionIcon, value: notion, onChange: setNotion },
+    { label: 'Github', icon: GithubIcon, value: github, onChange: setGithub },
+  ];
 
   return (
     <S.MyPageContainer>
@@ -45,9 +56,7 @@ export default function WebView() {
         <S.TitleBox isMobile={isMobile}>
           <S.BackArrow src={BackArrow} />
           <S.Title>마이페이지</S.Title>
-          <S.EditButton onClick={() => {
-            isEditing ? handleEditComplete() : setIsEditing(true);
-          }}>
+          <S.EditButton onClick={isEditing ? handleEditComplete : () => setIsEditing(true)}>
             {isEditing ? '완료' : '수정하기'}
           </S.EditButton>
         </S.TitleBox>
@@ -57,17 +66,15 @@ export default function WebView() {
         </S.SectionTitleBox>
 
         <S.ProfileCard isMobile={isMobile}>
-  <S.ProfileImage
-    src={user?.profileImageUrl || DefaultProfile}
-    alt={user?.name || "사용자"}
-  />
-  <S.ProfileInfo>
-    <S.RoleBox>
-      <S.Role>{user?.role}</S.Role>
-    </S.RoleBox>
-    <S.Name>{user?.name}</S.Name>
-  </S.ProfileInfo>
-</S.ProfileCard>
+          <S.ProfileImage
+            src={user?.profileImageUrl || DefaultProfile}
+            alt={user?.name || '사용자'}
+          />
+          <S.ProfileInfo>
+            <S.RoleBox><S.Role>{user?.role}</S.Role></S.RoleBox>
+            <S.Name>{user?.name}</S.Name>
+          </S.ProfileInfo>
+        </S.ProfileCard>
 
         {isEditing ? (
           <>
@@ -75,18 +82,12 @@ export default function WebView() {
               <S.SectionTitle>수정 정보</S.SectionTitle>
             </S.SectionTitleBox>
             <S.EditForm>
-              <S.EditField>
-                <S.RowBox><S.Icon2 src={PhoneIcon} /><label>전화번호</label></S.RowBox>
-                <input value={mobile} onChange={(e) => setMobile(e.target.value)} />
-              </S.EditField>
-              <S.EditField>
-                <S.RowBox><S.Icon2 src={Notion} /><label>Notion</label></S.RowBox>
-                <input value={notion} onChange={(e) => setNotion(e.target.value)} />
-              </S.EditField>
-              <S.EditField>
-                <S.RowBox><S.Icon2 src={Github} /><label>Github</label></S.RowBox>
-                <input value={github} onChange={(e) => setGithub(e.target.value)} />
-              </S.EditField>
+              {accountFields.map(({ label, icon, value, onChange }) => (
+                <S.EditField key={label}>
+                  <S.RowBox><S.Icon2 src={icon} /><label>{label}</label></S.RowBox>
+                  <input value={value} onChange={(e) => onChange(e.target.value)} />
+                </S.EditField>
+              ))}
             </S.EditForm>
           </>
         ) : (
@@ -108,11 +109,11 @@ export default function WebView() {
             </S.SectionTitleBox>
             <S.AccountLinks isMobile={isMobile}>
               <S.AccountBox>
-                <S.RowBox><S.Icon src={Notion} /><S.AccountLable>Notion</S.AccountLable></S.RowBox>
+                <S.RowBox><S.Icon src={NotionIcon} /><S.AccountLable>Notion</S.AccountLable></S.RowBox>
                 <S.AccountValue>{user?.notionAccount}</S.AccountValue>
               </S.AccountBox>
               <S.AccountBox>
-                <S.RowBox><S.Icon src={Github} /><S.AccountLable>Github</S.AccountLable></S.RowBox>
+                <S.RowBox><S.Icon src={GithubIcon} /><S.AccountLable>Github</S.AccountLable></S.RowBox>
                 <S.AccountValue>{user?.githubAccount}</S.AccountValue>
               </S.AccountBox>
             </S.AccountLinks>
