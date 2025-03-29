@@ -50,7 +50,8 @@ export const useAuthStore = create(
     {
       name: "auth-storage", 
       partialize: (state) => ({
-        studentId: state.studentId, 
+        studentId: state.studentId,
+        accessToken: state.accessToken,
       }),
     }
   )
