@@ -1,10 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { usePrivateApi } from '@repo/api/hooks/usePrivateApi';
 
-// cheer tag enum type (optional)
 export type CheerTag = "THANK" | "HUG" | "ENCOURAGE" | string;
 
-// 요청 바디 타입
 export interface CheerRequest {
   cheererId: number;
   cheeredId: number;
@@ -12,7 +10,6 @@ export interface CheerRequest {
   content: string;
 }
 
-// 응답 타입
 export interface CheerResponse {
   cheerId: number;
   cheerer: {
