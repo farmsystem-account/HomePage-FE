@@ -63,13 +63,6 @@ export default function StepInputStudentId() {
           $isMobile={isMobile}
         />
       </S.InputWrapper>
-
-      {errorMessage && (
-        <S.ErrorMessage $isMobile={isMobile}>
-          {errorMessage}
-        </S.ErrorMessage>
-      )}
-
       <S.Button
         onClick={handleNext}
         $isMobile={isMobile}
@@ -77,6 +70,11 @@ export default function StepInputStudentId() {
       >
         {mutation.isPending ? '인증 중...' : '인증하기'}
       </S.Button>
+      {errorMessage && (
+        <S.ErrorMessage $isMobile={isMobile}>
+          {errorMessage}
+        </S.ErrorMessage>
+      )}
     </S.Container>
   );
 }
