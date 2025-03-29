@@ -69,6 +69,7 @@ export const BackArrow = styled.img`
 export const Title = styled.h2`
   font-size: 36px;
   font-weight: 600;
+  font-family: "Pretendard Variable";
   margin: 0; /* 기본 margin 제거 */
 `;
 
@@ -92,6 +93,7 @@ export const RankingTitleText = styled.div<{ isApp: boolean }>`
   font-size: ${({ isApp }) => (isApp ? '9px' : '12px')};
   color: #2e2e2e;
   font-weight: 600;
+  font-family: "Pretendard Variable";
   margin-bottom: 10px;
   text-align: center;
 `;
@@ -137,6 +139,7 @@ export const RankBox = styled.div`
 export const RankNumber = styled.div<{ isApp: boolean }>`
   font-weight: bold;
   font-size: ${({ isApp }) => (isApp ? '14px' : '16px')};
+  font-family: "Pretendard Variable";
 `;
 
 /** 왕관 아이콘 */
@@ -175,17 +178,20 @@ export const ColumnBox = styled.div`
 export const Name = styled.div<{ isApp: boolean }>`
   font-weight: 600;
   font-size: ${({ isApp }) => (isApp ? '14px' : '16px')};
+  font-family: "Pretendard Variable";
 `;
 
 export const Track = styled.div<{ isApp: boolean }>`
   font-size: ${({ isApp }) => (isApp ? '10px' : '11px')};
   color: #2e2e2e;
   font-weight: 600;
+  font-family: "Pretendard Variable";
 `;
 
 export const Score = styled.div<{ isApp: boolean }>`
   font-weight: bold;
   font-size: ${({ isApp }) => (isApp ? '14px' : '16px')};
+  font-family: "Pretendard Variable";
 `;
 
 /** 말풍선 아이콘(선택된 항목) */
@@ -204,6 +210,7 @@ export const PhaseDesc = styled.div<{ $isMobile: boolean }>`
   justify-content: flex-start;
   font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
   font-weight: 400;
+  font-family: "Pretendard Variable";
   line-height: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
   letter-spacing: ${({ $isMobile }) => ($isMobile ? '-0.12px' : '-0.24px')};
 
