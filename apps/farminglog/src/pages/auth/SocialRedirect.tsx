@@ -2,12 +2,12 @@ import { useRef, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { useSocialLoginPostMutation } from "@repo/auth/services/mutation/useSocialLoginPostMutation";
 
+import LoadingSkeleton from "@/components/Skeleton/LoadingSkeleton";
+
 export default function SocialRedirect() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { mutate: login, status } = useSocialLoginPostMutation();
-
-  const isLoading = status === "pending";
+  const { mutate: login } = useSocialLoginPostMutation();
 
     const isCalled = useRef(false); // 한 번만 호출되도록
 
@@ -61,8 +61,16 @@ export default function SocialRedirect() {
   }, [code, provider, login, navigate]); 
 
   return (
-    <div style={{ textAlign: "center", marginTop: "4rem" }}>
-      <h2>{isLoading ? "로그인 중입니다..." : "소셜 로그인 처리 중입니다..."}</h2>
-    </div>
+     <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      width: "100%",
+    }}
+  >
+    <LoadingSkeleton />
+  </div>
   );
 }
