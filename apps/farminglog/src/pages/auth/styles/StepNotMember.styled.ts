@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logoImg from '@/assets/logos/logo.basic.png';
+import logoImg from '@/assets/logos/logo.dark.png';
 
 interface ResponsiveProps {
   $isMobile: boolean;
@@ -17,7 +17,7 @@ export const LogoIcon = styled.img.attrs({
   src: logoImg,
   alt: 'logoImg',
 })<ResponsiveProps>`
-  width: ${({ $isMobile }) => ($isMobile ? '34.3px' : '72.4px')};
+  width: ${({ $isMobile }) => ($isMobile ? '56.23px' : '112.46px')};
   transform: rotate(25deg); /* ← 살짝 오른쪽 기울기 효과 */
 `;
 
