@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import * as S from './AppView.styles';
 import NotionIcon from '../../../assets/Icons/Notion.png';
 import GithubIcon from '../../../assets/Icons/Github.png';
 import SeedIcon from '../../../assets/Icons/Seed.png';
 import BackArrow from '../../../assets/Icons/BackArrow.png';
 import DefaultProfile from '../../../assets/home/default_profile.png';
+import ImageEdit from '../../../assets/buttons/ImageEdit.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
@@ -15,22 +16,31 @@ export default function AppView() {
   const { data: user, refetch } = useUserInfoQuery();
   const { mutate: updateUserInfo } = useUpdateUserMutation();
   const setUser = useUserStore((s) => s.setUser);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [mobile, setMobile] = useState('');
   const [notion, setNotion] = useState('');
   const [github, setGithub] = useState('');
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
       setMobile(user.phoneNumber || '');
       setNotion(user.notionAccount || '');
       setGithub(user.githubAccount || '');
+      setProfileImageUrl(user.profileImageUrl || DefaultProfile);
     }
   }, [user]);
 
   const handleEditComplete = () => {
     updateUserInfo(
-      { phoneNumber: mobile, notionAccount: notion, githubAccount: github },
+      {
+        profileImageUrl: profileImageUrl || '',
+        phoneNumber: mobile,
+        notionAccount: notion,
+        githubAccount: github,
+      },
       {
         onSuccess: async () => {
           const { data: updatedUser } = await refetch();
@@ -41,8 +51,26 @@ export default function AppView() {
     );
   };
 
+  const handleImageEditClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfileImage(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          setProfileImageUrl(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const userName = user?.name || '사용자';
-  const profileImageUrl = user?.profileImageUrl || DefaultProfile;
 
   if (isEditView) {
     return (
@@ -54,15 +82,23 @@ export default function AppView() {
         </S.EditHeader>
 
         <S.EditProfile>
-          <S.ProfileImageEdit src={profileImageUrl} />
+          <S.ImageEditWrapper>
+            <S.ProfileImageEdit
+              src={profileImage ? URL.createObjectURL(profileImage) : profileImageUrl || DefaultProfile}
+            />
+            <S.ImageEditButton src={ImageEdit} onClick={handleImageEditClick} />
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
+            />
+          </S.ImageEditWrapper>
           <S.NameText>{userName}</S.NameText>
         </S.EditProfile>
 
-        {[
-          { label: '전화번호', value: mobile, set: setMobile },
-          { label: 'Notion', value: notion, set: setNotion },
-          { label: 'Github', value: github, set: setGithub },
-        ].map(({ label, value, set }) => (
+        {[{ label: '전화번호', value: mobile, set: setMobile }, { label: 'Notion', value: notion, set: setNotion }, { label: 'Github', value: github, set: setGithub }].map(({ label, value, set }) => (
           <div key={label}>
             <S.EditSection>
               <S.EditLabel>{label}</S.EditLabel>
@@ -86,7 +122,7 @@ export default function AppView() {
               <S.EditButton onClick={() => setIsEditView(true)}>수정</S.EditButton>
             </S.RowBox>
           </S.ColumnBox>
-          <S.ProfileImage src={profileImageUrl} />
+          <S.ProfileImage src={profileImageUrl || DefaultProfile} />
         </S.AppHeader>
 
         <S.AppInfoTable>

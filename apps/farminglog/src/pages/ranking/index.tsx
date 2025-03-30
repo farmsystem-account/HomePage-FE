@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { AnimatePresence } from 'framer-motion';
 import * as S from './index.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
@@ -9,6 +10,7 @@ import Sign from '@/components/Ranking/sign';
 import CheerBalloon from './components/CheerBalloon';
 import { useUserRankingQuery } from '@/services/query/useUserRankingQuery';
 import { convertTrackToString } from '@/utils/convertTrackToString';
+import ProfilePopup from '@/components/Popup/ProfilePopup';
 
 const headerTexts = [
   '랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.',
@@ -17,10 +19,12 @@ const headerTexts = [
 ];
 
 export default function Main() {
+  const navigate = useNavigate();
   const { data, isLoading } = useUserRankingQuery();
-  const { isMobile, isApp } = useMediaQueries();
+  const { isDesktop, isMobile, isApp } = useMediaQueries();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
   const balloonRef = useRef<HTMLDivElement>(null);
 
   const getBgColor = (rank: number) => {
@@ -44,16 +48,33 @@ export default function Main() {
 
   if (isLoading || !data) return null;
 
-  // 내 랭킹을 맨 위에, 그 외는 userRankList
   const rankingData = [data.myRank, ...data.userRankList];
 
   return (
     <S.MyPageContainer>
-      <S.ProfileWrapper isMobile={isMobile}>
-        <S.TitleBox isMobile={isMobile}>
-          <S.BackArrow src={BackArrow} />
-          <S.Title>랭킹</S.Title>
-        </S.TitleBox>
+      <S.ProfileWrapper $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+        <S.FarmingLogContainerHeader
+          $isApp={isApp}
+          $isMobile={isMobile}
+          $isDesktop={isDesktop}
+        >
+          <S.GoBackButton
+            $isApp={isApp}
+            $isMobile={isMobile}
+            $isDesktop={isDesktop}
+            onClick={() => navigate(-1)}
+          >
+            <img src={BackArrow} alt="뒤로가기" />
+          </S.GoBackButton>
+          <S.FarmingLogContainerTitle
+            $isApp={isApp}
+            $isMobile={isMobile}
+            $isDesktop={isDesktop}
+          >
+            랭킹
+          </S.FarmingLogContainerTitle>
+        </S.FarmingLogContainerHeader>
+
         <Sign isApp={isApp} isMobile={isMobile} texts={headerTexts} />
 
         <S.RankingTitle isApp={isApp}>
@@ -68,9 +89,10 @@ export default function Main() {
               key={item.userId}
               className="ranking-item"
               bgColor={getBgColor(item.rank)}
-              isMe={index === 0} // 내 랭킹은 항상 맨 위!!!!
+              isMe={index === 0}
               isApp={isApp}
               onClick={(e) => {
+                setShowProfilePopup(false);
                 setSelectedIndex(index);
                 setBalloonPosition({
                   x: e.pageX - 105,
@@ -105,16 +127,27 @@ export default function Main() {
               y={balloonPosition.y}
               onClose={() => setSelectedIndex(null)}
               onCheerClick={() => {
-                console.log('응원하기 클릭');
+                const { userId, name } = rankingData[selectedIndex!];
+                navigate(`/cheer/write?userId=${userId}&name=${encodeURIComponent(name)}`);
                 setSelectedIndex(null);
               }}
+              
               onProfileClick={() => {
-                console.log('프로필 보기 클릭');
-                setSelectedIndex(null);
+                setShowProfilePopup(true);
               }}
             />
           )}
         </AnimatePresence>
+
+        {showProfilePopup && selectedIndex !== null && (
+          <ProfilePopup
+            isOpen={showProfilePopup}
+            userName={rankingData[selectedIndex].name}
+            generationAndPart={`${rankingData[selectedIndex].generation}기 ${convertTrackToString(rankingData[selectedIndex].track)}`}
+            profileImg={rankingData[selectedIndex].profileImageUrl}
+            onClose={() => setShowProfilePopup(false)}
+          />
+        )}
       </S.ProfileWrapper>
     </S.MyPageContainer>
   );

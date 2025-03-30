@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Search from './search';
 import Cheer from './cheer'; 
 
 function Main() {
+  const location = useLocation();
   /** 검색으로 선택된 유저 이름 */
   const [selectedUser, setSelectedUser] = useState<{ userId: number; name: string } | null>(null);
 
@@ -10,6 +12,17 @@ function Main() {
   const handleSelectUser = (user: { userId: number; name: string }) => {
     setSelectedUser(user);
   };
+
+  /** 랭킹 페이지에서 넘어온 userId 및 name이 있다면 갱신신 */
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const userId = params.get('userId');
+    const name = params.get('name');
+    
+    if (userId && name) {
+      setSelectedUser({ userId: Number(userId), name });
+    }
+  }, [location.search]);
 
   return (
     <div>

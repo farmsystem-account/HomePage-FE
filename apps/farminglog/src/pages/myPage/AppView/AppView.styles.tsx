@@ -160,9 +160,19 @@ export const EditButton = styled.button`
   }
 `;
 
+export const ImageEditWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
-
-
+export const ImageEditButton = styled.img`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+`;
 
 
 export const EditViewWrapper = styled.div`
