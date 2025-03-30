@@ -19,7 +19,7 @@ export const useLogout = () => {
       clearUser();
       clearAuth();
 
-      localStorage.removeItem('auth-storage'); /
+      localStorage.removeItem('auth-storage');
 
       Cookies.remove('refreshToken'); 
 
