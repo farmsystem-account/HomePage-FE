@@ -15,6 +15,7 @@ import useFarmingLogStore from '@/stores/farminglogStore';
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
 
+
 const categoryList = Object.keys(FarmingLogCategory) as Array<keyof typeof FarmingLogCategory>;
 
 export default function Editor() {
@@ -130,7 +131,7 @@ export default function Editor() {
               <S.HeaderPinIcon $isApp={isApp} src={PinIcon} alt="pin" />
             </S.HeaderPin>
           </S.HeaderPinContainer>
-          <S.HeaderContext $isApp={isApp}>
+          <S.HeaderContext $isApp={isApp} $isMobile={isMobile}>
             <p>
               <S.HeaderContextBold>파밍로그</S.HeaderContextBold>는 매일 자신이 배운 내용을
             </p>
@@ -170,8 +171,8 @@ export default function Editor() {
             {/* 제목 */}
             <S.InputAndTextContainer $isApp={isApp}>
               <S.TitleContainer $isApp={isApp}>
-                <S.TitleText $isApp={isApp}>제목</S.TitleText>
-                <S.SmallText $isApp={isApp}>{titleCount + '/20자'}</S.SmallText>
+                <S.TitleText $isApp={isApp} $isMobile={isMobile}>제목</S.TitleText>
+                <S.SmallText $isApp={isApp} $isMobile={isMobile}>{titleCount + '/20자'}</S.SmallText>
               </S.TitleContainer>
               <S.InputBox
                 value={titleInput}
@@ -180,6 +181,8 @@ export default function Editor() {
                   setTitleCount(e.target.value.length);
                 }}
                 placeholder="내용을 입력해주세요."
+                $isApp={isApp}
+                $isMobile={isMobile}
               />
             </S.InputAndTextContainer>
 
@@ -206,6 +209,8 @@ export default function Editor() {
                   setContentCount(e.target.value.length);
                 }}
                 placeholder="내용을 입력해주세요."
+                $isApp={isApp}
+                $isMobile={isMobile}
               />
             </S.InputAndTextContainer>
           </S.ContentContainer>
@@ -213,11 +218,15 @@ export default function Editor() {
 
         {/* 버튼 섹션 */}
         <S.ButtonContainer $isApp={isApp} $isMobile={isMobile}>
-          <S.GoBackButton onClick={handleGoBack}>
-            <S.ButtonEnnerText>돌아가기</S.ButtonEnnerText>
+          <S.GoBackButton onClick={handleGoBack} $isApp={isApp}>
+            <S.ButtonEnnerText $isApp={isApp} $isMobile={isMobile}>
+              돌아가기
+            </S.ButtonEnnerText>
           </S.GoBackButton>
-          <S.CreateButton onClick={handleCreateFarmingLog}>
-            <S.ButtonEnnerText>작성 완료</S.ButtonEnnerText>
+          <S.CreateButton onClick={handleCreateFarmingLog} $isApp={isApp}>
+            <S.ButtonEnnerText $isApp={isApp} $isMobile={isMobile}>
+              작성 완료
+            </S.ButtonEnnerText>
           </S.CreateButton>
         </S.ButtonContainer>
       </S.FarmingLogEditorContainer>
