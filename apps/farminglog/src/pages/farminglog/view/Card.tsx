@@ -55,6 +55,7 @@ export default function Card({ data }: CardProps) {
   const { isApp, isMobile, isDesktop } = useMediaQueries();
   const { mutate: toggleLikeMutate } = useToggleLikeMutation();
   const {
+    setIsNeedRefresh,
     setIsEditMode,
     setFarmingLogId,
     setFarminglogTitle,
@@ -66,7 +67,8 @@ export default function Card({ data }: CardProps) {
     setLiked(prev => !prev);
     setClicked(true);
     toggleLikeMutate(data.farmingLogId);
-
+    // 좋아요 클릭 시 리프레쉬
+    setIsNeedRefresh(true);
     if (liked) {
       setLikeCount(prev => prev - 1);
     } else { 

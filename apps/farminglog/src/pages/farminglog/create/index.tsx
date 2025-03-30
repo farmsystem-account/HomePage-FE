@@ -35,6 +35,7 @@ export default function Editor() {
   const { mutate: createFarmingLogMutate } = useCreateFarmingLogMutation();
   const { mutate: editFarmingLogMutate } = useEditFarmingLogMutation();
   const {
+    setIsNeedRefresh,
     isEditMode,
     farmingLogId,
     farminglogTitle,
@@ -112,6 +113,7 @@ export default function Editor() {
       // setPopUpText(['안내', '파밍로그 작성 완료되었습니다.']);
       alert('파밍로그 작성 완료되었습니다.');
     }
+    setIsNeedRefresh(true);
     navigate('/farminglog/view');
   };
 

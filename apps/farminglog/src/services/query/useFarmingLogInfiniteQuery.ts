@@ -5,7 +5,7 @@ import { queryKeys } from "../queryKeys";
 import { FarmingLogsResponse } from '@/models/farminglog';
 
 export const useFarmingLogsInfiniteQuery = () => {
-  const { getData  } = usePrivateApi();
+  const { getData } = usePrivateApi();
   const size = 10; // 한 페이지 당 불러올 게시글 수
 
   return useInfiniteQuery<FarmingLogsResponse, Error>({
@@ -18,7 +18,8 @@ export const useFarmingLogsInfiniteQuery = () => {
         console.error("파밍로그 조회 실패");
         throw new Error("파밍로그 조회 실패");
       }
-      console.log(response)
+      console.log("파밍로그 조회 성공");
+      // console.log(response)
       return (response as FarmingLogsResponse);
     },
     initialPageParam: 0,

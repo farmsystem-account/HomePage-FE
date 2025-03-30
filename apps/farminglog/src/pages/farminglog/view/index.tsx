@@ -1,9 +1,10 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import * as S from './index.styled';
 import Card from './Card';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useFarmingLogsInfiniteQuery } from '@/services/query/useFarmingLogInfiniteQuery';
+import useFarmingLogStore from '@/stores/farminglogStore';
 
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
 import EditImage from '@/assets/Icons/edit-3.png';
@@ -20,7 +21,17 @@ export default function View() {
     isFetching,
     isLoading,
     error,
+    refetch
   } = useFarmingLogsInfiniteQuery();
+  const { isNeedRefresh, setIsNeedRefresh } = useFarmingLogStore();
+
+  useEffect(() => {
+    if (isNeedRefresh) {
+      refetch();
+      setIsNeedRefresh(false);
+    }
+  }
+  , [isNeedRefresh, refetch, setIsNeedRefresh]);
 
   // 마지막 카드 요소를 관찰하여 다음 페이지를 불러오기 위한 IntersectionObserver
   const observerRef = useRef<IntersectionObserver | null>(null);
