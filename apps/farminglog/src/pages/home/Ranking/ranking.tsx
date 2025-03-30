@@ -12,25 +12,38 @@ import { useUserRankingQuery } from '@/services/query/useUserRankingQuery';
 import CheerBalloon from '@/pages/ranking/components/CheerBalloon';
 import ProfilePopup from '@/components/Popup/ProfilePopup';
 
+// 컨테이너 기준의 좌표를 계산하는 함수
+const getMousePos = (
+  e: MouseEvent,
+  container?: HTMLElement | null
+): { x: number; y: number } => {
+  if (container) {
+    const bounds = container.getBoundingClientRect();
+    return {
+      x: e.clientX - bounds.left,
+      y: e.clientY - bounds.top,
+    };
+  }
+  return { x: e.clientX, y: e.clientY };
+};
+
 export default function RankingPreview() {
   const navigate = useNavigate();
   const { isMobile, isApp, isTablet } = useMediaQueries();
 
-  // 기준 컨테이너 ref (예: 전체 랭킹 영역)
+  // 기준 컨테이너 ref (전체 랭킹 영역)
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 풍선 표시를 위한 상태들
+  // 풍선 표시 상태
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
-
-  // 풍선 DOM 참조
   const balloonRef = useRef<HTMLDivElement>(null);
 
-  // 랭킹 데이터
+  // 랭킹 데이터 불러오기
   const { data, isLoading } = useUserRankingQuery();
 
-  // 클릭이 랭킹 아이템/풍선 바깥에서 일어나면 풍선 닫기
+  // 랭킹 아이템 및 풍선 바깥 클릭 시 풍선 닫기
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -53,8 +66,8 @@ export default function RankingPreview() {
 
   if (isLoading || !data) return null;
 
-  // 미리보기용: 내 순위 + 상위 3명
-  const previewRankingData = [data.myRank, ...data.userRankList.slice(0, 3)];
+  // 미리보기용: 상위 3명 (내 랭크 포함)
+  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)];
 
   return (
     <>
@@ -89,24 +102,16 @@ export default function RankingPreview() {
               bgColor={getBgColor(item.rank)}
               isMe={item.userId === data.myRank.userId}
               isApp={isApp}
-              onClick={(e) => {
-                // 풍선 크기 가정 (px)
+              onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                // 풍선 크기 (px)
                 const balloonWidth = 210;
                 const balloonHeight = 120;
 
-                // 부모 컨테이너(예: ProfileWrapper)의 offset 계산
-                let containerLeft = 0;
-                let containerTop = 0;
-                if (containerRef.current) {
-                  const containerRect = containerRef.current.getBoundingClientRect();
-                  containerLeft = containerRect.left;
-                  containerTop = containerRect.top;
-                }
-
-                // e.pageX, e.pageY는 문서 전체 기준의 절대 좌표
-                // 부모 컨테이너의 offset을 빼서 상대적인 위치를 구합니다.
-                const x = e.pageX - balloonWidth / 2 - containerLeft;
-                const y = e.pageY - balloonHeight - containerTop; // 570px은 추가 고정 오프셋
+                // SyntheticEvent의 nativeEvent를 사용하여 컨테이너 기준 좌표 계산
+                const pos = getMousePos(e.nativeEvent, containerRef.current);
+                // 풍선이 클릭한 위치에서 중앙 상단에 위치하도록 보정
+                const x = pos.x - balloonWidth / 2;
+                const y = pos.y - balloonHeight;
 
                 setSelectedIndex(index);
                 setBalloonPosition({ x, y });
