@@ -9,30 +9,32 @@ interface ResponsiveProps {
 
 export const CheerContainer = styled.div<ResponsiveProps>`
   width: ${({ 
-    $isApp, $isMobile, 
+    $isMobile, 
     $isTablet, $isDesktop 
-  }) => ($isApp ? '290px' : $isMobile ? '400px' : $isTablet ? '780px' : $isDesktop ? '1000px' : '1200px')};
+  }) => ($isMobile ? '290px' : $isTablet ? '90%' : $isDesktop ? '1200px' : '1200px')};
   height: screen;
-  padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
+  padding: ${({ $isMobile }) => ($isMobile ? '20px 15px 0px 15px' : '')};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: ${({ $isApp }) => ($isApp ? '0px' : '40px')};
+  gap: ${({ $isMobile }) => ($isMobile ? '0px' : '40px')};
 
   border-radius: 5px;
   background: var(--FarmSystem_White, #FCFCFC);
-  margin: 0 auto;
+  margin-top: ${({ $isMobile }) => ($isMobile ? '20px' : '50px')};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const CheerContainerHeader = styled.div<ResponsiveProps>`
   width: 100%;
-  height: ${({ $isApp }) => ($isApp ? '40px' : '80px')};
+  height: ${({ $isMobile }) => ($isMobile ? '40px' : '80px')};
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
 
-  ${({ $isApp }) => ($isApp ? '' : `
+  ${({ $isMobile }) => ($isMobile ? '' : `
     background: var(--FarmSystem_White, #FCFCFC);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   `)}
@@ -43,19 +45,21 @@ export const CheerContainerTitle = styled.h1<ResponsiveProps>`
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '20px' : $isMobile ? '28px' : '36px')};
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '20px' : $isMobile ? '20px' : '36px')};
   font-style: normal;
   font-weight: 700;
   line-height: 26px; /* 130% */
   letter-spacing: -0.24px;
+  margin-bottom: ${({ $isMobile }) => ($isMobile ? '13px' : '0px')};
 `;
 
 export const GoBackButton = styled.button<ResponsiveProps>`
   grid-column: 1;
-  width: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
-  height: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
+  width: ${({ $isMobile }) => ($isMobile ? '24px' : '35px')};
+  height: ${({ $isMobile }) => ($isMobile ? '24px' : '35px')};
   flex-shrink: 0;
-  margin-left: ${({ $isApp }) => ($isApp ? '0px' : '25px')};
+  margin-left: ${({ $isMobile }) => ($isMobile ? '0px' : '25px')};
+  margin-bottom: ${({ $isMobile }) => ($isMobile ? '15px' : '0px')};
 `;
 
 export const CheerCardContainer = styled.div<ResponsiveProps>`
@@ -71,7 +75,7 @@ export const CheerCardContainer = styled.div<ResponsiveProps>`
       $isDesktop || $isTablet ? '48%' : '100%'};
   }
   padding: ${({ $isDesktop, $isTablet }) =>
-      $isDesktop || $isTablet ? '0px 60px' : '0px 40px'};
+      $isDesktop || $isTablet ? '0px 75px' : '0px 25.5px'};
   padding-bottom: 40px;
 `;
 export const CheerWriteButton = styled.button<ResponsiveProps>`

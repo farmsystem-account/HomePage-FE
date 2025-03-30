@@ -2,7 +2,7 @@ import * as S from './index.styled';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import CheerCard from './CheerCard';
-import GoBackImage from '@/assets/Icons/corner-up-left.png';
+// import GoBackImage from '@/assets/Icons/corner-up-left.png';
 import Thumb from '@/assets/home/thumbs-up.png';
 import { useCheerListQuery } from '@/services/query/useCheerListQuery';
 import { convertTagToCategory } from '@/utils/convertTagToCategory';
@@ -39,13 +39,13 @@ const { data: cheerList = [] } = useCheerListQuery();
         $isMobile={isMobile}
         $isDesktop={isDesktop}
       >
-        <S.GoBackButton
+        {/* <S.GoBackButton
           $isApp={isApp}
           $isMobile={isMobile}
           $isDesktop={isDesktop}
         >
           <img src={GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton>
+        </S.GoBackButton> */}
         <S.CheerContainerTitle
           $isApp={isApp}
           $isMobile={isMobile}
