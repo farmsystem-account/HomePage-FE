@@ -12,17 +12,16 @@ export const useFarmingLogsInfiniteQuery = () => {
     queryKey: queryKeys.farminglog,
     queryFn: async ({ pageParam = 0 }): Promise<FarmingLogsResponse> => {
       const { data, status } = await get<FarmingLogsResponse>(
-        `/farming-logs?page=${pageParam}&size=${size}&sort=%5B%22string%22%5D`
+        `/farming-logs?page=${pageParam}&size=${size}&sort=`
       );
       if (status !== 200) {
         throw new Error("파밍로그 조회 실패");
       }
       return data;
     },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) => {
-     return lastPage.number < lastPage.totalPages ? lastPage.number + 1 : undefined;
-    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.last ? undefined : lastPage.number + 1,
     staleTime: 1000 * 60 * 5, // 5분
   });
+
 };
