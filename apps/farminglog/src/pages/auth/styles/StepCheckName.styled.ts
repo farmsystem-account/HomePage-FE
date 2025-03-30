@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logoImg from '@/assets/logos/logo.basic.png';
+import logoImg from '@/assets/logos/logo.dark.png';
 
 interface ResponsiveProps {
   $isMobile: boolean;
@@ -8,7 +8,7 @@ interface ResponsiveProps {
 export const Container = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
-  gap: ${({ $isMobile }) => ($isMobile ? '1.25rem' : '2.5rem')};
+  gap: ${({ $isMobile }) => ($isMobile ? '2.2rem' : '4rem')};
   align-items: center;
   width: 100%;
 `;
@@ -17,7 +17,7 @@ export const LogoIcon = styled.img.attrs({
   src: logoImg,
   alt: 'logoImg',
 })<ResponsiveProps>`
-  width: ${({ $isMobile }) => ($isMobile ? '34.3px' : '72.4px')};
+  width: ${({ $isMobile }) => ($isMobile ? '56.23px' : '112.46px')};
 `;
 
 export const Title = styled.h2<ResponsiveProps>`

@@ -4,45 +4,65 @@ interface ResponsiveProps {
   $isMobile: boolean;
 }
 
-const floatScroll = keyframes`
+
+
+const scrollText = keyframes`
   0% {
-    transform: translateX(0%);
+    transform: translateX(-300%);
+    opacity: 0.6;
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(0%);
+  }
+`;
+
+const scrollTextReverse = keyframes`
+  0% {
+    transform: translateX(0%);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-300%);
   }
 `;
 
 
-export const FloatingBackgroundTop = styled.div<ResponsiveProps>`
+export const MovingTextBackground = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 100px;
   width: 100%; 
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: -1; 
+`;
+
+export const ScrollingText = styled.div<ResponsiveProps>`
+  display: flex;
+  flex-direction: row; 
+  margin-top: 40px;
+  gap: ${(props) => (props.$isMobile ? '50px' : '300px')}; 
+  animation: ${scrollText} ${(props) => (props.$isMobile ? '90s' : '120s')} linear infinite;
+`;
+
+export const MovingTextBottom = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: -1;
+`;
+
+export const ScrollingTextReverse = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: row;
-  animation: ${floatScroll} 20s linear infinite;
-  animation-delay: -10s;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 0;
-  margin-top: 45px;
-
-  & > img {
-    width: ${({ $isMobile }) => ($isMobile ? '403px' : '1632px')};
-    height: 100%;
-    object-fit: cover;
-  }
+  margin-bottom: 40px;
+  gap: ${(props) => (props.$isMobile ? '50px' : '300px')}; 
+  animation: ${scrollTextReverse} ${(props) => (props.$isMobile ? '90s' : '120s')} linear infinite;
 `;
 
-export const FloatingBackgroundBottom = styled(FloatingBackgroundTop)`
-  top: auto;
-  bottom: 0;
-  margin-top: 0;
-  margin-bottom: 45px;
-  animation-delay: -5s;
-`;
 
 
 export const Wrapper = styled.div`
@@ -66,7 +86,6 @@ export const Box = styled.div<{
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 420px;
   z-index: 1;
 
   ${(props) =>

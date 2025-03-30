@@ -1,90 +1,79 @@
-import useMediaQueries from "../../../../../website/src/hooks/useMediaQueries";
-// 예시로 FarmSystem_Logo.png를 프로필로 사용
-import Image from "../../../assets/Icons/FarmSystem_Logo.png";
+import useMediaQueries from "@/hooks/useMediaQueries";
 import * as S from "./cheer.styled";
+import { useCheerListQuery } from "@/services/query/useCheerListQuery";
+import { convertTagToCategory } from "@/utils/convertTagToCategory";
+import FarmLogoImg from "../../../assets/Icons/FarmSystem_Logo.png"; // 유지된 이미지 import
 
-export default function Cheer() {
+export default function CheerPreview() {
   const { isMobile, isTablet } = useMediaQueries();
+  const { data: cheerList = [] } = useCheerListQuery();
 
-  // 예시 데이터 (각 카테고리에 따라 폰트색과 배경색을 함께 지정)
-  const cheerData = [
-    {
-      id: 1,
-      r_profile: Image,
-      receiver: "이소은",
-      category: "칭찬해요!",
-      content:
-        "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
-      s_profile: Image,
-      sender: "백합",
-      bgColor: "#FFF8E1", // 노란색 계열
-      fontColor: "#A49900", // "칭찬해요!" 폰트색
-    },
-    {
-      id: 2,
-      r_profile: Image,
-      receiver: "이소은",
-      category: "감사해요!",
-      content:
-        "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
-      s_profile: Image,
-      sender: "팜하니",
-      bgColor: "#E3F2FD", // 파란색 계열
-      fontColor: "#1D5AB2", // "감사해요!" 폰트색
-    },
-    {
-      id: 3,
-      r_profile: Image,
-      receiver: "이소은",
-      category: "응원해요!",
-      content:
-        "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
-      s_profile: Image,
-      sender: "팜하니",
-      bgColor: "#FFC0CB", // 분홍색 계열
-      fontColor: "#E5435F", // "응원해요!" 폰트색
-    },
-    {
-      id: 4,
-      r_profile: Image,
-      receiver: "이소은",
-      category: "응원해요!",
-      content:
-        "잘하고있다. 웹뷰에서는 세 줄까지 가능. 텍스트 가운데정렬. 넘어가면 ...ㅇㅇㅇㅇㅇㅇㅇㅇㄴㄴㄴ",
-      s_profile: Image,
-      sender: "팜하니",
-      bgColor: "#FFC0CB", // 예시 bgColor (응원해요)
-      fontColor: "#E5435F", // "응원해요!" 폰트색
-    },
-  ];
+  // 홈화면 미리보기로 최대 5개만 보여줌
+  const previewCheerData = cheerList.slice(0, 5).map((item) => {
+    const categoryData = convertTagToCategory(item.tag);
+
+    return {
+      id: item.cheerId,
+      r_profile: item.cheered.profileImageUrl,
+      receiver: item.cheered.name,
+      category: categoryData.name,
+      content: item.content,
+      s_profile: item.cheerer.profileImageUrl,
+      sender: item.cheerer.name,
+      bgColor: categoryData.bgColor,
+      fontColor: categoryData.fontColor,
+    };
+  });
 
   return (
     <S.CheerContainer $isMobile={isMobile} $isTablet={isTablet}>
-      <S.CheerTitle>실시간 응원 현황</S.CheerTitle>
+      <S.CheerTitle $isMobile={isMobile}>실시간 응원 현황</S.CheerTitle>
 
-      <S.CheerCardWrapper $isMobile={isMobile} $isTablet={isTablet}>
-        {cheerData.map((cheer) => (
+      <S.CheerCardWrapper
+        $isMobile={isMobile}
+        $isTablet={isTablet}
+        style={{ overflowX: "auto", whiteSpace: "nowrap" }} // 좌우 스크롤 가능하게 설정
+      >
+        {previewCheerData.map((cheer) => (
           <S.CheerCard
             key={cheer.id}
             bgColor={cheer.bgColor}
             $isMobile={isMobile}
+            style={{ display: "inline-block" }} // 옆으로 나열
           >
             {/* 상단(수신자) */}
-            <S.CheerHeader $isMobile={isMobile} >
-              {/* 실제 프로필 이미지를 표시하도록 img 태그 사용 */}
-              <S.CheerAvatar src={cheer.r_profile} alt="profile" $isMobile={isMobile} />
-              <S.CheerReceiverText $isMobile={isMobile} >
-                <a>{cheer.receiver}</a> 님에게&nbsp; <a><S.CheerColorText categoryColor={cheer.fontColor} $isMobile={isMobile}>{cheer.category}</S.CheerColorText></a>
+            <S.CheerHeader $isMobile={isMobile}>
+              <S.CheerAvatar
+                src={cheer.r_profile || FarmLogoImg}
+                alt="profile"
+                $isMobile={isMobile}
+              />
+              <S.CheerReceiverText $isMobile={isMobile}>
+                <a>{cheer.receiver}</a> 님에게&nbsp;{" "}
+                <a>
+                  <S.CheerColorText
+                    categoryColor={cheer.fontColor}
+                    $isMobile={isMobile}
+                  >
+                    {cheer.category}
+                  </S.CheerColorText>
+                </a>
               </S.CheerReceiverText>
             </S.CheerHeader>
 
             {/* 중단(본문) */}
-            <S.CheerContent $isMobile={isMobile} >{cheer.content}</S.CheerContent>
+            <S.CheerContent $isMobile={isMobile}>
+              {cheer.content}
+            </S.CheerContent>
 
             {/* 하단(발신자) */}
-            <S.CheerFooter $isMobile={isMobile} >
-              <S.CheerAvatar src={cheer.s_profile} alt="profile" $isMobile={isMobile}  />
-                <a>{cheer.sender}</a>&nbsp;님
+            <S.CheerFooter $isMobile={isMobile}>
+              <S.CheerAvatar
+                src={cheer.s_profile || FarmLogoImg}
+                alt="profile"
+                $isMobile={isMobile}
+              />
+              <a>{cheer.sender}</a>&nbsp;님
             </S.CheerFooter>
           </S.CheerCard>
         ))}

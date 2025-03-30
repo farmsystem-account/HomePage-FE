@@ -16,41 +16,44 @@ export default function StepInputStudentId() {
   const { isMobile } = useMediaQueries();
   const mutation = useUserVerifyMutation();
 
-  const handleNext = () => {
-    if (!input.trim()) return;
-
-    setStudentId(input); 
-
-    mutation.mutate(
-      { studentNumber: input },
-      {
-        onSuccess: (data) => {
-          if (data.isVerified) {
-            setUserName(data.name); 
-            setErrorMessage(null); 
-            setStep('check-name'); 
-          } else {
-            setErrorMessage('회원 인증에 실패했습니다.');
-          }
-        },
-       onError: (err: any) => {
-  if (err.message?.includes('401')) {
-    setStep('not-member');
-  } else {
-    setErrorMessage('서버 오류입니다. 운영진에게 문의해주세요.');
+const handleNext = () => {
+  if (!input.trim()) {
+    setErrorMessage('학번을 입력해주세요.');
+    return;
   }
-}
-,
-      }
-    );
-  };
+
+  setStudentId(input);
+
+  mutation.mutate(
+    { studentNumber: input },
+    {
+      onSuccess: (data) => {
+        if (data.isVerified) {
+          setUserName(data.name);
+          setErrorMessage(null);
+          setStep('check-name');
+        } else {
+          setErrorMessage('회원 인증에 실패했습니다.');
+        }
+      },
+      onError: (err: any) => {
+        if (err.message?.includes('401')) {
+          setStep('not-member');
+        } else {
+          setErrorMessage('서버 오류입니다. 운영진에게 문의해주세요.');
+        }
+      },
+    }
+  );
+};
+
 
   return (
     <S.Container $isMobile={isMobile}>
       <S.LogoIcon $isMobile={isMobile} />
       <S.Title $isMobile={isMobile}>Farm System 회원 인증</S.Title>
       <S.SubTitle $isMobile={isMobile}>
-        Farm System 회원임을 인증하기 위한 <br /> 학번을 입력해주세요.
+        Farm System 회원임을 인증하기 위한 <br /> 학번을 입력해주세요!
       </S.SubTitle>
 
       <S.InputWrapper $isMobile={isMobile}>
@@ -63,13 +66,6 @@ export default function StepInputStudentId() {
           $isMobile={isMobile}
         />
       </S.InputWrapper>
-
-      {errorMessage && (
-        <S.ErrorMessage $isMobile={isMobile}>
-          {errorMessage}
-        </S.ErrorMessage>
-      )}
-
       <S.Button
         onClick={handleNext}
         $isMobile={isMobile}
@@ -77,6 +73,11 @@ export default function StepInputStudentId() {
       >
         {mutation.isPending ? '인증 중...' : '인증하기'}
       </S.Button>
+      {errorMessage && (
+        <S.ErrorMessage $isMobile={isMobile}>
+          {errorMessage}
+        </S.ErrorMessage>
+      )}
     </S.Container>
   );
 }

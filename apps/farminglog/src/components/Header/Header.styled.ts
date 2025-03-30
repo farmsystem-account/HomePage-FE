@@ -16,7 +16,7 @@ export const MobileHeader = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 
 export const Logo = styled.div<{ $isMobile: boolean, $isTablet: boolean }>`
@@ -43,7 +43,7 @@ export const Nav = styled.nav`
 export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActive: boolean }>`
   text-decoration: none;
   padding: ${({$isMobile, $isTablet}) => 
-    $isMobile ? "0 20px" : $isTablet ? "0 20px" : "0 30px"};
+    $isMobile ? "0 20px" : $isTablet ? "0 12px" : "0 30px"};
   font-size: ${({$isMobile, $isTablet}) => 
     $isMobile ? "15px" : $isTablet ? "15px" : "18px"};
   font-weight: 500;
@@ -95,6 +95,7 @@ export const RecordCount = styled.div<{ $isMobile: boolean }>`
     color: #1CC08B;
     font-weight: 600;
     font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
+    padding-left: 10px;
   }
 
   .seed-count {
@@ -154,7 +155,7 @@ export const ProfileAndSeedContainer = styled.div<{ $isMobile: boolean }>`
   overflow: hidden;
 
   /* $isMobile에 따라 크기 조정 */
-  width: ${({ $isMobile }) => ($isMobile ? "200px" : "240px")};
+  width: ${({ $isMobile }) => ($isMobile ? "220px" : "300px")};
   height: ${({ $isMobile }) => ($isMobile ? "50px" : "60px")};
 
   display: flex;
@@ -168,6 +169,7 @@ export const ProfileContainer = styled.div<{ $isMobile: boolean }>`
   align-items: center;
 
   height: ${({ $isMobile }) => ($isMobile ? "50px" : "60px")};
+  padding-right: 30px;
 `;
 
 export const ProfileImage = styled.img<{ $isMobile: boolean }>`
@@ -182,5 +184,6 @@ export const ProfileName = styled.div<{ $isMobile: boolean }>`
   padding: 0 10px;
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
   font-weight: 600;
+  font-family: "Pretendard Variable";
   color: black;
 `;

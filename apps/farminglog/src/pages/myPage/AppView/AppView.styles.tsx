@@ -136,13 +136,11 @@ export const Icon = styled.img`
   margin-right: 5px;
 `;
 
-export const ProfileImage = styled.div`
+export const ProfileImage = styled.img`
   width: 84px;
   height: 84px;
-  background-color: #f0f0f0;
   border-radius: 50%;
-  background-image: url('/plant-icon.png');
-  background-size: cover;
+  object-fit: cover;
 `;
 
 export const EditButton = styled.button`
@@ -251,11 +249,9 @@ export const Line = styled.div`
     margin-bottom: 28px;
 `
 
-export const ProfileImageEdit = styled.div`
+export const ProfileImageEdit = styled.img`
   width: 114px;
   height: 114px;
-  background-color: #f0f0f0;
   border-radius: 50%;
-  background-image: url('/plant-icon.png');
-  background-size: cover;
+  object-fit: cover;
 `;

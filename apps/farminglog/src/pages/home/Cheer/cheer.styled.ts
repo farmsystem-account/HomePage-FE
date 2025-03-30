@@ -17,12 +17,14 @@ export const CheerContainer = styled.div<{
   padding-bottom: 30px;
 
   background: white;
+  border-radius: 3px;
 `;
 
 // 타이틀
-export const CheerTitle = styled.h2`
-  font-size: 36px;
+export const CheerTitle = styled.h2<{$isMobile: boolean;}>`
+  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
   font-weight: 600;
+  font-family: "Pretendard Variable";
   margin-bottom: 24px;
 `;
 
@@ -60,8 +62,8 @@ export const CheerCard = styled.div<{
 
   background-color: ${({ bgColor }) => bgColor || "#ffffff"};
   border-radius: 10px;
-  width: ${({ $isMobile }) => ($isMobile ? "320px" : "400px")};
-  height: ${({ $isMobile }) => ($isMobile ? "240px" : "300px")};
+  width: ${({ $isMobile }) => ($isMobile ? "280px" : "400px")};
+  height: ${({ $isMobile }) => ($isMobile ? "200px" : "300px")};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   overflow: hidden;
@@ -89,15 +91,18 @@ export const CheerAvatar = styled.img<{$isMobile: boolean;}>`
 export const CheerReceiverText = styled.span<{$isMobile: boolean;}>`
   font-weight: 400;
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "18px")};
+  font-family: "Pretendard Variable";
   a{
     font-size: ${({ $isMobile }) => ($isMobile ? "18px" : "24px")};
     font-weight: 700;
+    font-family: "Pretendard Variable";
   }
 `;
 
 /** 중단 */
 export const CheerContent = styled.div<{$isMobile: boolean;}>`
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
+  font-family: "Pretendard Variable";
   color: #333;
   margin: ${({ $isMobile }) => ($isMobile ? "20px auto" : "50px auto")};
 
@@ -112,6 +117,7 @@ export const CheerContent = styled.div<{$isMobile: boolean;}>`
 /** 하단: 발신자 */
 export const CheerFooter = styled.div<{$isMobile: boolean;}>`
   font-size: 16px;
+  font-family: "Pretendard Variable";
   font-weight: 500;
   color: #999;
   text-align: center;
@@ -122,11 +128,13 @@ export const CheerFooter = styled.div<{$isMobile: boolean;}>`
   a{
     font-size: 16px;
     font-weight: 600;
+    font-family: "Pretendard Variable";
   }
 `;
 
 export const CheerColorText = styled.span<{ categoryColor?: string, $isMobile: boolean; }>`
   font-weight: 700;
+  font-family: "Pretendard Variable";
   font-size: ${({ $isMobile }) => ($isMobile ? "18px" : "24px")};
   color: ${({ categoryColor }) => categoryColor || "#333"};
 `;

@@ -10,11 +10,10 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit"
   },
-"dependencies": {
+  "dependencies": {
     "@repo/api": "workspace:*",
     "@repo/auth": "workspace:*",
-    "@repo/router": "workspace:*"
-
-  },
-  "devDependencies": {}
+    "@repo/router": "workspace:*",
+    "framer-motion": "^12.4.3"
+  }
 }

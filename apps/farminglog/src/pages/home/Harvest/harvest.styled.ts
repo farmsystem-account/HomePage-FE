@@ -1,3 +1,4 @@
+// harvest.styled.ts
 import styled, { keyframes } from "styled-components";
 
 /** 메인 컨테이너 */
@@ -5,7 +6,7 @@ export const HarvestContainer = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  position: relative; /* 추가: 절대 위치 자식 요소의 기준 */
+  position: relative;
   width: 100%;
   max-width: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "90%" : $isTablet ? "90%" : "1200px"};
@@ -19,6 +20,7 @@ export const HarvestContainer = styled.div<{
   flex-direction: column;
   align-items: center;
   gap: ${({ $isMobile }) => ($isMobile ? "10px" : "20px")};
+  border-radius: 3px;
 `;
 
 /** 메인 텍스트 (타이틀) */
@@ -26,8 +28,9 @@ export const MainText = styled.h1<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  font-size: 36px;
+  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
   font-weight: 600;
+  font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "34px" : $isTablet ? "38px" : "42px"};
   letter-spacing: -0.24px;
@@ -44,6 +47,7 @@ export const SubText = styled.p<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "14px" : $isTablet ? "15px" : "16px"};
   font-weight: 400;
+  font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "24px" : $isTablet ? "26px" : "30px"};
   letter-spacing: -0.24px;
@@ -62,13 +66,10 @@ export const ButtonContainer = styled.div<{
   justify-content: center;
   align-items: center;
   padding-top: 12px;
-
-  /* anyCleared가 true면 gap을 줄이고, 아니면 기존 로직 */
   gap: ${({ $isMobile, $isTablet, $anyCleared }) => {
-    if ($anyCleared) return $isMobile ? "10px" : $isTablet ? "15px" : "20px";
-    return $isMobile ? "20px" : $isTablet ? "25px" : "30px";
+    if ($anyCleared) return $isMobile ? "10px" : $isTablet ? "10px" : "10px";
+    return $isMobile ? "10px" : $isTablet ? "10px" : "10px";
   }};
-  
   flex-wrap: wrap;
 `;
 
@@ -81,12 +82,12 @@ export const StageButton = styled.div<{
   flex-direction: column;
   align-items: center;
   gap: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "8px" : $isTablet ? "10px" : "12px"};
-
+    $isMobile ? "8px" : $isTablet ? "12px" : "10px"};
   cursor: pointer;
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
   font-weight: 700;
+  font-family: "Pretendard Variable";
   line-height: 26px;
   letter-spacing: -0.24px;
 
@@ -112,15 +113,25 @@ export const ButtonIcon = styled.div<{
   box-shadow: 4px 4px 0px 0px #d8d8d8;
 `;
 
-/** 아이콘 이미지 */
+/** 아이콘 이미지
+ *  - $isActive가 true면 #D1D1D1 느낌으로 처리 (grayscale + 밝기 조절 등으로 근접 구현)
+ */
 export const IconImg = styled.img<{
   $isMobile: boolean;
   $isTablet: boolean;
+  $isActive: boolean;
 }>`
   width: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "20px" : $isTablet ? "25px" : "30px"};
   height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "20px" : $isTablet ? "25px" : "30px"};
+
+  /* 기본은 약간 투명도와 어두운 느낌 */
+  filter: ${({ $isActive }) =>
+    $isActive
+      ? // 활성 시(#D1D1D1)와 비슷하도록 회색톤 + 밝기 조절
+        "grayscale(100%) brightness(1.15)"
+      : "opacity(0.5) drop-shadow(0 0 0 #575656)"};
 `;
 
 /** 버튼 하단 라벨 */
@@ -131,6 +142,7 @@ export const ButtonLabel = styled.div<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "14px" : $isTablet ? "15px" : "16px"};
   text-align: center;
+  font-family: "Pretendard Variable";
 `;
 
 /** 평행사변형 버튼 */
@@ -144,34 +156,29 @@ export const ParallelogramBox = styled.div<{
     $isMobile ? "60px" : $isTablet ? "70px" : "80px"};
   height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
-
-  /* 평행사변형 효과 */
   transform: skewX(-10deg);
 
   /* isActive(true)면 주황색, false면 회색 */
-  background-color: ${({ $isActive }) => ($isActive ? "#FFA500" : "gray")};
+  background-color: ${({ $isActive }) => ($isActive ? "#FFA500" : "#FCFCFC")};
   border-radius: 10px;
-
-
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 
-box-shadow: ${({ $isActive }) =>
-  $isActive
-    ? "inset 5px 5px rgba(243, 106, 21, 1)"
-    : "none"};
+  box-shadow: ${({ $isActive }) =>
+    $isActive
+      ? "inset 5px 5px rgba(243, 106, 21, 1)"
+      : "inset 5px 5px rgb(209, 209, 209)"};
 
-  /* 평행사변형 안의 실제 컨텐츠를 다시 skewX(10deg)로 보정 */
   .content {
     transform: skewX(10deg);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-
+    gap: 10px;
     font-weight: bold;
+    font-family: "Pretendard Variable";
     color: #fff;
   }
 
@@ -191,12 +198,12 @@ export const Stage = styled.div<{
   gap: 10px;
 
   font-size: ${({ $isMobile, $isTablet }) =>
-  $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
+    $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
   font-weight: 700;
+  font-family: "Pretendard Variable";
   line-height: 26px;
   letter-spacing: -0.24px;
 `;
-
 
 /* 새싹 애니메이션: 중앙에서 시작해 CSS 변수(--tx, --ty) 만큼 이동하며 커졌다가 사라짐 */
 const sproutExplosion = keyframes`
@@ -226,6 +233,7 @@ export const GlobalSproutAnimation = styled.div`
   .sprout {
     position: absolute;
     font-size: 30px;
+    font-family: "Pretendard Variable";
     line-height: 30px;
     width: 30px;
     height: 30px;

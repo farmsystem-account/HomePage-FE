@@ -126,7 +126,7 @@ export const RankingTitle = styled.div<{ isApp: boolean }>`
   flex-direction: row;
   width: 80%;
   display: flex;
-  justify-content: ${({ isApp }) => (isApp ? 'space-between' : 'space-around')};
+  justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
   align-items: center;
   /* background-color: pink; */
   /* padding-left: 10px; */
@@ -159,11 +159,11 @@ export const RankingItem = styled.div<{
   width: 100%;
   height: 60px;
   display: flex;
-  justify-content: ${({ isApp }) => (isApp ? 'space-between' : 'space-around')};
+  justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
   align-items: center;
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 12px;
-  padding: 16px;
+  padding:  ${({ isApp }) => (isApp ? '20px' : '16px')};
   border: ${({ isMe }) => (isMe ? '3px solid #29D4A7' : 'none')};
 `;
 

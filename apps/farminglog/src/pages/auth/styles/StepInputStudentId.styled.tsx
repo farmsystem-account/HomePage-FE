@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logoImg from '@/assets/logos/logo.basic.png';
+import logoImg from '@/assets/logos/logo.dark.png';
 
 interface ResponsiveProps {
   $isMobile: boolean;
@@ -8,7 +8,7 @@ interface ResponsiveProps {
 export const Container = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
-  gap: ${({ $isMobile }) => ($isMobile ? '0.8rem' : '1.7rem')};
+  gap: ${({ $isMobile }) => ($isMobile ? '0.2rem' : '0.5rem')};
   align-items: center;
   width: 100%;
 `;
@@ -17,7 +17,7 @@ export const LogoIcon = styled.img.attrs({
   src: logoImg,
   alt: 'logoImg',
 })<ResponsiveProps>`
-  width: ${({ $isMobile }) => ($isMobile ? '34.3px' : '72.4px')};
+  width: ${({ $isMobile }) => ($isMobile ? '56.23px' : '112.46px')};
 `;
 
 export const Title = styled.h2<ResponsiveProps>`
@@ -31,6 +31,7 @@ export const Title = styled.h2<ResponsiveProps>`
 `;
 
 export const SubTitle = styled.p<ResponsiveProps>`
+ margin-top: 1.5rem;
   color: #2e2e2e;
   font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
   font-family: 'Pretendard Variable';
@@ -45,6 +46,7 @@ export const InputWrapper = styled.div<ResponsiveProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1.5rem;
   width: ${({ $isMobile }) => ($isMobile ? '181px' : '305px')};
   max-width: 360px;
   font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
@@ -64,10 +66,10 @@ export const InputWrapper = styled.div<ResponsiveProps>`
 `;
 
 export const Input = styled.input<ResponsiveProps>`
-  margin-top: 0.5rem;
+  margin-top: ${({ $isMobile }) => ($isMobile ? '0.3rem' : '1.5rem')};
   width: ${({ $isMobile }) => ($isMobile ? '150px' : '250px')};
-  heigth: ${({ $isMobile }) => ($isMobile ? '30px' : '40px')};
-  padding: 0.55rem 1rem;
+  height: ${({ $isMobile }) => ($isMobile ? '30px' : '40px')};
+  padding: ${({ $isMobile }) => ($isMobile ? '0.5rem' : '0.55rem')} 1rem;
   font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
   font-family: 'Pretendard Variable';
   border: 1px solid #29d4a7;
@@ -77,7 +79,8 @@ export const Input = styled.input<ResponsiveProps>`
 `;
 
 export const Button = styled.button<ResponsiveProps>`
-  width: ${({ $isMobile }) => ($isMobile ? '80px' : '200px')};
+  margin-top: ${({ $isMobile }) => ($isMobile ? '1rem' : '2rem')};
+  width: ${({ $isMobile }) => ($isMobile ? '80px' : '180px')};
   height: ${({ $isMobile }) => ($isMobile ? '30px' : '50px')};
   background-color: #29d4a7;
   box-shadow: 0px 2px 10px rgba(25, 25, 25, 0.2);

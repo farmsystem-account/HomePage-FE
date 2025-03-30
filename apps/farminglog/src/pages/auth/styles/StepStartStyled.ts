@@ -46,8 +46,10 @@ export const SubText = styled.p<ResponsiveProps>`
 
 export const ButtonGroup = styled.div<ResponsiveProps>`
   display: flex;
-  flex-direction: column;
-  gap:  ${({ $isMobile }) => ($isMobile ? '0rem' : '0.5rem')};
+  flex-direction: ${({ $isMobile }) => ($isMobile ? 'column' : 'row')};
+  justify-content: center;
+  align-items: center; 
+  gap: ${({ $isMobile }) => ($isMobile ? '10px' : '30px')};
   width: 100%;
 `;
 
@@ -59,6 +61,10 @@ export const Text = styled.p<ResponsiveProps>`
 `;
 
 export const LinkWrapper = styled.div<ResponsiveProps>`
+  display: inline-flex; 
+  align-items: center;
+  gap: 6px;
+
   font-size: ${({ $isMobile }) => ($isMobile ? '16px' : '20px')};
   color: #fffaA4;
   cursor: pointer;

@@ -5,6 +5,7 @@ import { usePrivateApi } from '../../../api/hooks/usePrivateApi';
 import { useUserStore, UserInfo } from '../../stores/userStore';
 import { ApiResponse } from '../../../api/models/api';
 
+
 interface UpdateUserPayload {
   profileImageUrl?: string;
   phoneNumber?: string;
