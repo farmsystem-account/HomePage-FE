@@ -10,12 +10,12 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   if (!isOpen) return null;
 
-  // 팝업 클릭 시 배경을 누르면 닫히도록
+  // 팝업 클릭 시 배경을 누르면 닫힘ㅁㅁ
   const handleOverlayClick = () => {
     onClose();
   };
 
-  // 내부 박스 클릭 시 이벤트 전파 중단
+  // 알림 전파? 이건 한번 확인
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
