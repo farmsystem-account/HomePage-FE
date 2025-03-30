@@ -114,7 +114,7 @@ export default function Header() {
   userName={user?.name}
   generationAndPart={`${user?.generation}기 ${user?.track}`}
   profileImg={user?.profileImageUrl} 
-  hasAlarm={true}         
+  // hasAlarm={false} // 알림 패치 후 바꿔야함       
   hasLogout={true}       
 />
 

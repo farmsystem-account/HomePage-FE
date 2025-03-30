@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { PopupProps } from "./popup.types";
 import * as S from "./popup.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
 
-import BellIcon from "@/assets/Icons/bell.png";
+// import BellIcon from "@/assets/Icons/bell.png"; 알림
 import LogoutIcon from "@/assets/Icons/log-out.png";
 import GithubIcon from "@/assets/Icons/github.png";
 import CloseIcon from "@/assets/Icons/close.png";
+import NotificationModal from "@/components/Notification/NotificationModal";
 
 const Popup: React.FC<PopupProps> = (props) => {
   const { isMobile, isTablet } = useMediaQueries();
@@ -69,8 +70,12 @@ const ProfileLayout: React.FC<PopupProps> = ({
         </S.ProfileCircle>
 
         <S.InfoBox $isMobile={isMobile}>
-          <S.PopupTitle $isMobile={isMobile} $isTablet={isTablet}>{userName || "이름"}</S.PopupTitle>
-          <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>{generationAndPart || "3기 보안/웹"}</S.PopupText>
+          <S.PopupTitle $isMobile={isMobile} $isTablet={isTablet}>
+            {userName || "이름"}
+          </S.PopupTitle>
+          <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
+            {generationAndPart || "3기 보안/웹"}
+          </S.PopupText>
         </S.InfoBox>
       </S.ProfileLayoutRow>
 
@@ -83,7 +88,13 @@ const ProfileLayout: React.FC<PopupProps> = ({
       <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
         {githubId ? (
           <>
-            <img src={GithubIcon} width={24} height={24} alt="github" style={{ marginRight: 8 }} />
+            <img
+              src={GithubIcon}
+              width={24}
+              height={24}
+              alt="github"
+              style={{ marginRight: 8 }}
+            />
             {githubId}
           </>
         ) : (
@@ -100,34 +111,35 @@ const MyPageLayout: React.FC<PopupProps> = ({
   userName,
   generationAndPart,
   profileImg,
-  hasAlarm,
+  // hasAlarm, 알림
   hasLogout,
 }) => {
   const { isMobile, isTablet } = useMediaQueries();
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
 
   return (
     <>
       <S.IconContainer $isMobile={isMobile}>
-        {hasAlarm && (
-        <div className="alarm">
-        <img
-          src={BellIcon}
-          alt="알림"
-          width={isMobile ? 20 : 40}
-          height={isMobile ? 20 : 40}
-        />
-        <S.AlarmDot />
-        </div>
-        )}
+        {/* 알림 버튼  나중에 보이게*/}
+        {/* <div className="alarm" onClick={() => setNotificationOpen(true)}>
+          <img
+            src={BellIcon}
+            alt="알림"
+            width={isMobile ? 20 : 40}
+            height={isMobile ? 20 : 40}
+          />
+          {hasAlarm && <S.AlarmDot />} 
+        </div> */}
+
         {hasLogout && (
-        <button onClick={onClose}>
-        <img
-          src={LogoutIcon}
-          alt="로그아웃"
-          width={isMobile ? 20 : 40}
-          height={isMobile ? 20 : 40}
-        />
-        </button>
+          <button onClick={onClose}>
+            <img
+              src={LogoutIcon}
+              alt="로그아웃"
+              width={isMobile ? 20 : 40}
+              height={isMobile ? 20 : 40}
+            />
+          </button>
         )}
       </S.IconContainer>
 
@@ -137,16 +149,27 @@ const MyPageLayout: React.FC<PopupProps> = ({
         </S.ProfileCircle>
 
         <S.InfoBox $isMobile={isMobile}>
-          <S.PopupTitle $isMobile={isMobile} $isTablet={isTablet}>{userName || "사용자"}</S.PopupTitle>
-          <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>{generationAndPart || "4기 보안/웹"}</S.PopupText>
+          <S.PopupTitle $isMobile={isMobile} $isTablet={isTablet}>
+            {userName || "사용자"}
+          </S.PopupTitle>
+          <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
+            {generationAndPart || "4기 보안/웹"}
+          </S.PopupText>
         </S.InfoBox>
       </S.ProfileLayoutRow>
 
       <S.Divider $isMobile={isMobile} />
 
-      <S.CenteredPopupText $isMobile={isMobile} onClick={() => window.location.href = "/mypage"}>
+      <S.CenteredPopupText
+        $isMobile={isMobile}
+        onClick={() => (window.location.href = "/mypage")}
+      >
         마이페이지
       </S.CenteredPopupText>
+
+      {isNotificationOpen && (
+        <NotificationModal onClose={() => setNotificationOpen(false)} />
+      )}
     </>
   );
 };
@@ -171,7 +194,9 @@ const MessageLayout: React.FC<PopupProps> = ({
 
       <S.Divider $isMobile={isMobile} />
 
-      <S.ConfirmButton onClick={onClose}>{confirmLabel || "확인"}</S.ConfirmButton>
+      <S.ConfirmButton onClick={onClose}>
+        {confirmLabel || "확인"}
+      </S.ConfirmButton>
     </>
   );
 };
