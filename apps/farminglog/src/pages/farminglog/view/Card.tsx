@@ -10,6 +10,7 @@ import useFarmingLogStore from '@/stores/farminglogStore';
 
 import { FiEdit3 } from "react-icons/fi";
 import Heart from '@/assets/Icons/heart.png';
+import HeartPC from '@/assets/Icons/heart-pc.png';
 import HeartFill from '@/assets/Icons/heart-fill.png';
 import ChecvronRight from '@/assets/Icons/chevron-right.png';
 
@@ -25,6 +26,22 @@ const trackOptions = [
   { key: "SECURITY_WEB", label: "보안/웹" },
   { key: "AI", label: "인공지능" }
 ];
+
+// 날짜 파싱 함수
+function formatIsoToCustomDateTime(isoString: string): string {
+  const date = new Date(isoString);
+
+  // 간단히 2자리 맞춰주는 헬퍼
+  const pad2 = (num: number): string => String(num).padStart(2, '0');
+
+  const year = date.getFullYear();
+  const month = pad2(date.getMonth() + 1);
+  const day = pad2(date.getDate());
+  const hours = pad2(date.getHours());
+  const minutes = pad2(date.getMinutes());
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+}
 
 export default function Card({ data }: CardProps) {
   const [content, setContent] = useState('');
@@ -68,16 +85,25 @@ export default function Card({ data }: CardProps) {
   };
 
   useEffect(() => {
+    // PC에선 더보기 없이 그냥 표시
+    if (!isApp) {
+      setContent(data.content);
+      setShowDetailButton(false);
+      return;
+    }
+  
     if (data.content.length > 150) {
       setShowDetailButton(true);
-      if (viewDetail) setContent(data.content);
-      else setContent(data.content.slice(0, 150) + '...');
+      if (viewDetail) {
+        setContent(data.content);
+      } else {
+        setContent(data.content.slice(0, 150) + '...');
+      }
     } else {
       setContent(data.content);
       setShowDetailButton(false);
     }
-  }
-  , [data.content, viewDetail]);
+  }, [data.content, viewDetail, isApp]);
 
   return (
     <S.FarmingLogCard $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
@@ -93,34 +119,51 @@ export default function Card({ data }: CardProps) {
           {data.isOwner && (
             <S.EditButton onClick={handleEditClick}>
               <FiEdit3 
-                style={{ width: '20px', height: '20px' }}
-                aria-label="수정" />
+                style={{ 
+                  width: isApp ? '20px' : isMobile ? '24px' : '28px',
+                  height: isApp ? '20px' : isMobile ? '24px' : '28px',
+                }}
+                aria-label="수정" 
+              />
             </S.EditButton>
           )}
         </S.CategoryContainer>
         <S.TitleContainer>
-          <S.Title>{data.title}</S.Title>
+          <S.Title $isApp={isApp} $isMobile={isMobile}>{data.title}</S.Title>
           <S.LikeContainer onClick={handleLikeClick}>
-          <S.LikeImage
-            src={liked ? HeartFill : Heart}
-            
-            clicked={!!clicked}
-            alt="좋아요"
-          />
-          <S.LikeCount>{likeCount}</S.LikeCount>
+            <S.LikeImage
+              src={liked ? HeartFill : isApp ? Heart : HeartPC }
+              clicked={!!clicked}
+              alt="좋아요"
+              $isApp={isApp}
+              $isMobile={isMobile}
+            />
+            <S.LikeCount $isApp={isApp} $isMobile={isMobile}>
+              {likeCount}
+            </S.LikeCount>
           </S.LikeContainer>
         </S.TitleContainer>
         <S.InfoContainer>
-          <S.CreatedAt>{data.createdAt}</S.CreatedAt>
-          <S.Author>{data.author} | {trackOptions.find(option => option.key === data.track)?.label}</S.Author>
+          <S.CreatedAt $isApp={isApp} $isMobile={isMobile}>
+            {formatIsoToCustomDateTime(data.createdAt)}
+          </S.CreatedAt>
+          <S.Author $isApp={isApp} $isMobile={isMobile}>
+            {data.author} | {trackOptions.find(option => option.key === data.track)?.label}
+          </S.Author>
         </S.InfoContainer>
-        <S.Content>{content}</S.Content>
+        <S.Content $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
+          {content}
+        </S.Content>
       </S.ContentContainer>
       {showDetailButton && (
         <S.DetailContainer>
           <S.DetailButton onClick={() => setViewDetail(!viewDetail)}>
             <S.DetailButtonText>{viewDetail ? '간략히' : '자세히'}</S.DetailButtonText>
-            <S.DetailButtonImage src={ChecvronRight} alt="더보기" viewDetail={viewDetail} />
+            <S.DetailButtonImage 
+              src={ChecvronRight}
+              alt="더보기"
+              viewDetail={viewDetail}
+            />
           </S.DetailButton>
         </S.DetailContainer>
       )}

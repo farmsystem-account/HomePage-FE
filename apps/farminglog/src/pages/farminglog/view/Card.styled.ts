@@ -14,7 +14,7 @@ export const FarmingLogCard = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
+  gap: 30px;
   background: var(--FarmSystem_White, #FCFCFC);
   border-radius: 5px; 
   border: 2px solid var(--FarmSystem_LightGrey, #E5E5E5);
@@ -31,7 +31,7 @@ export const ContentContainer = styled.div<ResponsiveProps>`
   padding: 10px 5px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5px;
+  gap: ${({ $isApp }) => ($isApp ? '5px' : '15px')};
   align-self: stretch;
 `;
 
@@ -66,7 +66,7 @@ export const EditButton = styled.button`
   cursor: pointer;
   justify-content: center;
   align-items: center;
-  padding-right: 4px;
+  padding-right: 2px;
 `;
 
 export const TitleContainer = styled.div<ResponsiveProps>`
@@ -78,16 +78,16 @@ export const TitleContainer = styled.div<ResponsiveProps>`
   align-self: stretch;
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h2<ResponsiveProps>`
   display: flex;
-  width: 205px;
   height: 16px;
   flex-direction: column;
   justify-content: center;
 
   color: #2E2E2E;
   font-family: "Pretendard Variable";
-  font-size: 16px;
+  // 제목 Figma 상에선 32px이지만, 너무 큰 것 같아서 임의로 24px로 줄여봤습니다.
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '16px' : $isMobile ? '20px' : '24px')};
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 125% */
@@ -108,7 +108,6 @@ const pop = keyframes`
 
 export const LikeContainer = styled.div<ResponsiveProps>`
   display: flex;
-  width: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -117,10 +116,12 @@ export const LikeContainer = styled.div<ResponsiveProps>`
   cursor: pointer;
 `;
 
-export const LikeImage = styled.img<{ clicked: boolean }>`
-  width: 20px;
-  height: 20px;
+export const LikeImage = styled.img<{ clicked: boolean } & ResponsiveProps>`
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '20px' : $isMobile ? '25px' : '30px')};
+  height: ${({ $isApp, $isMobile }) => ($isApp ? '20px' : $isMobile ? '25px' : '30px')};
+  flex-shrink: 0;
   aspect-ratio: 1/1;
+
   cursor: pointer;
   transition: transform 0.2s ease;
 
@@ -129,7 +130,7 @@ export const LikeImage = styled.img<{ clicked: boolean }>`
   `}
 `;
 
-export const LikeCount = styled.span`
+export const LikeCount = styled.span<ResponsiveProps>`
   display: flex;
   width: 20px;
   height: 10px;
@@ -139,7 +140,7 @@ export const LikeCount = styled.span`
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 8px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '8px' : $isMobile ? '12px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 250% */
@@ -154,7 +155,7 @@ export const InfoContainer = styled.div<ResponsiveProps>`
   align-self: stretch;
 `;
 
-export const CreatedAt = styled.span`
+export const CreatedAt = styled.span<ResponsiveProps>`
   display: flex;
   height: 16px;
   flex-direction: column;
@@ -163,14 +164,14 @@ export const CreatedAt = styled.span`
 
   color: #2E2E2E;
   font-family: "Pretendard Variable";
-  font-size: 10px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '10px' : $isMobile ? '13px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 200% */
   letter-spacing: -0.24px;
 `;
 
-export const Author = styled.span`
+export const Author = styled.span<ResponsiveProps>`
   display: flex;
   height: 16px;
   flex-direction: column;
@@ -180,14 +181,14 @@ export const Author = styled.span`
   color: #2E2E2E;
   text-align: right;
   font-family: "Pretendard Variable";
-  font-size: 10px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '10px' : $isMobile ? '13px' : '16px')};
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 200% */
   letter-spacing: -0.24px;
 `;
 
-export const Content = styled.p`
+export const Content = styled.p<ResponsiveProps>`
   width: 100%;
   min-height: 60px;
   white-space: normal;
@@ -195,7 +196,7 @@ export const Content = styled.p`
   word-break: break-all;      /* 필요시 강제로 줄바꿈 */
   color: #2E2E2E;
   font-family: "Pretendard Variable";
-  font-size: 12px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '12px' : $isMobile ? '14px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px;

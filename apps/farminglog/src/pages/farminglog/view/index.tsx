@@ -99,7 +99,15 @@ export default function View() {
         </S.FarmingLogCardContainer>
         {isFetchingNextPage && <div>로딩중...</div>}
         {!hasNextPage && !isFetching && (
-          <div>더 불러올 게시글이 없습니다.</div>
+          <S.EndOfList>
+            <S.EndOfListText
+              $isApp={isApp}
+              $isMobile={isMobile}
+              $isDesktop={isDesktop}
+            >
+              더 이상 글이 없습니다.
+            </S.EndOfListText>
+          </S.EndOfList>
         )}
         <S.FarmingLogWriteButton
           $isApp={isApp}
