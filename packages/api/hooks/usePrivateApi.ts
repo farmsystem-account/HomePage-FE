@@ -107,11 +107,28 @@ export function usePrivateApi() {
     [navigate, reissueToken]
   );
 
+  /**
+   *  ApiResponse<T>를 반환하는 기존 GET 메소드
+   */
+  const get = <T>(uri: string, params?: Record<string, string>, tokens?: Tokens) =>
+    request<T>(uri, { method: 'get', searchParams: params }, tokens);
+
+  /** 
+   * 새로 추가한 getData는 응답이 ApiResponse<T> 형태라면 내부의 T만 반환
+   * 파밍로그쪽 API가 기존 백엔드의 ApiResponse 형태가 아닌 데이터만 던져주기 때문에 get을 분리했습니다.
+   */
+  const getData = async <T>(uri: string, params?: Record<string, string>, tokens?: Tokens): Promise<T> => {
+    const response = await get<T>(uri, params, tokens);
+    if (response && typeof response === 'object' && 'data' in response) {
+      return (response as ApiResponse<T>).data;
+    }
+    return response as T;
+  };
+  
 
   return {
-    get: <T>(uri: string, params?: Record<string, string>, tokens?: Tokens) =>
-      request<T>(uri, { method: 'get', searchParams: params }, tokens),
-
+    get,
+    getData, // 새로 추가된 getData 메서드
     post: <T>(uri: string, body?: unknown, tokens?: Tokens) =>
       request<T>(uri, { method: 'post', json: body }, tokens),
 

@@ -8,7 +8,7 @@ import { useFarmingLogsInfiniteQuery } from '@/services/query/useFarmingLogInfin
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
 import EditImage from '@/assets/Icons/edit-3.png';
 
-export default  function View() {
+export default function View() {
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
 
@@ -18,6 +18,8 @@ export default  function View() {
     hasNextPage,
     isFetchingNextPage,
     isFetching,
+    isLoading,
+    error,
   } = useFarmingLogsInfiniteQuery();
 
   // 마지막 카드 요소를 관찰하여 다음 페이지를 불러오기 위한 IntersectionObserver
@@ -36,6 +38,11 @@ export default  function View() {
     },
     [isFetchingNextPage, fetchNextPage, hasNextPage]
   );
+
+  // 로딩 또는 에러 상태 처리
+  if (isLoading) return <div>로딩중...</div>;
+  if (error) return <div>에러 발생: {error.message}</div>;
+  if (!data) return <div>데이터가 없습니다.</div>;
 
   return (
     <S.MainContainer>
@@ -71,7 +78,7 @@ export default  function View() {
           $isMobile={isMobile}
           $isDesktop={isDesktop}
         >
-          {data?.pages.map((page, pageIndex) => (
+          {data.pages.map((page, pageIndex) => (
             <React.Fragment key={pageIndex}>
               {page.content.map((log, idx) => {
                 // 마지막 페이지의 마지막 요소에 ref 적용

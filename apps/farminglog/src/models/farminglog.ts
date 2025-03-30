@@ -34,6 +34,8 @@ export interface FarmingLog {
 }
 
 export interface FarmingLogsResponse {
+  content: FarmingLog[];
+  
   totalElements: number;
   totalPages: number;
   first: boolean;
@@ -58,6 +60,5 @@ export interface FarmingLogsResponse {
     offset: number;
   },
   size: number;
-  content: FarmingLog[];
   empty: boolean;
 }
