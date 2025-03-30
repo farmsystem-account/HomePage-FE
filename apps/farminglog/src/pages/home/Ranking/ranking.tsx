@@ -16,12 +16,15 @@ export default function RankingPreview() {
   const navigate = useNavigate();
   const { isMobile, isApp, isTablet } = useMediaQueries();
 
+  // 기준 컨테이너 ref (예: 전체 랭킹 영역)
+  const containerRef = useRef<HTMLDivElement>(null);
+
   // 풍선 표시를 위한 상태들
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
 
-  // 풍선 DOM
+  // 풍선 DOM 참조
   const balloonRef = useRef<HTMLDivElement>(null);
 
   // 랭킹 데이터
@@ -37,7 +40,8 @@ export default function RankingPreview() {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () =>
+      document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const getBgColor = (rank: number) => {
@@ -54,7 +58,8 @@ export default function RankingPreview() {
 
   return (
     <>
-      <S.ProfileWrapper $isMobile={isMobile} $isTablet={isTablet}>
+      {/* 기준 컨테이너에 ref 추가 */}
+      <S.ProfileWrapper ref={containerRef} $isMobile={isMobile} $isTablet={isTablet}>
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title $isMobile={isMobile}>랭킹</S.Title>
           <S.BackArrow
@@ -85,14 +90,23 @@ export default function RankingPreview() {
               isMe={item.userId === data.myRank.userId}
               isApp={isApp}
               onClick={(e) => {
-                // 풍선 크기 가정
+                // 풍선 크기 가정 (px)
                 const balloonWidth = 210;
                 const balloonHeight = 120;
 
-                // 클릭한 지점(pageX, pageY) 기반 좌표계산
-                // pageX/pageY는 문서 전체 기준이므로 스크롤 고려가 자동으로 됩니다.
-                const x = e.pageX - balloonWidth / 2 - 200;
-                const y = e.pageY - balloonHeight - 570; // 10px 정도 위로 띄워주기
+                // 부모 컨테이너(예: ProfileWrapper)의 offset 계산
+                let containerLeft = 0;
+                let containerTop = 0;
+                if (containerRef.current) {
+                  const containerRect = containerRef.current.getBoundingClientRect();
+                  containerLeft = containerRect.left;
+                  containerTop = containerRect.top;
+                }
+
+                // e.pageX, e.pageY는 문서 전체 기준의 절대 좌표
+                // 부모 컨테이너의 offset을 빼서 상대적인 위치를 구합니다.
+                const x = e.pageX - balloonWidth / 2 - containerLeft;
+                const y = e.pageY - balloonHeight - containerTop; // 570px은 추가 고정 오프셋
 
                 setSelectedIndex(index);
                 setBalloonPosition({ x, y });
