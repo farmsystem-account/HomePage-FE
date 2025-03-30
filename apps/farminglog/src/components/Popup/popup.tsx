@@ -1,6 +1,6 @@
 // Popup.tsx
 import React from "react";
-import { PopupProps, PopupVariant } from "./popup.types";
+import { PopupProps } from "./popup.types";
 import * as S from "./popup.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
 
