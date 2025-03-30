@@ -15,13 +15,19 @@ import ProfilePopup from '@/components/Popup/ProfilePopup';
 export default function RankingPreview() {
   const navigate = useNavigate();
   const { isMobile, isApp, isTablet } = useMediaQueries();
+
+  // 풍선 표시를 위한 상태들
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
+
+  // 풍선 DOM
   const balloonRef = useRef<HTMLDivElement>(null);
 
+  // 랭킹 데이터
   const { data, isLoading } = useUserRankingQuery();
 
+  // 클릭이 랭킹 아이템/풍선 바깥에서 일어나면 풍선 닫기
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -43,6 +49,7 @@ export default function RankingPreview() {
 
   if (isLoading || !data) return null;
 
+  // 미리보기용: 내 순위 + 상위 3명
   const previewRankingData = [data.myRank, ...data.userRankList.slice(0, 3)];
 
   return (
@@ -58,7 +65,8 @@ export default function RankingPreview() {
         </S.TitleBox>
 
         <S.PhaseDesc $isMobile={isMobile}>
-          · 랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.<br />
+          · 랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.
+          <br />
           · 씨앗은 트랙별 우수활동자 심사에 반영돼요.
         </S.PhaseDesc>
 
@@ -77,11 +85,17 @@ export default function RankingPreview() {
               isMe={item.userId === data.myRank.userId}
               isApp={isApp}
               onClick={(e) => {
+                // 풍선 크기 가정
+                const balloonWidth = 210;
+                const balloonHeight = 120;
+
+                // 클릭한 지점(pageX, pageY) 기반 좌표계산
+                // pageX/pageY는 문서 전체 기준이므로 스크롤 고려가 자동으로 됩니다.
+                const x = e.pageX - balloonWidth / 2 - 200;
+                const y = e.pageY - balloonHeight - 570; // 10px 정도 위로 띄워주기
+
                 setSelectedIndex(index);
-                setBalloonPosition({
-                  x: e.pageX - 105,
-                  y: e.pageY - 115,
-                });
+                setBalloonPosition({ x, y });
               }}
             >
               <S.RankBox>
@@ -118,7 +132,6 @@ export default function RankingPreview() {
               }}
               onProfileClick={() => {
                 setShowProfilePopup(true);
-                // setSelectedIndex(null);
               }}
             />
           )}
@@ -126,14 +139,14 @@ export default function RankingPreview() {
       </S.ProfileWrapper>
 
       {showProfilePopup && selectedIndex !== null && (
-  <ProfilePopup
-    isOpen={showProfilePopup}
-    userName={previewRankingData[selectedIndex].name}
-    generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${previewRankingData[selectedIndex].track}`}
-    profileImg={previewRankingData[selectedIndex].profileImageUrl}
-    onClose={() => setShowProfilePopup(false)}
-  />
-)}
+        <ProfilePopup
+          isOpen={showProfilePopup}
+          userName={previewRankingData[selectedIndex].name}
+          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${previewRankingData[selectedIndex].track}`}
+          profileImg={previewRankingData[selectedIndex].profileImageUrl}
+          onClose={() => setShowProfilePopup(false)}
+        />
+      )}
     </>
   );
 }

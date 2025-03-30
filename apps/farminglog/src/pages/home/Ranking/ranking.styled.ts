@@ -123,7 +123,7 @@ export const RankingItem = styled.div<{
   width: 100%;
   height: 60px;
   display: flex;
-  justify-content: ${({ isApp }) => (isApp ? 'space-between' : 'space-around')};
+  justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
   align-items: center;
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 12px;
