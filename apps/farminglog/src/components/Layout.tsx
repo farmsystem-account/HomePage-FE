@@ -4,16 +4,19 @@ import useMediaQueries from "@/hooks/useMediaQueries";
 import Header from "./Header/Header";
 
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
+import { useUserStore } from "@repo/auth/stores/userStore"; // ✅ Zustand store import
 
 export default function Layout() {
   const { isMobile } = useMediaQueries();
   const headerHeight = isMobile ? 55 : 70;
 
-  // accessToken 존재 여부로 fetch 제어 이건 나중에 리펙토링 필요... 모든 화면마다 계속 패치 중...
+  const user = useUserStore((state) => state.user);
+
   const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
   const isLoggedIn = !!accessToken;
 
-  useUserInfoQuery(isLoggedIn);
+  // 상태가 없고 로그인된 경우에만 패치
+  useUserInfoQuery(isLoggedIn && !user);
 
   return (
     <LayoutWrapper>

@@ -8,11 +8,10 @@ import { useCheerMutation } from '@/services/mutation/useCheerMutation';
 
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
 
-/** 카테고리-태그 매핑!!!!!! ENUM 값 확인 필요!!!! */
 const tagMap = {
-  '칭찬해요!': 'PRAISE',
+  '칭찬해요!': 'COMPLIMENT',
   '감사해요!': 'THANK',
-  '응원해요!': 'SUPPORT',
+  '응원해요!': 'CHEER',
 } as const;
 
 type CategoryName = keyof typeof tagMap;
