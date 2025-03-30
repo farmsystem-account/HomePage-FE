@@ -67,8 +67,9 @@ export const CheerCardContainer = styled.div<ResponsiveProps>`
   flex-direction: ${({ $isDesktop, $isTablet }) =>
     $isDesktop || $isTablet ? 'row' : 'column'};
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   row-gap: 30px;
+  column-gap: 42px;
 
   & > * {
     width: ${({ $isDesktop, $isTablet }) =>
