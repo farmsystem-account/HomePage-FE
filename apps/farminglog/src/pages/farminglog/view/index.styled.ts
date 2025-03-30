@@ -9,8 +9,7 @@ interface ResponsiveProps {
 
 export const MainContainer = styled.div<ResponsiveProps>`
   display: flex;
-  padding-top: 50px;
-  padding-bottom: 100px;
+  padding: 20px 20px 100px;
   min-height: 100vh;
   width: 100%;
   flex-direction: column;
@@ -20,12 +19,8 @@ export const MainContainer = styled.div<ResponsiveProps>`
 
 export const FarmingLogContainer = styled.div<ResponsiveProps>`
   width: 100%;
-  max-width: ${({ $isApp, $isMobile, $isTablet, $isDesktop }) =>
-    $isApp ? '290px' :
-    $isMobile ? '400px' :
-    $isTablet ? '700px' :
-    $isDesktop ? '1000px' :
-    '1200px'};
+  max-width: 75rem;
+  min-height: 90vh;
 
   padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '0')};
   display: flex;
@@ -35,9 +30,6 @@ export const FarmingLogContainer = styled.div<ResponsiveProps>`
 
   border-radius: 5px;
   background: var(--FarmSystem_White, #FCFCFC);
-
-  // height 제거 or min-height만 유지
-  min-height: 90vh;
 `;
 
 export const FarmingLogContainerHeader = styled.div<ResponsiveProps>`

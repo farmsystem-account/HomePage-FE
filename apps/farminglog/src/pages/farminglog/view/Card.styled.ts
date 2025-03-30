@@ -7,20 +7,17 @@ interface ResponsiveProps {
 }
 
 export const FarmingLogCard = styled.div<ResponsiveProps>`
-  display: flex;
-
   width: 100%;
-  max-width: ${({ $isApp, $isMobile }) =>
-    $isApp ? '260px' :
-    $isMobile ? '420px' :
-    '700px'};
-
-  padding: ${({ $isApp }) => ($isApp ? '10px 5px' : '20px 10px')};
+  max-width: 75rem;
+  height: 90vh;
+  padding: 15px 12px 0px 13px;
+  // padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
+  display: flex;
   flex-direction: column;
   align-items: center;
-
+  gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
+  background: var(--FarmSystem_White, #FCFCFC);
   border-radius: 5px;
-  border: 1px solid #DBDBDB;
 `;
 
 
