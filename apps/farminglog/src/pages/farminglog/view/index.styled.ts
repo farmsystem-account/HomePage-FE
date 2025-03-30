@@ -72,6 +72,7 @@ export const FarmingLogCardContainer = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 0px 20px;
 `;
 
 export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
@@ -83,7 +84,7 @@ export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
   right: ${({ $isApp, $isMobile }) =>
     $isApp ? '25px' :
     $isMobile ? '90px' :
-    '180px'};
+    '120px'};
 
   display: flex;
   justify-content: center;
@@ -105,8 +106,8 @@ export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
 `;
 
 export const FarmingLogWriteButtonImage = styled.img<ResponsiveProps>`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   aspect-ratio: 1/1;
   flex-shrink: 0;
 `;
