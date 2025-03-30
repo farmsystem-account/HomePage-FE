@@ -184,5 +184,6 @@ export const ProfileName = styled.div<{ $isMobile: boolean }>`
   padding: 0 10px;
   font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
   font-weight: 600;
+  font-family: "Pretendard Variable";
   color: black;
 `;
