@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./profilePopup.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
 
-import GithubIcon from "@/assets/Icons/github.png";
+import GithubIcon from "@/assets/Icons/Github.png";
 import CloseIcon from "@/assets/Icons/close.png";
 
 interface ProfilePopupProps {
