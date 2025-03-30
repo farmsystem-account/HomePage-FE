@@ -17,11 +17,12 @@ export const CheerContainer = styled.div<{
   padding-bottom: 30px;
 
   background: white;
+  border-radius: 3px;
 `;
 
 // 타이틀
-export const CheerTitle = styled.h2`
-  font-size: 36px;
+export const CheerTitle = styled.h2<{$isMobile: boolean;}>`
+  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
   font-weight: 600;
   font-family: "Pretendard Variable";
   margin-bottom: 24px;
@@ -61,8 +62,8 @@ export const CheerCard = styled.div<{
 
   background-color: ${({ bgColor }) => bgColor || "#ffffff"};
   border-radius: 10px;
-  width: ${({ $isMobile }) => ($isMobile ? "320px" : "400px")};
-  height: ${({ $isMobile }) => ($isMobile ? "240px" : "300px")};
+  width: ${({ $isMobile }) => ($isMobile ? "280px" : "400px")};
+  height: ${({ $isMobile }) => ($isMobile ? "200px" : "300px")};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   overflow: hidden;

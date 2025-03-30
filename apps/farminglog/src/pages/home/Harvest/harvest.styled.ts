@@ -28,7 +28,7 @@ export const MainText = styled.h1<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  font-size: 36px;
+  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
   font-weight: 600;
   font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
