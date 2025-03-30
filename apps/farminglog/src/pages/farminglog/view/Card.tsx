@@ -1,12 +1,15 @@
 import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { FarmingLog } from '@/models/farminglog';
 import { useToggleLikeMutation } from '@/services/mutation/FarmingLog';
+import useFarmingLogStore from '@/stores/farminglogStore';
 
 import Heart from '@/assets/Icons/heart.png';
 import HeartFill from '@/assets/Icons/heart-fill.png';
 import ChecvronRight from '@/assets/Icons/chevron-right.png';
+import Edit3 from '@/assets/Icons/edit-3.png';
 
 interface CardProps {
   data: FarmingLog;
@@ -20,8 +23,16 @@ export default function Card({ data }: CardProps) {
   const [likeCount, setLikeCount] = useState(data.likeCount);
   const [clicked, setClicked] = useState(false);
 
+  const navigate = useNavigate();
   const { isApp, isMobile, isDesktop } = useMediaQueries();
   const { mutate: toggleLikeMutate } = useToggleLikeMutation();
+  const {
+    setIsEditMode,
+    setFarmingLogId,
+    setFarminglogTitle,
+    setFarminglogContent,
+    setFarminglogCategory,
+  } = useFarmingLogStore();
 
   const handleLikeClick = () => {
     setLiked(prev => !prev);
@@ -34,6 +45,15 @@ export default function Card({ data }: CardProps) {
       setLikeCount(prev => prev + 1);
     }
     setTimeout(() => setClicked(false), 300);
+  };
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+    setFarmingLogId(data.farmingLogId);
+    setFarminglogTitle(data.title);
+    setFarminglogContent(data.content);
+    setFarminglogCategory(data.category);
+    navigate('/farminglog/create');
   };
 
   useEffect(() => {
@@ -59,6 +79,11 @@ export default function Card({ data }: CardProps) {
           <S.Category $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
             {data.category}
           </S.Category>
+          {data.isOwner && (
+            <S.EditButton onClick={handleEditClick}>
+              <img src={Edit3} alt="수정" />
+            </S.EditButton>
+          )}
         </S.CategoryContainer>
         <S.TitleContainer>
           <S.Title>{data.title}</S.Title>

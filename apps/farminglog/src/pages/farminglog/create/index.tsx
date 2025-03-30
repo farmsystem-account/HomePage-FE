@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './index.styled';
@@ -6,7 +6,11 @@ import {
   FarmingLogCategory,
   FarmingLogCategoryDisplayMapping
 } from '@/models/farminglog';
-import { useCreateFarmingLogMutation } from '@/services/mutation/FarmingLog';
+import { 
+  useCreateFarmingLogMutation,
+  useEditFarmingLogMutation
+} from '@/services/mutation/FarmingLog';
+import useFarmingLogStore from '@/stores/farminglogStore';
 
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
@@ -25,6 +29,24 @@ export default function Editor() {
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
   const { mutate: createFarmingLogMutate } = useCreateFarmingLogMutation();
+  const { mutate: editFarmingLogMutate } = useEditFarmingLogMutation();
+  const {
+    isEditMode,
+    farmingLogId,
+    farminglogTitle,
+    farminglogContent,
+    farminglogCategory,
+    setIsEditMode,
+  } = useFarmingLogStore();
+
+  useEffect(() => {
+    if (isEditMode) {
+      setTitleInput(farminglogTitle);
+      setContentInput(farminglogContent);
+      setDropDownSelected(farminglogCategory as keyof typeof FarmingLogCategory);
+    }
+  }
+  , [isEditMode, farminglogTitle, farminglogContent, farminglogCategory]);
 
   const handleCreateFarmingLog = () => {
     console.log('제목:', titleInput);
@@ -46,12 +68,28 @@ export default function Editor() {
       alert('내용은 100자 이상, 300자 이하로 작성해주세요.');
       return;
     }
+    if (isEditMode) {
+      // 수정 모드일 때
 
-    createFarmingLogMutate({
-      title: titleInput,
-      content: contentInput,
-      category: categoryEnum,
-    });
+      if (farmingLogId === null) {
+        alert('잘못된 접근입니다.');
+        return;
+      }
+      editFarmingLogMutate({
+        farminglogId: farmingLogId,
+        title: titleInput,
+        content: contentInput,
+        category: categoryEnum,
+      });
+
+      setIsEditMode(false);
+    } else {
+      createFarmingLogMutate({
+        title: titleInput,
+        content: contentInput,
+        category: categoryEnum,
+      });
+    }
     navigate('/farminglog/view');
   };
 

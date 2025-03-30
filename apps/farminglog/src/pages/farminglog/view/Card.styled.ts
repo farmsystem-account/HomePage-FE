@@ -17,7 +17,7 @@ export const FarmingLogCard = styled.div<ResponsiveProps>`
   align-items: center;
   gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
   background: var(--FarmSystem_White, #FCFCFC);
-  border-radius: 5px;
+  border-radius: 5px; 
 `;
 
 
@@ -39,7 +39,7 @@ export const ContentContainer = styled.div<ResponsiveProps>`
 export const CategoryContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 export const Category = styled.div<ResponsiveProps>`
@@ -60,6 +60,11 @@ export const Category = styled.div<ResponsiveProps>`
   font-weight: 400;
   line-height: 20px; /* 200% */
   letter-spacing: -0.24px;
+`;
+
+export const EditButton = styled.button`
+  display: flex;
+  cursor: pointer;
 `;
 
 export const TitleContainer = styled.div<ResponsiveProps>`
