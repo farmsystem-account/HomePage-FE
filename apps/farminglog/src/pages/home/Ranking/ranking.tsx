@@ -55,7 +55,7 @@ export default function RankingPage() {
       <S.ProfileWrapper $isMobile={isMobile} $isTablet={isTablet}>
         {/* 상단 영역 */}
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
-          <S.Title>랭킹</S.Title>
+          <S.Title $isMobile={isMobile}>랭킹</S.Title>
           <S.BackArrow src={UpArrowImg} alt="확대하기" onClick={() => navigate("/rankingDetail")}/>
         </S.TitleBox>
 

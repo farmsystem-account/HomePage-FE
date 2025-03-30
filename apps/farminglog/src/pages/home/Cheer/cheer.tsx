@@ -60,7 +60,7 @@ export default function Cheer() {
 
   return (
     <S.CheerContainer $isMobile={isMobile} $isTablet={isTablet}>
-      <S.CheerTitle>실시간 응원 현황</S.CheerTitle>
+      <S.CheerTitle $isMobile={isMobile}>실시간 응원 현황</S.CheerTitle>
 
       <S.CheerCardWrapper $isMobile={isMobile} $isTablet={isTablet}>
         {cheerData.map((cheer) => (

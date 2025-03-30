@@ -36,6 +36,8 @@ export const ProfileWrapper = styled.div<{
   color: black;
   position: relative;
   margin: 0 auto;
+
+  
 `;
 
 /** 상단 영역: 뒤로가기 아이콘, 제목(랭킹) 등 */
@@ -55,6 +57,8 @@ export const TitleBox = styled.div<{
   align-items: center;
   position: relative;
   z-index: 2;
+
+  border-radius: 3px;
 `;
 
 /** 뒤로가기 아이콘 */
@@ -66,8 +70,8 @@ export const BackArrow = styled.img`
 `;
 
 /** 제목 */
-export const Title = styled.h2`
-  font-size: 36px;
+export const Title = styled.h2<{$isMobile: boolean;}>`
+  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
   font-weight: 600;
   font-family: "Pretendard Variable";
   margin: 0; /* 기본 margin 제거 */
