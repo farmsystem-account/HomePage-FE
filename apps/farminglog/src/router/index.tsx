@@ -12,7 +12,7 @@ import View from "@/pages/farminglog/view";
 import Create from "@/pages/farminglog/create";
 import Mypage from "@/pages/myPage";
 import Ranking from "@/pages/home/Ranking/ranking";
-import RankingDetail from "@/pages/Ranking";
+import RankingDetail from "@/pages/ranking";
 
 export const router = createBrowserRouter([
   {
