@@ -5,7 +5,7 @@ import useMediaQueries from "@/hooks/useMediaQueries";
 
 // import BellIcon from "@/assets/Icons/bell.png"; 알림
 import LogoutIcon from "@/assets/Icons/log-out.png";
-import GithubIcon from "@/assets/Icons/github.png";
+import GithubIcon from "@/assets/Icons/Github.png";
 import CloseIcon from "@/assets/Icons/close.png";
 import NotificationModal from "@/components/Notification/NotificationModal";
 
