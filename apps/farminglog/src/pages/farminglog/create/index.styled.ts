@@ -7,21 +7,27 @@ interface ResponsiveProps {
   $isDesktop?: boolean;
 }
 
+export const MainContainer = styled.div<ResponsiveProps>`
+  display: flex;
+  padding: 20px 20px 100px;
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 export const FarmingLogEditorContainer = styled.div<ResponsiveProps>`
-  width: ${({ 
-    $isApp, $isMobile, 
-    $isTablet, $isDesktop 
-  }) => ($isApp ? '290px' : $isMobile ? '400' : $isTablet ? '800px' : $isDesktop ? '800px' : '1200px')};
-  height: screen;
+  width: 100%;
+  max-width: 75rem;
+  height: 90vh;
   padding: 15px 12px 0px 13px;
   // padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
-  // background: linear-gradient(135deg, #4ade80, #14b8a6);
+  background: var(--FarmSystem_White, #FCFCFC);
   border-radius: 5px;
 `;
 
@@ -30,6 +36,7 @@ export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
   height: ${({ $isApp }) => ($isApp ? '60px' : '130px')};
   flex-shrink: 0;
 
+  margin-top: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
   border-radius: 5px;
   border: 1px solid #FFF763;
   background: #FFFAA4;
@@ -80,7 +87,7 @@ export const HeaderContext = styled.h3<ResponsiveProps>`
   font-style: normal;
   font-weight: 500;
   line-height: ${({ $isApp }) => ($isApp ? '16px' : '24px')}; 
-  margin-top: ${({ $isApp }) => ($isApp ? '5px' : '23px')};
+  margin-top: ${({ $isApp }) => ($isApp ? '0px' : '23px')};
   letter-spacing: -0.24px;
 `;
 
@@ -90,7 +97,8 @@ export const HeaderContextBold = styled.span`
 
 export const FarmingLogCard = styled.div<ResponsiveProps>`
   display: flex;
-  width: ${({ $isApp, $isMobile }) => ($isApp ? '260px' : $isMobile ? '420px' : '700px')};
+  width: 100%;
+  max-width: 800px;
   padding: ${({ $isApp }) => ($isApp ? '10px 5px' : '20px 10px')};
   flex-direction: column;
   align-items: center;
@@ -285,12 +293,56 @@ export const TextArea = styled.textarea`
   border-radius: 5px;
   border: 1px solid #5CD282;
   background: var(--FarmSystem_White, #FCFCFC);
+  resize: none;
 
   color: var(--FarmSystem_DarkGrey, #999);
   font-family: "Pretendard Variable";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: -0.24px;
+`;
+
+export const ButtonContainer = styled.div<ResponsiveProps>`
+  max-width: 100%;
+  display: flex;
+  width: 100%;
+  padding: 5px 0px;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
+`;
+
+export const GoBackButton = styled.button<ResponsiveProps>`
+  display: flex;
+  padding: 5px 18.5px 5px 20.5px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  background: var(--FarmSystem_DarkGrey, #999);
+  box-shadow: 0px 2px 10px 0px rgba(25, 25, 25, 0.20);
+`;
+
+export const CreateButton = styled.button<ResponsiveProps>`
+  display: flex;
+  padding: 5px 17.5px 5px 18.5px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  background: #5CD282;
+  box-shadow: 0px 2px 10px 0px rgba(25, 25, 25, 0.20);
+`;
+
+export const ButtonEnnerText = styled.p<ResponsiveProps>`
+  color: var(--FarmSystem_White, #FCFCFC);
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
   line-height: 20px; /* 166.667% */
   letter-spacing: -0.24px;
 `;

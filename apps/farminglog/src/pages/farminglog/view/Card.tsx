@@ -1,30 +1,30 @@
 import * as S from './Card.styled';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import { FarmingLog,
+  FarmingLogCategoryDisplayMapping
+} from '@/models/farminglog';
+import { useToggleLikeMutation } from '@/services/mutation/FarmingLog';
+import useFarmingLogStore from '@/stores/farminglogStore';
 
+import { FiEdit3 } from "react-icons/fi";
 import Heart from '@/assets/Icons/heart.png';
 import HeartFill from '@/assets/Icons/heart-fill.png';
 import ChecvronRight from '@/assets/Icons/chevron-right.png';
 
-interface Data{
-  farmingLogId: number,
-  title: string,
-  // thumbnail?: string,
-  content: string,
-  category: string,
-  createdAt: string,
-  author: string,
-  profileImageUrl: string,
-  track: string,
-  generation: number,
-  isOwner: boolean,
-  isLiked: boolean,
-  likeCount: number
+interface CardProps {
+  data: FarmingLog;
 }
 
-interface CardProps {
-  data: Data
-}
+const trackOptions = [
+  { key: "UNION", label: "유니온" },
+  { key: "GAMING_VIDEO", label: "게임/영상" },
+  { key: "IOT_ROBOTICS", label: "사물인터넷/로봇" },
+  { key: "BIGDATA", label: "빅데이터" },
+  { key: "SECURITY_WEB", label: "보안/웹" },
+  { key: "AI", label: "인공지능" }
+];
 
 export default function Card({ data }: CardProps) {
   const [content, setContent] = useState('');
@@ -34,15 +34,37 @@ export default function Card({ data }: CardProps) {
   const [likeCount, setLikeCount] = useState(data.likeCount);
   const [clicked, setClicked] = useState(false);
 
+  const navigate = useNavigate();
   const { isApp, isMobile, isDesktop } = useMediaQueries();
+  const { mutate: toggleLikeMutate } = useToggleLikeMutation();
+  const {
+    setIsEditMode,
+    setFarmingLogId,
+    setFarminglogTitle,
+    setFarminglogContent,
+    setFarminglogCategory,
+  } = useFarmingLogStore();
 
   const handleLikeClick = () => {
-    if (liked) return; // 이미 좋아요 눌렀으면 무시
-  
-    setLiked(true);
-    setLikeCount(prev => prev + 1);
+    setLiked(prev => !prev);
     setClicked(true);
+    toggleLikeMutate(data.farmingLogId);
+
+    if (liked) {
+      setLikeCount(prev => prev - 1);
+    } else { 
+      setLikeCount(prev => prev + 1);
+    }
     setTimeout(() => setClicked(false), 300);
+  };
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+    setFarmingLogId(data.farmingLogId);
+    setFarminglogTitle(data.title);
+    setFarminglogContent(data.content);
+    setFarminglogCategory(data.category);
+    navigate('/farminglog/create');
   };
 
   useEffect(() => {
@@ -66,8 +88,15 @@ export default function Card({ data }: CardProps) {
       <S.ContentContainer>
         <S.CategoryContainer>
           <S.Category $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-            {data.category}
+            {FarmingLogCategoryDisplayMapping[data.category]}
           </S.Category>
+          {data.isOwner && (
+            <S.EditButton onClick={handleEditClick}>
+              <FiEdit3 
+                style={{ width: '20px', height: '20px' }}
+                aria-label="수정" />
+            </S.EditButton>
+          )}
         </S.CategoryContainer>
         <S.TitleContainer>
           <S.Title>{data.title}</S.Title>
@@ -83,7 +112,7 @@ export default function Card({ data }: CardProps) {
         </S.TitleContainer>
         <S.InfoContainer>
           <S.CreatedAt>{data.createdAt}</S.CreatedAt>
-          <S.Author>{data.author} | {data.track}</S.Author>
+          <S.Author>{data.author} | {trackOptions.find(option => option.key === data.track)?.label}</S.Author>
         </S.InfoContainer>
         <S.Content>{content}</S.Content>
       </S.ContentContainer>
@@ -91,7 +120,7 @@ export default function Card({ data }: CardProps) {
         <S.DetailContainer>
           <S.DetailButton onClick={() => setViewDetail(!viewDetail)}>
             <S.DetailButtonText>{viewDetail ? '간략히' : '자세히'}</S.DetailButtonText>
-            <S.DetailButtonImage src={ChecvronRight} alt="더보기" />
+            <S.DetailButtonImage src={ChecvronRight} alt="더보기" viewDetail={viewDetail} />
           </S.DetailButton>
         </S.DetailContainer>
       )}

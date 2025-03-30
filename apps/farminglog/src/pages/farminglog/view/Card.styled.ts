@@ -7,14 +7,17 @@ interface ResponsiveProps {
 }
 
 export const FarmingLogCard = styled.div<ResponsiveProps>`
+  width: 100%;
+  max-width: 800px;
+  padding: 15px 12px 0px 13px;
+  // padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '')};
   display: flex;
-  width: ${({ $isApp, $isMobile }) => ($isApp ? '260px' : $isMobile ? '420px' : '700px')};
-  padding: ${({ $isApp }) => ($isApp ? '10px 5px' : '20px 10px')};
   flex-direction: column;
   align-items: center;
-
-  border-radius: 5px;
-  border: 1px solid #DBDBDB;
+  gap: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
+  background: var(--FarmSystem_White, #FCFCFC);
+  border-radius: 5px; 
+  border: 2px solid var(--FarmSystem_LightGrey, #E5E5E5);
 `;
 
 // 일단 사진 없이
@@ -35,7 +38,7 @@ export const ContentContainer = styled.div<ResponsiveProps>`
 export const CategoryContainer = styled.div<ResponsiveProps>`
   display: flex;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 export const Category = styled.div<ResponsiveProps>`
@@ -56,6 +59,14 @@ export const Category = styled.div<ResponsiveProps>`
   font-weight: 400;
   line-height: 20px; /* 200% */
   letter-spacing: -0.24px;
+`;
+
+export const EditButton = styled.button`
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  padding-right: 4px;
 `;
 
 export const TitleContainer = styled.div<ResponsiveProps>`
@@ -177,13 +188,17 @@ export const Author = styled.span`
 `;
 
 export const Content = styled.p`
-  align-self: stretch;
+  width: 100%;
+  min-height: 60px;
+  white-space: normal;
+  overflow-wrap: break-word;  /* 긴 단어를 적절히 나눔 */
+  word-break: break-all;      /* 필요시 강제로 줄바꿈 */
   color: #2E2E2E;
   font-family: "Pretendard Variable";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 166.667% */
+  line-height: 20px;
   letter-spacing: -0.24px;
 `;
 
@@ -219,9 +234,15 @@ export const DetailButtonText = styled.span`
   letter-spacing: -0.24px;
 `;
 
-export const DetailButtonImage = styled.img`
+export const DetailButtonImage = styled.img<{ viewDetail: boolean }>`
   width: 15px;
   height: 15px;
   flex-shrink: 0;
   aspect-ratio: 1/1;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+  ${({ viewDetail }) => viewDetail && css`
+    transform: rotate(180deg);
+  `}
+  cursor: pointer;
 `;
