@@ -67,8 +67,8 @@ export const ButtonContainer = styled.div<{
 
   /* anyCleared가 true면 gap을 줄이고, 아니면 기존 로직 */
   gap: ${({ $isMobile, $isTablet, $anyCleared }) => {
-    if ($anyCleared) return $isMobile ? "10px" : $isTablet ? "15px" : "20px";
-    return $isMobile ? "20px" : $isTablet ? "25px" : "30px";
+    if ($anyCleared) return $isMobile ? "10px" : $isTablet ? "10px" : "10px";
+    return $isMobile ? "10px" : $isTablet ? "10px" : "10px";
   }};
   
   flex-wrap: wrap;
@@ -83,8 +83,7 @@ export const StageButton = styled.div<{
   flex-direction: column;
   align-items: center;
   gap: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "8px" : $isTablet ? "10px" : "12px"};
-
+    $isMobile ? "8px" : $isTablet ? "12px" : "10px"};
   cursor: pointer;
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
@@ -173,7 +172,7 @@ box-shadow: ${({ $isActive }) =>
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
 
     font-weight: bold;
     font-family: "Pretendard Variable";

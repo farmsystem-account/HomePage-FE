@@ -43,7 +43,7 @@ export const Nav = styled.nav`
 export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActive: boolean }>`
   text-decoration: none;
   padding: ${({$isMobile, $isTablet}) => 
-    $isMobile ? "0 20px" : $isTablet ? "0 15px" : "0 30px"};
+    $isMobile ? "0 20px" : $isTablet ? "0 12px" : "0 30px"};
   font-size: ${({$isMobile, $isTablet}) => 
     $isMobile ? "15px" : $isTablet ? "15px" : "18px"};
   font-weight: 500;
@@ -169,7 +169,7 @@ export const ProfileContainer = styled.div<{ $isMobile: boolean }>`
   align-items: center;
 
   height: ${({ $isMobile }) => ($isMobile ? "50px" : "60px")};
-  padding-right: 50px;
+  padding-right: 30px;
 `;
 
 export const ProfileImage = styled.img<{ $isMobile: boolean }>`
