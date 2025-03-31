@@ -5,7 +5,6 @@ import LogoImage from "../../assets/home/farming_log.png";
 import CloseIcon from "../../assets/react.svg";
 import ProfileImage from "../../assets/home/default_profile.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
-
 import Popup from "@/components/Popup/popup"; 
 import { useUserStore } from "@repo/auth/stores/userStore";
 
@@ -22,6 +21,8 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { isMobile, isTablet } = useMediaQueries();
+
+  // user와 fetchUser 함수를 store에서 가져오기 (fetchUser는 최신 정보를 불러오는 함수)
   const user = useUserStore((s) => s.user);
 
   const name = user?.name;
@@ -34,7 +35,7 @@ export default function Header() {
   };
 
   const ProfileAndSeed = (
-    <S.ProfileAndSeedContainer $isMobile={isMobile}>
+    <S.ProfileAndSeedContainer $isMobile={isMobile} $isTablet={isTablet}>
       <S.ProfileContainer $isMobile={isMobile}
         onClick={() => setProfilePopupOpen(true)}>
         <S.ProfileImage
@@ -44,7 +45,7 @@ export default function Header() {
         />
         <S.ProfileName $isMobile={isMobile}>{name || ""}</S.ProfileName>
       </S.ProfileContainer>
-      <S.RecordCount $isMobile={isMobile}>
+      <S.RecordCount $isMobile={isMobile} $isTablet={isTablet}>
         <span className="seed-text">내 씨앗</span>
         <span className="seed-count">{totalSeed ?? 0}</span>
       </S.RecordCount>
@@ -107,17 +108,16 @@ export default function Header() {
         </S.MobileNavWrapper>
       </S.HeaderContainer>
 
-<Popup
-  isOpen={isProfilePopupOpen}
-  onClose={() => setProfilePopupOpen(false)}
-  variant="MYPAGE"
-  userName={user?.name}
-  generationAndPart={`${user?.generation}기 ${user?.track}`}
-  profileImg={user?.profileImageUrl} 
-  // hasAlarm={false} // 알림 패치 후 바꿔야함       
-  hasLogout={true}       
-/>
-
+      <Popup
+        isOpen={isProfilePopupOpen}
+        onClose={() => setProfilePopupOpen(false)}
+        variant="MYPAGE"
+        userName={user?.name}
+        generationAndPart={`${user?.generation}기 ${user?.track}`}
+        profileImg={user?.profileImageUrl} 
+        // hasAlarm={false} // 알림 패치 후 바꿔야함       
+        hasLogout={true}       
+      />
     </>
   );
 }

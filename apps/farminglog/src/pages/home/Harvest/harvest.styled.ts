@@ -1,4 +1,3 @@
-// harvest.styled.ts
 import styled, { keyframes } from "styled-components";
 
 /** 메인 컨테이너 */
@@ -28,7 +27,7 @@ export const MainText = styled.h1<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
+  font-size: ${({ $isMobile }) => ($isMobile ? "24px" : "36px")};
   font-weight: 600;
   font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
@@ -51,7 +50,6 @@ export const SubText = styled.p<{
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "24px" : $isTablet ? "26px" : "30px"};
   letter-spacing: -0.24px;
-
   margin-bottom: 24px;
   text-align: center;
 `;
@@ -66,56 +64,11 @@ export const ButtonContainer = styled.div<{
   justify-content: center;
   align-items: center;
   padding-top: 12px;
-  gap: ${({ $isMobile, $isTablet, $anyCleared }) => {
-    if ($anyCleared) return $isMobile ? "10px" : $isTablet ? "10px" : "10px";
-    return $isMobile ? "10px" : $isTablet ? "10px" : "10px";
-  }};
+  gap: 10px;
   flex-wrap: wrap;
 `;
 
-/** 기존(원형+텍스트) 스테이지 버튼 */
-export const StageButton = styled.div<{
-  $isMobile: boolean;
-  $isTablet: boolean;
-}>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "8px" : $isTablet ? "12px" : "10px"};
-  cursor: pointer;
-  font-size: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
-  font-weight: 700;
-  font-family: "Pretendard Variable";
-  line-height: 26px;
-  letter-spacing: -0.24px;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-/** 원형 아이콘 div */
-export const ButtonIcon = styled.div<{
-  $isMobile: boolean;
-  $isTablet: boolean;
-}>`
-  width: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
-  height: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
-  background-color: #4caf50;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 4px 4px 0px 0px #d8d8d8;
-`;
-
-/** 아이콘 이미지
- *  - $isActive가 true면 #D1D1D1 느낌으로 처리 (grayscale + 밝기 조절 등으로 근접 구현)
- */
+/** 원형 아이콘 이미지 */
 export const IconImg = styled.img<{
   $isMobile: boolean;
   $isTablet: boolean;
@@ -125,12 +78,9 @@ export const IconImg = styled.img<{
     $isMobile ? "20px" : $isTablet ? "25px" : "30px"};
   height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "20px" : $isTablet ? "25px" : "30px"};
-
-  /* 기본은 약간 투명도와 어두운 느낌 */
   filter: ${({ $isActive }) =>
     $isActive
-      ? // 활성 시(#D1D1D1)와 비슷하도록 회색톤 + 밝기 조절
-        "grayscale(100%) brightness(1.15)"
+      ? "grayscale(100%) brightness(1.15)"
       : "opacity(0.5) drop-shadow(0 0 0 #575656)"};
 `;
 
@@ -149,7 +99,7 @@ export const ButtonLabel = styled.div<{
 export const ParallelogramBox = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
-  $isActive: boolean; // 현재 버튼이 클리어인지
+  $isActive: boolean;
 }>`
   position: relative;
   width: ${({ $isMobile, $isTablet }) =>
@@ -157,15 +107,12 @@ export const ParallelogramBox = styled.div<{
   height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
   transform: skewX(-10deg);
-
-  /* isActive(true)면 주황색, false면 회색 */
   background-color: ${({ $isActive }) => ($isActive ? "#FFA500" : "#FCFCFC")};
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
   box-shadow: ${({ $isActive }) =>
     $isActive
       ? "inset 5px 5px rgba(243, 106, 21, 1)"
@@ -196,7 +143,6 @@ export const Stage = styled.div<{
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "16px" : $isTablet ? "18px" : "20px"};
   font-weight: 700;
@@ -205,7 +151,9 @@ export const Stage = styled.div<{
   letter-spacing: -0.24px;
 `;
 
-/* 새싹 애니메이션: 중앙에서 시작해 CSS 변수(--tx, --ty) 만큼 이동하며 커졌다가 사라짐 */
+/* 애니메이션 정의 */
+
+/** 폭발 애니메이션: 버튼 주변에서 퍼져나감 */
 const sproutExplosion = keyframes`
   0% {
     transform: translate(0, 0) scale(0);
@@ -221,12 +169,25 @@ const sproutExplosion = keyframes`
   }
 `;
 
+/** 모으기 애니메이션: 폭발 후 목표 위치로 이동 (목표 위치는 inline CSS 변수 --dx, --dy로 적용) */
+const gatherToTopRight = keyframes`
+  0% {
+    transform: translate(var(--tx), var(--ty)) scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--tx) + var(--dx)), calc(var(--ty) + var(--dy))) scale(0);
+    opacity: 0;
+  }
+`;
+
+/** GlobalSproutAnimation: 뷰포트 전체에 고정된 컨테이너 */
 export const GlobalSproutAnimation = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 10;
 
@@ -238,6 +199,6 @@ export const GlobalSproutAnimation = styled.div`
     width: 30px;
     height: 30px;
     opacity: 0;
-    animation: ${sproutExplosion} 1s forwards;
+    animation: ${sproutExplosion} 1s forwards, ${gatherToTopRight} 0.8s 1s forwards;
   }
 `;

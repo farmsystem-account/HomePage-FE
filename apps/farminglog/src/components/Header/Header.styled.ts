@@ -44,6 +44,7 @@ export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActi
   text-decoration: none;
   padding: ${({$isMobile, $isTablet}) => 
     $isMobile ? "0 20px" : $isTablet ? "0 12px" : "0 30px"};
+  font-family: "Pretendard Variable";
   font-size: ${({$isMobile, $isTablet}) => 
     $isMobile ? "15px" : $isTablet ? "15px" : "18px"};
   font-weight: 500;
@@ -71,16 +72,16 @@ export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActi
   }
 `;
 
-export const RecordCount = styled.div<{ $isMobile: boolean }>`
+export const RecordCount = styled.div<{ $isMobile: boolean, $isTablet: boolean; }>`
   /* 절대 위치로 부모 범위를 벗어나도록 배치 */
   position: absolute;
   right: -20px; 
-  padding-left: 10px;
+  padding-left: 8px;
   top: 50%;     
   transform: translateY(-50%);
 
   /* $isMobile 여부에 따라 크기 조정 */
-  width: ${({ $isMobile }) => ($isMobile ? "120px" : "170px")};
+  width: ${({ $isMobile, $isTablet}) => ($isMobile ? "120px" : $isTablet ? "150px" : "170px")};
   height: ${({ $isMobile }) => ($isMobile ? "40px" : "50px")};
   border-radius: 30px;
   background: #FFFAA4;
@@ -89,20 +90,22 @@ export const RecordCount = styled.div<{ $isMobile: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
+  gap: ${({ $isMobile }) => ($isMobile ? "5px" : "10px")};
 
   .seed-text {
     color: #1CC08B;
+    font-family: "Pretendard Variable";
     font-weight: 600;
-    font-size: ${({ $isMobile }) => ($isMobile ? "14px" : "16px")};
+    font-size: ${({ $isMobile }) => ($isMobile ? "13px" : "16px")};
     padding-left: 10px;
   }
 
   .seed-count {
     color: #333;
-    font-size: ${({ $isMobile }) => ($isMobile ? "20px" : "28px")};
+    font-family: "Pretendard Variable";
+    font-size: ${({ $isMobile }) => ($isMobile ? "18px" : "28px")};
     font-weight: 700;
-    line-height: ${({ $isMobile }) => ($isMobile ? "30px" : "40px")};
+    line-height: ${({ $isMobile }) => ($isMobile ? "28px" : "40px")};
     letter-spacing: -0.24px;
   }
 `;
@@ -150,12 +153,12 @@ export const MobileNav = styled.nav`
   margin-top: 20px;
 `;
 
-export const ProfileAndSeedContainer = styled.div<{ $isMobile: boolean }>`
+export const ProfileAndSeedContainer = styled.div<{ $isMobile: boolean, $isTablet: boolean }>`
   position: relative;
   overflow: hidden;
 
   /* $isMobile에 따라 크기 조정 */
-  width: ${({ $isMobile }) => ($isMobile ? "220px" : "300px")};
+  width: ${({ $isMobile, $isTablet}) => ($isMobile ? "190px" : $isTablet ? "230px" : "280px")};
   height: ${({ $isMobile }) => ($isMobile ? "50px" : "60px")};
 
   display: flex;
@@ -169,7 +172,7 @@ export const ProfileContainer = styled.div<{ $isMobile: boolean }>`
   align-items: center;
 
   height: ${({ $isMobile }) => ($isMobile ? "50px" : "60px")};
-  padding-right: 30px;
+  padding-right: ${({ $isMobile }) => ($isMobile ? "0px" : "20px")};
 `;
 
 export const ProfileImage = styled.img<{ $isMobile: boolean }>`
