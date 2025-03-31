@@ -17,7 +17,6 @@ const tagMap = {
 
 type CategoryName = keyof typeof tagMap;
 
-/** 카테고리 목록 */
 const categories = [
   { name: '칭찬해요!', bgColor: '#FFF9A5', fontColor: '#A49900' },
   { name: '감사해요!', bgColor: '#8FB7F2', fontColor: '#1D5AB2' },
@@ -36,7 +35,6 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
   const [contentCount, setContentCount] = useState(0);
   const { userId: cheeredId } = searchedUser;
 
-
   const [selectedCategory, setSelectedCategory] = useState<{
     name: CategoryName;
     bgColor?: string;
@@ -47,27 +45,32 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
-  const { user } = useUserStore((s) => s); // 로그인한 유저 정보
-  const { mutate: sendCheer } = useCheerMutation(); // 응원 API
+  const { user } = useUserStore((s) => s);
+  const { mutate: sendCheer } = useCheerMutation();
 
-  // 카테고리 선택
   const handleCategoryClick = (cat: { name: CategoryName; bgColor: string; fontColor?: string }) => {
     setSelectedCategory(cat);
   };
 
-  // 입력값 변경
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContentInput(e.target.value);
-    setContentCount(e.target.value.length);
-  };
+ const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const textarea = e.target;
+  setContentInput(textarea.value);
+  setContentCount(textarea.value.length);
 
-  // 응원 메시지 전송
-   const handleSubmit = () => {
+  // 기본 높이보다 클 때만 늘림
+  const baseHeight = 100; // 기본 높이(px)
+  textarea.style.height = `${baseHeight}px`; // 초기화
+  const newHeight = Math.min(textarea.scrollHeight, 300); // (선택) 최대 높이 제한
+  textarea.style.height = `${newHeight}px`;
+};
+
+
+  const handleSubmit = () => {
     if (!user?.userId || !selectedCategory || isButtonDisabled) return;
 
     sendCheer({
       cheererId: user.userId,
-      cheeredId, 
+      cheeredId,
       tag: tagMap[selectedCategory.name],
       content: contentInput,
     });
@@ -77,7 +80,6 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 
   return (
     <S.CheerContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-      {/* 헤더 */}
       <S.CheerContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
         <S.GoBackButton $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop} onClick={() => navigate('/cheer')}>
           <img src={isMobile ? BackMobile : GoBackImage} alt="뒤로가기" />
@@ -87,18 +89,15 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
         </S.CheerContainerTitle>
       </S.CheerContainerHeader>
 
-      {/* 타이틀 */}
       <S.HeaderText $isApp={isApp} $isMobile={isMobile}>
         {searchedUser.name} 님에게
       </S.HeaderText>
       <S.MainTitle $isMobile={isMobile}>응원 메시지를 남겨볼까요?</S.MainTitle>
 
-      {/* 카드 영역 */}
       <S.CheerCard $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
         <S.ContentWrapper $isApp={isApp} $isMobile={isMobile}>
           <a>To. {searchedUser.name}</a>
 
-          {/* 카테고리 선택 */}
           <S.CategoryContainer>
             {categories.map((cat) => (
               <S.CategoryItem
@@ -117,8 +116,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
             ))}
           </S.CategoryContainer>
 
-          {/* 메시지 작성 */}
-          <S.InputArea $isApp={isApp}>
+          <S.InputArea $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
             <S.InputHeader>
               <S.InputTitleContainer>
                 <S.SmallText $isApp={isApp}>{contentCount}/180자</S.SmallText>
@@ -135,8 +133,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
             />
           </S.InputArea>
 
-          {/* 전송 버튼 */}
-          <S.SubmitButton disabled={isButtonDisabled} $disabled={isButtonDisabled} onClick={handleSubmit}>
+          <S.SubmitButton $isMobile={isMobile} $isTablet={isTablet} disabled={isButtonDisabled} $disabled={isButtonDisabled} onClick={handleSubmit}>
             응원하기
           </S.SubmitButton>
         </S.ContentWrapper>
