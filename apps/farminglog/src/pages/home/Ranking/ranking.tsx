@@ -66,8 +66,9 @@ export default function RankingPreview() {
 
   if (isLoading || !data) return null;
 
-  // 미리보기용: 상위 3명 (내 랭크 포함)
-  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)];
+  // 미리보기용: 상위 3명 (내 랭크 포함) -> null 필터링
+  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)].filter(item => item !== null);
+
 
   return (
     <>
@@ -146,7 +147,6 @@ export default function RankingPreview() {
               y={balloonPosition.y}
               onClose={() => setSelectedIndex(null)}
               onCheerClick={() => {
-                console.log('응원하기 클릭');
                 setSelectedIndex(null);
               }}
               onProfileClick={() => {
