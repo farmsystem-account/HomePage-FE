@@ -47,6 +47,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const queryClient = useQueryClient();
 
   // const { user } = useUserStore((s) => s); // 로그인한 유저 정보
   const { mutate: sendCheer } = useCheerMutation(); // 응원 API
