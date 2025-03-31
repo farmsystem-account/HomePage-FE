@@ -5,7 +5,7 @@ import Header from "./Header/Header";
 
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
 import { useUserStore } from "@repo/auth/stores/userStore"; 
-import { useAuthStore } from "@repo/auth/stores/useauthStore";
+import { useAuthStore } from "@repo/auth/stores/useAuthStore";
 
 export default function Layout() {
   const { isMobile } = useMediaQueries();
