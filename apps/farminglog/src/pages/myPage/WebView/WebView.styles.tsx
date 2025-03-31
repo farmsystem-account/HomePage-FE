@@ -68,6 +68,7 @@ export const SectionTitleBox = styled.div<{ isMobile: boolean }>`
   border-bottom-style: solid;
   border-bottom-color: #bebebe;
   width: ${({ isMobile }) => (isMobile ? '100%' : '900px')};
+  margin-top: 15px;
 `;
 
 export const SectionTitle = styled.h3`
@@ -94,6 +95,20 @@ export const ProfileImage = styled.img`
   background-color: #f0f0f0;
 `;
 
+
+export const ImageEditWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const ImageEditButton = styled.img`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`;
 
 export const ProfileInfo = styled.div`
   display: flex;
@@ -212,11 +227,11 @@ export const ColumnBox = styled.div`
   gap: 10px;
 `;
 
-export const EditForm = styled.div`
+export const EditForm = styled.div<{ isMobile: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 100%;
+  width: ${({ isMobile }) => (isMobile ? '80%' : '100%')};
   max-width: 600px;
   margin-top: 16px;
 `;

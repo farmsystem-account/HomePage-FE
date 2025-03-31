@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+interface ResponsiveProps {
+  $isApp?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+  $isDesktop?: boolean;
+}
+
 export const MyPageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -9,17 +16,56 @@ export const MyPageContainer = styled.div`
   padding: 40px 20px;
 `;
 
-export const ProfileWrapper = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  justify-content: center;
+export const FarmingLogContainerHeader = styled.div<ResponsiveProps>`
+  width: 100%;
+  height: ${({ $isApp }) => ($isApp ? '40px' : '80px')};
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
+
+  ${({ $isApp }) => !$isApp && `
+    background: var(--FarmSystem_White, #FCFCFC);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  `}
+`;
+
+export const FarmingLogContainerTitle = styled.h1<ResponsiveProps>`
+  grid-column: 2;
+  color: #2E2E2E;
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: ${({ $isApp, $isMobile }) =>
+    $isApp ? '20px' :
+    $isMobile ? '28px' :
+    '36px'};
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: -0.24px;
+`;
+
+export const GoBackButton = styled.button<ResponsiveProps>`
+  grid-column: 1;
+  width: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
+  height: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
+  flex-shrink: 0;
+  margin-left: ${({ $isApp }) => ($isApp ? '15px' : '25px')};
+  
+`;
+
+export const ProfileWrapper = styled.div<ResponsiveProps>`
+  width: 100%;
+  max-width: 75rem;
+  min-height: 90vh;
+
+  padding: ${({ $isApp }) => ($isApp ? '20px 0px 0px 0px' : '0')};
+  display: flex;
   flex-direction: column;
-  width: ${({ isMobile }) => (isMobile ? '100%' : '900px')};
-  background: white;
-  border-radius: 3px;
-  padding: ${({ isMobile }) => (isMobile ? '0px 0px 30px 0px' : '0px 24px 30px 24px')};
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  color: black;
+  align-items: center;
+  gap: ${({ $isApp }) => ($isApp ? '0px' : '40px')};
+
+  border-radius: 5px;
+  background: var(--FarmSystem_White, #FCFCFC);
 `;
 
 export const TitleBox = styled.div<{ isMobile: boolean }>`
@@ -122,6 +168,7 @@ export const ColumnBox = styled.div`
 
 export const RankingTitle = styled.div<{ isApp: boolean }>`
   margin-top: 30px;
+  margin-bottom: -30px;
   display: flex;
   flex-direction: row;
   width: 80%;
