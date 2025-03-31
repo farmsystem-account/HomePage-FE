@@ -12,4 +12,5 @@ export const queryKeys = {
   auth: {
     verify: (studentNumber: string) => ["auth", "verify", studentNumber] as const,
   },
+  farminglog: ["farminglog"] as const, // 파밍로그 게시글 무한스크롤 쿼리
 };
