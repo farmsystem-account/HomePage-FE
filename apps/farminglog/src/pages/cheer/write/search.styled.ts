@@ -47,7 +47,7 @@ export const GoBackButton = styled.button<ResponsiveProps>`
   grid-column: 1;
   width: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
   height: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
-  margin-left: ${({ $isApp }) => ($isApp ? '0px' : '25px')};
+  margin-left: ${({ $isApp }) => ($isApp ? '0px' : '27px')};
 
   border: none;
   background: none;

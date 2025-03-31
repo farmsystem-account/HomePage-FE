@@ -7,6 +7,7 @@ import { useUserStore } from '@repo/auth/stores/userStore';
 import { useCheerMutation } from '@/services/mutation/useCheerMutation';
 
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
+import BackMobile from '@/assets/Icons/BackMobile.png';
 
 const tagMap = {
   '칭찬해요!': 'COMPLIMENT',
@@ -79,7 +80,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
       {/* 헤더 */}
       <S.CheerContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
         <S.GoBackButton $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop} onClick={() => navigate('/cheer')}>
-          <img src={GoBackImage} alt="뒤로가기" />
+          <img src={isMobile ? BackMobile : GoBackImage} alt="뒤로가기" />
         </S.GoBackButton>
         <S.CheerContainerTitle $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
           응원하기
@@ -90,7 +91,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
       <S.HeaderText $isApp={isApp} $isMobile={isMobile}>
         {searchedUser.name} 님에게
       </S.HeaderText>
-      <S.MainTitle>응원 메시지를 남겨볼까요?</S.MainTitle>
+      <S.MainTitle $isMobile={isMobile}>응원 메시지를 남겨볼까요?</S.MainTitle>
 
       {/* 카드 영역 */}
       <S.CheerCard $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>

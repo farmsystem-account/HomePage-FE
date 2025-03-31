@@ -10,7 +10,7 @@ import GithubIcon from "@/assets/Icons/Github.png";
 import CloseIcon from "@/assets/Icons/close.png";
 import NotificationModal from "@/components/Notification/NotificationModal";
 import { useLogout } from "@repo/auth/services/mutation/useLogout";
-import { nav } from "framer-motion/client";
+// import { nav } from "framer-motion/client";
 
 
 const Popup: React.FC<PopupProps> = (props) => {

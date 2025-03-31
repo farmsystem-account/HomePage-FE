@@ -10,28 +10,24 @@ interface ResponsiveProps {
 
 /* ====== 전체 컨테이너 ====== */
 export const CheerContainer = styled.div<ResponsiveProps>`
-  width: ${({ $isApp, $isMobile, $isTablet, $isDesktop }) =>
-    $isApp
-      ? '290px'
-      : $isMobile
-      ? '400px'
-      : $isTablet
-      ? '780px'
-      : $isDesktop
-      ? '1000px'
-      : '1200px'};
+  max-width: ${({ 
+    $isMobile, 
+    $isTablet, $isDesktop 
+  }) => ($isMobile ? '290px' : $isTablet ? '90%' : $isDesktop ? '1000px' : '1000px')};
+  width: 100%;
+  height: 80vh; 
+  padding: ${({ $isMobile }) => ($isMobile ? '14px 12px 0px 12px' : '')};
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  gap: ${({ $isApp }) => ($isApp ? '0px' : '40px')};
+  gap: ${({ $isMobile }) => ($isMobile ? '0px' : '40px')};
 
   border-radius: 5px;
-  background: #fcfcfc;
-  margin: 0 auto;
-
-  /* 앱인 경우 padding을 추가로 주고 싶다면 */
-  padding: ${({ $isMobile }) => ($isMobile ? '20px 15px 0px 15px' : '')};
+  background: var(--FarmSystem_White, #FCFCFC);
+  margin-top: ${({ $isMobile }) => ($isMobile ? '20px' : '50px')};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 /* ====== 헤더 ====== */
@@ -42,22 +38,18 @@ export const CheerContainerHeader = styled.div<ResponsiveProps>`
   grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
 
-  ${({ $isMobile }) =>
-    !$isMobile &&
-    `
-    background: #FCFCFC;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  `}
+  ${({ $isMobile }) => ($isMobile ? '' : `
+    background: var(--FarmSystem_White, #FCFCFC);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  `)}
 `;
 
 export const CheerContainerTitle = styled.h1<ResponsiveProps>`
-  grid-column: 2;
+ grid-column: 2;
   color: #2e2e2e;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: ${({ $isApp, $isMobile }) =>
-    $isApp ? '20px' : $isMobile ? '28px' : '36px'};
-  font-style: normal;
+  font-size: ${({ $isMobile }) => ($isMobile ? '16px' : '36px')};
   font-weight: 700;
   line-height: 26px;
   letter-spacing: -0.24px;
@@ -67,32 +59,34 @@ export const GoBackButton = styled.button<ResponsiveProps>`
   grid-column: 1;
   width: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
   height: ${({ $isApp }) => ($isApp ? '24px' : '35px')};
-  margin-left: ${({ $isApp }) => ($isApp ? '0px' : '25px')};
+  margin-left: ${({ $isApp }) => ($isApp ? '0px' : '27px')};
 
   border: none;
   background: none;
   cursor: pointer;
 `;
-
 /* 작은 서브타이틀 */
 export const HeaderText = styled.h3<ResponsiveProps>`
-  color: #2e2e2e;
-  text-align: center;
-  font-family: "Pretendard Variable";
-  font-size: ${({ $isApp }) => ($isApp ? '10px' : '20px')};
+  margin-top: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
+  margin-left: ${({ $isMobile }) => ($isMobile ? '27px' : '0')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '16px' : '24px')};
   font-weight: 500;
-  line-height: ${({ $isApp }) => ($isApp ? '16px' : '24px')};
-  margin-top: ${({ $isApp }) => ($isApp ? '5px' : '23px')};
-  letter-spacing: -0.24px;
+  color: #191919;
+  font-family: "Pretendard Variable";
+  text-align: ${({ $isMobile }) => ($isMobile ? 'left' : 'center')};
+  width: 100%; /* Ensure proper alignment */
 `;
 
 /* 메인 타이틀 */
-export const MainTitle = styled.h2`
+export const MainTitle = styled.h2<ResponsiveProps>`
   margin: 0;
-  font-size: 20px;
+  font-size: ${({ $isMobile }) => ($isMobile ? '20px' : '36px')};
   font-family: "Pretendard Variable";
   font-weight: 700;
   color: #2e2e2e;
+  text-align: ${({ $isMobile }) => ($isMobile ? 'left' : 'center')};
+  width: 100%; /* Ensure proper alignment */
+  margin-left: ${({ $isMobile }) => ($isMobile ? '27px' : '0')};
 `;
 
 /* ====== 카드 영역 ====== */
@@ -112,6 +106,7 @@ export const ContentWrapper = styled.div<ResponsiveProps>`
   padding: 10px 5px;
   gap: ${({ $isApp }) => ($isApp ? '5px' : '30px')};
   width: 100%;
+  font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
 `;
 
 /* ====== 카테고리 영역 (3개 버튼) ====== */
