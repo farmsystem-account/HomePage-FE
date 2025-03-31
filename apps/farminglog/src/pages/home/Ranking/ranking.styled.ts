@@ -5,14 +5,10 @@ export const MyPageContainer = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
 }>`
-  /* 화면 전체 너비로 그라디언트 배경을 깔기 위해 width: 100% */
-  width: 100%;
 
   /* 상하 여백(패딩)을 주어 흰색 박스를 가운데 띄우기 */
   display: flex;
   justify-content: center;
-  padding: 20px 0;
-  box-sizing: border-box;
 `;
 
 /** 흰색 박스 컨테이너 */
@@ -46,7 +42,8 @@ export const TitleBox = styled.div<{
   $isTablet: boolean;
 }>`
   /* 흰색 박스 내부 전체 폭을 사용 */
-  width: 100%;
+    width: ${({ $isMobile, $isTablet }) =>
+    $isMobile || $isTablet ? '90%' : '1200px'};
   background-color: white;
   padding: 16px 0; /* 위아래 여백 */
   box-sizing: border-box;
