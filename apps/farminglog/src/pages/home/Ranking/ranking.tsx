@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import * as S from './ranking.styled';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import { convertTrackToString } from '@/utils/convertTrackToString';
 
 import UpArrowImg from '@/assets/Icons/UpArrow.png';
 import FarmLogoImg from '@/assets/Icons/FarmSystem_Logo.png';
@@ -128,7 +129,7 @@ export default function RankingPreview() {
                 <S.ColumnBox>
                   <S.Name isApp={isApp}>{item.name}</S.Name>
                   <S.Track isApp={isApp}>
-                    {item.generation}기 {item.track}
+                    {item.generation}기{convertTrackToString(item.track)}
                   </S.Track>
                 </S.ColumnBox>
               </S.ProfileSection>
