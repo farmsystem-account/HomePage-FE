@@ -92,7 +92,7 @@ export default function RankingPreview() {
 
         <S.RankingTitle isApp={isApp}>
           <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>
-          <S.RankingTitleText isApp={isApp}>이름/전공</S.RankingTitleText>
+          <S.RankingTitleText isApp={isApp}>이름/트랙</S.RankingTitleText>
           <S.RankingTitleText isApp={isApp}>누적 씨앗 개수</S.RankingTitleText>
         </S.RankingTitle>
 
@@ -129,7 +129,7 @@ export default function RankingPreview() {
                 <S.ColumnBox>
                   <S.Name isApp={isApp}>{item.name}</S.Name>
                   <S.Track isApp={isApp}>
-                    {item.generation}기{convertTrackToString(item.track)}
+                    {item.generation}기/{convertTrackToString(item.track)}
                   </S.Track>
                 </S.ColumnBox>
               </S.ProfileSection>

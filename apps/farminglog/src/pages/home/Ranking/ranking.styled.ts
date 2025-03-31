@@ -172,7 +172,8 @@ export const ProfileIcon = styled.img`
 export const ColumnBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; // 여기!
+  padding-right: 30px;
   gap: 0px;
 `;
 
