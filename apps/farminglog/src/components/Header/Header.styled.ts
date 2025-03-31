@@ -52,40 +52,37 @@ export const NavItem = styled.a<{
   font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "15px" : $isTablet ? "15px" : "18px"};
   font-weight: 500;
-  color: ${({ $isMobile }) => ($isMobile ? "black" : "white")};
+  color: ${({ $isMobile, isActive }) =>
+    $isMobile ? (isActive ? "#28723F" : "black") : (isActive ? "#FFFAA4" : "white")};
   
   cursor: pointer;
   position: relative;
 
-  ${({ $isMobile }) =>
-    !$isMobile
-      ? `&:hover {
-          color: #FFFAA4;
-        };`
-      : `&:hover {
-          color: #28723F;
-        };`}
+  &:hover {
+    color: ${({ $isMobile }) => ($isMobile ? "#28723F" : "#FFFAA4")};
+  }
 
   &::after {
     content: "";
     position: absolute;
     bottom: -2px;
-    /* 모바일일 경우 중앙 정렬 */
     left: ${({ $isMobile }) => ($isMobile ? "50%" : "0")};
     transform: ${({ $isMobile }) =>
       $isMobile ? "translateX(-50%)" : "none"};
     width: 100%;
     min-width: ${({ $isMobile }) => ($isMobile ? "100px" : "none")};
     height: 2px;
-    background-color: ${({ $isMobile }) => ($isMobile ? "gray" : "white")};
+    background-color: ${({ $isMobile, isActive }) =>
+      $isMobile ? (isActive ? "#28723F" : "gray") : (isActive ? "#FFFAA4" : "white")};
     padding: 0px 2px;
   }
 
   &:hover::after {
     background-color: ${({ $isMobile }) =>
-      $isMobile ? "none" : "#FFFAA4"};
+      $isMobile ? "#28723F" : "#FFFAA4"};
   }
 `;
+
 
 
 export const RecordCount = styled.div<{ $isMobile: boolean, $isTablet: boolean; }>`
