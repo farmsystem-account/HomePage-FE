@@ -2,21 +2,26 @@ import * as S from './index.styled';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import CheerCard from './CheerCard';
-import GoBackImage from '@/assets/Icons/corner-up-left.png';
+// import GoBackImage from '@/assets/Icons/corner-up-left.png';
 import Thumb from '@/assets/home/thumbs-up.png';
 import { useCheerListQuery } from '@/services/query/useCheerListQuery';
 import { convertTagToCategory } from '@/utils/convertTagToCategory';
+import { useState } from 'react';
 
-export interface CheerData {
-  id: number;
-  r_profile: string;
-  receiver: string;
-  category: string;
-  content: string;
-  s_profile: string;
-  sender: string;
-  bgColor: string;
-  fontColor: string;
+export interface CheerCardProps {
+  cheer: {
+    id: number;
+    r_profile: string;
+    receiver: string;
+    category: string;
+    content: string;
+    s_profile: string;
+    sender: string;
+    bgColor: string;
+    fontColor: string;
+  };
+  isExpanded: boolean;
+  onClick: () => void;
 }
 
 
@@ -25,6 +30,12 @@ const { data: cheerList = [] } = useCheerListQuery();
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+
+  const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
+
+  const handleCardClick = (id: number) => {
+  setExpandedCardId(prev => (prev === id ? null : id)); // 토글
+};
 
   return (
     <S.CheerContainer
@@ -39,13 +50,13 @@ const { data: cheerList = [] } = useCheerListQuery();
         $isMobile={isMobile}
         $isDesktop={isDesktop}
       >
-        <S.GoBackButton
+        {/* <S.GoBackButton
           $isApp={isApp}
           $isMobile={isMobile}
           $isDesktop={isDesktop}
         >
           <img src={GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton>
+        </S.GoBackButton> */}
         <S.CheerContainerTitle
           $isApp={isApp}
           $isMobile={isMobile}
@@ -78,6 +89,8 @@ const { data: cheerList = [] } = useCheerListQuery();
                 bgColor: categoryData.bgColor,
                 fontColor: categoryData.fontColor,
               }}
+              isExpanded={expandedCardId === item.cheerId}
+              onClick={() => handleCardClick(item.cheerId)}
             />
           );
         })}
