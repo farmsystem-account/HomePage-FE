@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useAttendMutation } from "../../../services/mutation/useAttendMutation";
 import { useNavigate } from "react-router";
 import useMediaQueries from "../../../../../website/src/hooks/useMediaQueries";
@@ -6,7 +6,8 @@ import terminal from "@/assets/home/terminal.png";
 import thumb from "@/assets/home/thumbs-up.png";
 import edit from "@/assets/home/edit.png";
 import * as S from "./harvest.styled";
-import useButtonStore from "../../../stores/harvestStore"; // zustand persist store (경로는 실제 경로에 맞게 수정)
+import useButtonStore from "../../../stores/harvestStore"; // zustand persist store
+import { useUserStore } from "@repo/auth/stores/userStore";
 
 interface StageProps {
   text: string;
@@ -24,7 +25,9 @@ export default function Harvest() {
   const { mutate: attend } = useAttendMutation();
   const navigate = useNavigate();
 
-  // persist로 저장된 버튼 활성 상태와 업데이트 함수 사용
+  const user = useUserStore((s) => s.user);
+
+  // persist 스토어에서 버튼 활성 상태와 업데이트 함수 사용
   const activeStates = useButtonStore((state) => state.activeStates);
   const setActive = useButtonStore((state) => state.setActive);
 
@@ -43,17 +46,58 @@ export default function Harvest() {
     useRef<HTMLDivElement>(null),
   ];
 
-  // 버튼 클릭 시 동작: 출석 API 호출, 버튼 중앙 좌표 계산, persist 상태 업데이트, 애니메이션 실행 후 링크 이동
-  const toggleClear = (index: number, link?: string) => {
+  // 응원하기, 파밍로그 버튼 클릭 시 이동 전 현재 seed 값을 저장하는 ref
+  const previousSeedsRef = useRef<{ [key: number]: number }>({});
+
+  // Harvest 컴포넌트가 마운트되거나 user store가 업데이트될 때,
+  // 응원하기(1)와 파밍로그(2) 버튼의 seed 변화가 있다면 버튼 활성화 처리
+  useEffect(() => {
+    [1, 2].forEach((idx) => {
+      const prevSeed = previousSeedsRef.current[idx] || 0;
+      if (user?.currentSeed && user.currentSeed > prevSeed) {
+        setActive(idx);
+      }
+    });
+  }, [user, setActive]);
+
+  const toggleClear = async (index: number, link?: string) => {
     // 이미 활성화된 버튼이면 클릭 무시
     if (activeStates[index]) return;
-
-    // 출석하기 버튼 클릭 시 출석 API 호출
+  
+    // 버튼 클릭 시점에 현재 seed 값 저장
+    const previousSeed = user?.currentSeed || 0;
+    let updatedSeed = previousSeed;
+  
     if (index === 0) {
-      attend();
+      // 출석하기의 경우, attend API 호출 후 응답으로 최신 seed 값을 받음
+      try {
+        // attend의 반환 타입을 올바르게 지정하거나,
+        // 만약 반환값이 없다면, attend 호출 후 user store가 업데이트 되는 방식으로 수정 필요
+        let updatedUser = useUserStore((s) => s.user);
+        attend(); // updatedUser 타입을 수정하세요.
+        updatedSeed = updatedUser?.currentSeed ?? previousSeed;
+      } catch (error) {
+        console.error("출석 API 호출 에러:", error);
+      }
+      if (updatedSeed > previousSeed) {
+        setActive(index);
+      }
+      else{
+        return; //나머지 애니메이션 로직 실행하지 않기
+      }
+    } 
+    else {
+      // 응원하기와 파밍로그는 다른 창에서 처리되므로,
+      // 버튼 클릭 전에 현재 seed 값을 저장해두고 바로 페이지 이동
+      previousSeedsRef.current[index] = previousSeed;
+      // link가 정의되어 있는지 확인
+      if (link) {
+        navigate(link);
+      }
+      return; // 나머지 애니메이션 로직은 실행하지 않음
     }
-
-    // 버튼의 중앙 좌표 계산 후 새싹 시작 위치 업데이트
+  
+    // 버튼의 중앙 좌표 계산 후 새싹 애니메이션 시작 위치 업데이트
     const btnRef = buttonRefs[index].current;
     if (btnRef) {
       const rect = btnRef.getBoundingClientRect();
@@ -65,16 +109,14 @@ export default function Harvest() {
         return newPos;
       });
     }
-
-    // persist 스토어를 통해 버튼 활성화 (한 번 true가 되면 이후 변경되지 않음)
-    setActive(index);
-
+  
     // 새싹 애니메이션 실행
     setAnimateSprouts((prev) => {
       const newSprouts = [...prev];
       newSprouts[index] = true;
       return newSprouts;
     });
+  
     // 1.8초 후 애니메이션 종료 및 링크 이동
     setTimeout(() => {
       setAnimateSprouts((prev) => {
@@ -87,12 +129,12 @@ export default function Harvest() {
       }
     }, 1800);
   };
-
+  
   const anyCleared = activeStates.some((state) => state);
 
   const stages: StageProps[] = [
     { text: "출석체크", image: terminal, link: "/home", buttonText: "출석하기" },
-    { text: "응원하기", image: thumb, link: "/cheer", buttonText: "응원하기" },
+    { text: "응원하기", image: thumb, link: "/cheer/write", buttonText: "응원하기" },
     { text: "파밍로그", image: edit, link: "/farminglog/view", buttonText: "파밍로그" },
   ];
 

@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import * as S from './ranking.styled';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import { convertTrackToString } from '@/utils/convertTrackToString';
 
 import UpArrowImg from '@/assets/Icons/UpArrow.png';
 import FarmLogoImg from '@/assets/Icons/FarmSystem_Logo.png';
@@ -66,8 +67,9 @@ export default function RankingPreview() {
 
   if (isLoading || !data) return null;
 
-  // 미리보기용: 상위 3명 (내 랭크 포함)
-  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)];
+  // 미리보기용: 상위 3명 (내 랭크 포함) -> null 필터링
+  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)].filter(item => item !== null);
+
 
   return (
     <>
@@ -90,7 +92,7 @@ export default function RankingPreview() {
 
         <S.RankingTitle isApp={isApp}>
           <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>
-          <S.RankingTitleText isApp={isApp}>이름/전공</S.RankingTitleText>
+          <S.RankingTitleText isApp={isApp}>이름/트랙</S.RankingTitleText>
           <S.RankingTitleText isApp={isApp}>누적 씨앗 개수</S.RankingTitleText>
         </S.RankingTitle>
 
@@ -127,7 +129,7 @@ export default function RankingPreview() {
                 <S.ColumnBox>
                   <S.Name isApp={isApp}>{item.name}</S.Name>
                   <S.Track isApp={isApp}>
-                    {item.generation}기 {item.track}
+                    {item.generation}기/{convertTrackToString(item.track)}
                   </S.Track>
                 </S.ColumnBox>
               </S.ProfileSection>
@@ -146,7 +148,6 @@ export default function RankingPreview() {
               y={balloonPosition.y}
               onClose={() => setSelectedIndex(null)}
               onCheerClick={() => {
-                console.log('응원하기 클릭');
                 setSelectedIndex(null);
               }}
               onProfileClick={() => {

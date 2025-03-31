@@ -8,12 +8,13 @@ interface ResponsiveProps {
 }
 
 export const CheerContainer = styled.div<ResponsiveProps>`
-  width: ${({ 
+    max-width: ${({ 
     $isMobile, 
     $isTablet, $isDesktop 
-  }) => ($isMobile ? '290px' : $isTablet ? '90%' : $isDesktop ? '1200px' : '1200px')};
+  }) => ($isMobile ? '290px' : $isTablet ? '90%' : $isDesktop ? '1000px' : '1000px')};
+  width: 100%;
   height: screen;
-  padding: ${({ $isMobile }) => ($isMobile ? '20px 15px 0px 15px' : '')};
+  padding: ${({ $isMobile }) => ($isMobile ? '14px 12px 0px 12px' : '')};
   display: flex;
   flex-direction: column;
   justify-content: center;

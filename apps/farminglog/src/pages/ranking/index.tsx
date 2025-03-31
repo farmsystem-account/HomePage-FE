@@ -48,7 +48,7 @@ export default function Main() {
 
   if (isLoading || !data) return null;
 
-  const rankingData = [data.myRank, ...data.userRankList];
+  const rankingData = [data.myRank, ...data.userRankList].filter(item => item !== null);
 
   return (
     <S.MyPageContainer>
