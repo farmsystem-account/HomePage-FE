@@ -1,8 +1,12 @@
 import Cookies from "js-cookie";
+import { useAuthStore } from "../../auth/stores/useAuthStore"; 
 
 export const getClientSideTokens = () => {
+  const accessToken = useAuthStore.getState().accessToken; 
+  const refreshToken = Cookies.get("refreshToken") || "";
+
   return {
-    accessToken: localStorage.getItem("accessToken") || "",
-    refreshToken: Cookies.get("refreshToken") || "",
+    accessToken: accessToken || "",
+    refreshToken,
   };
 };

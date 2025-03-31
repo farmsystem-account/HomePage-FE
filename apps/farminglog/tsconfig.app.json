@@ -27,5 +27,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "../../packages/auth/hooks/useSocialLogin.tsx"]
+  "include": ["src", "../../packages/auth/hooks/useSocialLogin.tsx", "../../packages/auth/stores/useAuthStore.ts"]
 }

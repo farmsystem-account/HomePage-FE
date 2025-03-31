@@ -59,6 +59,7 @@ export function usePublicApi() {
         return response.data;
       } catch (error: any) {
         if (error.response) {
+
           const { status } = error.response;
 
           if (status === STATUS.NOT_FOUND) {
@@ -66,9 +67,7 @@ export function usePublicApi() {
           }
         }
 
-        throw new Error(
-          `API 요청 실패: ${error.message || '알 수 없는 오류'}`
-        );
+        throw error; 
       }
     },
     [navigate]
