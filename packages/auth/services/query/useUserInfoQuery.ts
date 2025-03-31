@@ -17,8 +17,8 @@ export const useUserInfoQuery = (enabled: boolean = true) => {
       // setUser(res.data); 
       return res.data;
     },
-    staleTime: 0, // 페이지 진입 시마다 항상 fetch 그 외에는 클라이언트 단에서 상태 관리 하도록 해놨음
-    gcTime: 1000 * 60 * 5, //5분간 캐시는 유지 -> 얼마가 적당한지 나중에 알아봐야함
+    staleTime: 1000 * 60 * 5, // 5분 캐시
+    gcTime: 1000 * 60 * 60, //1시간 캐시는 유지 -> 얼마가 적당한지 나중에 알아봐야함
     retry: 1,
     enabled, 
   });
