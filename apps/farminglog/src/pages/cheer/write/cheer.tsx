@@ -5,6 +5,7 @@ import * as S from './cheer.styled';
 
 import { useUserStore } from '@repo/auth/stores/userStore';
 import { useCheerMutation } from '@/services/mutation/useCheerMutation';
+import { useQueryClient } from '@tanstack/react-query';
 
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
 import BackMobile from '@/assets/Icons/BackMobile.png';
@@ -47,6 +48,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
   const { user } = useUserStore((s) => s);
   const { mutate: sendCheer } = useCheerMutation();
+  const queryClient = useQueryClient();
 
   const handleCategoryClick = (cat: { name: CategoryName; bgColor: string; fontColor?: string }) => {
     setSelectedCategory(cat);
@@ -65,19 +67,26 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 };
 
 
-  const handleSubmit = () => {
-    if (!user?.userId || !selectedCategory || isButtonDisabled) return;
+ const handleSubmit = () => {
+  if (!user?.userId || !selectedCategory || isButtonDisabled) return;
 
-    sendCheer({
+  sendCheer(
+    {
       cheererId: user.userId,
       cheeredId,
       tag: tagMap[selectedCategory.name],
       content: contentInput,
-    });
+    },
+    {
+      onSuccess: () => {
+        // 캐시 무효화 → 리패칭
+        queryClient.invalidateQueries({ queryKey: ['cheerList'] });
 
-    navigate('/cheer');
-  };
-
+        navigate('/cheer');
+      },
+    }
+  );
+};
   return (
     <S.CheerContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
       <S.CheerContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
