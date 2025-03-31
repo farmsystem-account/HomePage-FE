@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { PopupProps } from "./popup.types";
 import * as S from "./popup.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
+import { useNavigate } from "react-router"; // 추가
 
 // import BellIcon from "@/assets/Icons/bell.png"; 알림
 import LogoutIcon from "@/assets/Icons/log-out.png";
 import GithubIcon from "@/assets/Icons/Github.png";
 import CloseIcon from "@/assets/Icons/close.png";
 import NotificationModal from "@/components/Notification/NotificationModal";
+import { useLogout } from "@repo/auth/services/mutation/useLogout";
+import { nav } from "framer-motion/client";
+
 
 const Popup: React.FC<PopupProps> = (props) => {
   const { isMobile, isTablet } = useMediaQueries();
@@ -116,6 +120,15 @@ const MyPageLayout: React.FC<PopupProps> = ({
 }) => {
   const { isMobile, isTablet } = useMediaQueries();
   const [isNotificationOpen, setNotificationOpen] = useState(false);
+  const navigate = useNavigate(); // 추가
+  
+  const logout = useLogout();
+  
+  const handleLogout = () => {
+    logout.mutate();
+    onClose();
+    navigate("/"); // 로그아웃 후 이동
+  };
 
   return (
     <>
@@ -132,7 +145,7 @@ const MyPageLayout: React.FC<PopupProps> = ({
         </div> */}
 
         {hasLogout && (
-          <button onClick={onClose}>
+          <button onClick={handleLogout}> {/* 수정 */}
             <img
               src={LogoutIcon}
               alt="로그아웃"
