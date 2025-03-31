@@ -33,7 +33,7 @@ export const FarmingLogEditorContainer = styled.div<ResponsiveProps>`
 
 export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
   width: ${({ $isApp, $isMobile }) => ($isApp ? '220px' : $isMobile ? '400px' : '550px')};
-  height: ${({ $isApp }) => ($isApp ? '60px' : '130px')};
+  height: ${({ $isApp, $isMobile }) => ($isApp ? '60px' : $isMobile ? '100px' : '130px')};
   flex-shrink: 0;
 
   margin-top: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
@@ -83,11 +83,11 @@ export const HeaderContext = styled.h3<ResponsiveProps>`
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: ${({ $isApp }) => ($isApp ? '10px' : '20px')};
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '10px' : $isMobile ? '15px' : '20px')};
   font-style: normal;
   font-weight: 500;
-  line-height: ${({ $isApp }) => ($isApp ? '16px' : '24px')}; 
-  margin-top: ${({ $isApp }) => ($isApp ? '0px' : '23px')};
+  line-height: ${({ $isApp, $isMobile }) => ($isApp ? '16px' : $isMobile ? '22px' : '28px')};
+  margin-top: ${({ $isApp, $isMobile  }) => ($isApp ? '0px' : $isMobile ? '10px' : '20px')};
   letter-spacing: -0.24px;
 `;
 
@@ -142,8 +142,8 @@ export const CategoryContainer = styled.div<ResponsiveProps>`
 
 export const CategorySelect = styled.div<ResponsiveProps>`
   display: flex;
-  height: 20px;
-  padding: ${({ $isApp }) => ($isApp ? '5px 10px' : '10px 15px')};
+  padding: ${({ $isApp }) => ($isApp ? '0px 10px' : '5px 15px')};
+  justify-content: center;
   align-items: center;
   gap: 5px;
 
@@ -154,7 +154,7 @@ export const CategorySelect = styled.div<ResponsiveProps>`
 
 export const CategoryOptionContainer = styled.ul<ResponsiveProps>`
   position: absolute;
-  margin-top: 20px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   width: ${({ $isApp }) => ($isApp ? '66px' : '130px')};
@@ -223,7 +223,7 @@ export const TitleText = styled.p<ResponsiveProps>`
   color: #2E2E2E;
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: ${({ $isApp }) => ($isApp ? '12px' : '20px')};
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '12px' : $isMobile ? '16px' : '20px')};
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 166.667% */
@@ -234,16 +234,16 @@ export const SmallText = styled.p<ResponsiveProps>`
   color: var(--FarmSystem_DarkGrey2, #757575);
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: ${({ $isApp }) => ($isApp ? '8px' : '12px')};
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '8px' : $isMobile ? '12px' : '16px')};
   font-style: normal;
   font-weight: 500;
   line-height: 14px; /* 175% */
   letter-spacing: -0.24px;
 `;
 
-export const InputBox = styled.input`
+export const InputBox = styled.input<ResponsiveProps>`
   display: flex;
-  padding: 5px 5px 5px 10px;
+  padding: 10px;
   align-items: center;
   width: 100%;
   outline: none;
@@ -251,10 +251,10 @@ export const InputBox = styled.input`
   border-radius: 5px;
   border: 1px solid #5CD282;
   background: var(--FarmSystem_White, #FCFCFC);
-  color: var(--FarmSystem_DarkGrey, #999);
+  color: #2E2E2E;
 
   font-family: "Pretendard Variable";
-  font-size: 12px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '12px' : $isMobile ? '14px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 166.667% */
@@ -282,7 +282,7 @@ export const DateText = styled.p`
   letter-spacing: -0.24px;
 `;
 
-export const TextArea = styled.textarea`
+export const TextArea = styled.textarea<ResponsiveProps>`
   display: flex;
   width: 100%;
   height: 100px;
@@ -295,9 +295,9 @@ export const TextArea = styled.textarea`
   background: var(--FarmSystem_White, #FCFCFC);
   resize: none;
 
-  color: var(--FarmSystem_DarkGrey, #999);
+  color: #2e2e2e;
   font-family: "Pretendard Variable";
-  font-size: 12px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '12px' : $isMobile ? '14px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 166.667% */
@@ -316,22 +316,22 @@ export const ButtonContainer = styled.div<ResponsiveProps>`
 
 export const GoBackButton = styled.button<ResponsiveProps>`
   display: flex;
-  padding: 5px 18.5px 5px 20.5px;
+  padding: ${({ $isApp }) => ($isApp ? '5px 17.5px 5px 18.5px' : '15px 30px')};
   justify-content: center;
   align-items: center;
 
-  border-radius: 5px;
+  border-radius: ${({ $isApp }) => ($isApp ? '5px' : '10px')};
   background: var(--FarmSystem_DarkGrey, #999);
   box-shadow: 0px 2px 10px 0px rgba(25, 25, 25, 0.20);
 `;
 
 export const CreateButton = styled.button<ResponsiveProps>`
   display: flex;
-  padding: 5px 17.5px 5px 18.5px;
+  padding: ${({ $isApp }) => ($isApp ? '5px 17.5px 5px 18.5px' : '15px 30px')};
   justify-content: center;
   align-items: center;
 
-  border-radius: 5px;
+  border-radius: ${({ $isApp }) => ($isApp ? '5px' : '10px')};
   background: #5CD282;
   box-shadow: 0px 2px 10px 0px rgba(25, 25, 25, 0.20);
 `;
@@ -340,7 +340,7 @@ export const ButtonEnnerText = styled.p<ResponsiveProps>`
   color: var(--FarmSystem_White, #FCFCFC);
   text-align: center;
   font-family: "Pretendard Variable";
-  font-size: 12px;
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '12px' : $isMobile ? '14px' : '16px')};
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 166.667% */

@@ -22,7 +22,7 @@ export const FarmingLogContainer = styled.div<ResponsiveProps>`
   max-width: 75rem;
   min-height: 90vh;
 
-  padding: ${({ $isApp }) => ($isApp ? '20px 15px 0px 15px' : '0')};
+  padding: ${({ $isApp }) => ($isApp ? '20px 16px 0px 16px' : '0')};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,8 +71,33 @@ export const GoBackButton = styled.button<ResponsiveProps>`
 export const FarmingLogCardContainer = styled.div<ResponsiveProps>`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 0px 20px;
+  gap: 20px;
+  padding: ${({ $isApp }) => ($isApp ?  '0' : '0 20px 0 20px')};
+`;
+
+export const EndOfList = styled.div<ResponsiveProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 150px;
+`;
+
+export const EndOfListText = styled.p<ResponsiveProps>`
+  color: var(--FarmSystem_Gray, #B7B7B7);
+  font-family: "Pretendard Variable";
+  font-size: ${({ $isApp, $isMobile }) =>
+    $isApp ? '20px' :
+    $isMobile ? '24px' :
+    '28px'};
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: -0.24px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
