@@ -51,9 +51,9 @@ export const useSocialLogin = () => {
     }
 
     const authUrl =
-  provider === "KAKAO"
-    ? `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=KAKAO`
-    : `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=profile email openid&state=GOOGLE`;
+      provider === "KAKAO"
+        ? `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=KAKAO`
+        : `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=profile email openid&state=GOOGLE`;
 
     window.location.href = authUrl;
   };
