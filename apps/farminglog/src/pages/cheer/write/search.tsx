@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './search.styled';
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
+import BackMobile from '@/assets/Icons/BackMobile.png';
 import searchIcon from '@/assets/Icons/search_icon.png';
 import { useUserSuggestQuery } from '@/services/query/useUserSuggestQuery';
 
@@ -79,7 +80,7 @@ export default function Search({ onSelectUser }: SearchProps) {
           $isDesktop={isDesktop}
           onClick={() => window.history.back()}
         >
-          <img src={GoBackImage} alt="뒤로가기" />
+          <img src={isMobile ? BackMobile : GoBackImage} alt="뒤로가기" />
         </S.GoBackButton>
 
         <S.SearchTitle
@@ -91,15 +92,19 @@ export default function Search({ onSelectUser }: SearchProps) {
         </S.SearchTitle>
       </S.SearchHeader>
 
-      <S.Title>회원 찾기</S.Title>
+      <S.Title $isMobile={isMobile}>
+        응원할 회원의 <p>이름</p>을<br />
+        찾아주세요!
+      </S.Title>
 
       <S.SearchWrapper>
-        <S.SearchBar>
+        <S.SearchBar $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}> 
           <S.SearchInput
             type="text"
             value={query}
-            placeholder="응원할 회원의 이름을 입력해 주세요"
+            placeholder="성까지 포함한 이름을 써주세요"
             onChange={(e) => setQuery(e.target.value)}
+            $isMobile={isMobile}
           />
           <S.SearchButton>
             <img
@@ -114,19 +119,23 @@ export default function Search({ onSelectUser }: SearchProps) {
         </S.SearchBar>
 
         {results.length > 0 && (
-          <S.ResultsList>
+          <S.ResultsList
+            $isMobile={isMobile}
+            $isTablet={isTablet}
+            $isDesktop={isDesktop}>
             {results.map((user) => (
               <S.ResultItem
                 key={user.userId}
                 onClick={() => handleSelectItem(user)}
+                $isMobile={isMobile}
               >
-                <S.ItemIconWrapper>
+                <S.ItemIconWrapper $isMobile={isMobile}>
                   <img
                     src={user.profileImageUrl || '/images/icon_leaf.png'}
                     alt="icon"
                   />
                 </S.ItemIconWrapper>
-                <S.ItemTextWrapper>
+                <S.ItemTextWrapper $isMobile={isMobile}>
                   <span className="name">{user.name}</span>
                   <span className="sub">
                     {user.generation}기 {formatTrack(user.track)}
