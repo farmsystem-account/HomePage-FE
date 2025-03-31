@@ -40,37 +40,53 @@ export const Nav = styled.nav`
   gap: 10px;
 `;
 
-export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActive: boolean }>`
+export const NavItem = styled.a<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+  isActive: boolean;
+}>`
   text-decoration: none;
-  padding: ${({$isMobile, $isTablet}) => 
+  padding: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "0 20px" : $isTablet ? "0 12px" : "0 30px"};
   font-family: "Pretendard Variable";
-  font-size: ${({$isMobile, $isTablet}) => 
+  font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "15px" : $isTablet ? "15px" : "18px"};
   font-weight: 500;
-  color: white;
+  color: ${({ $isMobile }) => ($isMobile ? "black" : "white")};
+  
   cursor: pointer;
   position: relative;
 
-  &:hover {
-    color: #FFFAA4;
-  }
+  ${({ $isMobile }) =>
+    !$isMobile
+      ? `&:hover {
+          color: #FFFAA4;
+        };`
+      : `&:hover {
+          color: #28723F;
+        };`}
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
-    left: 0;
     bottom: -2px;
+    /* 모바일일 경우 중앙 정렬 */
+    left: ${({ $isMobile }) => ($isMobile ? "50%" : "0")};
+    transform: ${({ $isMobile }) =>
+      $isMobile ? "translateX(-50%)" : "none"};
     width: 100%;
+    min-width: ${({ $isMobile }) => ($isMobile ? "100px" : "none")};
     height: 2px;
-    background-color: white;
+    background-color: ${({ $isMobile }) => ($isMobile ? "gray" : "white")};
     padding: 0px 2px;
   }
 
   &:hover::after {
-    background-color: #FFFAA4; /* 호버 시 라인 색상 변경 */
+    background-color: ${({ $isMobile }) =>
+      $isMobile ? "none" : "#FFFAA4"};
   }
 `;
+
 
 export const RecordCount = styled.div<{ $isMobile: boolean, $isTablet: boolean; }>`
   /* 절대 위치로 부모 범위를 벗어나도록 배치 */
@@ -121,7 +137,7 @@ export const MobileNavWrapper = styled.div<{ $isMenuOpen: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgb(245, 245, 245); 
+  background-color: rgb(245, 245, 245);
   display: flex;
   flex-direction: column;
   align-items: center;
