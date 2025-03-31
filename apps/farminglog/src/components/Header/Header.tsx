@@ -6,7 +6,8 @@ import CloseIcon from "../../assets/react.svg";
 import ProfileImage from "../../assets/home/default_profile.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
 import Popup from "@/components/Popup/popup"; 
-import { useUserStore } from "@repo/auth/stores/userStore";
+import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
+// import { useUserStore } from "@repo/auth/stores/userStore";
 
 const navItems = [
   { label: "홈", path: "/home" },
@@ -23,7 +24,8 @@ export default function Header() {
   const { isMobile, isTablet } = useMediaQueries();
 
   // user와 fetchUser 함수를 store에서 가져오기 (fetchUser는 최신 정보를 불러오는 함수)
-  const user = useUserStore((s) => s.user);
+  // const user = useUserStore((s) => s.user);
+  const { data: user } = useUserInfoQuery(); // false로 설정하여 자동으로 fetch하지 않도록 함
 
   const name = user?.name;
   const profileImageUrl = user?.profileImageUrl;
