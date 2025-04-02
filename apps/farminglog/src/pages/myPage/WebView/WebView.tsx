@@ -3,25 +3,24 @@ import { useNavigate } from 'react-router';
 import * as S from './WebView.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
-import BackArrow from '../../../assets/Icons/BackArrow.png';
-import NotionIcon from '../../../assets/Icons/Notion.png';
-import GithubIcon from '../../../assets/Icons/Github.png';
-import PhoneIcon from '../../../assets/Icons/PhoneIcon.png';
-import DefaultProfile from '../../../assets/home/default_profile.png';
-import ImageEdig from '../../../assets/buttons/ImageEdit.png';
+import BackArrow from '@/assets/Icons/BackArrow.png';
+import NotionIcon from '@/assets/Icons/Notion.png';
+import GithubIcon from '@/assets/Icons/Github.png';
+import PhoneIcon from '@/assets/Icons/PhoneIcon.png';
+import DefaultProfile from '@/assets/home/default_profile.png';
+import ImageEdig from '@/assets/buttons/ImageEdit.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
 import { useUserStore } from '@repo/auth/stores/userStore';
 import { usePresignedUrlMutation } from '@/services/mutation/usePresignedUrlMutation';
 
-
 export default function WebView() {
   const navigate = useNavigate();
   const { isMobile } = useMediaQueries();
-  const { data: user, refetch } = useUserInfoQuery();
+  const { data: user } = useUserInfoQuery();  // , refetch
   const { mutate: updateUserInfo } = useUpdateUserMutation();
-  const setUser = useUserStore((s) => s.setUser);
+  // const setUser = useUserStore((s) => s.setUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
 
@@ -104,8 +103,8 @@ export default function WebView() {
       },
       {
         onSuccess: async () => {
-          const { data: updatedUser } = await refetch();
-          if (updatedUser) setUser(updatedUser);
+          // const { data: updatedUser } = await refetch();
+          // if (updatedUser) setUser(updatedUser);
           setIsEditing(false);
         },
       }
@@ -145,7 +144,10 @@ export default function WebView() {
             />
             {isEditing && (
               <>
-                <S.ImageEditButton src={ImageEdig} onClick={handleImageEditClick} />
+                <S.ImageEditButton 
+                  src={ImageEdig}
+                  onClick={handleImageEditClick}
+                />
                 <input
                   type="file"
                   accept="image/*"

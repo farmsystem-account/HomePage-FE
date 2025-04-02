@@ -14,9 +14,9 @@ import { usePresignedUrlMutation } from '@/services/mutation/usePresignedUrlMuta
 
 export default function AppView() {
   const [isEditView, setIsEditView] = useState(false);
-  const { data: user, refetch } = useUserInfoQuery();
+  const { data: user } = useUserInfoQuery();
   const { mutate: updateUserInfo } = useUpdateUserMutation();
-  const setUser = useUserStore((s) => s.setUser);
+  // const setUser = useUserStore((s) => s.setUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutateAsync: getPresignedUrl } = usePresignedUrlMutation(); 
 
@@ -47,8 +47,8 @@ export default function AppView() {
       },
       {
         onSuccess: async () => {
-          const { data: updatedUser } = await refetch();
-          if (updatedUser) setUser(updatedUser);
+          // const { data: updatedUser } = await refetch();
+          // if (updatedUser) setUser(updatedUser);
           setIsEditView(false);
         },
       }

@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import * as S from "./Header.styled";
 import LogoImage from "../../assets/home/farming_log.png";
-import CloseIcon from "../../assets/react.svg";
+import CloseIcon from "../../assets/Icons/BackArrow.png";
 import ProfileImage from "../../assets/home/default_profile.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
-
 import Popup from "@/components/Popup/popup"; 
-import { useUserStore } from "@repo/auth/stores/userStore";
+import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
+// import { useUserStore } from "@repo/auth/stores/userStore";
 
 const navItems = [
   { label: "홈", path: "/home" },
@@ -22,21 +22,37 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { isMobile, isTablet } = useMediaQueries();
-  const user = useUserStore((s) => s.user);
+
+  // user와 fetchUser 함수를 store에서 가져오기 (fetchUser는 최신 정보를 불러오는 함수)
+  // const user = useUserStore((s) => s.user);
+  const { data: user } = useUserInfoQuery(); // false로 설정하여 자동으로 fetch하지 않도록 함
 
   const name = user?.name;
   const profileImageUrl = user?.profileImageUrl;
   const totalSeed = user?.totalSeed;
 
-  const handleNavItemClick = (path?: string) => {
+  const handleNavItemClick = (path?: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
     if (path) navigate(path);
     setMenuOpen(false);
   };
 
+  // 헤더의 빈 영역 클릭 시 모바일 메뉴 열기
+  const handleHeaderClick = () => {
+    if (isMobile && !isMenuOpen) {
+      setMenuOpen(true);
+    }
+  };
+
   const ProfileAndSeed = (
-    <S.ProfileAndSeedContainer $isMobile={isMobile}>
-      <S.ProfileContainer $isMobile={isMobile}
-        onClick={() => setProfilePopupOpen(true)}>
+    <S.ProfileAndSeedContainer $isMobile={isMobile} $isTablet={isTablet}>
+      <S.ProfileContainer 
+        $isMobile={isMobile}
+        onClick={(e) => {
+          e.stopPropagation();
+          setProfilePopupOpen(true);
+        }}
+      >
         <S.ProfileImage
           src={profileImageUrl || ProfileImage}
           alt={name || "사용자"}
@@ -44,7 +60,7 @@ export default function Header() {
         />
         <S.ProfileName $isMobile={isMobile}>{name || ""}</S.ProfileName>
       </S.ProfileContainer>
-      <S.RecordCount $isMobile={isMobile}>
+      <S.RecordCount $isMobile={isMobile} $isTablet={isTablet}>
         <span className="seed-text">내 씨앗</span>
         <span className="seed-count">{totalSeed ?? 0}</span>
       </S.RecordCount>
@@ -53,8 +69,15 @@ export default function Header() {
 
   return (
     <>
-      <S.HeaderContainer $isMobile={isMobile}>
-        <S.Logo onClick={() => navigate("/home")} $isMobile={isMobile} $isTablet={isTablet}>
+      <S.HeaderContainer $isMobile={isMobile} onClick={handleHeaderClick}>
+        <S.Logo 
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate("/home");
+          }} 
+          $isMobile={isMobile} 
+          $isTablet={isTablet}
+        >
           <img src={LogoImage} alt="파밍로그" />
         </S.Logo>
 
@@ -69,7 +92,10 @@ export default function Header() {
                     key={path}
                     $isTablet={isTablet}
                     $isMobile={isMobile}
-                    onClick={() => navigate(path)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(path);
+                    }}
                     isActive={location.pathname === path}
                   >
                     {label}
@@ -82,12 +108,15 @@ export default function Header() {
         )}
 
         <S.MobileNavWrapper $isMenuOpen={isMenuOpen}>
-          {isMobile && (
+          {isMobile && isMenuOpen && (
             <>
               <S.CloseButton
                 src={CloseIcon}
                 alt="Close"
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMenuOpen(false);
+                }}
               />
               <S.MobileNav>
                 {navItems.map(({ label, path }) => (
@@ -95,7 +124,7 @@ export default function Header() {
                     key={path}
                     $isTablet={isTablet}
                     $isMobile={isMobile}
-                    onClick={() => handleNavItemClick(path)}
+                    onClick={(e) => handleNavItemClick(path, e)}
                     isActive={location.pathname === path}
                   >
                     {label}
@@ -107,17 +136,15 @@ export default function Header() {
         </S.MobileNavWrapper>
       </S.HeaderContainer>
 
-<Popup
-  isOpen={isProfilePopupOpen}
-  onClose={() => setProfilePopupOpen(false)}
-  variant="MYPAGE"
-  userName={user?.name}
-  generationAndPart={`${user?.generation}기 ${user?.track}`}
-  profileImg={user?.profileImageUrl} 
-  // hasAlarm={false} // 알림 패치 후 바꿔야함       
-  hasLogout={true}       
-/>
-
+      <Popup
+        isOpen={isProfilePopupOpen}
+        onClose={() => setProfilePopupOpen(false)}
+        variant="MYPAGE"
+        userName={user?.name}
+        generationAndPart={`${user?.generation}기 ${user?.track}`}
+        profileImg={user?.profileImageUrl} 
+        hasLogout={true}       
+      />
     </>
   );
 }

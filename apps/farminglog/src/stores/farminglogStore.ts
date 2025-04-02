@@ -5,6 +5,9 @@ import { create } from 'zustand';
  */
 
 interface FarmingLogStore {
+  isNeedRefresh: boolean;
+  setIsNeedRefresh: (isNeedRefresh: boolean) => void;
+
   isEditMode: boolean;
   farmingLogId: number | null;
   farminglogTitle: string;
@@ -19,6 +22,10 @@ interface FarmingLogStore {
 }
 
 const useFarmingLogStore = create<FarmingLogStore>((set) => ({
+  // 리액트-쿼리 캐싱 리프레쉬
+  isNeedRefresh: false,
+  setIsNeedRefresh: (isNeedRefresh) => set(() => ({ isNeedRefresh })),
+
   isEditMode: false,  // 수정 모드인지 여부
   farmingLogId: null,
   farminglogTitle: '',

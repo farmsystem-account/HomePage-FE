@@ -11,9 +11,11 @@ import {
   useEditFarmingLogMutation
 } from '@/services/mutation/FarmingLog';
 import useFarmingLogStore from '@/stores/farminglogStore';
+// import Popup from '@/components/Popup/popup';
 
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
+
 
 const categoryList = Object.keys(FarmingLogCategory) as Array<keyof typeof FarmingLogCategory>;
 
@@ -25,12 +27,15 @@ export default function Editor() {
 
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [dropDownSelected, setDropDownSelected] = useState<keyof typeof FarmingLogCategory | null>(null);
+  // const [popUpOpen, setPopupOpen] = useState(false);
+  // const [popUpText, setPopUpText] = useState<string[]>(['', '']);
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
   const { mutate: createFarmingLogMutate } = useCreateFarmingLogMutation();
   const { mutate: editFarmingLogMutate } = useEditFarmingLogMutation();
   const {
+    setIsNeedRefresh,
     isEditMode,
     farmingLogId,
     farminglogTitle,
@@ -42,7 +47,9 @@ export default function Editor() {
   useEffect(() => {
     if (isEditMode) {
       setTitleInput(farminglogTitle);
+      setTitleCount(farminglogTitle.length);
       setContentInput(farminglogContent);
+      setContentCount(farminglogContent.length);
       setDropDownSelected(farminglogCategory as keyof typeof FarmingLogCategory);
     }
   }
@@ -61,11 +68,21 @@ export default function Editor() {
     console.log('카테고리:', categoryEnum);
 
     if (titleCount < 1 || titleCount > 20) {
-      alert('제목은 1자 이상 20자 이하로 작성해주세요.');
+      // setPopupOpen(true);
+      // setPopUpText(['제목이 너무 길어요.', '1자 이상, 20자 이하로 작성해주세요.']);
+      alert('제목이 너무 길어요. 1자 이상, 20자 이하로 작성해주세요.');
       return;
     }
-    if (contentCount < 100 || contentCount > 300) {
-      alert('내용은 100자 이상, 300자 이하로 작성해주세요.');
+    if (contentCount < 100) {
+      // setPopupOpen(true);
+      // setPopUpText(['회원님의 이야기를 더 듣고 싶어요.', '내용을 100자 이상 작성해주세요.']);
+      alert('회원님의 이야기를 더 듣고 싶어요. 내용은 100자 이상 작성해주세요.');
+      return;
+    }
+    if (contentCount > 300) {
+      // setPopupOpen(true);
+      // setPopUpText(['내용이 너무 길어요.', '300자 이하로 작성해주세요.']);
+      alert('내용이 너무 길어요. 300자 이하로 작성해주세요.');
       return;
     }
     if (isEditMode) {
@@ -83,13 +100,20 @@ export default function Editor() {
       });
 
       setIsEditMode(false);
+      // setPopupOpen(true);
+      // setPopUpText(['안내', '수정이 완료되었습니다.']);
+      alert('수정이 완료되었습니다.');
     } else {
       createFarmingLogMutate({
         title: titleInput,
         content: contentInput,
         category: categoryEnum,
       });
+      // setPopupOpen(true);
+      // setPopUpText(['안내', '파밍로그 작성 완료되었습니다.']);
+      alert('파밍로그 작성 완료되었습니다.');
     }
+    setIsNeedRefresh(true);
     navigate('/farminglog/view');
   };
 
@@ -130,7 +154,7 @@ export default function Editor() {
               <S.HeaderPinIcon $isApp={isApp} src={PinIcon} alt="pin" />
             </S.HeaderPin>
           </S.HeaderPinContainer>
-          <S.HeaderContext $isApp={isApp}>
+          <S.HeaderContext $isApp={isApp} $isMobile={isMobile}>
             <p>
               <S.HeaderContextBold>파밍로그</S.HeaderContextBold>는 매일 자신이 배운 내용을
             </p>
@@ -170,8 +194,8 @@ export default function Editor() {
             {/* 제목 */}
             <S.InputAndTextContainer $isApp={isApp}>
               <S.TitleContainer $isApp={isApp}>
-                <S.TitleText $isApp={isApp}>제목</S.TitleText>
-                <S.SmallText $isApp={isApp}>{titleCount + '/20자'}</S.SmallText>
+                <S.TitleText $isApp={isApp} $isMobile={isMobile}>제목</S.TitleText>
+                <S.SmallText $isApp={isApp} $isMobile={isMobile}>{titleCount + '/20자'}</S.SmallText>
               </S.TitleContainer>
               <S.InputBox
                 value={titleInput}
@@ -180,6 +204,8 @@ export default function Editor() {
                   setTitleCount(e.target.value.length);
                 }}
                 placeholder="내용을 입력해주세요."
+                $isApp={isApp}
+                $isMobile={isMobile}
               />
             </S.InputAndTextContainer>
 
@@ -206,6 +232,8 @@ export default function Editor() {
                   setContentCount(e.target.value.length);
                 }}
                 placeholder="내용을 입력해주세요."
+                $isApp={isApp}
+                $isMobile={isMobile}
               />
             </S.InputAndTextContainer>
           </S.ContentContainer>
@@ -213,14 +241,28 @@ export default function Editor() {
 
         {/* 버튼 섹션 */}
         <S.ButtonContainer $isApp={isApp} $isMobile={isMobile}>
-          <S.GoBackButton onClick={handleGoBack}>
-            <S.ButtonEnnerText>돌아가기</S.ButtonEnnerText>
+          <S.GoBackButton onClick={handleGoBack} $isApp={isApp}>
+            <S.ButtonEnnerText $isApp={isApp} $isMobile={isMobile}>
+              돌아가기
+            </S.ButtonEnnerText>
           </S.GoBackButton>
-          <S.CreateButton onClick={handleCreateFarmingLog}>
-            <S.ButtonEnnerText>작성 완료</S.ButtonEnnerText>
+          <S.CreateButton onClick={handleCreateFarmingLog} $isApp={isApp}>
+            <S.ButtonEnnerText $isApp={isApp} $isMobile={isMobile}>
+              작성 완료
+            </S.ButtonEnnerText>
           </S.CreateButton>
         </S.ButtonContainer>
       </S.FarmingLogEditorContainer>
+      {/* {popUpOpen && (
+        <Popup
+          isOpen={popUpOpen}
+          variant='MESSAGE'
+          onClose={() => setPopupOpen(false)}
+          mainMessage={popUpText[0]}
+          subMessage={popUpText[1]}
+          confirmLabel='확인'
+        />
+      )} */}
     </S.MainContainer>
   );
 }

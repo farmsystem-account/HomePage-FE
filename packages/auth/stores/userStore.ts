@@ -1,4 +1,4 @@
-import { create } from "zustand";
+// import { create } from "zustand";
 
 export interface UserInfo {
   userId: number;
@@ -16,15 +16,14 @@ export interface UserInfo {
   totalSeed: number;
 }
 
-interface UserState {
-  user: UserInfo | null;
-  setUser: (user: UserInfo) => void;
-  clearUser: () => void;
-}
+// interface UserState {
+//   user: UserInfo | null;
+//   setUser: (user: UserInfo) => void;
+//   clearUser: () => void;
+// }
 
-export const useUserStore = create<UserState>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
-  clearUser: () => set({ user: null }),
-}));
-
+// export const useUserStore = create<UserState>((set) => ({
+//   user: null,
+//   setUser: (user: UserInfo) => set({ user }),
+//   clearUser: () => set({ user: null }),
+// }));

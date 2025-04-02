@@ -4,15 +4,16 @@ import useMediaQueries from "@/hooks/useMediaQueries";
 import Header from "./Header/Header";
 
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
-import { useUserStore } from "@repo/auth/stores/userStore"; // ✅ Zustand store import
+// import { useUserStore } from "@repo/auth/stores/userStore"; 
+import { useAuthStore } from "@repo/auth/stores/useAuthStore";
 
 export default function Layout() {
   const { isMobile } = useMediaQueries();
   const headerHeight = isMobile ? 55 : 70;
 
-  const user = useUserStore((state) => state.user);
+  const { data: user } = useUserInfoQuery();
 
-  const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+  const accessToken = useAuthStore((state) => state.accessToken);
   const isLoggedIn = !!accessToken;
 
   // 상태가 없고 로그인된 경우에만 패치

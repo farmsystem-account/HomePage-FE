@@ -16,13 +16,16 @@ export interface CheerData {
 
 interface CheerCardProps {
   cheer: CheerData;
+  isExpanded: boolean;
+  onClick?: () => void;
 }
 
-const CheerCard: React.FC<CheerCardProps> = ({ cheer }) => {
+const CheerCard: React.FC<CheerCardProps> = ({ cheer, isExpanded, onClick }) => {
   const { isMobile } = useMediaQueries();
 
   return (
-    <S.CheerCard bgColor={cheer.bgColor} $isMobile={isMobile}>
+    <S.CheerCard bgColor={cheer.bgColor} $isMobile={isMobile}  $isExpanded={isExpanded}
+      onClick={onClick}>
       {/* 상단 (수신자 정보) */}
       <S.CheerHeader $isMobile={isMobile}>
         <S.CheerAvatar src={cheer.r_profile} alt="profile" $isMobile={isMobile} />
@@ -37,7 +40,7 @@ const CheerCard: React.FC<CheerCardProps> = ({ cheer }) => {
       </S.CheerHeader>
 
       {/* 중단 (본문 내용) */}
-      <S.CheerContent $isMobile={isMobile}>
+      <S.CheerContent $isMobile={isMobile} $isExpanded={isExpanded}>
         {cheer.content}
       </S.CheerContent>
 

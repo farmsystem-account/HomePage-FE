@@ -1,10 +1,13 @@
 import useMediaQueries from "@/hooks/useMediaQueries";
+import { useNavigate } from 'react-router';
 import * as S from "./cheer.styled";
 import { useCheerListQuery } from "@/services/query/useCheerListQuery";
 import { convertTagToCategory } from "@/utils/convertTagToCategory";
 import FarmLogoImg from "../../../assets/Icons/FarmSystem_Logo.png"; // 유지된 이미지 import
+import UpArrowImg from '@/assets/Icons/UpArrow.png';
 
 export default function CheerPreview() {
+  const navigate = useNavigate();
   const { isMobile, isTablet } = useMediaQueries();
   const { data: cheerList = [] } = useCheerListQuery();
 
@@ -27,8 +30,14 @@ export default function CheerPreview() {
 
   return (
     <S.CheerContainer $isMobile={isMobile} $isTablet={isTablet}>
-      <S.CheerTitle $isMobile={isMobile}>실시간 응원 현황</S.CheerTitle>
-
+      <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
+        <S.Title $isMobile={isMobile}>실시간 응원 현황</S.Title>
+        <S.BackArrow
+          src={UpArrowImg}
+          alt="작성하기"
+          onClick={() => navigate("/cheer/write")}
+        />
+      </S.TitleBox>
       <S.CheerCardWrapper
         $isMobile={isMobile}
         $isTablet={isTablet}
@@ -52,7 +61,7 @@ export default function CheerPreview() {
                 <a>{cheer.receiver}</a> 님에게&nbsp;{" "}
                 <a>
                   <S.CheerColorText
-                    categoryColor={cheer.fontColor}
+                    $categoryColor={cheer.fontColor}
                     $isMobile={isMobile}
                   >
                     {cheer.category}
