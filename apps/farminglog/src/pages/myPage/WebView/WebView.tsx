@@ -12,7 +12,7 @@ import ImageEdig from '@/assets/buttons/ImageEdit.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
-import { useUserStore } from '@repo/auth/stores/userStore';
+// import { useUserStore } from '@repo/auth/stores/userStore';
 import { usePresignedUrlMutation } from '@/services/mutation/usePresignedUrlMutation';
 
 export default function WebView() {
@@ -86,7 +86,7 @@ export default function WebView() {
 
   useEffect(() => {
     if (user) {
-      setProfileImageUrl(user.profileImageUrl);
+      setProfileImageUrl(user.profileImageUrl || '');
       setMobile(user.phoneNumber || '');
       setNotion(user.notionAccount || '');
       setGithub(user.githubAccount || '');
@@ -106,6 +106,7 @@ export default function WebView() {
           // const { data: updatedUser } = await refetch();
           // if (updatedUser) setUser(updatedUser);
           setIsEditing(false);
+          window.location.reload(); 
         },
       }
     );

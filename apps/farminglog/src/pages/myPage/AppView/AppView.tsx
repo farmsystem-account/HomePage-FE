@@ -9,7 +9,7 @@ import ImageEdit from '../../../assets/buttons/ImageEdit.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
-import { useUserStore } from '@repo/auth/stores/userStore';
+// import { useUserStore } from '@repo/auth/stores/userStore';
 import { usePresignedUrlMutation } from '@/services/mutation/usePresignedUrlMutation'; 
 
 export default function AppView() {
@@ -50,6 +50,7 @@ export default function AppView() {
           // const { data: updatedUser } = await refetch();
           // if (updatedUser) setUser(updatedUser);
           setIsEditView(false);
+          window.location.reload(); 
         },
       }
     );
