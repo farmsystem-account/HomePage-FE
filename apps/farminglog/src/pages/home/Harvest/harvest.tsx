@@ -7,7 +7,8 @@ import thumb from "@/assets/home/thumbs-up.png";
 import edit from "@/assets/home/edit.png";
 import * as S from "./harvest.styled";
 import useButtonStore from "../../../stores/harvestStore"; // zustand persist store
-import { useUserStore } from "@repo/auth/stores/userStore";
+import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
+// import { useUserStore } from "@repo/auth/stores/userStore";
 
 interface StageProps {
   text: string;
@@ -25,7 +26,8 @@ export default function Harvest() {
   const { mutate: attend } = useAttendMutation();
   const navigate = useNavigate();
 
-  const user = useUserStore((s) => s.user);
+ // const user = useUserStore((s) => s.user);
+  const { data: user } = useUserInfoQuery(); // 사용자 정보 쿼리
 
   // persist 스토어에서 버튼 활성 상태와 업데이트 함수 사용
   const activeStates = useButtonStore((state) => state.activeStates);
@@ -71,9 +73,8 @@ export default function Harvest() {
     if (index === 0) {
       // 출석하기의 경우, attend API 호출 후 응답으로 최신 seed 값을 받음
       try {
-        // attend의 반환 타입을 올바르게 지정하거나,
-        // 만약 반환값이 없다면, attend 호출 후 user store가 업데이트 되는 방식으로 수정 필요
-        let updatedUser = useUserStore((s) => s.user);
+        const updatedUser = user;
+        // let updatedUser = useUserStore((s) => s.user);
         attend(); // updatedUser 타입을 수정하세요.
         updatedSeed = updatedUser?.currentSeed ?? previousSeed;
       } catch (error) {

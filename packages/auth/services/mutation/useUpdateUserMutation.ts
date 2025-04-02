@@ -2,9 +2,8 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePrivateApi } from '../../../api/hooks/usePrivateApi';
-import { useUserStore, UserInfo } from '../../stores/userStore';
+import { UserInfo } from '../../stores/userStore';
 import { ApiResponse } from '../../../api/models/api';
-
 
 interface UpdateUserPayload {
   profileImageUrl?: string;
@@ -16,7 +15,7 @@ interface UpdateUserPayload {
 export const useUpdateUserMutation = () => {
   const { patch } = usePrivateApi();
   const queryClient = useQueryClient();
-  const setUser = useUserStore((s) => s.setUser);
+  // const setUser = useUserStore((s) => s.setUser);
 
   return useMutation({
     mutationFn: async (payload: UpdateUserPayload) => {
@@ -25,7 +24,7 @@ export const useUpdateUserMutation = () => {
     },
     onSuccess: (updatedUser) => {
       queryClient.setQueryData(['userInfo'], updatedUser);
-      setUser(updatedUser.data); 
+      // setUser(updatedUser.data); 
     },
   });
 };

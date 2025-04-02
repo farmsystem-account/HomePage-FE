@@ -3,7 +3,8 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNavigate } from 'react-router';
 import * as S from './cheer.styled';
 
-import { useUserStore } from '@repo/auth/stores/userStore';
+// import { useUserStore } from '@repo/auth/stores/userStore';
+import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useCheerMutation } from '@/services/mutation/useCheerMutation';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -46,9 +47,12 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
-  const { user } = useUserStore((s) => s);
-  const { mutate: sendCheer } = useCheerMutation();
   const queryClient = useQueryClient();
+
+  // const { user } = useUserStore((s) => s); // 로그인한 유저 정보
+  const { mutate: sendCheer } = useCheerMutation(); // 응원 API
+  const { data: user } = useUserInfoQuery();
+
 
   const handleCategoryClick = (cat: { name: CategoryName; bgColor: string; fontColor?: string }) => {
     setSelectedCategory(cat);

@@ -9,13 +9,13 @@ import ImageEdit from '../../../assets/buttons/ImageEdit.png';
 
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
-import { useUserStore } from '@repo/auth/stores/userStore';
+// import { useUserStore } from '@repo/auth/stores/userStore';
 
 export default function AppView() {
   const [isEditView, setIsEditView] = useState(false);
-  const { data: user, refetch } = useUserInfoQuery();
+  const { data: user } = useUserInfoQuery();
   const { mutate: updateUserInfo } = useUpdateUserMutation();
-  const setUser = useUserStore((s) => s.setUser);
+  // const setUser = useUserStore((s) => s.setUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [mobile, setMobile] = useState('');
@@ -43,8 +43,8 @@ export default function AppView() {
       },
       {
         onSuccess: async () => {
-          const { data: updatedUser } = await refetch();
-          if (updatedUser) setUser(updatedUser);
+          // const { data: updatedUser } = await refetch();
+          // if (updatedUser) setUser(updatedUser);
           setIsEditView(false);
         },
       }
