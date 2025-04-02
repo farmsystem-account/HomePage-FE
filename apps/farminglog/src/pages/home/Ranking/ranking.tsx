@@ -162,7 +162,7 @@ export default function RankingPreview() {
         <ProfilePopup
           isOpen={showProfilePopup}
           userName={previewRankingData[selectedIndex].name}
-          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${previewRankingData[selectedIndex].track}`}
+          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${convertTrackToString(previewRankingData[selectedIndex].track)}`}
           profileImg={previewRankingData[selectedIndex].profileImageUrl}
           onClose={() => setShowProfilePopup(false)}
         />

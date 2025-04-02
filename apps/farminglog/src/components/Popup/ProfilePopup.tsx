@@ -5,6 +5,7 @@ import useMediaQueries from "@/hooks/useMediaQueries";
 import GithubIcon from "@/assets/Icons/Github.png";
 import CloseIcon from "@/assets/Icons/close.png";
 
+
 interface ProfilePopupProps {
   isOpen: boolean;
   onClose: () => void;
@@ -40,7 +41,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
     <S.PopupOverlay onClick={handleOverlayClick}>
       <S.PopupBox onClick={stopPropagation} $isMobile={isMobile} $isTablet={isTablet}>
         <S.CloseIconButton onClick={onClose}>
-          <img src={CloseIcon} alt="닫기" width={24} height={24} />
+          <img src={CloseIcon} alt="닫기" width={40} height={40} />
         </S.CloseIconButton>
 
         <S.ProfileLayoutRow $isMobile={isMobile}>
@@ -53,20 +54,15 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
               {userName}
             </S.PopupTitle>
             <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
-              {generationAndPart}
+              {generationAndPart} <a>|</a> {major}
             </S.PopupText>
           </S.InfoBox>
         </S.ProfileLayoutRow>
-
-        <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
-          {major}
-        </S.PopupText>
-
         <S.Divider $isMobile={isMobile} />
 
-        <S.PopupText $isMobile={isMobile} $isTablet={isTablet}>
-          {githubId ? (
-            <>
+        
+          {!githubId ? (
+            <S.PopupBottomText $isMobile={isMobile} $isTablet={isTablet}>
               <img
                 src={GithubIcon}
                 width={24}
@@ -75,11 +71,12 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
                 style={{ marginRight: 8 }}
               />
               {githubId}
-            </>
+              </S.PopupBottomText>
           ) : (
+            <S.PopupBottomText $isMobile={isMobile} $isTablet={isTablet}>
             "깃허브 아이디 없음"
+            </S.PopupBottomText>
           )}
-        </S.PopupText>
       </S.PopupBox>
     </S.PopupOverlay>
   );

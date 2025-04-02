@@ -202,3 +202,31 @@ export const GlobalSproutAnimation = styled.div`
     animation: ${sproutExplosion} 1s forwards, ${gatherToTopRight} 0.8s 1s forwards;
   }
 `;
+
+
+export const InfoContationer = styled.div<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+}>`
+  position: relative;
+  width: 100%;
+  max-width: ${({ $isMobile, $isTablet }) =>
+    $isMobile ? "90%" : $isTablet ? "90%" : "1200px"};
+  min-height: ${({ $isMobile, $isTablet }) =>
+    $isMobile ? "40%" : $isTablet ? "40%" : "400px"};
+  margin: 0 auto;
+  padding: 20px;
+  background-color: ${({ $isMobile }) => ($isMobile ? "#f9f9f9" : "#fff")};
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ $isMobile }) => ($isMobile ? "10px" : "20px")};
+  border-radius: 3px;
+`;
+
+export const InfoButton = styled.div<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+}>`
+`;
