@@ -9,13 +9,14 @@ import * as S from './WhiteContentContainer.styled';
 import GoBackImage from '@/assets/Icons/corner-up-left.png';
 
 interface WhiteContentContainerProps {
-  title: string;                  // 페이지 제목
+  title?: string;                  // 페이지 제목
   isContentHeaderShown?: boolean; // 콘텐츠 헤더 표시 여부
   children: React.ReactNode;
 };
 
 export default function WhiteContentContainer({
-  title,
+  title = '',
+  isContentHeaderShown = true,
   children
 }: WhiteContentContainerProps) {
   const navigate = useNavigate();
@@ -28,36 +29,38 @@ export default function WhiteContentContainer({
       $isTablet={isTablet}
       $isDesktop={isDesktop}
     >
-      <S.ContentContainerHeader
-        $isApp={isApp}
-        $isMobile={isMobile}
-        $isTablet={isTablet}
-        $isDesktop={isDesktop}
-      >
-        <S.GoBackButton
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isTablet={isTablet}
-          $isDesktop={isDesktop}
-          onClick={() => navigate(-1)}
-        >
-          <img src={GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton>
-        <S.ContentContainerTitle
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isTablet={isTablet}
-          $isDesktop={isDesktop}
-        >
-          {title}
-        </S.ContentContainerTitle>
-      </S.ContentContainerHeader>
       <S.ContentContainer
         $isApp={isApp}
         $isMobile={isMobile}
         $isTablet={isTablet}
         $isDesktop={isDesktop}
       >
+        { isContentHeaderShown && (
+          <S.ContentContainerHeader
+            $isApp={isApp}
+            $isMobile={isMobile}
+            $isTablet={isTablet}
+            $isDesktop={isDesktop}
+          >
+            <S.GoBackButton
+              $isApp={isApp}
+              $isMobile={isMobile}
+              $isTablet={isTablet}
+              $isDesktop={isDesktop}
+              onClick={() => navigate(-1)}
+            >
+              <img src={GoBackImage} alt="뒤로가기" />
+            </S.GoBackButton>
+            <S.ContentContainerTitle
+              $isApp={isApp}
+              $isMobile={isMobile}
+              $isTablet={isTablet}
+              $isDesktop={isDesktop}
+            >
+              {title}
+            </S.ContentContainerTitle>
+          </S.ContentContainerHeader>
+        )}
         {children}
       </S.ContentContainer>
     </S.MainContainer>

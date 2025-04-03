@@ -12,6 +12,7 @@ import {
 } from '@/services/mutation/FarmingLog';
 import useFarmingLogStore from '@/stores/farminglogStore';
 // import Popup from '@/components/Popup/popup';
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
@@ -31,7 +32,7 @@ export default function Editor() {
   // const [popUpText, setPopUpText] = useState<string[]>(['', '']);
 
   const navigate = useNavigate();
-  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const { isApp, isMobile, isDesktop } = useMediaQueries();
   const { mutate: createFarmingLogMutate } = useCreateFarmingLogMutation();
   const { mutate: editFarmingLogMutate } = useEditFarmingLogMutation();
   const {
@@ -137,13 +138,9 @@ export default function Editor() {
   };
 
   return (
-    <S.MainContainer>
-      <S.FarmingLogEditorContainer
-        $isApp={isApp}
-        $isMobile={isMobile}
-        $isTablet={isTablet}
-        $isDesktop={isDesktop}
-      >
+    <WhiteContentContainer
+      isContentHeaderShown={false}
+    >
         {/* Header 섹션 */}
         <S.FarmingLogEditorContainerHeader $isApp={isApp} $isMobile={isMobile}>
           <S.HeaderPinContainer $isApp={isApp}>
@@ -252,7 +249,6 @@ export default function Editor() {
             </S.ButtonEnnerText>
           </S.CreateButton>
         </S.ButtonContainer>
-      </S.FarmingLogEditorContainer>
       {/* {popUpOpen && (
         <Popup
           isOpen={popUpOpen}
@@ -263,6 +259,6 @@ export default function Editor() {
           confirmLabel='확인'
         />
       )} */}
-    </S.MainContainer>
+    </WhiteContentContainer>
   );
 }
