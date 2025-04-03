@@ -138,7 +138,7 @@ export default function Harvest() {
   const stages: StageProps[] = [
     { text: "출석체크", image: terminal, link: "/home", buttonText: "출석하기" },
     { text: "응원하기", image: thumb, link: "/cheer/write", buttonText: "응원하기" },
-    { text: "파밍로그", image: edit, link: "/farminglog/view", buttonText: "파밍로그" },
+    { text: "파밍로그", image: edit, link: "/farminglog/write", buttonText: "파밍로그" },
   ];
 
   // 글로벌 새싹 애니메이션 렌더링 함수
