@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import * as S from './search.styled';
-import GoBackImage from '@/assets/Icons/corner-up-left.png';
-import BackMobile from '@/assets/Icons/BackMobile.png';
 import searchIcon from '@/assets/Icons/search_icon.png';
 import { useUserSuggestQuery } from '@/services/query/useUserSuggestQuery';
 
@@ -37,7 +35,9 @@ export default function Search({ onSelectUser }: SearchProps) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<UserInfo[]>([]);
 
-  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const { 
+    // isApp, 
+    isMobile, isTablet, isDesktop } = useMediaQueries();
 
   const { data } = useUserSuggestQuery(query);
 
@@ -62,36 +62,7 @@ export default function Search({ onSelectUser }: SearchProps) {
 
 
   return (
-    <S.SearchContainer
-      $isApp={isApp}
-      $isMobile={isMobile}
-      $isTablet={isTablet}
-      $isDesktop={isDesktop}
-    >
-      {/* 헤더 */}
-      <S.SearchHeader
-        $isApp={isApp}
-        $isMobile={isMobile}
-        $isDesktop={isDesktop}
-      >
-        <S.GoBackButton
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-          onClick={() => window.history.back()}
-        >
-          <img src={isMobile ? BackMobile : GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton>
-
-        <S.SearchTitle
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-        >
-          응원하기
-        </S.SearchTitle>
-      </S.SearchHeader>
-
+    <>
       <S.Title $isMobile={isMobile}>
         응원할 회원의 <p>이름</p>을<br />
         찾아주세요!
@@ -146,6 +117,6 @@ export default function Search({ onSelectUser }: SearchProps) {
           </S.ResultsList>
         )}
       </S.SearchWrapper>
-    </S.SearchContainer>
+    </>
   );
 }

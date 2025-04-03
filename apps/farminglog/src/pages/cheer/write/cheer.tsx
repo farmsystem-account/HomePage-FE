@@ -8,9 +8,6 @@ import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useCheerMutation } from '@/services/mutation/useCheerMutation';
 import { useQueryClient } from '@tanstack/react-query';
 
-import GoBackImage from '@/assets/Icons/corner-up-left.png';
-import BackMobile from '@/assets/Icons/BackMobile.png';
-
 const tagMap = {
   '칭찬해요!': 'COMPLIMENT',
   '감사해요!': 'THANK',
@@ -92,16 +89,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
   );
 };
   return (
-    <S.CheerContainer $isApp={isApp} $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-      <S.CheerContainerHeader $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-        <S.GoBackButton $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop} onClick={() => navigate('/cheer')}>
-          <img src={isMobile ? BackMobile : GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton>
-        <S.CheerContainerTitle $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-          응원하기
-        </S.CheerContainerTitle>
-      </S.CheerContainerHeader>
-
+    <>
       <S.HeaderText $isApp={isApp} $isMobile={isMobile}>
         {searchedUser.name} 님에게
       </S.HeaderText>
@@ -151,6 +139,6 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
           </S.SubmitButton>
         </S.ContentWrapper>
       </S.CheerCard>
-    </S.CheerContainer>
+    </>
   );
 }
