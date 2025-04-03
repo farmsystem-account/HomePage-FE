@@ -216,7 +216,6 @@ export default function Harvest() {
                 <div className="content">
                   <S.IconImg
                     src={stage.image}
-                    alt={stage.text}
                     $isMobile={isMobile}
                     $isTablet={isTablet}
                     $isActive={isActive}

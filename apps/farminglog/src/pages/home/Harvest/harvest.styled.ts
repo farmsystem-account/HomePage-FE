@@ -66,6 +66,11 @@ export const ButtonContainer = styled.div<{
   padding-top: 12px;
   gap: 10px;
   flex-wrap: wrap;
+
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 `;
 
 /** 원형 아이콘 이미지 */
