@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 import * as S from './WebView.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 
-import BackArrow from '@/assets/Icons/BackArrow.png';
+// import BackArrow from '@/assets/Icons/BackArrow.png';
 import NotionIcon from '@/assets/Icons/Notion.png';
 import GithubIcon from '@/assets/Icons/Github.png';
 import PhoneIcon from '@/assets/Icons/PhoneIcon.png';
@@ -14,8 +15,9 @@ import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
 // import { useUserStore } from '@repo/auth/stores/userStore';
 
+
 export default function WebView() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { isMobile } = useMediaQueries();
   const { data: user } = useUserInfoQuery();  // , refetch
   const { mutate: updateUserInfo } = useUpdateUserMutation();
@@ -82,16 +84,18 @@ const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   ];
 
   return (
-    <S.MyPageContainer>
-      <S.ProfileWrapper isMobile={isMobile}>
-        <S.TitleBox isMobile={isMobile}>
-          <S.BackArrow src={BackArrow} onClick={() => navigate(-1)}/>
-          <S.Title>마이페이지</S.Title>
-          <S.EditButton onClick={isEditing ? handleEditComplete : () => setIsEditing(true)}>
+    <WhiteContentContainer title="마이페이지">
+    {/* <S.MyPageContainer>
+         <S.ProfileWrapper isMobile={isMobile}>
+           <S.TitleBox isMobile={isMobile}>
+             <S.BackArrow src={BackArrow} onClick={() => navigate(-1)}/>
+             <S.Title>마이페이지</S.Title>
+          
+           </S.TitleBox> */}
+
+        <S.EditButton onClick={isEditing ? handleEditComplete : () => setIsEditing(true)}>
             {isEditing ? '완료' : '수정하기'}
           </S.EditButton>
-        </S.TitleBox>
-
         <S.SectionTitleBox isMobile={isMobile}>
           <S.SectionTitle>프로필</S.SectionTitle>
         </S.SectionTitleBox>
@@ -173,7 +177,8 @@ const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             </S.AccountLinks>
           </>
         )}
-      </S.ProfileWrapper>
-    </S.MyPageContainer>
+      {/* </S.ProfileWrapper>
+    </S.MyPageContainer> */}
+    </WhiteContentContainer>
   );
 }

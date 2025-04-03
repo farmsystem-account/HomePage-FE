@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { AnimatePresence } from 'framer-motion';
 import * as S from './index.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
-import BackArrow from '../../assets/Icons/BackArrow.png';
 import FarmLogo from '../../assets/Icons/FarmSystem_Logo.png';
 import Crown from '../../assets/Icons/crown.png';
 import Sign from '@/components/Ranking/sign';
@@ -11,6 +10,7 @@ import CheerBalloon from './components/CheerBalloon';
 import { useUserRankingQuery } from '@/services/query/useUserRankingQuery';
 import { convertTrackToString } from '@/utils/convertTrackToString';
 import ProfilePopup from '@/components/Popup/ProfilePopup';
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 
 const headerTexts = [
   '랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.',
@@ -21,7 +21,7 @@ const headerTexts = [
 export default function Main() {
   const navigate = useNavigate();
   const { data, isLoading } = useUserRankingQuery();
-  const { isDesktop, isMobile, isApp } = useMediaQueries();
+  const { isMobile, isApp } = useMediaQueries();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
@@ -51,29 +51,7 @@ export default function Main() {
   const rankingData = [data.myRank, ...data.userRankList].filter(item => item !== null);
 
   return (
-    <S.MyPageContainer>
-      <S.ProfileWrapper $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-        <S.FarmingLogContainerHeader
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-        >
-          <S.GoBackButton
-            $isApp={isApp}
-            $isMobile={isMobile}
-            $isDesktop={isDesktop}
-            onClick={() => navigate(-1)}
-          >
-            <img src={BackArrow} alt="뒤로가기" />
-          </S.GoBackButton>
-          <S.FarmingLogContainerTitle
-            $isApp={isApp}
-            $isMobile={isMobile}
-            $isDesktop={isDesktop}
-          >
-            랭킹
-          </S.FarmingLogContainerTitle>
-        </S.FarmingLogContainerHeader>
+    <WhiteContentContainer title='랭킹' >
 
         <Sign isApp={isApp} isMobile={isMobile} texts={headerTexts} />
 
@@ -148,7 +126,6 @@ export default function Main() {
             onClose={() => setShowProfilePopup(false)}
           />
         )}
-      </S.ProfileWrapper>
-    </S.MyPageContainer>
+      </WhiteContentContainer>
   );
 }
