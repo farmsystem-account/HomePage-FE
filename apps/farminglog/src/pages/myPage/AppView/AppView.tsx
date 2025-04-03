@@ -10,6 +10,7 @@ import ImageEdit from '../../../assets/buttons/ImageEdit.png';
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
 // import { useUserStore } from '@repo/auth/stores/userStore';
+import { usePresignedUrlMutation } from '@/services/mutation/usePresignedUrlMutation'; 
 
 export default function AppView() {
   const [isEditView, setIsEditView] = useState(false);
@@ -17,6 +18,7 @@ export default function AppView() {
   const { mutate: updateUserInfo } = useUpdateUserMutation();
   // const setUser = useUserStore((s) => s.setUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { mutateAsync: getPresignedUrl } = usePresignedUrlMutation(); 
 
   const [mobile, setMobile] = useState('');
   const [notion, setNotion] = useState('');
@@ -34,6 +36,8 @@ export default function AppView() {
   }, [user]);
 
   const handleEditComplete = () => {
+    console.log('Profile Image URL:', profileImageUrl);
+    
     updateUserInfo(
       {
         profileImageUrl: profileImageUrl || '',
@@ -46,30 +50,53 @@ export default function AppView() {
           // const { data: updatedUser } = await refetch();
           // if (updatedUser) setUser(updatedUser);
           setIsEditView(false);
+          window.location.reload(); 
         },
       }
     );
+  };
+
+  const uploadImageToS3 = async (file: File): Promise<string> => {
+    const fileName = `${Date.now()}_${file.name}`;
+    const directory = 'profile_images';
+
+    try {
+      console.log('📦 Presigned URL 요청 중...');
+      const { presignedUrl } = await getPresignedUrl({ directory, fileName });
+      console.log('✅ Presigned URL 수신 완료:', presignedUrl);
+
+      const response = await fetch(presignedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      });
+
+      if (!response.ok) {
+        throw new Error(`S3 업로드 실패: ${response.status} ${response.statusText}`);
+      }
+
+      const objectUrl = presignedUrl.split('?')[0];
+      console.log('✅ S3 업로드 성공! 접근 URL:', objectUrl);
+      return objectUrl;
+    } catch (error) {
+      console.error('❌ 이미지 업로드 중 오류 발생:', error);
+      throw error;
+    }
   };
 
   const handleImageEditClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setProfileImage(file);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          setProfileImageUrl(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
+      const objectUrl = await uploadImageToS3(file);
+      setProfileImageUrl(objectUrl);
     }
   };
-
   const userName = user?.name || '사용자';
 
   if (isEditView) {
