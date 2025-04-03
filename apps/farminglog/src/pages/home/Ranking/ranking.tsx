@@ -78,6 +78,7 @@ export default function RankingPreview() {
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title $isMobile={isMobile}>랭킹</S.Title>
           <S.BackArrow
+            $isMobile={isMobile}
             src={UpArrowImg}
             alt="확대하기"
             onClick={() => navigate('/rankingDetail')}
