@@ -43,7 +43,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
     fontColor?: string;
   } | null>(null);
 
-  const isButtonDisabled = contentCount < 100;
+  const isButtonDisabled = contentCount < 10;
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
@@ -134,7 +134,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
               <S.InputTitleContainer>
                 <S.SmallText $isApp={isApp}>{contentCount}/180자</S.SmallText>
               </S.InputTitleContainer>
-              <S.SmallText $isApp={isApp}>* 100자 이상 작성</S.SmallText>
+              <S.SmallText $isApp={isApp}>* 10자 이상 작성</S.SmallText>
             </S.InputHeader>
 
             <S.MessageTextarea
