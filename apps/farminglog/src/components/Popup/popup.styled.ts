@@ -18,7 +18,6 @@ export const PopupBox = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   border-radius: 16px;
   padding: 24px;
   width: ${({ $isMobile }) => ($isMobile ? '300px' : '500px')};
-  height: ${({ $isMobile }) => ($isMobile ? '240px' : '400px')};
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
 `;
