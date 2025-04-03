@@ -9,11 +9,11 @@ export const useTodaySeedQuery = () => {
   return useQuery({
     queryKey: queryKeys.user.todaySeed, // queryKeys 사용
     queryFn: async () => {
-      const { data, status } = await get('/api/user/today-seed');
+      const { data, status } = await get('/user/today-seed');
       if (status !== 200) throw new Error('오늘의 씨앗 현황 조회 실패');
       return data as isHarvest;
     },
-    staleTime: 100, 
+    staleTime: 1000*60, //1분 
     retry: false, // 404 등 에러 시 재시도 X
   });
 };
