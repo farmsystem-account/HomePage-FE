@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router'; 
+import { useSearchParams } from 'react-router';
 import * as S from '../styles/StepNotMember.styled';
 import { useAuthStore } from '@repo/auth/stores/useAuthStore';
 import { useErrorStore } from '@/stores/useErrorStore';
@@ -11,15 +10,13 @@ export default function StepNotMember() {
   const { errorTitle, errorMessage, resetError, buttonLabel } = useErrorStore();
   const { isMobile } = useMediaQueries();
 
-  useEffect(() => {
-    if (params.get('status') === 'not-member') {
-      setStep('start'); 
-    }
-  }, [params, setStep]);
-
   const handleClick = () => {
     resetError();
-    setStep('input');
+    if (params.get('status') === 'not-member') {
+      setStep('start'); 
+    } else {
+      setStep('input'); 
+    }
   };
 
   return (
