@@ -7,6 +7,7 @@ import ProfileImage from "../../assets/home/default_profile.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
 import Popup from "@/components/Popup/popup"; 
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
+import { convertTrackToString } from "@/utils/convertTrackToString";
 // import { useUserStore } from "@repo/auth/stores/userStore";
 
 const navItems = [
@@ -141,7 +142,11 @@ export default function Header() {
         onClose={() => setProfilePopupOpen(false)}
         variant="MYPAGE"
         userName={user?.name}
-        generationAndPart={`${user?.generation}기 ${user?.track}`}
+        generationAndPart={
+          user?.generation && user?.track
+            ? `${user.generation}기 ${convertTrackToString(user.track)}`
+            : "기수 정보 없음"
+        }
         profileImg={user?.profileImageUrl} 
         hasLogout={true}       
       />

@@ -22,7 +22,7 @@ export const ProfileWrapper = styled.div<{
 
   /* 내부를 흰색 박스로 표현 */
   background: white;
-  border-radius: 3px;
+  border-radius:  ${({ $isMobile }) => ($isMobile ? '3px' : '10px')};
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   /* 내용 배치를 위한 설정 */
@@ -32,7 +32,7 @@ export const ProfileWrapper = styled.div<{
   color: black;
   position: relative;
   margin: 0 auto;
-
+  padding-top: 10px;
   
 `;
 
@@ -43,7 +43,7 @@ export const TitleBox = styled.div<{
 }>`
   /* 흰색 박스 내부 전체 폭을 사용 */
     width: ${({ $isMobile, $isTablet }) =>
-    $isMobile || $isTablet ? '90%' : '1200px'};
+    $isMobile || $isTablet ? '100%' : '1200px'};
   background-color: white;
   padding: 16px 0; /* 위아래 여백 */
   box-sizing: border-box;
@@ -55,20 +55,21 @@ export const TitleBox = styled.div<{
   position: relative;
   z-index: 2;
 
-  border-radius: 3px;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '3px' : '10px')};
 `;
 
 /** 뒤로가기 아이콘 */
-export const BackArrow = styled.img`
-  width: 25px;
+export const BackArrow = styled.img<{$isMobile: boolean;}>`
+  width: ${({ $isMobile }) => ($isMobile ? '24px' : '35px')};
   position: absolute;
-  right: 16px; /* 왼쪽으로 띄우기 */
+  top: 16px;
+  right: 16px;
   cursor: pointer;
 `;
 
 /** 제목 */
 export const Title = styled.h2<{$isMobile: boolean;}>`
-  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" }
+  font-size: ${({ $isMobile}) => $isMobile ? "24px" : "36px" };
   font-weight: 600;
   font-family: "Pretendard Variable";
   margin: 0; /* 기본 margin 제거 */
@@ -79,7 +80,6 @@ export const Phrase = styled.div<{ isApp: boolean }>`
   width: ${({ isApp }) => (isApp ? '300px' : '400px')};
   margin-top: 40px;
 `;
-
 /** 랭킹 헤더 영역 (순위/이름/전공/누적 씨앗) */
 export const RankingTitle = styled.div<{ isApp: boolean }>`
   margin-top: 30px;

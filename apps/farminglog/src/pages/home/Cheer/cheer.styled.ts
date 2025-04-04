@@ -17,7 +17,7 @@ export const CheerContainer = styled.div<{
   padding-bottom: 30px;
 
   background: white;
-  border-radius: 3px;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '3px' : '10px')};
 `;
 /** 랭킹 코드의 TitleBox 스타일을 참고해 동일한 구조로 적용 */
 export const TitleBox = styled.div<{
@@ -34,7 +34,7 @@ export const TitleBox = styled.div<{
   align-items: center;
   position: relative;
   z-index: 2;
-  border-radius: 3px;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '3px' : '10px')};
 `;
 
 /** 랭킹 코드의 Title 스타일 */
@@ -46,10 +46,11 @@ export const Title = styled.h2<{ $isMobile: boolean }>`
 `;
 
 /** 랭킹 코드의 BackArrow 스타일 */
-export const BackArrow = styled.img`
-  width: 25px;
+export const BackArrow = styled.img<{ $isMobile: boolean }>`
+  width: ${({ $isMobile }) => ($isMobile ? '24px' : '35px')};
   position: absolute;
   right: 16px;
+  top: 16px;
   cursor: pointer;
 `;
 

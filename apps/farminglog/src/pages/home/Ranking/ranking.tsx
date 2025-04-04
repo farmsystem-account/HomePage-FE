@@ -68,7 +68,7 @@ export default function RankingPreview() {
   if (isLoading || !data) return null;
 
   // 미리보기용: 상위 3명 (내 랭크 포함) -> null 필터링
-  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)].filter(item => item !== null);
+  const previewRankingData = [...data.userRankList.slice(0, 3)].filter(item => item !== null);
 
 
   return (
@@ -78,6 +78,7 @@ export default function RankingPreview() {
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title $isMobile={isMobile}>랭킹</S.Title>
           <S.BackArrow
+            $isMobile={isMobile}
             src={UpArrowImg}
             alt="확대하기"
             onClick={() => navigate('/rankingDetail')}
@@ -102,7 +103,7 @@ export default function RankingPreview() {
               key={item.userId}
               className="ranking-item"
               bgColor={getBgColor(item.rank)}
-              isMe={item.userId === data.myRank.userId}
+              isMe={false}
               isApp={isApp}
               onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                 // 풍선 크기 (px)
@@ -162,7 +163,7 @@ export default function RankingPreview() {
         <ProfilePopup
           isOpen={showProfilePopup}
           userName={previewRankingData[selectedIndex].name}
-          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${previewRankingData[selectedIndex].track}`}
+          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${convertTrackToString(previewRankingData[selectedIndex].track)}`}
           profileImg={previewRankingData[selectedIndex].profileImageUrl}
           onClose={() => setShowProfilePopup(false)}
         />
