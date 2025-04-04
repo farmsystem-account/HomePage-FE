@@ -1,21 +1,28 @@
+// useErrorStore.ts
+
 import { create } from 'zustand';
+import { ReactNode } from 'react';
 
 interface ErrorState {
-  errorMessage: string | null;
-  errorTitle: string | null;
-  buttonLabel: string;
-  setErrorMessage: (msg: string | null) => void;
-  setErrorTitle: (title: string | null) => void;
-  setButtonLabel: (label: string) => void;
+  errorTitle: ReactNode | null;      // string → ReactNode
+  errorMessage: ReactNode | null;    // string → ReactNode
+  buttonLabel: string | null;
+  setErrorTitle: (title: ReactNode | null) => void;
+  setErrorMessage: (msg: ReactNode | null) => void;
+  setButtonLabel: (label: string | null) => void;
   resetError: () => void;
 }
 
 export const useErrorStore = create<ErrorState>((set) => ({
-  errorMessage: null,
   errorTitle: null,
-  buttonLabel: '회원인증 하기',
-  setErrorMessage: (msg) => set({ errorMessage: msg }),
+  errorMessage: null,
+  buttonLabel: null,
   setErrorTitle: (title) => set({ errorTitle: title }),
+  setErrorMessage: (msg) => set({ errorMessage: msg }),
   setButtonLabel: (label) => set({ buttonLabel: label }),
-  resetError: () => set({ errorMessage: null, errorTitle: null, buttonLabel: '회원인증 하기' }),
+  resetError: () => set({
+    errorTitle: null,
+    errorMessage: null,
+    buttonLabel: null,
+  }),
 }));
