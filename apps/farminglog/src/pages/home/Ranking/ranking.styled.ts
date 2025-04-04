@@ -43,7 +43,7 @@ export const TitleBox = styled.div<{
 }>`
   /* 흰색 박스 내부 전체 폭을 사용 */
     width: ${({ $isMobile, $isTablet }) =>
-    $isMobile || $isTablet ? '90%' : '1200px'};
+    $isMobile || $isTablet ? '100%' : '1200px'};
   background-color: white;
   padding: 16px 0; /* 위아래 여백 */
   box-sizing: border-box;
@@ -63,7 +63,7 @@ export const BackArrow = styled.img<{$isMobile: boolean;}>`
   width: ${({ $isMobile }) => ($isMobile ? '24px' : '35px')};
   position: absolute;
   top: 16px;
-  right: 16px; /* 왼쪽으로 띄우기 */
+  right: 16px;
   cursor: pointer;
 `;
 
@@ -80,7 +80,6 @@ export const Phrase = styled.div<{ isApp: boolean }>`
   width: ${({ isApp }) => (isApp ? '300px' : '400px')};
   margin-top: 40px;
 `;
-
 /** 랭킹 헤더 영역 (순위/이름/전공/누적 씨앗) */
 export const RankingTitle = styled.div<{ isApp: boolean }>`
   margin-top: 30px;
