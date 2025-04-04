@@ -7,6 +7,7 @@ import Thumb from '@/assets/home/thumbs-up.png';
 import { useCheerListQuery } from '@/services/query/useCheerListQuery';
 import { convertTagToCategory } from '@/utils/convertTagToCategory';
 import { useState } from 'react';
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 
 export interface CheerCardProps {
   cheer: {
@@ -29,7 +30,7 @@ export default function Cheer() {
 const { data: cheerList = [] } = useCheerListQuery();
 
   const navigate = useNavigate();
-  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const { isApp, isMobile, isDesktop } = useMediaQueries();
 
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
 
@@ -38,34 +39,7 @@ const { data: cheerList = [] } = useCheerListQuery();
 };
 
   return (
-    <S.CheerContainer
-      $isApp={isApp}
-      $isMobile={isMobile}
-      $isTablet={isTablet}
-      $isDesktop={isDesktop}
-    >
-      {/* 헤더 */}
-      <S.CheerContainerHeader
-        $isApp={isApp}
-        $isMobile={isMobile}
-        $isDesktop={isDesktop}
-      >
-        {/* <S.GoBackButton
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-        >
-          <img src={GoBackImage} alt="뒤로가기" />
-        </S.GoBackButton> */}
-        <S.CheerContainerTitle
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-        >
-          응원하기
-        </S.CheerContainerTitle>
-      </S.CheerContainerHeader>
-
+    <WhiteContentContainer title="응원하기" >
       {/* 본문 */}
       <S.CheerCardContainer
         $isApp={isApp}
@@ -111,6 +85,6 @@ const { data: cheerList = [] } = useCheerListQuery();
           alt="글쓰기"
         />
       </S.CheerWriteButton>
-    </S.CheerContainer>
+    </WhiteContentContainer>
   );
 }

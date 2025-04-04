@@ -3,15 +3,15 @@ import * as S from './index.styled';
 import Card from './Card';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 import { useFarmingLogsInfiniteQuery } from '@/services/query/useFarmingLogInfiniteQuery';
 import useFarmingLogStore from '@/stores/farminglogStore';
 
-import GoBackImage from '@/assets/Icons/corner-up-left.png';
 import EditImage from '@/assets/Icons/edit-3.png';
 
 export default function View() {
   const navigate = useNavigate();
-  const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
+  const { isApp, isMobile, isDesktop } = useMediaQueries();
 
   const {
     data,
@@ -56,34 +56,10 @@ export default function View() {
   if (!data) return <div>데이터가 없습니다.</div>;
 
   return (
-    <S.MainContainer>
-      <S.FarmingLogContainer
-        $isApp={isApp}
-        $isMobile={isMobile}
-        $isTablet={isTablet}
-        $isDesktop={isDesktop}
+    <WhiteContentContainer
+      title="파밍로그"
+      isContentHeaderShown={true}
       >
-        <S.FarmingLogContainerHeader
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-        >
-          <S.GoBackButton
-            $isApp={isApp}
-            $isMobile={isMobile}
-            $isDesktop={isDesktop}
-            onClick={() => navigate(-1)}
-          >
-            <img src={GoBackImage} alt="뒤로가기" />
-          </S.GoBackButton>
-          <S.FarmingLogContainerTitle
-            $isApp={isApp}
-            $isMobile={isMobile}
-            $isDesktop={isDesktop}
-          >
-            파밍 로그
-          </S.FarmingLogContainerTitle>
-        </S.FarmingLogContainerHeader>
         <S.FarmingLogCardContainer
           $isApp={isApp}
           $isMobile={isMobile}
@@ -134,7 +110,6 @@ export default function View() {
             alt="글쓰기"
           />
         </S.FarmingLogWriteButton>
-      </S.FarmingLogContainer>
-    </S.MainContainer>
+    </WhiteContentContainer>
   );
 }

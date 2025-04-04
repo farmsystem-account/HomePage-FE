@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import Search from './search';
 import Cheer from './cheer'; 
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 
 function Main() {
   const location = useLocation();
@@ -25,7 +26,7 @@ function Main() {
   }, [location.search]);
 
   return (
-    <div>
+    <WhiteContentContainer title="응원하기" >
       {!selectedUser ? (
         /** 아직 선택된 유저가 없으면 "검색 화면" */
         <Search onSelectUser={handleSelectUser} />
@@ -33,7 +34,7 @@ function Main() {
         /** 유저가 선택됐다면 "응원 메시지 작성 화면" */
         <Cheer searchedUser={selectedUser} />
       )}
-    </div>
+    </WhiteContentContainer>
   );
 }
 
