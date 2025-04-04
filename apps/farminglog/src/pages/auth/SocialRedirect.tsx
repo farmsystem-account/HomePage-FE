@@ -26,31 +26,52 @@ export default function SocialRedirect() {
       return;
     }
 
-    const login = async () => {
-      try {
-        await socialLogin({ code, socialType: provider });
-        navigate('/home');
-      } catch (error: any) {
-        const status = error?.status;
+        const login = async () => {
+          try {
+            await socialLogin({ code, socialType: provider });
+            navigate('/home');
+          } catch (error: any) {
+            const status = error?.status;
 
-        if (status === 404) {
-          setErrorTitle("가입되지 않은 사용자입니다.");
-          setErrorMessage("소속 정보를 확인하고 다시 시도해주세요.");
+          if (status === 404) {
+          setErrorTitle(
+            <>
+              가입되지 않은 <br /> 사용자입니다.
+            </>
+          );
+          setErrorMessage(
+            <>
+              회원 인증 후 로그인해주세요. <br />
+              인증이 계속 안 될 경우, 운영진에게 문의해주세요.
+            </>
+          );
           setButtonLabel("처음으로");
           navigate('/?status=not-member');
-        } else if (status === 409) {
-          setErrorTitle("이미 다른 소셜 계정으로 가입된 사용자입니다.");
-          setErrorMessage("다른 계정으로 로그인해주세요.");
+
+          // 409 - 다른 계정으로 이미 가입된 사용자
+          setErrorTitle(
+            <>
+              이미 다른 소셜 계정으로 <br /> 가입된 사용자입니다.
+            </>
+          );
+          setErrorMessage(
+            <>
+              다른 계정으로 로그인해주세요. <br />
+              계정을 찾을 수 없다면 운영진에게 문의해주세요.
+            </>
+          );
           setButtonLabel("처음으로");
           navigate('/?status=not-member&type=409');
-        } else if (status === 500) {
-          alert("로그인 중 문제가 발생했습니다.\n다시 로그인 해주세요.");
-          navigate('/');
-        } else {
-          alert("계속 안되면 운영진에게 문의해주세요!");
-          navigate('/');
-        }
-      }
+
+    } else if (status === 500) {
+      alert("로그인 중 문제가 발생했습니다.\n다시 로그인 해주세요.");
+      navigate('/');
+    } else {
+      alert("계속 안되면 운영진에게 문의해주세요!");
+      navigate('/');
+    }
+
+          }
     };
 
     login();
