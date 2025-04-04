@@ -122,7 +122,7 @@ const handleSubmit = () => {
       queryClient.invalidateQueries({ queryKey: ['cheerList'] });
       setPopupMessage({
         main: '전송이 완료되었어요.',
-        sub: '씨앗 2개 획득!',
+        sub: '응원 온전히 잘 전달할게요!',
       });
       setPopupOpen(true);
     },

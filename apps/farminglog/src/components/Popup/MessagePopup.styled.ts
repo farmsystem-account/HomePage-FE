@@ -14,13 +14,13 @@ export const PopupOverlay = styled.div`
 `;
 
 export const PopupContainer = styled.div<{ $isMobile: boolean }>`
-  width: ${({ $isMobile }) => ($isMobile ? '200px' : '400px')};
+  width: ${({ $isMobile }) => ($isMobile ? '220px' : '400px')};
   height: ${({ $isMobile }) => ($isMobile ? '150px' : '250px')};
   position: relative;
   background: #FCFCFC;
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@ export const PopupContainer = styled.div<{ $isMobile: boolean }>`
 `;
 
 export const MainMessage = styled.div<{ $isMobile: boolean }>`
-  width: ${({ $isMobile }) => ($isMobile ? '160px' : '300px')};
+  width: ${({ $isMobile }) => ($isMobile ? '180px' : '300px')};
   text-align: center;
   color: #2E2E2E;
   font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
@@ -58,13 +58,12 @@ export const Divider = styled.hr<{ $isMobile: boolean }>`
   width: 100%;
   border: none;
   border-top: ${({ $isMobile }) => ($isMobile ? '1px' : '2px')} solid #5CD282;
-  margin: ${({ $isMobile }) => ($isMobile ? '10px 0' : '20px 0')};
+  margin: ${({ $isMobile }) => ($isMobile ? '15px 0' : '20px 0')};
   outline-offset: -1px;
 `;
 
 export const ConfirmButton = styled.button<{ $isMobile: boolean }>`
   width: ${({ $isMobile }) => ($isMobile ? '200px' : '200px')};
-  height: ${({ $isMobile }) => ($isMobile ? '40px' : '40px')};
   background: none;
   border: none;
   display: flex;

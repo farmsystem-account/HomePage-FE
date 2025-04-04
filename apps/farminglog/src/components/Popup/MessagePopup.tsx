@@ -10,8 +10,8 @@ interface MessagePopupProps {
 }
 
 const MessagePopup: React.FC<MessagePopupProps> = ({
-  mainMessage = '파밍로그 작성이 완료되었어요.',
-  subMessage = '!',
+  mainMessage = '...',
+  subMessage = '...',
   confirmLabel = '확인',
   onClose,
   isMobile = false,
