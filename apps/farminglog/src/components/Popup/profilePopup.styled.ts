@@ -25,8 +25,8 @@ export const PopupBox = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
 
 export const CloseIconButton = styled.button`
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 20px;
+  right: 20px;
   background: none;
   border: none;
   cursor: pointer;
@@ -78,9 +78,13 @@ export const PopupTitle = styled.h2<{ $isMobile: boolean; $isTablet: boolean }>`
 `;
 
 export const PopupText = styled.p<{ $isMobile: boolean; $isTablet: boolean }>`
-  font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '20px')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '8px' : '16px')};
   color: #333;
   font-family: "Pretendard Variable";
+  a {
+      ${({ $isMobile }) => ($isMobile ? '0px 2px' : '0px 5px')};
+     color: #29D4A7;
+  }
 `;
 
 export const Divider = styled.hr<{ $isMobile: boolean }>`
@@ -88,4 +92,11 @@ export const Divider = styled.hr<{ $isMobile: boolean }>`
   border-top: 1px solid #00c37d;
   margin-top: ${({ $isMobile }) => ($isMobile ? '18px' : '40px')};
   margin-bottom: ${({ $isMobile }) => ($isMobile ? '8px' : '16px')};
+`;
+export const PopupBottomText = styled.p<{ $isMobile: boolean; $isTablet: boolean }>`
+  display: flex;
+  font-size: ${({ $isMobile }) => ($isMobile ? '8px' : '16px')};
+  color: #333;
+  font-family: "Pretendard Variable";
+  justify-content: center;
 `;

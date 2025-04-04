@@ -37,12 +37,12 @@ const handleNext = () => {
         }
       },
       onError: (err: any) => {
-        if (err.message?.includes('401')) {
+        if (err.status === 401 || err.status === 404) {
           setStep('not-member');
         } else {
           setErrorMessage('서버 오류입니다. 운영진에게 문의해주세요.');
         }
-      },
+      }
     }
   );
 };

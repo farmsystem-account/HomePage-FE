@@ -14,11 +14,11 @@ export const PopupOverlay = styled.div`
 `;
 
 export const PopupBox = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  width: ${({ $isMobile }) => ($isMobile ? '200px' : '400px')};
-  height: ${({ $isMobile }) => ($isMobile ? '150px' : '300px')};
+  background: #FCFCFC;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '10px' : '16px')};
+  padding-top: 24px;
+  padding-bottom: 24px;
+  width: ${({ $isMobile }) => ($isMobile ? '220px' : '400px')};
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
 `;
@@ -61,8 +61,9 @@ export const ProfileLayoutRow = styled.div<{ $isMobile: boolean }>`
   align-items: center;
   justify-content: flex-start;
   gap: ${({ $isMobile }) => ($isMobile ? '8px' : '12px')};
-  margin-top: ${({ $isMobile }) => ($isMobile ? '25px' : '50px')};
-  margin-left: ${({ $isMobile }) => ($isMobile ? '0px' : '20px')};
+  margin-top: ${({ $isMobile }) => ($isMobile ? '20px' : '50px')};
+  margin-left: ${({ $isMobile }) => ($isMobile ? '20px' : '36px')};
+
 `;
 
 export const ProfileCircle = styled.div<{ $isMobile: boolean }>`
@@ -103,8 +104,8 @@ export const PopupText = styled.p<{ $isMobile: boolean; $isTablet: boolean }>`
   font-family: "Pretendard Variable";
 `;
 
-export const CenteredPopupText = styled.div<{ $isMobile: boolean }>`
-  font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '20px')};
+export const CenteredPopupText = styled.button<{ $isMobile: boolean }>`
+  font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '18px')};
   color: #2E2E2E;
   font-family: "Pretendard Variable";
   font-weight: 700;
@@ -113,25 +114,61 @@ export const CenteredPopupText = styled.div<{ $isMobile: boolean }>`
   justify-content: center;
   text-align: center;
   width: 100%;
+  cursor: pointer;
 `;
 
+export const PopupContainer = styled.div<{ $isMobile: boolean }>`
+  background: #FCFCFC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const MainMessage = styled.p<{ $isMobile: boolean }>`
+  padding-top: ${({ $isMobile }) => ($isMobile ? '14px' : '24px')};
+  font-family: 'Pretendard Variable';
+  font-weight: 500;
+  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '20px')};
+  line-height: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
+  color: #2E2E2E;
+  text-align: center;
+  margin: 0 0 ${({ $isMobile }) => ($isMobile ? '8px' : '16px')} 0;
+`;
+
+export const SubMessage = styled.p<{ $isMobile: boolean }>`
+  font-family: 'Pretendard Variable';
+  font-weight: 500;
+  font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '18px')};
+  line-height: ${({ $isMobile }) => ($isMobile ? '18px' : '26px')};
+  color: #2E2E2E;
+  text-align: center;
+  margin: 0 0 ${({ $isMobile }) => ($isMobile ? '8px' : '16px')} 0;
+
+  .highlight {
+    color: #29D4A7;
+    font-weight: 700;
+  }
+`;
 
 export const Divider = styled.hr<{ $isMobile: boolean }>`
+  width: 100%;
   border: none;
-  border-top: 1px solid #00c37d;
-  margin-top: ${({ $isMobile }) => ($isMobile ? '18px' : '40px')};
-  margin-bottom: ${({ $isMobile }) => ($isMobile ? '8px' : '16px')};
+  border-top: ${({ $isMobile }) => ($isMobile ? '1px' : '2px')} solid #5CD282;
+  margin: ${({ $isMobile }) => ($isMobile ? '16px 0 8px 0' : '32px 0 16px 0')};
+
 `;
 
-export const ConfirmButton = styled.button`
-  display: block;
+export const ConfirmButton = styled.button<{ $isMobile: boolean }>`
   width: 100%;
-  padding: 12px;
-  background-color: #00c37d;
-  color: white;
+  height: ${({ $isMobile }) => ($isMobile ? '12px' : '44px')};
+  background: none;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
-  font-size: 16px;
+  font-family: 'Pretendard Variable';
+  font-weight: 700;
+  font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '18px')};
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

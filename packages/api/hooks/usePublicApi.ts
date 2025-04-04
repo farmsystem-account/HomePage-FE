@@ -40,6 +40,7 @@ import { useNavigate } from 'react-router';
 import apiConfig from '../config/apiConfig';
 import { ApiResponse, STATUS } from '../models/api';
 
+
 export function usePublicApi() {
   const navigate = useNavigate();
 
@@ -59,15 +60,19 @@ export function usePublicApi() {
         return response.data;
       } catch (error: any) {
         if (error.response) {
-
           const { status } = error.response;
 
           if (status === STATUS.NOT_FOUND) {
             navigate('/404');
           }
+
+          const wrapped = new Error(error.message) as any;
+          wrapped.status = status;
+          wrapped.message = error.response.data?.message || error.message;
+          throw wrapped;
         }
 
-        throw error; 
+        throw error;
       }
     },
     [navigate]

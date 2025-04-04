@@ -18,30 +18,34 @@ export const useSocialLoginPostMutation = () => {
   const studentId = useAuthStore((state) => state.studentId);
   const setToken = useAuthStore((state) => state.setToken);
 
-  const mutation = useMutation<TokenResponse, Error, SocialLoginRequest>({
+  const mutation = useMutation<TokenResponse, any, SocialLoginRequest>({
     mutationFn: async ({ code, socialType }) => {
-      const { data, status } = await post<TokenResponse>("/auth/login", {
+      const { data, status } = await post<{ message?: string } & TokenResponse>("/auth/login", {
         code,
         socialType,
         studentNumber: studentId,
       });
 
-      if (status !== 200) throw new Error("로그인 실패");
-
-      console.log("소셜 로그인 성공", data);
+      if (status !== 200) {
+        const error = new Error("로그인 실패") as any;
+        error.status = status;
+        error.message = data?.message || "로그인 실패";
+        throw error;
+      }
 
       const { accessToken, refreshToken } = data;
-
       setToken(accessToken);
-
       Cookies.set("refreshToken", refreshToken, {
         secure: true,
         sameSite: "Strict",
       });
 
-      return data; // ✅ 이게 중요!
+      return data;
     },
   });
 
-  return mutation;
+  return {
+    ...mutation,
+    mutateAsync: mutation.mutateAsync, 
+  };
 };

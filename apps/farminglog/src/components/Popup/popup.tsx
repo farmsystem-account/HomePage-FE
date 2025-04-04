@@ -195,21 +195,21 @@ const MessageLayout: React.FC<PopupProps> = ({
   confirmLabel,
 }) => {
   const { isMobile } = useMediaQueries();
+  const words = subMessage?.split(' ');
+  const highlight = words?.shift() || '';
+  const rest = words?.join(' ');
 
   return (
     <>
-      <p style={{ fontSize: "18px", fontWeight: 500, marginBottom: "8px" }}>
-        {mainMessage || "파밍로그 작성이 완료되었어요."}
-      </p>
-      <p style={{ fontSize: "20px", color: "#00a34a", fontWeight: 600 }}>
-        {subMessage || "씨앗 5개 획득!"}
-      </p>
-
-      <S.Divider $isMobile={isMobile} />
-
-      <S.ConfirmButton onClick={onClose}>
-        {confirmLabel || "확인"}
-      </S.ConfirmButton>
+        <S.MainMessage $isMobile={isMobile}>{mainMessage}</S.MainMessage>
+        <S.SubMessage $isMobile={isMobile}>
+          <span className="highlight">{highlight}</span>{' '}
+          <span>{rest}</span>
+        </S.SubMessage>
+        <S.Divider $isMobile={isMobile} />
+        <S.ConfirmButton $isMobile={isMobile} onClick={onClose}>
+          {confirmLabel}
+        </S.ConfirmButton>
     </>
   );
 };
