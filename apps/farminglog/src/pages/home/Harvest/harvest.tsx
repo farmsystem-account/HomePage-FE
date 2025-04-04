@@ -280,10 +280,7 @@ export default function Harvest() {
     <Popup
       isOpen={isInfoOpen}
       onClose={()=>setInfoOpen(false)}
-      variant="MESSAGE"
-      mainMessage="오늘도 파밍로그 출석 완료!"
-      subMessage="씨앗 2개 획득!"
-      confirmLabel="확인"
+      variant="INFO"
     />
     </>
   );

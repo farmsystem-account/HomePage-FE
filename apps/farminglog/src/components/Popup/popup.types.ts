@@ -1,5 +1,5 @@
 // Popup.types.ts
-export type PopupVariant = "PROFILE" | "MYPAGE" | "MESSAGE";
+export type PopupVariant = "PROFILE" | "MYPAGE" | "MESSAGE"| "INFO";
 
 /** 공통 prop */
 interface BasePopupProps {

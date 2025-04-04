@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+interface ResponsiveProps {
+  $isApp?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+  $isDesktop?: boolean;
+}
+
 export const PopupOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -16,8 +23,8 @@ export const PopupOverlay = styled.div`
 export const PopupBox = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   background: #FCFCFC;
   border-radius: ${({ $isMobile }) => ($isMobile ? '10px' : '16px')};
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   width: ${({ $isMobile }) => ($isMobile ? '220px' : '400px')};
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -171,4 +178,71 @@ export const ConfirmButton = styled.button<{ $isMobile: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '220px' : $isMobile ? '400px' : '550px')};
+  min-height: ${({ $isApp, $isMobile }) => ($isApp ? '100px' : $isMobile ? '100px' : '130px')};
+  flex-shrink: 0;
+
+  margin-top: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
+  border-radius: 5px;
+  border: 1px solid #FFF763;
+  background: #FFFAA4;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: column;
+`;
+
+export const HeaderPinContainer = styled.div<ResponsiveProps>`
+  width: 100%;
+  height: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
+  z-index: 1;
+`;
+
+export const HeaderPin = styled.div<ResponsiveProps>`
+  display: flex;
+  width: ${({ $isApp }) => ($isApp ? '11px' : '20px')};
+  height: ${({ $isApp }) => ($isApp ? '11px' : '20px')};
+  padding: 2px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  margin: 3px 6px 0px 6px;
+
+  border-radius: ${({ $isApp }) => ($isApp ? '6px' : '100px')};
+  background: #FF9A4D;
+  box-shadow: 0px 2px 2px 0px #FF6F00 inset;
+`;
+
+export const HeaderPinIcon = styled.img<ResponsiveProps>`
+  width: ${({ $isApp }) => ($isApp ? '7px' : '10px')};
+  height: ${({ $isApp }) => ($isApp ? '7px' : '10px')};
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+`;
+
+export const HeaderContext = styled.h3<ResponsiveProps>`
+  color: #2E2E2E;
+  text-align: center;
+  font-family: "Pretendard Variable";
+  font-size: ${({ $isApp, $isMobile }) => ($isApp ? '10px' : $isMobile ? '15px' : '20px')};
+  font-style: normal;
+  font-weight: 400;
+  line-height: ${({ $isApp, $isMobile }) => ($isApp ? '16px' : $isMobile ? '22px' : '28px')};
+  margin-top: ${({ $isApp, $isMobile  }) => ($isApp ? '10px' : $isMobile ? '10px' : '20px')};
+  letter-spacing: -0.24px;
+  a{
+    text-decoration: underline;
+  }
+`;
+
+export const HeaderContextBold = styled.span`
+  font-weight: 700;
 `;
