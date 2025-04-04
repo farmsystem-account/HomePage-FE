@@ -11,12 +11,13 @@ interface MessagePopupProps {
 
 const MessagePopup: React.FC<MessagePopupProps> = ({
   mainMessage = '파밍로그 작성이 완료되었어요.',
-  subMessage = '씨앗 5개 획득!',
+  subMessage = '!',
   confirmLabel = '확인',
   onClose,
   isMobile = false,
 }) => {
   return (
+    <S.PopupOverlay onClick={onClose}>
     <S.PopupContainer $isMobile={isMobile}>
       <S.MainMessage $isMobile={isMobile}>{mainMessage}</S.MainMessage>
       <S.SubMessage $isMobile={isMobile}>
@@ -28,6 +29,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({
         {confirmLabel}
       </S.ConfirmButton>
     </S.PopupContainer>
+    </S.PopupOverlay>
   );
 };
 

@@ -1,5 +1,18 @@
 import styled from 'styled-components';
 
+export const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
 export const PopupContainer = styled.div<{ $isMobile: boolean }>`
   width: ${({ $isMobile }) => ($isMobile ? '200px' : '400px')};
   height: ${({ $isMobile }) => ($isMobile ? '150px' : '250px')};

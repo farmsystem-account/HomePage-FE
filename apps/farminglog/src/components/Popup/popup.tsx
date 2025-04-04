@@ -39,6 +39,8 @@ const Popup: React.FC<PopupProps> = (props) => {
         return <MessageLayout {...props} />;
       case "INFO":
         return <InfoLayout {...props} />;
+      case "CHEER":
+        return <CheerMessageLayout {...props} />;
       default:
         return null;
     }
@@ -52,7 +54,7 @@ const Popup: React.FC<PopupProps> = (props) => {
       </S.PopupBox>
       }
       {
-        variant === "INFO" && (
+        (variant === "INFO") && (
           <>
             {renderContent()}
           </>
@@ -268,5 +270,31 @@ const InfoLayout: React.FC<PopupProps> = ({
 ·           </S.HeaderContext>
           </S.FarmingLogEditorContainerHeader>
       </>
+  );
+};
+
+const CheerMessageLayout: React.FC<PopupProps> = ({
+  onClose = () => {},
+  mainMessage = '파밍로그 작성이 완료되었어요.',
+  subMessage = '씨앗 5개 획득!',
+  confirmLabel = '확인',
+}) => {
+  const { isMobile } = useMediaQueries();
+  const words = subMessage?.split(' ');
+  const highlight = words?.shift() || '';
+  const rest = words?.join(' ');
+
+  return (
+    <>
+        <S.MainMessage $isMobile={isMobile}>{mainMessage}</S.MainMessage>
+        <S.SubMessage $isMobile={isMobile}>
+          <span className="highlight">{highlight}</span>{' '}
+          <span>{rest}</span>
+        </S.SubMessage>
+        <S.Divider $isMobile={isMobile} />
+        <S.ConfirmButton $isMobile={isMobile} onClick={onClose}>
+          {confirmLabel}
+        </S.ConfirmButton>
+    </>
   );
 };

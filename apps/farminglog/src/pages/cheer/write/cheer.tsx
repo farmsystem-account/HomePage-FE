@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNavigate } from 'react-router';
 import * as S from './cheer.styled';
@@ -8,6 +8,7 @@ import MessagePopup from '@/components/Popup/MessagePopup';
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useCheerMutation } from '@/services/mutation/useCheerMutation';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTodaySeedQuery } from "../../../services/query/useTodaySeedQuery";
 
 const tagMap = {
   '칭찬해요!': 'COMPLIMENT',
@@ -45,7 +46,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
     fontColor?: string;
   } | null>(null);
 
-const isButtonDisabled = contentCount < 10;
+  const isButtonDisabled = contentCount < 20;
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
@@ -54,6 +55,21 @@ const isButtonDisabled = contentCount < 10;
   // const { user } = useUserStore((s) => s); // 로그인한 유저 정보
   const { mutate: sendCheer } = useCheerMutation(); // 응원 API
   const { data: user } = useUserInfoQuery();
+  const { data: todaySeed } = useTodaySeedQuery();
+  const [prevIsCheer, setPrevIsCheer] = useState<boolean | undefined>(undefined);
+
+  // 첫 응원 감지를 위한 useTodaySeedQuery의 isCheer 변경 감시
+  useEffect(() => {
+    if (prevIsCheer !== undefined && !prevIsCheer && todaySeed?.isCheer) {
+    // 처음 응원 성공: 씨앗 팝업 띄우기
+    setPopupMessage({
+      main: '전송이 완료되었어요!',
+      sub: '씨앗 2개 획득!'
+    });
+    setPopupOpen(true);
+    }
+    setPrevIsCheer(todaySeed?.isCheer);
+  }, [todaySeed?.isCheer, prevIsCheer]);
 
 
   const handleCategoryClick = (cat: { name: CategoryName; bgColor: string; fontColor?: string }) => {
@@ -159,7 +175,7 @@ const handleSubmit = () => {
                 <S.SmallText $isApp={isApp}>{contentCount}/180자</S.SmallText>
               </S.InputTitleContainer>
 
-              <S.SmallText $isApp={isApp}>* 10자 이상 작성</S.SmallText>
+              <S.SmallText $isApp={isApp}>* 20자 이상 작성</S.SmallText>
             </S.InputHeader>
 
             <S.MessageTextarea
