@@ -86,22 +86,23 @@ export function usePrivateApi() {
                   true
                 );
               } catch {
-                // 엑세스 토큰 재발급 실패시 로직 추가 예정
+                // 토큰 재발급 실패시
               }
             }
 
             navigate("/?toast=401");
-            throw new Error("로그인이 필요합니다.");
+            throw error; // ✅ 여기서도 원래 에러 던짐
           }
 
           if (status === STATUS.NOT_FOUND) {
             navigate("/404");
+            throw error; // ✅ 상태코드 유지
           }
+
+          throw error; // ✅ 기타 상태 코드 (400 포함)
         }
 
-        throw new Error(
-          `API 요청 실패: ${error.message || "알 수 없는 오류가 발생했습니다."}`
-        );
+        throw error; // ✅ 네트워크 오류 등
       }
     },
     [navigate, reissueToken]
