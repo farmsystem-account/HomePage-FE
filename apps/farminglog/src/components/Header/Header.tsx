@@ -15,7 +15,7 @@ import { convertTrackToString } from "@/utils/convertTrackToString";
 
 const navItems = [
   { label: "홈", path: "/home" },
-  { label: "응원하기", path: "/cheer" },
+  { label: "응원", path: "/cheer" },
   { label: "파밍로그", path: "/farminglog/view" },
   { label: "랭킹", path: "/rankingDetail" },
 ];
