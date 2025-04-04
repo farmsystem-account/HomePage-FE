@@ -40,7 +40,8 @@ export const useCheerMutation = () => {
     mutationFn: async (cheerData: CheerRequest): Promise<CheerResponse> => {
       const { data, status } = await post<CheerResponse>('/cheer', cheerData);
       
-      if (status !== 200) throw new Error('응원 등록 실패');
+      if (status < 200 || status >= 300) throw new Error('응원 등록 실패');
+      
       return data;
     },
     onSuccess: () => {
