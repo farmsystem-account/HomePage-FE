@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNavigate } from 'react-router';
 import * as S from './cheer.styled';
+import MessagePopup from '@/components/Popup/MessagePopup';
 
 // import { useUserStore } from '@repo/auth/stores/userStore';
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
@@ -34,13 +35,17 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
   const [contentCount, setContentCount] = useState(0);
   const { userId: cheeredId } = searchedUser;
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<{ main: string; sub?: string }>({ main: '', sub: '' });
+ 
+
   const [selectedCategory, setSelectedCategory] = useState<{
     name: CategoryName;
     bgColor?: string;
     fontColor?: string;
   } | null>(null);
 
-  const isButtonDisabled = contentCount < 10;
+const isButtonDisabled = contentCount < 10;
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
@@ -68,26 +73,57 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 };
 
 
- const handleSubmit = () => {
-  if (!user?.userId || !selectedCategory || isButtonDisabled) return;
+const handleSubmit = () => {
+  if (!user?.userId) return;
+
+  if (!selectedCategory) {
+    setPopupMessage({
+      main: '당신의 응원이 더욱 따뜻하게 전달될 수 있도록,',
+      sub: '칭찬, 감사, 응원 중 하나를 선택해 주세요!',
+    });
+    setPopupOpen(true);
+    return;
+  }
+
+  if (contentCount < 20) {
+    setPopupMessage({
+      main: '따뜻한 응원은 길수록 좋아요.',
+      sub: '최소 20자 이상 입력해야 전송할 수 있어요!',
+    });
+    setPopupOpen(true);
+    return;
+  }
 
   sendCheer(
-    {
-      cheererId: user.userId,
-      cheeredId,
-      tag: tagMap[selectedCategory.name],
-      content: contentInput,
+  {
+    cheererId: user.userId,
+    cheeredId,
+    tag: tagMap[selectedCategory.name],
+    content: contentInput,
+  },
+  {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cheerList'] });
+      setPopupMessage({
+        main: '전송이 완료되었어요.',
+        sub: '씨앗 2개 획득!',
+      });
+      setPopupOpen(true);
     },
-    {
-      onSuccess: () => {
-        // 캐시 무효화 → 리패칭
-        queryClient.invalidateQueries({ queryKey: ['cheerList'] });
-
-        navigate('/cheer');
-      },
-    }
-  );
+    onError: (error: any) => {
+      if (error?.status === 400) {
+        setPopupMessage({
+          main: '본인이 아닌 다른 사람을 응원해주세요!',
+        });
+        setPopupOpen(true);
+      } else {
+        console.error('예상치 못한 에러:', error);
+      }
+    },
+  }
+);
 };
+
   return (
     <>
       <S.HeaderText $isApp={isApp} $isMobile={isMobile}>
@@ -122,6 +158,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
               <S.InputTitleContainer>
                 <S.SmallText $isApp={isApp}>{contentCount}/180자</S.SmallText>
               </S.InputTitleContainer>
+
               <S.SmallText $isApp={isApp}>* 10자 이상 작성</S.SmallText>
             </S.InputHeader>
 
@@ -139,6 +176,24 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
           </S.SubmitButton>
         </S.ContentWrapper>
       </S.CheerCard>
+
+      {popupOpen && (
+        <MessagePopup
+          mainMessage={popupMessage.main}
+          subMessage={popupMessage.sub}
+          isMobile={isMobile}
+          onClose={() => {
+            setPopupOpen(false);
+              if (popupMessage.main === '전송이 완료되었어요.') {
+               navigate('/cheer');
+            }
+
+              if (popupMessage.main === '본인이 아닌 다른 사람을 응원해주세요!') {
+                navigate('/cheer');
+            }
+          }}
+        />
+      )}
     </>
   );
 }

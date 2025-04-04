@@ -32,7 +32,7 @@ export const CheerCardWrapper = styled.div<{
 
 // 개별 카드
 export const CheerCard = styled.div<{
-  bgColor?: string;
+  $bgColor?: string;
   $isMobile: boolean;
   $isExpanded?: boolean;
 }>`
@@ -52,7 +52,7 @@ export const CheerCard = styled.div<{
   flex-direction: column;
   justify-content: space-between;
 
-  background-color: ${({ bgColor }) => bgColor || "#ffffff"};
+  background-color: ${({ $bgColor }) => $bgColor || "#ffffff"};
   border-radius: 10px;
   width: ${({ $isMobile }) => ($isMobile ? "240px" : "420px")};
   box-shadow: ${({ $isExpanded }) =>
