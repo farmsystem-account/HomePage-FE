@@ -121,6 +121,7 @@ export default function WebView() {
   ];
 
   return (
+    <S.OverrideContainer>
     <WhiteContentContainer title="마이페이지">
     {/* <S.MyPageContainer>
          <S.ProfileWrapper isMobile={isMobile}>
@@ -130,11 +131,11 @@ export default function WebView() {
           
            </S.TitleBox> */}
 
-        <S.EditButton onClick={isEditing ? handleEditComplete : () => setIsEditing(true)}>
-            {isEditing ? '완료' : '수정하기'}
-          </S.EditButton>
         <S.SectionTitleBox isMobile={isMobile}>
           <S.SectionTitle>프로필</S.SectionTitle>
+          <S.EditButton onClick={isEditing ? handleEditComplete : () => setIsEditing(true)}>
+            {isEditing ? '완료' : '수정하기'}
+          </S.EditButton>
         </S.SectionTitleBox>
 
         <S.ProfileCard isMobile={isMobile}>
@@ -217,5 +218,6 @@ export default function WebView() {
       {/* </S.ProfileWrapper>
     </S.MyPageContainer> */}
     </WhiteContentContainer>
+    </S.OverrideContainer>
   );
 }
