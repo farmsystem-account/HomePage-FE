@@ -13,6 +13,7 @@ import Create from "@/pages/farminglog/create";
 import Mypage from "@/pages/myPage";
 import Ranking from "@/pages/home/Ranking/ranking";
 import RankingDetail from "@/pages/ranking";
+import Error from "@/pages/error";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
 
   {
     element: <Layout />, 
+    errorElement: <Error />,
     children: [
       {
         path: "/home",
@@ -68,5 +70,9 @@ export const router = createBrowserRouter([
         element: <RankingDetail />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Error />, 
   },
 ]);
