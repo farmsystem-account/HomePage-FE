@@ -5,6 +5,7 @@ interface ButtonStore {
   activeStates: boolean[];
   lastUpdate: number;
   setActive: (index: number) => void;
+  reset: () => void;
 }
 
 const useButtonStore = create<ButtonStore>()(
@@ -12,6 +13,7 @@ const useButtonStore = create<ButtonStore>()(
     (set, get) => ({
       activeStates: [false, false, false],
       lastUpdate: Date.now(),
+      reset: () => set({ activeStates: [false, false, false] }),
       setActive: (index: number) => {
         const currentStates = get().activeStates;
         // 이미 활성화되어 있지 않은 경우에만 활성화 (true로 설정)

@@ -12,14 +12,14 @@ export const HarvestContainer = styled.div<{
   min-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "40%" : $isTablet ? "40%" : "400px"};
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   background-color: ${({ $isMobile }) => ($isMobile ? "#f9f9f9" : "#fff")};
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${({ $isMobile }) => ($isMobile ? "10px" : "20px")};
-  border-radius: 3px;
+  border-radius: ${({ $isMobile }) => ($isMobile ? "3px" : "10px")};
 `;
 
 /** 메인 텍스트 (타이틀) */
@@ -28,14 +28,23 @@ export const MainText = styled.h1<{
   $isTablet: boolean;
 }>`
   font-size: ${({ $isMobile }) => ($isMobile ? "24px" : "36px")};
+  padding: 16px 0;
   font-weight: 600;
   font-family: "Pretendard Variable";
   line-height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "34px" : $isTablet ? "38px" : "42px"};
   letter-spacing: -0.24px;
   margin-bottom: 12px;
-  padding-top: ${({ $isMobile }) => ($isMobile ? "20px" : "40px")};
   text-align: center;
+`;
+
+/** 뒤로가기 아이콘 */
+export const BackArrow = styled.img<{$isMobile: boolean;}>`
+  width: ${({ $isMobile }) => ($isMobile ? '24px' : '35px')};
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
 `;
 
 /** 서브 텍스트 */
@@ -233,5 +242,10 @@ export const InfoContationer = styled.div<{
 export const InfoButton = styled.div<{
   $isMobile: boolean;
   $isTablet: boolean;
+}>`
+`;
+
+export const TextContainer = styled.div<{
+
 }>`
 `;

@@ -8,6 +8,8 @@ import * as S from "./harvest.styled";
 import useButtonStore from "../../../stores/harvestStore"; // zustand persist store
 import { useAttendMutation } from "../../../services/mutation/useAttendMutation";
 import { useTodaySeedQuery } from "../../../services/query/useTodaySeedQuery";
+import Popup from "@/components/Popup/popup"; 
+import Info from "@/assets/Icons/info.png"; // 정보 아이콘
 
 interface StageProps {
   text: string;
@@ -32,6 +34,11 @@ export default function Harvest() {
   // zustand 스토어: 버튼 활성 상태 (활성 상태면 더 이상 클릭 안됨)
   const activeStates = useButtonStore((state) => state.activeStates);
   const setActive = useButtonStore((state) => state.setActive);
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isInfoOpen, setInfoOpen] = useState(false);
+  const [showAnimationAfterModal, setShowAnimationAfterModal] = useState<number | null>(null);
+
 
   // 렌더링 시 todaySeed 쿼리 결과로 zustand active 상태 업데이트
   useEffect(() => {
@@ -96,14 +103,6 @@ export default function Harvest() {
     }, 1800);
   };
 
-  // 출석하기 버튼 전용: API 호출 성공 시 애니메이션 실행 후 페이지 이동
-  const runAnimationAndNavigate = (index: number, link?: string) => {
-    setSproutStartPosition(index);
-    runAnimation(index, () => {
-      if (link) navigate(link);
-    });
-  };
-
   // 버튼 클릭 처리
   const handleButtonClick = async (index: number, link?: string) => {
     // 이미 버튼이 활성화되어 있으면 클릭 무시
@@ -119,17 +118,22 @@ export default function Harvest() {
       : false;
     if (isCompleted) return;
 
+
     if (index === 0) {
-      // [출석하기]: API 호출 후 애니메이션 실행 및 페이지 이동
       try {
-        await attend();
+        await attend(); // 출석 API 호출
       } catch (error) {
         console.error("출석 API 호출 에러:", error);
         return;
       }
-      setActive(index);
-      runAnimationAndNavigate(index, link);
-    } else {
+    
+      setActive(index); // zustand 업데이트
+      setSproutStartPosition(index); // 애니메이션 좌표 미리 설정
+      setShowAnimationAfterModal(index); // 모달 확인 후 실행할 인덱스 저장
+      setModalOpen(true); // 모달 오픈
+
+    }
+    else {
       // [응원하기] 및 [파밍로그]: 첫 클릭 시 바로 페이지 이동
       navigate(link!);
     }
@@ -188,13 +192,43 @@ export default function Harvest() {
     );
   };
 
+  //모달 창 메세지 닫는 함수
+  const handleModalClose = () => {
+    setModalOpen(false);
+    if (showAnimationAfterModal !== null) {
+      runAnimation(showAnimationAfterModal, () => {
+        navigate("/home");
+        setShowAnimationAfterModal(null);
+      });
+    }
+  };
+
   const anyCleared = activeStates.some((state) => state);
+  useEffect(() => {
+    return () => {
+      // 컴포넌트가 unmount될 때 상태 초기화
+      useButtonStore.getState().reset();
+    };
+  }, []);
 
   return (
+    <>
     <S.HarvestContainer $isMobile={isMobile} $isTablet={isTablet}>
-      <S.MainText $isMobile={isMobile} $isTablet={isTablet}>
-        씨앗 모으기
-      </S.MainText>
+      <S.TextContainer>
+          <S.MainText $isMobile={isMobile} $isTablet={isTablet}>
+            씨앗 모으기
+          </S.MainText>
+          <S.BackArrow
+          src={Info}
+          alt="정보"
+          onClick={() => {
+            setInfoOpen(true);
+          }}
+          $isMobile={isMobile}
+        />
+        <S.InfoButton $isMobile={isMobile} $isTablet={isTablet}></S.InfoButton>
+      </S.TextContainer>
+
       <S.SubText $isMobile={isMobile} $isTablet={isTablet}>
         매일 버튼을 눌러 출석 체크를 하거나,
         <br />
@@ -235,5 +269,22 @@ export default function Harvest() {
       {animateSprouts[1] && renderGlobalSproutAnimation(1)}
       {animateSprouts[2] && renderGlobalSproutAnimation(2)}
     </S.HarvestContainer>
+    <Popup
+      isOpen={isModalOpen}
+      onClose={handleModalClose}
+      variant="MESSAGE"
+      mainMessage="오늘도 파밍로그 출석 완료!"
+      subMessage="씨앗 2개"
+      confirmLabel="확인"
+    />
+    <Popup
+      isOpen={isInfoOpen}
+      onClose={()=>setInfoOpen(false)}
+      variant="MESSAGE"
+      mainMessage="오늘도 파밍로그 출석 완료!"
+      subMessage="씨앗 2개 획득!"
+      confirmLabel="확인"
+    />
+    </>
   );
 }
