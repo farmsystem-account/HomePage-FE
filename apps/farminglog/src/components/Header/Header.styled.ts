@@ -206,8 +206,8 @@ export const ProfileName = styled.div<{ $isMobile: boolean }>`
 
 export const MobileWrapper = styled.div`
   position: fixed;
-  left: 10px;
-  bottom: 50px;
+  left: 20px;
+  bottom: 40px;
   z-index: 1000;
 
   @media (min-width: 768px) {

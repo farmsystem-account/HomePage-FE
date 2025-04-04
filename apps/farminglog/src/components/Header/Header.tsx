@@ -121,7 +121,7 @@ export default function Header() {
               <>
                 <S.MobileNavButton
                   style={{
-                    bottom: "80px",
+                    bottom: "70px",
                     right: "7px",
                     backgroundImage: `url(${crownIcon})`,
                     opacity: isMenuOpen ? 1 : 0,
@@ -132,7 +132,7 @@ export default function Header() {
                 <S.MobileNavButton
                   style={{
                     top: "7px",
-                    left: "70px",
+                    left: "65px",
                     backgroundImage: `url(${thumbsUpIcon})`,
                     opacity: isMenuOpen ? 1 : 0,
                     transform: isMenuOpen ? "scale(1)" : "scale(0.5)",
