@@ -69,7 +69,7 @@ export const SearchTitle = styled.h1<ResponsiveProps>`
 export const Title = styled.h2<ResponsiveProps>`
   margin-top: 60px;
   margin-bottom: 30px;
-  font-size: ${({ $isMobile }) => ($isMobile ? '15px' : '35px')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '18px' : '35px')};
   font-weight: 700;
   color: #191919;
   font-family: "Pretendard Variable";
@@ -115,7 +115,7 @@ export const SearchBar = styled.div<ResponsiveProps>`
 
 export const SearchInput = styled.input<ResponsiveProps>`
   flex: 1;
-  margin-right: 8px;
+  margin-right: 0px;
   border: none;
   outline: none;
   background: transparent;
@@ -123,7 +123,7 @@ export const SearchInput = styled.input<ResponsiveProps>`
   font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '16px')};
   font-family: "Pretendard Variable";
   height: ${({ $isMobile }) => ($isMobile ? '40px' : '60px')};
-  padding: ${({ $isMobile }) => ($isMobile ? '8px' : '12px')};
+  padding: ${({ $isMobile }) => ($isMobile ? '8px 0px 8px 12px' : '12px 6px 12px 16px')};
   color: #333;
 
   &::placeholder {
@@ -136,7 +136,7 @@ export const SearchInput = styled.input<ResponsiveProps>`
 export const SearchButton = styled.button`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 
   width: 50px;
   height: 50px;

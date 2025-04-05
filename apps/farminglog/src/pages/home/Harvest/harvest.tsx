@@ -1,15 +1,14 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import useMediaQueries from "../../../../../website/src/hooks/useMediaQueries";
 import terminal from "@/assets/home/terminal.png";
 import thumb from "@/assets/home/thumbs-up.png";
 import edit from "@/assets/home/edit.png";
 import * as S from "./harvest.styled";
-import useButtonStore from "../../../stores/harvestStore"; // zustand persist store
 import { useAttendMutation } from "../../../services/mutation/useAttendMutation";
 import { useTodaySeedQuery } from "../../../services/query/useTodaySeedQuery";
 import Popup from "@/components/Popup/popup";
-import Info from "@/assets/Icons/info.png"; // 정보 아이콘
+import Info from "@/assets/Icons/info.png";
 
 interface StageProps {
   text: string;
@@ -27,24 +26,12 @@ export default function Harvest() {
   const { isMobile, isTablet } = useMediaQueries();
   const { mutate: attend } = useAttendMutation();
   const navigate = useNavigate();
-
-  const { data: todaySeed } = useTodaySeedQuery();
-
-  const activeStates = useButtonStore((state) => state.activeStates);
-  const setActive = useButtonStore((state) => state.setActive);
+const { data: todaySeed, refetch } = useTodaySeedQuery();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isAlready, setIsAlready] = useState(false);
   const [showAnimationAfterModal, setShowAnimationAfterModal] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (todaySeed) {
-      if (todaySeed.isAttendance && !activeStates[0]) setActive(0);
-      if (todaySeed.isCheer && !activeStates[1]) setActive(1);
-      if (todaySeed.isFarminglog && !activeStates[2]) setActive(2);
-    }
-  }, [todaySeed]);
 
   const buttonRefs = [
     useRef<HTMLDivElement>(null),
@@ -90,14 +77,6 @@ export default function Harvest() {
   };
 
   const handleButtonClick = async (index: number, link?: string) => {
-    // ✅ 이미 활성화된 상태
-    if (activeStates[index]) {
-      if (index === 0) {
-        setIsAlready(true); // 출석 완료 팝업
-      }
-      return;
-    }
-
     const isCompleted = todaySeed
       ? index === 0
         ? todaySeed.isAttendance
@@ -106,7 +85,12 @@ export default function Harvest() {
         : todaySeed.isFarminglog
       : false;
 
-    if (isCompleted) return;
+    if (isCompleted) {
+      if (index === 0) {
+        setIsAlready(true);
+      }
+      return;
+    }
 
     if (index === 0) {
       try {
@@ -115,8 +99,6 @@ export default function Harvest() {
         console.error("출석 API 호출 에러:", error);
         return;
       }
-
-      setActive(index);
       setSproutStartPosition(index);
       setShowAnimationAfterModal(index);
       setModalOpen(true);
@@ -181,19 +163,14 @@ export default function Harvest() {
     setModalOpen(false);
     if (showAnimationAfterModal !== null) {
       runAnimation(showAnimationAfterModal, () => {
+        refetch(); 
         navigate("/home");
         setShowAnimationAfterModal(null);
       });
     }
   };
 
-  const anyCleared = activeStates.some((state) => state);
-
-  useEffect(() => {
-    return () => {
-      useButtonStore.getState().reset();
-    };
-  }, []);
+  const anyCleared = !!(todaySeed?.isAttendance || todaySeed?.isCheer || todaySeed?.isFarminglog);
 
   return (
     <>
@@ -223,7 +200,11 @@ export default function Harvest() {
           $anyCleared={anyCleared}
         >
           {stages.map((stage, idx) => {
-            const isActive = activeStates[idx];
+            const isActive =
+              idx === 0 ? !!todaySeed?.isAttendance :
+              idx === 1 ? !!todaySeed?.isCheer :
+              !!todaySeed?.isFarminglog;
+
             return (
               <S.Stage key={idx} $isMobile={isMobile} $isTablet={isTablet}>
                 <S.ParallelogramBox

@@ -26,7 +26,7 @@ export const FarmingLogEditorContainer = styled.div<ResponsiveProps>`
 
 export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
   width: ${({ $isApp, $isMobile }) => ($isApp ? '220px' : $isMobile ? '400px' : '500px')};
-  height: ${({ $isApp }) => ($isApp ? '60px' : '130px')};
+  height: ${({ $isApp }) => ($isApp ? '70px' : '130px')};
   flex-shrink: 0;
 
   border-radius: 5px;
@@ -81,7 +81,7 @@ export const HeaderContext = styled.h3<ResponsiveProps>`
   font-style: normal;
   font-weight: 500;
   line-height: ${({ $isApp }) => ($isApp ? '13px' : '26px')}; 
-  margin-top: ${({ $isApp }) => ($isApp ? '5px' : '23px')};
+  margin-top: ${({ $isApp }) => ($isApp ? '13px' : '23px')};
   letter-spacing: -0.24px;
 `;
 

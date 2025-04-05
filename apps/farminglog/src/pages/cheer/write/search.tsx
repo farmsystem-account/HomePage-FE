@@ -64,8 +64,7 @@ export default function Search({ onSelectUser }: SearchProps) {
   return (
     <>
       <S.Title $isMobile={isMobile}>
-        응원할 회원의 <p>이름</p>을<br />
-        찾아주세요!
+        회원 검색
       </S.Title>
 
       <S.SearchWrapper>
@@ -73,7 +72,7 @@ export default function Search({ onSelectUser }: SearchProps) {
           <S.SearchInput
             type="text"
             value={query}
-            placeholder="성까지 포함한 이름을 써주세요"
+            placeholder="응원을 보낼 회원의 이름을 검색해 보세요."
             onChange={(e) => setQuery(e.target.value)}
             $isMobile={isMobile}
           />
