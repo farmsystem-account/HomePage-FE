@@ -40,37 +40,50 @@ export const Nav = styled.nav`
   gap: 10px;
 `;
 
-export const NavItem = styled.a<{ $isMobile: boolean; $isTablet: boolean; isActive: boolean }>`
+export const NavItem = styled.a<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+  isActive: boolean;
+}>`
   text-decoration: none;
-  padding: ${({$isMobile, $isTablet}) => 
+  padding: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "0 20px" : $isTablet ? "0 12px" : "0 30px"};
   font-family: "Pretendard Variable";
-  font-size: ${({$isMobile, $isTablet}) => 
+  font-size: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "15px" : $isTablet ? "15px" : "18px"};
   font-weight: 500;
-  color: white;
+  color: ${({ $isMobile, isActive }) =>
+    $isMobile ? (isActive ? "#28723F" : "black") : (isActive ? "#FFFAA4" : "white")};
+  
   cursor: pointer;
   position: relative;
 
   &:hover {
-    color: #FFFAA4;
+    color: ${({ $isMobile }) => ($isMobile ? "#28723F" : "#FFFAA4")};
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
-    left: 0;
     bottom: -2px;
+    left: ${({ $isMobile }) => ($isMobile ? "50%" : "0")};
+    transform: ${({ $isMobile }) =>
+      $isMobile ? "translateX(-50%)" : "none"};
     width: 100%;
+    min-width: ${({ $isMobile }) => ($isMobile ? "100px" : "none")};
     height: 2px;
-    background-color: white;
+    background-color: ${({ $isMobile, isActive }) =>
+      $isMobile ? (isActive ? "#28723F" : "gray") : (isActive ? "#FFFAA4" : "white")};
     padding: 0px 2px;
   }
 
   &:hover::after {
-    background-color: #FFFAA4; /* 호버 시 라인 색상 변경 */
+    background-color: ${({ $isMobile }) =>
+      $isMobile ? "#28723F" : "#FFFAA4"};
   }
 `;
+
+
 
 export const RecordCount = styled.div<{ $isMobile: boolean, $isTablet: boolean; }>`
   /* 절대 위치로 부모 범위를 벗어나도록 배치 */
@@ -121,7 +134,7 @@ export const MobileNavWrapper = styled.div<{ $isMenuOpen: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgb(245, 245, 245); 
+  background-color: rgb(245, 245, 245);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -189,4 +202,47 @@ export const ProfileName = styled.div<{ $isMobile: boolean }>`
   font-weight: 600;
   font-family: "Pretendard Variable";
   color: black;
+`;
+
+export const MobileWrapper = styled.div`
+  position: fixed;
+  left: 20px;
+  bottom: 40px;
+  z-index: 1000;
+
+  @media (min-width: 768px) {
+    display: none; // 모바일만 보이도록
+  }
+`;
+
+export const MobileMainButton = styled.div`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 5px 30px 30px 30px;
+  border: 1px solid var(--FarmSystem_White, #FCFCFC);
+  background: #5CD282;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const MobileMainButtonIcon = styled.img`
+  width: 36px;
+  height: 36px;
+`;
+
+export const MobileNavButton = styled.div`
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 35px;
+  border: 1px solid var(--FarmSystem_White, #FCFCFC);
+  background-color: #5CD282;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.3s ease;
 `;

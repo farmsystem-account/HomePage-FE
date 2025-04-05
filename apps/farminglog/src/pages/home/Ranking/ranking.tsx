@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import * as S from './ranking.styled';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import { convertTrackToString } from '@/utils/convertTrackToString';
 
 import UpArrowImg from '@/assets/Icons/UpArrow.png';
 import FarmLogoImg from '@/assets/Icons/FarmSystem_Logo.png';
@@ -66,8 +67,9 @@ export default function RankingPreview() {
 
   if (isLoading || !data) return null;
 
-  // 미리보기용: 상위 3명 (내 랭크 포함)
-  const previewRankingData = [data.myRank, ...data.userRankList.slice(1, 3)];
+  // 미리보기용: 상위 3명 (내 랭크 포함) -> null 필터링
+  const previewRankingData = [...data.userRankList.slice(0, 3)].filter(item => item !== null);
+
 
   return (
     <>
@@ -76,6 +78,7 @@ export default function RankingPreview() {
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title $isMobile={isMobile}>랭킹</S.Title>
           <S.BackArrow
+            $isMobile={isMobile}
             src={UpArrowImg}
             alt="확대하기"
             onClick={() => navigate('/rankingDetail')}
@@ -90,7 +93,7 @@ export default function RankingPreview() {
 
         <S.RankingTitle isApp={isApp}>
           <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>
-          <S.RankingTitleText isApp={isApp}>이름/전공</S.RankingTitleText>
+          <S.RankingTitleText isApp={isApp}>이름/트랙</S.RankingTitleText>
           <S.RankingTitleText isApp={isApp}>누적 씨앗 개수</S.RankingTitleText>
         </S.RankingTitle>
 
@@ -100,7 +103,7 @@ export default function RankingPreview() {
               key={item.userId}
               className="ranking-item"
               bgColor={getBgColor(item.rank)}
-              isMe={item.userId === data.myRank.userId}
+              isMe={false}
               isApp={isApp}
               onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                 // 풍선 크기 (px)
@@ -122,12 +125,15 @@ export default function RankingPreview() {
                 {item.rank <= 3 && <S.CrownIcon src={CrownImg} alt="왕관" />}
               </S.RankBox>
 
+              {/* 균형을 맞추기 위한 더미 요소 */}
+              <div style={{ width: '140px', visibility: 'hidden' }} />
+              
               <S.ProfileSection>
                 <S.ProfileIcon src={item.profileImageUrl || FarmLogoImg} />
                 <S.ColumnBox>
                   <S.Name isApp={isApp}>{item.name}</S.Name>
                   <S.Track isApp={isApp}>
-                    {item.generation}기 {item.track}
+                    {item.generation}기/{convertTrackToString(item.track)}
                   </S.Track>
                 </S.ColumnBox>
               </S.ProfileSection>
@@ -146,7 +152,6 @@ export default function RankingPreview() {
               y={balloonPosition.y}
               onClose={() => setSelectedIndex(null)}
               onCheerClick={() => {
-                console.log('응원하기 클릭');
                 setSelectedIndex(null);
               }}
               onProfileClick={() => {
@@ -161,7 +166,7 @@ export default function RankingPreview() {
         <ProfilePopup
           isOpen={showProfilePopup}
           userName={previewRankingData[selectedIndex].name}
-          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${previewRankingData[selectedIndex].track}`}
+          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${convertTrackToString(previewRankingData[selectedIndex].track)}`}
           profileImg={previewRankingData[selectedIndex].profileImageUrl}
           onClose={() => setShowProfilePopup(false)}
         />

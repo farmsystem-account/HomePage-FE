@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { AnimatePresence } from 'framer-motion';
 import * as S from './index.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
-import BackArrow from '../../assets/Icons/BackArrow.png';
 import FarmLogo from '../../assets/Icons/FarmSystem_Logo.png';
 import Crown from '../../assets/Icons/crown.png';
 import Sign from '@/components/Ranking/sign';
@@ -11,9 +10,12 @@ import CheerBalloon from './components/CheerBalloon';
 import { useUserRankingQuery } from '@/services/query/useUserRankingQuery';
 import { convertTrackToString } from '@/utils/convertTrackToString';
 import ProfilePopup from '@/components/Popup/ProfilePopup';
+import WhiteContentContainer from '@/layouts/WhiteContentContainer';
+import Popup from "@/components/Popup/popup"; 
+import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
 
 const headerTexts = [
-  '랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.',
+  '랭킹은 씨앗을 기준으로 매일 자정마다 정렬돼요.',
   '씨앗은 트랙별 우수활동자 심사에 반영돼요.',
   '친구의 프로필을 눌러 응원할 수 있어요!'
 ];
@@ -21,11 +23,13 @@ const headerTexts = [
 export default function Main() {
   const navigate = useNavigate();
   const { data, isLoading } = useUserRankingQuery();
-  const { isDesktop, isMobile, isApp } = useMediaQueries();
+  const { isMobile, isApp } = useMediaQueries();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
   const balloonRef = useRef<HTMLDivElement>(null);
+  const [isProfilePopupOpen, setProfilePopupOpen] = useState(false); 
+  const { data: user } = useUserInfoQuery();
 
   const getBgColor = (rank: number) => {
     if (rank === 1) return '#5CD282';
@@ -48,32 +52,10 @@ export default function Main() {
 
   if (isLoading || !data) return null;
 
-  const rankingData = [data.myRank, ...data.userRankList];
+  const rankingData = [data.myRank, ...data.userRankList].filter(item => item !== null);
 
   return (
-    <S.MyPageContainer>
-      <S.ProfileWrapper $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-        <S.FarmingLogContainerHeader
-          $isApp={isApp}
-          $isMobile={isMobile}
-          $isDesktop={isDesktop}
-        >
-          <S.GoBackButton
-            $isApp={isApp}
-            $isMobile={isMobile}
-            $isDesktop={isDesktop}
-            onClick={() => navigate(-1)}
-          >
-            <img src={BackArrow} alt="뒤로가기" />
-          </S.GoBackButton>
-          <S.FarmingLogContainerTitle
-            $isApp={isApp}
-            $isMobile={isMobile}
-            $isDesktop={isDesktop}
-          >
-            랭킹
-          </S.FarmingLogContainerTitle>
-        </S.FarmingLogContainerHeader>
+    <WhiteContentContainer title='랭킹' >
 
         <Sign isApp={isApp} isMobile={isMobile} texts={headerTexts} />
 
@@ -92,19 +74,28 @@ export default function Main() {
               isMe={index === 0}
               isApp={isApp}
               onClick={(e) => {
-                setShowProfilePopup(false);
-                setSelectedIndex(index);
-                setBalloonPosition({
-                  x: e.pageX - 105,
-                  y: e.pageY - 115,
-                });
+                if (index === 0) {
+                  // 내 정보 클릭 시: 내 정보 팝업
+                  setProfilePopupOpen(true);
+                } else {
+                  // 다른 유저 클릭 시: 응원 벌룬
+                  setShowProfilePopup(false);
+                  setSelectedIndex(index);
+                  setBalloonPosition({
+                    x: e.pageX - 105,
+                    y: e.pageY - 115,
+                  });
+                }
               }}
             >
               <S.RankBox>
                 <S.RankNumber isApp={isApp}>{item.rank}</S.RankNumber>
-                {item.rank <= 3 && <S.CrownIcon src={Crown} alt="crown" />}
+                {item.rank <= 3 && <S.CrownIcon src={Crown} alt="crown" isMobile={isMobile} />}
               </S.RankBox>
 
+              {/* 균형을 맞추기 위한 더미 요소 */}
+              <div style={{ width: '140px', visibility: 'hidden' }} />
+              
               <S.ProfileSection>
                 <S.ProfileIcon src={item.profileImageUrl || FarmLogo} />
                 <S.ColumnBox>
@@ -148,7 +139,20 @@ export default function Main() {
             onClose={() => setShowProfilePopup(false)}
           />
         )}
-      </S.ProfileWrapper>
-    </S.MyPageContainer>
+
+        <Popup
+          isOpen={isProfilePopupOpen}
+          onClose={() => setProfilePopupOpen(false)}
+          variant="MYPAGE"
+          userName={user?.name}
+          generationAndPart={
+            user?.generation && user?.track
+              ? `${user.generation}기 ${convertTrackToString(user.track)}`
+              : "기수 정보 없음"
+          }
+          profileImg={user?.profileImageUrl} 
+          hasLogout={true}       
+        />
+      </WhiteContentContainer>
   );
 }

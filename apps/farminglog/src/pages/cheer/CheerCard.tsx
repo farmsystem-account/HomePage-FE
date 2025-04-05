@@ -24,7 +24,7 @@ const CheerCard: React.FC<CheerCardProps> = ({ cheer, isExpanded, onClick }) => 
   const { isMobile } = useMediaQueries();
 
   return (
-    <S.CheerCard bgColor={cheer.bgColor} $isMobile={isMobile}  $isExpanded={isExpanded}
+    <S.CheerCard $bgColor={cheer.bgColor} $isMobile={isMobile}  $isExpanded={isExpanded}
       onClick={onClick}>
       {/* 상단 (수신자 정보) */}
       <S.CheerHeader $isMobile={isMobile}>

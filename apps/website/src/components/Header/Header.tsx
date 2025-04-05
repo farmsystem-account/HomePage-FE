@@ -7,6 +7,8 @@ import CloseIcon from '../../assets/Icons/Close2.png';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
 const IS_RECRUIT = false; // 모집 모드 ON/OFF 설정은 여기서 해주시면 됩니다.
+const IS_ENABLE_FARMING_LOG_BUTTON = true; // 파밍로그 버튼 활성화 여부 설정은 여기서 해주시면 됩니다.
+// 파밍로그 버튼 활성화 시 지원하기 버튼이 안보입니다.
 
 export default function Header() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -75,12 +77,20 @@ export default function Header() {
               </S.NavItem>
             </S.Nav>
           </S.NavWrapper>
-          <S.FarmingLogButton
-            isRecruit={IS_RECRUIT}
-            onClick={handleRecruitClick}
-          >
-            지원하기
-          </S.FarmingLogButton>
+          { IS_ENABLE_FARMING_LOG_BUTTON ? (
+            <S.FarmingLogButton
+              isRecruit={true}
+            >
+              <a href='https://farminglog.farmsystem.kr'>파밍로그</a>
+            </S.FarmingLogButton>
+          ) : (
+            <S.FarmingLogButton
+              isRecruit={IS_RECRUIT}
+              onClick={handleRecruitClick}
+            >
+              지원하기
+            </S.FarmingLogButton>
+          )}
         </>
       )}
 
@@ -124,14 +134,24 @@ export default function Header() {
               >
                 FAQ
               </S.NavItem>
-              <S.NavItem 
-                $isTablet={isTablet} 
-                $isMobile={isMobile}
-                onClick={handleRecruitClick}
-                isActive={false}
-              >
-                지원하기
-              </S.NavItem>
+              { IS_ENABLE_FARMING_LOG_BUTTON ? (
+                <S.NavItem 
+                  $isTablet={isTablet} 
+                  $isMobile={isMobile}
+                  isActive={false}
+                >
+                  <a href='https://farminglog.farmsystem.kr'>파밍로그</a>
+                </S.NavItem>
+              ) : (
+                <S.NavItem 
+                  $isTablet={isTablet} 
+                  $isMobile={isMobile}
+                  onClick={handleRecruitClick}
+                  isActive={false}
+                >
+                  지원하기
+                </S.NavItem>
+            )}
             </S.MobileNav>
           </>
         )}

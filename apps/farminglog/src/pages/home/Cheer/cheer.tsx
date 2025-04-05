@@ -36,6 +36,7 @@ export default function CheerPreview() {
           src={UpArrowImg}
           alt="작성하기"
           onClick={() => navigate("/cheer/write")}
+          $isMobile={isMobile}
         />
       </S.TitleBox>
       <S.CheerCardWrapper

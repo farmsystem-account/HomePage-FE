@@ -8,6 +8,8 @@ import { FarmingLog,
 import { useToggleLikeMutation } from '@/services/mutation/FarmingLog';
 import useFarmingLogStore from '@/stores/farminglogStore';
 
+import { convertUrlsToLinks } from '@/utils/convertUrlsToLinks';
+
 import { FiEdit3 } from "react-icons/fi";
 import Heart from '@/assets/Icons/heart.png';
 import HeartPC from '@/assets/Icons/heart-pc.png';
@@ -151,7 +153,7 @@ export default function Card({ data }: CardProps) {
           </S.Author>
         </S.InfoContainer>
         <S.Content $isApp={isApp} $isMobile={isMobile} $isDesktop={isDesktop}>
-          {content}
+          {convertUrlsToLinks(content)}
         </S.Content>
       </S.ContentContainer>
       {showDetailButton && (
