@@ -5,32 +5,37 @@ import { useSocialLogin } from '@repo/auth/hooks/useSocialLogin';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import signIn from '@/assets/Icons/signIn.png';
 
-import { isKakaoInApp, isAndroid, isIOS } from '@/utils/detect'; // utils로 분리해둔 브라우저 감지 함수
+import { isKakaoInApp, isAndroid, isIOS } from '@/utils/detect';
 
 export default function StepStart() {
   const { setStep } = useAuthStore();
   const { handleLogin } = useSocialLogin();
   const { isMobile } = useMediaQueries();
 
-  const redirectIfInApp = (provider: 'KAKAO' | 'GOOGLE') => {
-    const loginUrl = `${window.location.origin}/login?type=${provider}`; // 외부 브라우저에서 다시 로그인 처리
+  // 인앱 브라우저일 경우 외부 브라우저로 강제 리디렉션
+  const redirectToExternalBrowser = (provider: 'KAKAO' | 'GOOGLE') => {
+    const origin = window.location.origin; // 현재 환경(dev/prod) 자동 반영
+    const loginUrl = `${origin}/login?type=${provider}`;
 
     if (isKakaoInApp()) {
       if (isAndroid()) {
-        window.location.href = `intent://login?type=${provider}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
+        const intentUrl = `intent://${origin.replace(/^https?:\/\//, '')}/login?type=${provider}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
           loginUrl
         )};end;`;
+        window.location.href = intentUrl;
       } else if (isIOS()) {
         window.location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(loginUrl)}`;
       }
-      return true; // 외부 브라우저로 이동하므로 로그인 로직은 중단
+      return true; // 인앱이라 리디렉션 처리됨
     }
-    return false; // 인앱이 아니면 그대로 로그인 진행
+
+    return false; // 외부 브라우저라 로그인 진행 가능
   };
 
+  // 로그인 버튼 클릭 핸들러
   const handleClick = (provider: 'KAKAO' | 'GOOGLE') => {
-    if (!redirectIfInApp(provider)) {
-      handleLogin(provider);
+    if (!redirectToExternalBrowser(provider)) {
+      handleLogin(provider); // 인앱이 아니면 기존 로그인 로직 수행
     }
   };
 
