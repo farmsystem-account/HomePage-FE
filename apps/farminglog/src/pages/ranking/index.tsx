@@ -90,7 +90,7 @@ export default function Main() {
             >
               <S.RankBox>
                 <S.RankNumber isApp={isApp}>{item.rank}</S.RankNumber>
-                {item.rank <= 3 && <S.CrownIcon src={Crown} alt="crown" />}
+                {item.rank <= 3 && <S.CrownIcon src={Crown} alt="crown" isMobile={isMobile} />}
               </S.RankBox>
 
               {/* 균형을 맞추기 위한 더미 요소 */}

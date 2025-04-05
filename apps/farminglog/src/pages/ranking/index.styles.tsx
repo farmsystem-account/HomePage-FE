@@ -173,29 +173,23 @@ export const RankingTitle = styled.div<{ isApp: boolean }>`
   display: flex;
   flex-direction: row;
   width: 80%;
-  display: flex;
   justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
   align-items: center;
-  /* background-color: pink; */
-  /* padding-left: 10px; */
 `;
 
 export const RankingTitleText = styled.div<{ isApp: boolean }>`
   width: ${({ isApp }) => (isApp ? '75px' : '90px')};
   font-size: ${({ isApp }) => (isApp ? '9px' : '12px')};
-  color: #2e2e2e;
-  font-weight: 600;
   margin-bottom: 10px;
-  /* background-color: green; */
-  text-align: center;
-  /* margin-left: 10px; */
 `;
+
 
 export const RankingList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 80%;
+  width: 100%;
+  align-items: center;
 `;
 
 export const RankingItem = styled.div<{
@@ -204,39 +198,38 @@ export const RankingItem = styled.div<{
   isApp?: boolean;
 }>`
   position: relative;
-  width: 100%;
+  width: ${({ isApp }) => (isApp ? '250px' : '80%')};
   height: 60px;
   display: flex;
   justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
   align-items: center;
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 12px;
-  padding:  ${({ isApp }) => (isApp ? '20px' : '16px')};
+  padding: ${({ isApp }) => (isApp ? '20px' : '16px')};
   border: ${({ isMe }) => (isMe ? '3px solid #29D4A7' : 'none')};
 `;
 
 
 export const RankBox = styled.div`
-  position: relative;
-  width: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 6px;
 `;
+
 
 export const RankNumber = styled.div<{ isApp: boolean }>`
   font-weight: bold;
   font-size: ${({ isApp }) => (isApp ? '14px' : '16px')};
+  text-align: left;
 `;
 
-export const CrownIcon = styled.img`
-  position: absolute;
-  /* top: -18px; */
-  left: 30px;
-  width: 20px;
-  height: 20px;
+export const CrownIcon = styled.img<{ isMobile: boolean }>`
+  width: ${({ isMobile }) => (isMobile ? '20px' : '18px')};
+  height: ${({ isMobile }) => (isMobile ? '20px' : '18px')};
 `;
+
 
 export const ProfileSection = styled.div`
   width: 140px;
@@ -259,16 +252,15 @@ export const ProfileIcon = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px;
 `;
 
 export const Name = styled.div<{ isApp: boolean }>`
   font-weight: 600;
-  font-size: ${({ isApp }) => (isApp ? '14px' : '16px')};
+  font-size: ${({ isApp }) => (isApp ? '12px' : '16px')};
 `;
 
 export const Track = styled.div<{ isApp: boolean }>`
-  font-size: ${({ isApp }) => (isApp ? '10px' : '11px')};
+  font-size: ${({ isApp }) => (isApp ? '8px' : '11px')};
   color: #2E2E2E;
   font-weight: 600;
 `;
@@ -279,7 +271,8 @@ export const Score = styled.div<{ isApp: boolean }>`
 `;
 
 export const Crown = styled.div`
-  
+  position: absolute;
+  left: 0;
 `;
 
 export const Balloon = styled.img`
