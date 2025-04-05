@@ -42,7 +42,7 @@ export default function SocialRedirect() {
           setErrorMessage(
             <>
               회원 인증 후 로그인해주세요. <br />
-              인증이 계속 안 될 경우, 운영진에게 문의해주세요.
+              문제가 있다면, 운영진에게 문의해주세요.
             </>
           );
           setButtonLabel("처음으로");
