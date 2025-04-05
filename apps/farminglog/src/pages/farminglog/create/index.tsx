@@ -18,6 +18,10 @@ import { useTodaySeedQuery } from '@/services/query/useTodaySeedQuery';
 import PinIcon from '@/assets/Icons/x.png';
 import Polygon from '@/assets/Icons/polygon-1.png';
 
+const MAX_TITLE_LENGTH = 20;
+const MAX_CONTENT_LENGTH = 500;
+const MIN_CONTENT_LENGTH = 100;
+
 const categoryList = Object.keys(FarmingLogCategory) as Array<keyof typeof FarmingLogCategory>;
 
 export default function Editor() {
@@ -49,7 +53,7 @@ export default function Editor() {
     setIsEditMode,
   } = useFarmingLogStore();
 
-  // ✅ 최초 작성 성공 시 씨앗 획득 팝업
+  // 최초 작성 성공 시 씨앗 획득 팝업
   useEffect(() => {
     if (prevIsFarminglog !== undefined && !prevIsFarminglog && todaySeed?.isFarminglog) {
       setPopupMessage({
@@ -61,7 +65,7 @@ export default function Editor() {
     setPrevIsFarminglog(todaySeed?.isFarminglog);
   }, [todaySeed?.isFarminglog, prevIsFarminglog]);
 
-  // ✅ 수정 모드 시 기본값 셋팅
+  // 수정 모드 시 기본값 셋팅
   useEffect(() => {
     if (isEditMode) {
       setTitleInput(farminglogTitle);
@@ -81,21 +85,21 @@ export default function Editor() {
 
     const categoryEnum = FarmingLogCategory[dropDownSelected];
 
-    if (titleCount < 1 || titleCount > 20) {
+    if (titleCount < 1 || titleCount > MAX_TITLE_LENGTH) {
       setPopupOpen(true);
-      setPopupMessage({ main: '제목이 너무 길어요.', sub: '1자 이상, 20자 이하로 작성해주세요.' });
+      setPopupMessage({ main: '제목이 너무 길어요.', sub: `1자 이상, ${MAX_TITLE_LENGTH}자 이하로 작성해주세요.` });
       return;
     }
 
-    if (contentCount < 100) {
+    if (contentCount < MIN_CONTENT_LENGTH) {
       setPopupOpen(true);
-      setPopupMessage({ main: '회원님의 이야기를 더 듣고 싶어요.', sub: '내용을 100자 이상 작성해주세요.' });
+      setPopupMessage({ main: '회원님의 이야기를 더 듣고 싶어요.', sub: `내용을 ${MIN_CONTENT_LENGTH}자 이상 작성해주세요.` });
       return;
     }
 
-    if (contentCount > 300) {
+    if (contentCount > MAX_CONTENT_LENGTH) {
       setPopupOpen(true);
-      setPopupMessage({ main: '내용이 너무 길어요.', sub: '300자 이하로 작성해주세요.' });
+      setPopupMessage({ main: '내용이 너무 길어요.', sub: `${MAX_CONTENT_LENGTH}자 이하로 작성해주세요.` });
       return;
     }
 
@@ -230,7 +234,7 @@ export default function Editor() {
                 <S.TitleText $isApp={isApp}>내용</S.TitleText>
                 <S.SmallText $isApp={isApp}>*100자 이상 작성</S.SmallText>
               </S.TitleTextContainer>
-              <S.SmallText $isApp={isApp}>{contentCount + '/300자'}</S.SmallText>
+              <S.SmallText $isApp={isApp}>{contentCount + `/${MAX_CONTENT_LENGTH}자`}</S.SmallText>
             </S.TitleContainer>
             <S.TextArea
               value={contentInput}
