@@ -203,3 +203,46 @@ export const ProfileName = styled.div<{ $isMobile: boolean }>`
   font-family: "Pretendard Variable";
   color: black;
 `;
+
+export const MobileWrapper = styled.div`
+  position: fixed;
+  left: 20px;
+  bottom: 40px;
+  z-index: 1000;
+
+  @media (min-width: 768px) {
+    display: none; // 모바일만 보이도록
+  }
+`;
+
+export const MobileMainButton = styled.div`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 5px 30px 30px 30px;
+  border: 1px solid var(--FarmSystem_White, #FCFCFC);
+  background: #5CD282;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const MobileMainButtonIcon = styled.img`
+  width: 36px;
+  height: 36px;
+`;
+
+export const MobileNavButton = styled.div`
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 35px;
+  border: 1px solid var(--FarmSystem_White, #FCFCFC);
+  background-color: #5CD282;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.3s ease;
+`;

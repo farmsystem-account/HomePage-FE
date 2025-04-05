@@ -1,5 +1,5 @@
 // Popup.types.ts
-export type PopupVariant = "PROFILE" | "MYPAGE" | "MESSAGE";
+export type PopupVariant = "PROFILE" | "MYPAGE" | "MESSAGE"| "INFO" | "CHEER";
 
 /** 공통 prop */
 interface BasePopupProps {
@@ -41,5 +41,15 @@ interface MessageProps {
   confirmLabel?: string;  // "확인" 버튼 레이블
 }
 
+/**
+ * 4) /cheer 모달 창에서 필요한 prop
+ *    - 예) 메세지, 서브 메시지, 닫기 아이콘 등
+ */
+interface CheerProps {
+    mainMessage?: string;
+    subMessage?: string;
+    confirmLabel?: string;
+}
+
 /** 최종 PopupProps: 세 유형에서 쓸 수 있는 모든 필드를 합침 */
-export type PopupProps = BasePopupProps & ProfileProps & MyPageProps & MessageProps;
+export type PopupProps = BasePopupProps & ProfileProps & MyPageProps & MessageProps & CheerProps;

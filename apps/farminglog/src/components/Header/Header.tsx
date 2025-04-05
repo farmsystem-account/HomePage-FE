@@ -1,53 +1,65 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router";
 import * as S from "./Header.styled";
 import LogoImage from "../../assets/home/farming_log.png";
-import CloseIcon from "../../assets/Icons/BackArrow.png";
 import ProfileImage from "../../assets/home/default_profile.png";
+import mainIcon from "@/assets/logos/logo.basic.png"; // 메인 아이콘
+import crownIcon from "@/assets/Icons/tabler_crown.png"; // 랭킹 아이콘
+import pencilIcon from "@/assets/Icons/edit-3.png"; // 파밍 아이콘
+import thumbsUpIcon from "@/assets/home/thumbs-up.png"; // 응원 아이콘
+
 import useMediaQueries from "@/hooks/useMediaQueries";
-import Popup from "@/components/Popup/popup"; 
+import Popup from "@/components/Popup/popup";
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
 import { convertTrackToString } from "@/utils/convertTrackToString";
-// import { useUserStore } from "@repo/auth/stores/userStore";
 
 const navItems = [
   { label: "홈", path: "/home" },
-  { label: "응원하기", path: "/cheer" },
+  { label: "응원", path: "/cheer" },
   { label: "파밍로그", path: "/farminglog/view" },
   { label: "랭킹", path: "/rankingDetail" },
 ];
 
 export default function Header() {
+  const [isProfilePopupOpen, setProfilePopupOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isProfilePopupOpen, setProfilePopupOpen] = useState(false); 
+  const menuRef = useRef<HTMLDivElement>(null);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { isMobile, isTablet } = useMediaQueries();
 
-  // user와 fetchUser 함수를 store에서 가져오기 (fetchUser는 최신 정보를 불러오는 함수)
-  // const user = useUserStore((s) => s.user);
-  const { data: user } = useUserInfoQuery(); // false로 설정하여 자동으로 fetch하지 않도록 함
+  const { data: user } = useUserInfoQuery();
 
   const name = user?.name;
   const profileImageUrl = user?.profileImageUrl;
   const totalSeed = user?.totalSeed;
 
-  const handleNavItemClick = (path?: string, e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (path) navigate(path);
-    setMenuOpen(false);
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setMenuOpen(false); // 이동 후 메뉴 닫기
   };
 
-  // 헤더의 빈 영역 클릭 시 모바일 메뉴 열기
-  const handleHeaderClick = () => {
-    if (isMobile && !isMenuOpen) {
-      setMenuOpen(true);
+  // ✅ 메뉴 외 클릭 시 메뉴 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
     }
-  };
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const ProfileAndSeed = (
     <S.ProfileAndSeedContainer $isMobile={isMobile} $isTablet={isTablet}>
-      <S.ProfileContainer 
+      <S.ProfileContainer
         $isMobile={isMobile}
         onClick={(e) => {
           e.stopPropagation();
@@ -70,13 +82,10 @@ export default function Header() {
 
   return (
     <>
-      <S.HeaderContainer $isMobile={isMobile} onClick={handleHeaderClick}>
-        <S.Logo 
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate("/home");
-          }} 
-          $isMobile={isMobile} 
+      <S.HeaderContainer $isMobile={isMobile}>
+        <S.Logo
+          onClick={() => navigate("/home")}
+          $isMobile={isMobile}
           $isTablet={isTablet}
         >
           <img src={LogoImage} alt="파밍로그" />
@@ -93,10 +102,7 @@ export default function Header() {
                     key={path}
                     $isTablet={isTablet}
                     $isMobile={isMobile}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(path);
-                    }}
+                    onClick={() => handleNavigation(path)}
                     isActive={location.pathname === path}
                   >
                     {label}
@@ -108,35 +114,51 @@ export default function Header() {
           </>
         )}
 
-        <S.MobileNavWrapper $isMenuOpen={isMenuOpen}>
-          {isMobile && isMenuOpen && (
-            <>
-              <S.CloseButton
-                src={CloseIcon}
-                alt="Close"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMenuOpen(false);
-                }}
-              />
-              <S.MobileNav>
-                {navItems.map(({ label, path }) => (
-                  <S.NavItem
-                    key={path}
-                    $isTablet={isTablet}
-                    $isMobile={isMobile}
-                    onClick={(e) => handleNavItemClick(path, e)}
-                    isActive={location.pathname === path}
-                  >
-                    {label}
-                  </S.NavItem>
-                ))}
-              </S.MobileNav>
-            </>
-          )}
-        </S.MobileNavWrapper>
+        {/* ✅ 모바일 네비게이션 버튼 */}
+        {isMobile && (
+          <S.MobileWrapper ref={menuRef}>
+            {isMenuOpen && (
+              <>
+                <S.MobileNavButton
+                  style={{
+                    bottom: "70px",
+                    right: "7px",
+                    backgroundImage: `url(${crownIcon})`,
+                    opacity: isMenuOpen ? 1 : 0,
+                    transform: isMenuOpen ? "scale(1)" : "scale(0.5)",
+                  } as React.CSSProperties}
+                  onClick={() => handleNavigation("/rankingDetail")}
+                />
+                <S.MobileNavButton
+                  style={{
+                    top: "7px",
+                    left: "65px",
+                    backgroundImage: `url(${thumbsUpIcon})`,
+                    opacity: isMenuOpen ? 1 : 0,
+                    transform: isMenuOpen ? "scale(1)" : "scale(0.5)",
+                  } as React.CSSProperties}
+                  onClick={() => handleNavigation("/cheer")}
+                />
+                <S.MobileNavButton
+                  style={{
+                    bottom: "50px",
+                    left: "50px",
+                    backgroundImage: `url(${pencilIcon})`,
+                    opacity: isMenuOpen ? 1 : 0,
+                    transform: isMenuOpen ? "scale(1)" : "scale(0.5)",
+                  } as React.CSSProperties}
+                  onClick={() => handleNavigation("/farminglog/view")}
+                />
+              </>
+            )}
+            <S.MobileMainButton onClick={() => setMenuOpen((prev) => !prev)}>
+              <S.MobileMainButtonIcon src={mainIcon} alt="Menu" />
+            </S.MobileMainButton>
+          </S.MobileWrapper>
+        )}
       </S.HeaderContainer>
 
+      {/* 프로필 팝업 */}
       <Popup
         isOpen={isProfilePopupOpen}
         onClose={() => setProfilePopupOpen(false)}
@@ -147,8 +169,8 @@ export default function Header() {
             ? `${user.generation}기 ${convertTrackToString(user.track)}`
             : "기수 정보 없음"
         }
-        profileImg={user?.profileImageUrl} 
-        hasLogout={true}       
+        profileImg={user?.profileImageUrl}
+        hasLogout={true}
       />
     </>
   );
