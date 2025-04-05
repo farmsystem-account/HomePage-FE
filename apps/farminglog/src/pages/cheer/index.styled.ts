@@ -105,8 +105,8 @@ export const CheerWriteButton = styled.button<ResponsiveProps>`
 `;
 
 export const CheerWriteButtonImage = styled.img<ResponsiveProps>`
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   flex-shrink: 0;
   aspect-ratio: 1/1;
 `;
