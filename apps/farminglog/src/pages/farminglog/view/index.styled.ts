@@ -102,28 +102,22 @@ export const EndOfListText = styled.p<ResponsiveProps>`
 
 export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
   position: fixed;
-  bottom: ${({ $isApp, $isMobile }) =>
-    $isApp ? '32px' :
-    $isMobile ? '50px' :
-    '70px'};
-  right: ${({ $isApp, $isMobile }) =>
-    $isApp ? '25px' :
-    $isMobile ? '90px' :
-    '120px'};
+  bottom: 40px;
+  right: ${({ $isApp, $isMobile, $isTablet, $isDesktop }) => {
+  if ($isApp) return '16px';
+  if ($isMobile) return '24px';
+  if ($isTablet) return 'calc((100vw - 780px) / 2 + 20px)';
+  if ($isDesktop) return 'calc((100vw - 980px) / 2 + 20px)';
+  return '32px';
+}};
 
   display: flex;
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '45px' : $isMobile ? '55px' : '70px')};
+  height: ${({ $isApp, $isMobile }) => ($isApp ? '45px' : $isMobile ? '55px' : '70px')};
   justify-content: center;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-  width: ${({ $isApp, $isMobile }) =>
-    $isApp ? '45px' :
-    $isMobile ? '55px' :
-    '70px'};
-  height: ${({ $isApp, $isMobile }) =>
-    $isApp ? '45px' :
-    $isMobile ? '55px' :
-    '70px'};
   aspect-ratio: 1/1;
 
   border-radius: 35px;
@@ -131,8 +125,8 @@ export const FarmingLogWriteButton = styled.button<ResponsiveProps>`
 `;
 
 export const FarmingLogWriteButtonImage = styled.img<ResponsiveProps>`
-  width: 30px;
-  height: 30px;
-  aspect-ratio: 1/1;
+  width: 25px;
+  height: 25px;
   flex-shrink: 0;
+  aspect-ratio: 1/1;
 `;
