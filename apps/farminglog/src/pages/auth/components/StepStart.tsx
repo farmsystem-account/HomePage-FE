@@ -51,6 +51,35 @@ export default function StepStart() {
     }
   };
 
+  // step=input 감지해서 자동 인증 단계 진입
+useEffect(() => {
+  const step = searchParams.get('step');
+  if (step === 'input') {
+    setStep('input');
+    navigate('/', { replace: true });
+  }
+}, [searchParams, setStep, navigate]);
+
+// 회원 인증 클릭 핸들러
+const handleVerifyClick = () => {
+  const origin = window.location.origin;
+  const verifyUrl = `${origin}/?step=input`;
+
+  if (isKakaoInApp()) {
+    if (isAndroid()) {
+      const intentUrl = `intent://${origin.replace(/^https?:\/\//, '')}/?step=input#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
+        verifyUrl
+      )};end;`;
+      window.location.href = intentUrl;
+    } else if (isIOS()) {
+      window.location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(verifyUrl)}`;
+    }
+    return;
+  }
+
+  setStep('input');
+};
+
   return (
     <S.Container>
       <S.LogoWrapper>
@@ -69,7 +98,7 @@ export default function StepStart() {
 
       <S.GapWrapper>
         <S.Text $isMobile={isMobile}>회원인증 후 서비스를 이용할 수 있어요!</S.Text>
-        <S.LinkWrapper onClick={() => setStep('input')} $isMobile={isMobile}>
+        <S.LinkWrapper onClick={handleVerifyClick} $isMobile={isMobile}>
           회원 인증하기
           <img
             src={signIn}
