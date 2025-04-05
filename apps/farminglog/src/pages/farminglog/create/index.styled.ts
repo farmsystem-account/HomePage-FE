@@ -37,6 +37,7 @@ export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
   flex-shrink: 0;
 
   margin-top: ${({ $isApp }) => ($isApp ? '15px' : '40px')};
+  margin-bottom: ${({ $isMobile }) => ($isMobile ? '20px' : '0px')};
   border-radius: 5px;
   border: 1px solid #FFF763;
   background: #FFFAA4;
