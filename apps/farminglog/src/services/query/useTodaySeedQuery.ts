@@ -13,7 +13,8 @@ export const useTodaySeedQuery = () => {
       if (status !== 200) throw new Error('오늘의 씨앗 현황 조회 실패');
       return data as isHarvest;
     },
-    staleTime: 1000*60, //1분 
+    staleTime: 0, 
+    refetchOnMount: true, // 강제로 다시 가져
     retry: false, // 404 등 에러 시 재시도 X
   });
 };
