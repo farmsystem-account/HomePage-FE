@@ -37,7 +37,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
   const { userId: cheeredId } = searchedUser;
 
   const [popupOpen, setPopupOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState<{ main: string; sub?: string }>({ main: '', sub: '' });
+  const [popupMessage, setPopupMessage] = useState<{ main: React.ReactNode; sub?: React.ReactNode }>({ main: '', sub: '' });
  
 
   const [selectedCategory, setSelectedCategory] = useState<{
@@ -94,8 +94,17 @@ const handleSubmit = () => {
 
   if (!selectedCategory) {
     setPopupMessage({
-      main: '당신의 응원이 더욱 따뜻하게 전달될 수 있도록,',
-      sub: '칭찬, 감사, 응원 중 하나를 선택해 주세요!',
+       main: (
+      <>
+        당신의 응원이 더욱 따뜻하게 <br /> 전달될 수 있도록,
+      </>
+    ),
+    sub: (
+      <>
+        <span style={{ color: '#29D4A7' }}>칭찬, 감사, 응원</span> 중 
+        하나를 선택해 주세요!
+      </>
+    ),
     });
     setPopupOpen(true);
     return;

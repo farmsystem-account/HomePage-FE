@@ -14,8 +14,8 @@ export const PopupOverlay = styled.div`
 `;
 
 export const PopupContainer = styled.div<{ $isMobile: boolean }>`
-  width: ${({ $isMobile }) => ($isMobile ? '220px' : '400px')};
-  height: ${({ $isMobile }) => ($isMobile ? '150px' : '250px')};
+  width: ${({ $isMobile }) => ($isMobile ? '200px' : '450px')};
+  height: ${({ $isMobile }) => ($isMobile ? '150px' : '300px')};
   position: relative;
   background: #FCFCFC;
   border-radius: 10px;
@@ -31,7 +31,7 @@ export const MainMessage = styled.div<{ $isMobile: boolean }>`
   width: ${({ $isMobile }) => ($isMobile ? '180px' : '300px')};
   text-align: center;
   color: #2E2E2E;
-  font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '20px')};
   font-family: 'Pretendard Variable';
   font-weight: 500;
   line-height: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
@@ -40,9 +40,9 @@ export const MainMessage = styled.div<{ $isMobile: boolean }>`
 `;
 
 export const SubMessage = styled.div<{ $isMobile: boolean }>`
-  width: ${({ $isMobile }) => ($isMobile ? '160px' : '300px')};
+  width: ${({ $isMobile }) => ($isMobile ? '200px' : '420px')};
   text-align: center;
-  font-size: ${({ $isMobile }) => ($isMobile ? '12px' : '20px')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '10px' : '20px')};
   line-height: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
   font-family: 'Pretendard Variable';
   font-weight: 500;
@@ -58,7 +58,7 @@ export const Divider = styled.hr<{ $isMobile: boolean }>`
   width: 100%;
   border: none;
   border-top: ${({ $isMobile }) => ($isMobile ? '1px' : '2px')} solid #5CD282;
-  margin: ${({ $isMobile }) => ($isMobile ? '15px 0' : '20px 0')};
+  margin: ${({ $isMobile }) => ($isMobile ? '13px 0' : '37px 0')};
   outline-offset: -1px;
 `;
 
