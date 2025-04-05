@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import * as S from '../styles/StepStartStyled';
 import AuthButton from './AuthButton';
 import { useAuthStore } from '@repo/auth/stores/useAuthStore';
@@ -6,36 +7,47 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import signIn from '@/assets/Icons/signIn.png';
 
 import { isKakaoInApp, isAndroid, isIOS } from '@/utils/detect';
+import { useSearchParams, useNavigate } from 'react-router';
 
 export default function StepStart() {
   const { setStep } = useAuthStore();
   const { handleLogin } = useSocialLogin();
   const { isMobile } = useMediaQueries();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const type = searchParams.get('type') as 'KAKAO' | 'GOOGLE' | null;
+
+  // 쿼리로 들어온 경우 자동 로그인 시도
+  useEffect(() => {
+    if (type === 'KAKAO' || type === 'GOOGLE') {
+      handleLogin(type);
+      navigate('/', { replace: true }); // 쿼리 파라미터 제거
+    }
+  }, [type, handleLogin, navigate]);
 
   // 인앱 브라우저일 경우 외부 브라우저로 강제 리디렉션
   const redirectToExternalBrowser = (provider: 'KAKAO' | 'GOOGLE') => {
-    const origin = window.location.origin; // 현재 환경(dev/prod) 자동 반영
+    const origin = window.location.origin;
     const loginUrl = `${origin}/?type=${provider}`;
 
     if (isKakaoInApp()) {
       if (isAndroid()) {
-        const intentUrl = `intent://${origin.replace(/^https?:\/\//, '')}/?type=${provider}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
-          loginUrl
-        )};end;`;
+        const intentUrl = `intent://${origin.replace(/^https?:\/\//, '')}/?type=${provider}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(loginUrl)};end;`;
         window.location.href = intentUrl;
       } else if (isIOS()) {
         window.location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(loginUrl)}`;
       }
-      return true; // 인앱이라 리디렉션 처리됨
+      return true;
     }
 
-    return false; // 외부 브라우저라 로그인 진행 가능
+    return false;
   };
 
   // 로그인 버튼 클릭 핸들러
   const handleClick = (provider: 'KAKAO' | 'GOOGLE') => {
     if (!redirectToExternalBrowser(provider)) {
-      handleLogin(provider); // 인앱이 아니면 기존 로그인 로직 수행
+      handleLogin(provider);
     }
   };
 

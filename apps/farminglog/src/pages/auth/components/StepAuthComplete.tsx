@@ -1,17 +1,31 @@
+import { useEffect } from 'react';
 import * as S from '../styles/StepAuthComplete.Stlyed.ts';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import AuthButton from './AuthButton';
 import { useSocialLogin } from '@repo/auth/hooks/useSocialLogin';
-
-import { isKakaoInApp, isAndroid, isIOS } from '@/utils/detect'; 
+import { isKakaoInApp, isAndroid, isIOS } from '@/utils/detect';
+import { useSearchParams, useNavigate } from 'react-router';
 
 export default function StepAuthComplete() {
   const { isMobile } = useMediaQueries();
   const { handleLogin } = useSocialLogin();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
+  const type = searchParams.get('type') as 'KAKAO' | 'GOOGLE' | null;
+
+  // 외부 브라우저 도착 시 자동 로그인
+  useEffect(() => {
+    if (type === 'KAKAO' || type === 'GOOGLE') {
+      handleLogin(type);
+      navigate('/', { replace: true }); // 쿼리 제거
+    }
+  }, [type, handleLogin, navigate]);
+
+  // 인앱이면 외부 브라우저로 이동
   const redirectToExternalBrowser = (provider: 'KAKAO' | 'GOOGLE') => {
     const origin = window.location.origin;
-    const loginUrl = `${origin}/?type=${provider}`; 
+    const loginUrl = `${origin}/?type=${provider}`;
 
     if (isKakaoInApp()) {
       if (isAndroid()) {
@@ -30,7 +44,7 @@ export default function StepAuthComplete() {
 
   const handleClick = (provider: 'KAKAO' | 'GOOGLE') => {
     if (!redirectToExternalBrowser(provider)) {
-      handleLogin(provider); // 외부 브라우저에서만 실행
+      handleLogin(provider); // 외부 브라우저에서 실행
     }
   };
 
