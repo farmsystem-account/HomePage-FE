@@ -153,9 +153,16 @@ export const CrownIcon = styled.img`
 
 /** 프로필 영역 */
 export const ProfileSection = styled.div`
+  width: 160px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
+  padding-left: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  /* background-color: yellow; */
 `;
 
 export const ProfileIcon = styled.img`

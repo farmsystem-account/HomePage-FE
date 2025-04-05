@@ -161,8 +161,9 @@ export const ColumnBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   gap: 0px;
+  /* background-color: green; */
 `;
 
 
@@ -238,9 +239,16 @@ export const CrownIcon = styled.img`
 `;
 
 export const ProfileSection = styled.div`
+  width: 140px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 12px;
+  /* background-color: yellow; */
+  padding-left: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 export const ProfileIcon = styled.img`

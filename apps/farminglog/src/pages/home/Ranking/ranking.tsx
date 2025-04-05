@@ -125,6 +125,9 @@ export default function RankingPreview() {
                 {item.rank <= 3 && <S.CrownIcon src={CrownImg} alt="왕관" />}
               </S.RankBox>
 
+              {/* 균형을 맞추기 위한 더미 요소 */}
+              <div style={{ width: '140px', visibility: 'hidden' }} />
+              
               <S.ProfileSection>
                 <S.ProfileIcon src={item.profileImageUrl || FarmLogoImg} />
                 <S.ColumnBox>

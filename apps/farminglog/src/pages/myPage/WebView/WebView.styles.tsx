@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
+export const OverrideContainer = styled.div`
+  // WhiteContentContainer 내부의 ContentContainer에 접근해서 패딩 제거
+  & > div > div {
+    padding: 0 !important;
+    gap: 0 !important;
+    padding-bottom: 50px !important;
+  }
+`;
+
 export const MyPageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -15,7 +24,7 @@ export const ProfileWrapper = styled.div<{ isMobile: boolean }>`
   align-items: center;
   flex-direction: column;
   width: ${({ isMobile }) => (isMobile ? '100%' : '900px')};
-  background: white;
+  /* background: white; */
   border-radius: 3px;
   padding: ${({ isMobile }) => (isMobile ? '0px 0px 30px 0px' : '0px 24px 30px 24px')};
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -29,7 +38,7 @@ export const TitleBox = styled.div<{ isMobile: boolean }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  /* background-color: white; */
   padding: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -52,6 +61,8 @@ export const EditButton = styled.button`
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s;
+  position: absolute;
+  right: 20px;
 
   &:hover {
     background-color: #25be96;
@@ -63,12 +74,13 @@ export const SectionTitleBox = styled.div<{ isMobile: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  /* background-color: white; */
   border-bottom-width: 0.5px;
   border-bottom-style: solid;
   border-bottom-color: #bebebe;
-  width: ${({ isMobile }) => (isMobile ? '100%' : '900px')};
+  width: ${({ isMobile }) => (isMobile ? '100%' : '100%')};
   margin-top: 15px;
+  position: relative;
 `;
 
 export const SectionTitle = styled.h3`
@@ -82,14 +94,14 @@ export const ProfileCard = styled.div<{ isMobile: boolean }>`
   display: flex;
   align-items: center;
   gap: 16px;
-  width: ${({ isMobile }) => (isMobile ? '100%' : '900px')};
+  width: ${({ isMobile }) => (isMobile ? '100%' : '100%')};
   background: #F6FBF9;
   padding: 20px 40px;
 `;
 
 export const ProfileImage = styled.img`
-  width: 84px;
-  height: 84px;
+  width: 114px;
+  height: 114px;
   object-fit: cover;
   border-radius: 50%;
   background-color: #f0f0f0;
@@ -131,7 +143,7 @@ export const Role = styled.span`
 `;
 
 export const Name = styled.span`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
 `;
 
@@ -141,6 +153,8 @@ export const InfoGrid = styled.div`
   justify-content: space-around;
   gap: 16px 32px;
   margin-top: 12px;
+  /* padding-left: 200px;
+  padding-right: 200px; */
 `;
 
 export const InfoItem = styled.div`
@@ -148,12 +162,12 @@ export const InfoItem = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 220px;
+  width: 300px;
   height: 50px;
 `;
 
 export const InfoLabel = styled.div`
-  font-size: 16px;
+  font-size: 18px;
   color: black;
   margin-bottom: 4px;
   font-weight: 700;
