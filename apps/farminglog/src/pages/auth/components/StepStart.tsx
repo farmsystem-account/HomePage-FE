@@ -15,7 +15,7 @@ export default function StepStart() {
   // 인앱 브라우저일 경우 외부 브라우저로 강제 리디렉션
   const redirectToExternalBrowser = (provider: 'KAKAO' | 'GOOGLE') => {
     const origin = window.location.origin; // 현재 환경(dev/prod) 자동 반영
-    const loginUrl = `${origin}/login?type=${provider}`;
+    const loginUrl = `${origin}/?type=${provider}`;
 
     if (isKakaoInApp()) {
       if (isAndroid()) {
