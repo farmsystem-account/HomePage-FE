@@ -71,10 +71,11 @@ export const CheerCardContainer = styled.div<ResponsiveProps>`
   justify-content: center;
   row-gap: 30px;
   column-gap: 42px;
+  margin: 20px 17px 0;
 
   & > * {
     width: ${({ $isDesktop, $isTablet }) =>
-      $isDesktop || $isTablet ? '48%' : '100%'};
+      $isDesktop || $isTablet ? '46%' : '100%'};
   }
   padding: ${({ $isDesktop, $isTablet }) =>
       $isDesktop || $isTablet ? '0px 75px' : '0px 25.5px'};
@@ -87,7 +88,7 @@ export const CheerWriteButton = styled.button<ResponsiveProps>`
   if ($isApp) return '16px';
   if ($isMobile) return '24px';
   if ($isTablet) return 'calc((100vw - 780px) / 2 + 20px)';
-  if ($isDesktop) return 'calc((100vw - 980px) / 2 + 20px)';
+  if ($isDesktop) return 'calc((100vw - 980px) / 2 + 40px)'; // Adjusted for more right alignment on desktop
   return '32px';
 }};
 
