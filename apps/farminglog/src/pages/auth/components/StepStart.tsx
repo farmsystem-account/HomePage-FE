@@ -19,7 +19,7 @@ export default function StepStart() {
 
     if (isKakaoInApp()) {
       if (isAndroid()) {
-        const intentUrl = `intent://${origin.replace(/^https?:\/\//, '')}/login?type=${provider}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
+        const intentUrl = `intent://${origin.replace(/^https?:\/\//, '')}/?type=${provider}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
           loginUrl
         )};end;`;
         window.location.href = intentUrl;
