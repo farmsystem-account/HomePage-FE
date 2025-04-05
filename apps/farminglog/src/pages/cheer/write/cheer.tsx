@@ -1,14 +1,13 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useNavigate } from 'react-router';
 import * as S from './cheer.styled';
 import MessagePopup from '@/components/Popup/MessagePopup';
 
-// import { useUserStore } from '@repo/auth/stores/userStore';
 import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useCheerMutation } from '@/services/mutation/useCheerMutation';
 import { useQueryClient } from '@tanstack/react-query';
-import { useTodaySeedQuery } from "../../../services/query/useTodaySeedQuery";
+import { useTodaySeedQuery } from '../../../services/query/useTodaySeedQuery';
 
 const tagMap = {
   '칭찬해요!': 'COMPLIMENT',
@@ -38,7 +37,6 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState<{ main: React.ReactNode; sub?: React.ReactNode }>({ main: '', sub: '' });
- 
 
   const [selectedCategory, setSelectedCategory] = useState<{
     name: CategoryName;
@@ -52,102 +50,88 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
   const queryClient = useQueryClient();
 
-  // const { user } = useUserStore((s) => s); // 로그인한 유저 정보
-  const { mutate: sendCheer } = useCheerMutation(); // 응원 API
+  const { mutate: sendCheer } = useCheerMutation();
   const { data: user } = useUserInfoQuery();
   const { data: todaySeed } = useTodaySeedQuery();
-  const [prevIsCheer, setPrevIsCheer] = useState<boolean | undefined>(undefined);
-
-  // 첫 응원 감지를 위한 useTodaySeedQuery의 isCheer 변경 감시
-  useEffect(() => {
-    if (prevIsCheer !== undefined && !prevIsCheer && todaySeed?.isCheer) {
-    // 처음 응원 성공: 씨앗 팝업 띄우기
-    setPopupMessage({
-      main: '전송이 완료되었어요!',
-      sub: '씨앗 2개 획득!'
-    });
-    setPopupOpen(true);
-    }
-    setPrevIsCheer(todaySeed?.isCheer);
-  }, [todaySeed?.isCheer, prevIsCheer]);
-
 
   const handleCategoryClick = (cat: { name: CategoryName; bgColor: string; fontColor?: string }) => {
     setSelectedCategory(cat);
   };
 
- const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  const textarea = e.target;
-  setContentInput(textarea.value);
-  setContentCount(textarea.value.length);
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = e.target;
+    setContentInput(textarea.value);
+    setContentCount(textarea.value.length);
 
-  // 기본 높이보다 클 때만 늘림
-  const baseHeight = 100; // 기본 높이(px)
-  textarea.style.height = `${baseHeight}px`; // 초기화
-  const newHeight = Math.min(textarea.scrollHeight, 300); // (선택) 최대 높이 제한
-  textarea.style.height = `${newHeight}px`;
-};
+    const baseHeight = 100;
+    textarea.style.height = `${baseHeight}px`;
+    const newHeight = Math.min(textarea.scrollHeight, 300);
+    textarea.style.height = `${newHeight}px`;
+  };
 
+  const handleSubmit = () => {
+    if (!user?.userId) return;
 
-const handleSubmit = () => {
-  if (!user?.userId) return;
-
-  if (!selectedCategory) {
-    setPopupMessage({
-       main: (
-      <>
-        당신의 응원이 더욱 따뜻하게 <br /> 전달될 수 있도록,
-      </>
-    ),
-    sub: (
-      <>
-        <span style={{ color: '#29D4A7' }}>칭찬, 감사, 응원</span> 중 
-        하나를 선택해 주세요!
-      </>
-    ),
-    });
-    setPopupOpen(true);
-    return;
-  }
-
-  if (contentCount < 20) {
-    setPopupMessage({
-      main: '따뜻한 응원은 길수록 좋아요.',
-      sub: '최소 20자 이상 입력해야 전송할 수 있어요!',
-    });
-    setPopupOpen(true);
-    return;
-  }
-
-  sendCheer(
-  {
-    cheererId: user.userId,
-    cheeredId,
-    tag: tagMap[selectedCategory.name],
-    content: contentInput,
-  },
-  {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cheerList'] });
+    if (!selectedCategory) {
       setPopupMessage({
-        main: '전송이 완료되었어요.',
-        sub: '응원 온전히 잘 전달할게요!',
+        main: (
+          <>
+            당신의 응원이 더욱 따뜻하게 <br /> 전달될 수 있도록,
+          </>
+        ),
+        sub: (
+          <>
+            <span style={{ color: '#29D4A7' }}>칭찬, 감사, 응원</span> 중 하나를 선택해 주세요!
+          </>
+        ),
       });
       setPopupOpen(true);
-    },
-    onError: (error: any) => {
-      if (error?.status === 400) {
-        setPopupMessage({
-          main: '본인이 아닌 다른 사람을 응원해주세요!',
-        });
-        setPopupOpen(true);
-      } else {
-        console.error('예상치 못한 에러:', error);
+      return;
+    }
+
+    if (contentCount < 20) {
+      setPopupMessage({
+        main: '따뜻한 응원은 길수록 좋아요.',
+        sub: '최소 20자 이상 입력해야 전송할 수 있어요!',
+      });
+      setPopupOpen(true);
+      return;
+    }
+
+    sendCheer(
+      {
+        cheererId: user.userId,
+        cheeredId,
+        tag: tagMap[selectedCategory.name],
+        content: contentInput,
+      },
+      {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ['cheerList'] });
+          await queryClient.invalidateQueries({ queryKey: ['user', 'today-seed'] });
+
+          const updatedSeed = queryClient.getQueryData<any>(['user', 'today-seed']);
+          const isFirstCheer = !todaySeed?.isCheer && updatedSeed?.isCheer;
+
+          setPopupMessage({
+            main: '전송이 완료되었어요.',
+            sub: isFirstCheer ? '씨앗 2개 획득!' : '응원 온전히 잘 전달할게요!'
+          });
+          setPopupOpen(true);
+        },
+        onError: (error: any) => {
+          if (error?.status === 400) {
+            setPopupMessage({
+              main: '본인이 아닌 다른 사람을 응원해주세요!',
+            });
+            setPopupOpen(true);
+          } else {
+            console.error('예상치 못한 에러:', error);
+          }
+        },
       }
-    },
-  }
-);
-};
+    );
+  };
 
   return (
     <>
@@ -209,12 +193,8 @@ const handleSubmit = () => {
           isMobile={isMobile}
           onClose={() => {
             setPopupOpen(false);
-              if (popupMessage.main === '전송이 완료되었어요.') {
-               navigate('/cheer');
-            }
-
-              if (popupMessage.main === '본인이 아닌 다른 사람을 응원해주세요!') {
-                navigate('/cheer');
+            if (popupMessage.main === '전송이 완료되었어요.' || popupMessage.main === '본인이 아닌 다른 사람을 응원해주세요!') {
+              navigate('/cheer');
             }
           }}
         />
