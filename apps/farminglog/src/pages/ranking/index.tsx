@@ -15,7 +15,7 @@ import Popup from "@/components/Popup/popup";
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
 
 const headerTexts = [
-  '랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.',
+  '랭킹은 씨앗을 기준으로 매일 자정마다 정렬돼요.',
   '씨앗은 트랙별 우수활동자 심사에 반영돼요.',
   '친구의 프로필을 눌러 응원할 수 있어요!'
 ];
