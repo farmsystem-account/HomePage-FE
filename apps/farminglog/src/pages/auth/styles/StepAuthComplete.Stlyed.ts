@@ -18,6 +18,7 @@ export const LogoIcon = styled.img.attrs({
   alt: 'logoImg',
 })<ResponsiveProps>`
   width: ${({ $isMobile }) => ($isMobile ? '56.23px' : '112.46px')};
+  margin-bottom: ${({ $isMobile }) => ($isMobile ? '1rem' : '2rem')};
 `;
 
 export const Title = styled.h2<ResponsiveProps>`
