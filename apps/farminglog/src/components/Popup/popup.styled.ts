@@ -122,6 +122,7 @@ export const CenteredPopupText = styled.button<{ $isMobile: boolean }>`
   text-align: center;
   width: 100%;
   cursor: pointer;
+  padding: 8px;
 `;
 
 export const PopupContainer = styled.div<{ $isMobile: boolean }>`
@@ -181,7 +182,7 @@ export const ConfirmButton = styled.button<{ $isMobile: boolean }>`
 `;
 
 export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
-  width: ${({ $isApp, $isMobile }) => ($isApp ? '220px' : $isMobile ? '400px' : '550px')};
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '300px' : $isMobile ? '400px' : '550px')};
   min-height: ${({ $isApp, $isMobile }) => ($isApp ? '100px' : $isMobile ? '100px' : '130px')};
   flex-shrink: 0;
 
@@ -193,6 +194,7 @@ export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
 
   display: flex;
   flex-direction: column;
+  padding-bottom: 20px;
 `;
 
 export const HeaderPinContainer = styled.div<ResponsiveProps>`
