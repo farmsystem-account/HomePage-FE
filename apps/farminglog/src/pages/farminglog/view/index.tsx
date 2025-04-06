@@ -51,7 +51,20 @@ export default function View() {
   );
 
   // 로딩 또는 에러 상태 처리
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return (
+    <WhiteContentContainer
+      title="파밍로그"
+      isContentHeaderShown={true}
+    >
+      <S.FarmingLogCardContainer
+        $isApp={isApp}
+        $isMobile={isMobile}
+        $isDesktop={isDesktop}
+      >
+        <div></div>
+      </S.FarmingLogCardContainer>
+    </WhiteContentContainer>
+  );
   if (error) return <div>에러 발생: {error.message}</div>;
   if (!data) return <div>데이터가 없습니다.</div>;
 
