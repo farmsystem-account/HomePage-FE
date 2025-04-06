@@ -148,16 +148,16 @@ export default function Editor() {
     setIsDropDownOpen((prev) => !prev);
   };
 
-  const getCurrentTimeFormatedString = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
+  // const getCurrentTimeFormatedString = () => {
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   const month = String(now.getMonth() + 1).padStart(2, '0');
+  //   const day = String(now.getDate()).padStart(2, '0');
+  //   const hours = String(now.getHours()).padStart(2, '0');
+  //   const minutes = String(now.getMinutes()).padStart(2, '0');
 
-    return `${year}/${month}/${day} ${hours}:${minutes}`;
-  };
+  //   return `${year}/${month}/${day} ${hours}:${minutes}`;
+  // };
 
   return (
     <WhiteContentContainer isContentHeaderShown={false}>
@@ -228,11 +228,11 @@ export default function Editor() {
           </S.InputAndTextContainer>
 
           {/* 날짜 */}
-          {isApp && (
+          {/* {isApp && (
             <S.DateContainer>
               <S.DateText>{getCurrentTimeFormatedString()}</S.DateText>
             </S.DateContainer>
-          )}
+          )} */}
 
           {/* 내용 */}
           <S.InputAndTextContainer $isApp={isApp}>
