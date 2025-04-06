@@ -85,9 +85,15 @@ export default function Editor() {
 
     const categoryEnum = FarmingLogCategory[dropDownSelected];
 
-    if (titleCount < 1 || titleCount > MAX_TITLE_LENGTH) {
+    if (titleCount < 1) {
       setPopupOpen(true);
-      setPopupMessage({ main: '제목이 너무 길어요.', sub: `1자 이상, ${MAX_TITLE_LENGTH}자 이하로 작성해주세요.` });
+      setPopupMessage({ main: '제목이 너무 짧아요.', sub: `1자 이상 작성해주세요.` });
+      return;
+    }
+
+    if (titleCount > MAX_TITLE_LENGTH) {
+      setPopupOpen(true);
+      setPopupMessage({ main: '제목이 너무 길어요.', sub: `${MAX_TITLE_LENGTH}자 이하로 작성해주세요.` });
       return;
     }
 
@@ -217,6 +223,7 @@ export default function Editor() {
               placeholder="내용을 입력해주세요."
               $isApp={isApp}
               $isMobile={isMobile}
+              maxLength={MAX_TITLE_LENGTH}
             />
           </S.InputAndTextContainer>
 
@@ -245,6 +252,7 @@ export default function Editor() {
               placeholder="내용을 입력해주세요."
               $isApp={isApp}
               $isMobile={isMobile}
+              maxLength={MAX_CONTENT_LENGTH}
             />
           </S.InputAndTextContainer>
         </S.ContentContainer>
