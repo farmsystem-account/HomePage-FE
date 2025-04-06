@@ -190,6 +190,7 @@ export const Author = styled.span<ResponsiveProps>`
 
 export const Content = styled.p<ResponsiveProps>`
   width: 100%;
+  max-width: 790px;
   min-height: 60px;
   white-space: normal;
   overflow-wrap: break-word;  /* 긴 단어를 적절히 나눔 */
