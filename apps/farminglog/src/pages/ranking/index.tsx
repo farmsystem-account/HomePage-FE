@@ -61,7 +61,7 @@ export default function Main() {
 
         <S.RankingTitle isApp={isApp}>
           <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>
-          <S.RankingTitleText isApp={isApp}>이름/전공</S.RankingTitleText>
+          <S.RankingTitleText isApp={isApp}>이름/트랙</S.RankingTitleText>
           <S.RankingTitleText isApp={isApp}>누적 씨앗 개수</S.RankingTitleText>
         </S.RankingTitle>
 
