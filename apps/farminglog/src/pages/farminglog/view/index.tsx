@@ -6,6 +6,7 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 import { useFarmingLogsInfiniteQuery } from '@/services/query/useFarmingLogInfiniteQuery';
 import useFarmingLogStore from '@/stores/farminglogStore';
+import CardSkeleton from './CardSkeleton';
 
 import EditImage from '@/assets/Icons/edit-3.png';
 
@@ -30,8 +31,7 @@ export default function View() {
       refetch();
       setIsNeedRefresh(false);
     }
-  }
-  , [isNeedRefresh, refetch, setIsNeedRefresh]);
+  }, [isNeedRefresh, refetch, setIsNeedRefresh]);
 
   // 마지막 카드 요소를 관찰하여 다음 페이지를 불러오기 위한 IntersectionObserver
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -61,7 +61,9 @@ export default function View() {
         $isMobile={isMobile}
         $isDesktop={isDesktop}
       >
-        <div></div>
+        {Array.from({ length: 10 }, (_, index) => (
+          <CardSkeleton key={index} />
+        ))}
       </S.FarmingLogCardContainer>
     </WhiteContentContainer>
   );
