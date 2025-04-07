@@ -6,6 +6,7 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import WhiteContentContainer from '@/layouts/WhiteContentContainer';
 import { useFarmingLogsInfiniteQuery } from '@/services/query/useFarmingLogInfiniteQuery';
 import useFarmingLogStore from '@/stores/farminglogStore';
+import CardSkeleton from './CardSkeleton';
 
 import EditImage from '@/assets/Icons/edit-3.png';
 
@@ -30,8 +31,7 @@ export default function View() {
       refetch();
       setIsNeedRefresh(false);
     }
-  }
-  , [isNeedRefresh, refetch, setIsNeedRefresh]);
+  }, [isNeedRefresh, refetch, setIsNeedRefresh]);
 
   // 마지막 카드 요소를 관찰하여 다음 페이지를 불러오기 위한 IntersectionObserver
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -51,7 +51,22 @@ export default function View() {
   );
 
   // 로딩 또는 에러 상태 처리
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return (
+    <WhiteContentContainer
+      title="파밍로그"
+      isContentHeaderShown={true}
+    >
+      <S.FarmingLogCardContainer
+        $isApp={isApp}
+        $isMobile={isMobile}
+        $isDesktop={isDesktop}
+      >
+        {Array.from({ length: 10 }, (_, index) => (
+          <CardSkeleton key={index} />
+        ))}
+      </S.FarmingLogCardContainer>
+    </WhiteContentContainer>
+  );
   if (error) return <div>에러 발생: {error.message}</div>;
   if (!data) return <div>데이터가 없습니다.</div>;
 

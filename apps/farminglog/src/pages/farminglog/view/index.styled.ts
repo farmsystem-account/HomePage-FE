@@ -69,8 +69,11 @@ export const GoBackButton = styled.button<ResponsiveProps>`
 `;
 
 export const FarmingLogCardContainer = styled.div<ResponsiveProps>`
+  width : 100%;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
+
   gap: 20px;
   padding: ${({ $isApp }) => ($isApp ?  '0' : '0 20px 0 20px')};
 `;
