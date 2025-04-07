@@ -1,7 +1,5 @@
-import * as S from "./profilePopup.styled"; // styled-components 모음
+import * as S from "./profilePopup.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
-
-
 import CloseIcon from "../../assets/Icons/close.png";
 import GithubIcon from "../../assets/Icons/github.svg";
 
@@ -11,9 +9,13 @@ interface PopupProps {
   major: string;
   githubId?: string;
   profileImg?: string;
+  isOpen: boolean;
   onClose: () => void;
-  stopPropagation: (e: React.MouseEvent) => void;
 }
+
+const stopPropagation = (e: React.MouseEvent) => {
+  e.stopPropagation();
+};
 
 const Popup: React.FC<PopupProps> = ({
   userName,
@@ -21,12 +23,16 @@ const Popup: React.FC<PopupProps> = ({
   major,
   githubId,
   profileImg,
+  isOpen,
   onClose,
-  stopPropagation,
 }) => {
   const { isMobile, isTablet } = useMediaQueries();
+
+  // 열려있지 않으면 null
+  if (!isOpen) return null;
+
   return (
-    <S.PopupOverlay>
+    <S.PopupOverlay onClick={onClose}>
       <S.PopupBox onClick={stopPropagation} $isMobile={isMobile} $isTablet={isTablet}>
         {/* 닫기 버튼 */}
         <S.CloseIconButton onClick={onClose} $isMobile={isMobile}>
@@ -65,7 +71,7 @@ const Popup: React.FC<PopupProps> = ({
               alt="github"
               style={{ marginRight: 8 }}
             />
-            {"깃허브 아이디 없음"}
+            깃허브 아이디 없음
           </S.PopupBottomText>
         ) : (
           <S.PopupBottomText $isMobile={isMobile} $isTablet={isTablet}>

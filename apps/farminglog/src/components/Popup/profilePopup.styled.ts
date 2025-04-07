@@ -11,7 +11,7 @@ export const PopupOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 9998;
 `;
 
 /** 팝업 박스 */
@@ -28,6 +28,8 @@ export const PopupBox = styled.div<{$isMobile: boolean; $isTablet: boolean}>`
 
   /* 패딩은 모바일/데스크톱 상황에 맞게 조정 */
   padding: ${({ $isMobile }) => ($isMobile ? "16px 0" : "24px 0")};
+
+  z-index: 9999;
 `;
 
 /** 닫기 버튼 */

@@ -139,7 +139,6 @@ export default function Main() {
             major={rankingData[selectedIndex].major}
             githubId={rankingData[selectedIndex].githubAccount}
             onClose={() => setShowProfilePopup(false)}
-            stopPropagation={(e) => e.stopPropagation()}
           />
         )}
 
