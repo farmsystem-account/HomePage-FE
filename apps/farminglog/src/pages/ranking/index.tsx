@@ -112,21 +112,23 @@ export default function Main() {
         <AnimatePresence>
           {selectedIndex !== null && balloonPosition && (
             <CheerBalloon
-              ref={balloonRef}
-              isApp={isApp}
-              x={balloonPosition.x}
-              y={balloonPosition.y}
-              onClose={() => setSelectedIndex(null)}
-              onCheerClick={() => {
-                const { userId, name } = rankingData[selectedIndex!];
-                navigate(`/cheer/write?userId=${userId}&name=${encodeURIComponent(name)}`);
-                setSelectedIndex(null);
-              }}
-              
-              onProfileClick={() => {
-                setShowProfilePopup(true);
-              }}
-            />
+            ref={balloonRef}
+            isApp={isApp}
+            x={balloonPosition.x}
+            y={balloonPosition.y}
+            userId={rankingData[selectedIndex!].userId}         // 추가
+            userName={rankingData[selectedIndex!].name}         // 추가
+            onClose={() => setSelectedIndex(null)}
+            onCheerClick={() => {
+              const { userId, name } = rankingData[selectedIndex!];
+              navigate(`/cheer/write?userId=${userId}&name=${encodeURIComponent(name)}`);
+              setSelectedIndex(null);
+            }}
+            onProfileClick={() => {
+              setShowProfilePopup(true);
+            }}
+          />
+
           )}
         </AnimatePresence>
 
