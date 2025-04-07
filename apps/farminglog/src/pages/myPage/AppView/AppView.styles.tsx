@@ -44,13 +44,13 @@ export const AppProfileImage = styled.div`
 `;
 
 export const AppRole = styled.div`
-  width: 60px;
+  width: 65px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
-  padding: 4px 12px;
+  padding: 4px 0px;
   font-size: 14px;
   border-radius: 20px;
 `;
@@ -146,6 +146,7 @@ export const ProfileImage = styled.img`
 export const EditButton = styled.button`
   
   /* margin-top: 16px; */
+  width: 60px;
   padding: 6px 16px;
   font-size: 14px;
   font-weight: 500;

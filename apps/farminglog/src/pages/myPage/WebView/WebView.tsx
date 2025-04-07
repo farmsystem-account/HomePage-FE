@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from 'react';
 import * as S from './WebView.styles';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import WhiteContentContainer from '@/layouts/WhiteContentContainer';
+import { convertTrackToString } from '@/utils/convertTrackToString';
+import { convertRoleToString } from '@/utils/convertRoleToString';
 
 // import BackArrow from '@/assets/Icons/BackArrow.png';
 import NotionIcon from '@/assets/Icons/Notion.png';
@@ -166,7 +168,7 @@ export default function WebView() {
           </S.ImageEditWrapper>
 
           <S.ProfileInfo>
-            <S.RoleBox><S.Role>{user?.role}</S.Role></S.RoleBox>
+            <S.RoleBox><S.Role>{user?.role ? convertRoleToString(user.role) : ''}</S.Role></S.RoleBox>
             <S.Name>{user?.name}</S.Name>
           </S.ProfileInfo>
         </S.ProfileCard>
@@ -193,7 +195,10 @@ export default function WebView() {
             </S.SectionTitleBox>
             <S.InfoGrid>
               <S.InfoItem><S.InfoLabel>전공</S.InfoLabel><S.InfoValue>{user?.major}</S.InfoValue></S.InfoItem>
-              <S.InfoItem><S.InfoLabel>트랙</S.InfoLabel><S.InfoValue>{user?.track}</S.InfoValue></S.InfoItem>
+              <S.InfoItem>
+                <S.InfoLabel>트랙</S.InfoLabel>
+                <S.InfoValue>{user?.track ? convertTrackToString(user.track) : ''}</S.InfoValue>
+              </S.InfoItem>
               <S.InfoItem><S.InfoLabel>기수</S.InfoLabel><S.InfoValue>{user?.generation}기</S.InfoValue></S.InfoItem>
               <S.InfoItem><S.InfoLabel>학번</S.InfoLabel><S.InfoValue>{user?.studentNumber}</S.InfoValue></S.InfoItem>
               <S.InfoItem><S.InfoLabel>전화번호</S.InfoLabel><S.InfoValue>{user?.phoneNumber}</S.InfoValue></S.InfoItem>
