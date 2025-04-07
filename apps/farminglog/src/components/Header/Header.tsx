@@ -6,7 +6,7 @@ import ProfileImage from "../../assets/home/default_profile.png";
 import mainIcon from "@/assets/logos/logo.basic.png"; // 메인 아이콘
 import crownIcon from "@/assets/Icons/tabler_crown.png"; // 랭킹 아이콘
 import pencilIcon from "@/assets/Icons/edit-3.png"; // 파밍 아이콘
-import thumbsUpIcon from "@/assets/home/thumbs-up.png"; // 응원 아이콘
+import thumbsUpIcon from "@/assets/Icons/goodgood.png"; // 응원 아이콘
 
 import useMediaQueries from "@/hooks/useMediaQueries";
 import Popup from "@/components/Popup/popup";

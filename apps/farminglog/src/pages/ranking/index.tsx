@@ -61,7 +61,7 @@ export default function Main() {
 
         <S.RankingTitle isApp={isApp}>
           <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>
-          <S.RankingTitleText isApp={isApp}>이름/전공</S.RankingTitleText>
+          <S.RankingTitleText isApp={isApp}>이름/트랙</S.RankingTitleText>
           <S.RankingTitleText isApp={isApp}>누적 씨앗 개수</S.RankingTitleText>
         </S.RankingTitle>
 
@@ -112,21 +112,23 @@ export default function Main() {
         <AnimatePresence>
           {selectedIndex !== null && balloonPosition && (
             <CheerBalloon
-              ref={balloonRef}
-              isApp={isApp}
-              x={balloonPosition.x}
-              y={balloonPosition.y}
-              onClose={() => setSelectedIndex(null)}
-              onCheerClick={() => {
-                const { userId, name } = rankingData[selectedIndex!];
-                navigate(`/cheer/write?userId=${userId}&name=${encodeURIComponent(name)}`);
-                setSelectedIndex(null);
-              }}
-              
-              onProfileClick={() => {
-                setShowProfilePopup(true);
-              }}
-            />
+            ref={balloonRef}
+            isApp={isApp}
+            x={balloonPosition.x}
+            y={balloonPosition.y}
+            userId={rankingData[selectedIndex!].userId}         // 추가
+            userName={rankingData[selectedIndex!].name}         // 추가
+            onClose={() => setSelectedIndex(null)}
+            onCheerClick={() => {
+              const { userId, name } = rankingData[selectedIndex!];
+              navigate(`/cheer/write?userId=${userId}&name=${encodeURIComponent(name)}`);
+              setSelectedIndex(null);
+            }}
+            onProfileClick={() => {
+              setShowProfilePopup(true);
+            }}
+          />
+
           )}
         </AnimatePresence>
 
@@ -136,6 +138,8 @@ export default function Main() {
             userName={rankingData[selectedIndex].name}
             generationAndPart={`${rankingData[selectedIndex].generation}기 ${convertTrackToString(rankingData[selectedIndex].track)}`}
             profileImg={rankingData[selectedIndex].profileImageUrl}
+            major={rankingData[selectedIndex].major}
+            githubId={rankingData[selectedIndex].githubAccount}
             onClose={() => setShowProfilePopup(false)}
           />
         )}

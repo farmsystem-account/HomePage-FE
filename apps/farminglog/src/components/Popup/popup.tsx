@@ -267,7 +267,7 @@ const InfoLayout: React.FC<PopupProps> = ({
             <S.HeaderContext $isApp={isApp} $isMobile={isMobile}>
                 <p>씨앗 모으기 퀘스트: 매일 00시 기준 초기화</p>
                 <p>하루에 모을 수 있는 최대 씨앗 개수: 8개</p>
-·           </S.HeaderContext>
+            </S.HeaderContext>
           </S.FarmingLogEditorContainerHeader>
       </>
   );

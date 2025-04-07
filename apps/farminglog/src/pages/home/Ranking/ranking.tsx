@@ -1,4 +1,5 @@
-import { useRef, useEffect, useState } from 'react';
+//ranking.tsx
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import * as S from './ranking.styled';
@@ -13,11 +14,7 @@ import { useUserRankingQuery } from '@/services/query/useUserRankingQuery';
 import CheerBalloon from '@/pages/ranking/components/CheerBalloon';
 import ProfilePopup from '@/components/Popup/ProfilePopup';
 
-// 컨테이너 기준의 좌표를 계산하는 함수
-const getMousePos = (
-  e: MouseEvent,
-  container?: HTMLElement | null
-): { x: number; y: number } => {
+const getMousePos = (e: MouseEvent, container?: HTMLElement | null) => {
   if (container) {
     const bounds = container.getBoundingClientRect();
     return {
@@ -31,31 +28,24 @@ const getMousePos = (
 export default function RankingPreview() {
   const navigate = useNavigate();
   const { isMobile, isApp, isTablet } = useMediaQueries();
-
-  // 기준 컨테이너 ref (전체 랭킹 영역)
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 풍선 표시 상태
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [balloonIndex, setBalloonIndex] = useState<number | null>(null);
   const [balloonPosition, setBalloonPosition] = useState<{ x: number; y: number } | null>(null);
-  const [showProfilePopup, setShowProfilePopup] = useState(false);
-  const balloonRef = useRef<HTMLDivElement>(null);
+  const [popupIndex, setPopupIndex] = useState<number | null>(null);
 
-  // 랭킹 데이터 불러오기
   const { data, isLoading } = useUserRankingQuery();
 
-  // 랭킹 아이템 및 풍선 바깥 클릭 시 풍선 닫기
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest('.ranking-item') && !target.closest('.cheer-balloon')) {
-        setSelectedIndex(null);
+        setBalloonIndex(null);
         setBalloonPosition(null);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () =>
-      document.removeEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const getBgColor = (rank: number) => {
@@ -67,13 +57,32 @@ export default function RankingPreview() {
 
   if (isLoading || !data) return null;
 
-  // 미리보기용: 상위 3명 (내 랭크 포함) -> null 필터링
+  // 상위 3명만 보여주는 예시
   const previewRankingData = [...data.userRankList.slice(0, 3)].filter(item => item !== null);
 
+  // 랭킹 클릭 -> 풍선 표시
+  const handleRankItemClick = (e: React.MouseEvent, index: number) => {
+    const balloonWidth = 210;
+    const balloonHeight = 120;
+    const pos = getMousePos(e.nativeEvent, containerRef.current);
+    const x = pos.x - balloonWidth / 2;
+    const y = pos.y - balloonHeight;
+
+    setBalloonIndex(index);
+    setBalloonPosition({ x, y });
+  };
+
+  // 풍선에서 "프로필 보기" 클릭
+  const handleProfileClick = () => {
+    if (balloonIndex !== null) {
+      setBalloonIndex(null);
+      setBalloonPosition(null);
+      setPopupIndex(balloonIndex);
+    }
+  };
 
   return (
     <>
-      {/* 기준 컨테이너에 ref 추가 */}
       <S.ProfileWrapper ref={containerRef} $isMobile={isMobile} $isTablet={isTablet}>
         <S.TitleBox $isMobile={isMobile} $isTablet={isTablet}>
           <S.Title $isMobile={isMobile}>랭킹</S.Title>
@@ -98,36 +107,22 @@ export default function RankingPreview() {
         </S.RankingTitle>
 
         <S.RankingList>
-          {previewRankingData.map((item, index) => (
+          {previewRankingData.map((item, idx) => (
             <S.RankingItem
               key={item.userId}
               className="ranking-item"
               bgColor={getBgColor(item.rank)}
               isMe={false}
               isApp={isApp}
-              onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-                // 풍선 크기 (px)
-                const balloonWidth = 210;
-                const balloonHeight = 120;
-
-                // SyntheticEvent의 nativeEvent를 사용하여 컨테이너 기준 좌표 계산
-                const pos = getMousePos(e.nativeEvent, containerRef.current);
-                // 풍선이 클릭한 위치에서 중앙 상단에 위치하도록 보정
-                const x = pos.x - balloonWidth / 2;
-                const y = pos.y - balloonHeight;
-
-                setSelectedIndex(index);
-                setBalloonPosition({ x, y });
-              }}
+              onClick={(e) => handleRankItemClick(e, idx)}
             >
               <S.RankBox>
                 <S.RankNumber isApp={isApp}>{item.rank}</S.RankNumber>
                 {item.rank <= 3 && <S.CrownIcon src={CrownImg} alt="왕관" />}
               </S.RankBox>
 
-              {/* 균형을 맞추기 위한 더미 요소 */}
               <div style={{ width: '140px', visibility: 'hidden' }} />
-              
+
               <S.ProfileSection>
                 <S.ProfileIcon src={item.profileImageUrl || FarmLogoImg} />
                 <S.ColumnBox>
@@ -144,31 +139,46 @@ export default function RankingPreview() {
         </S.RankingList>
 
         <AnimatePresence>
-          {selectedIndex !== null && balloonPosition && (
+          {balloonIndex !== null && balloonPosition && (
             <CheerBalloon
-              ref={balloonRef}
               isApp={isApp}
               x={balloonPosition.x}
               y={balloonPosition.y}
-              onClose={() => setSelectedIndex(null)}
-              onCheerClick={() => {
-                setSelectedIndex(null);
+              /** ranking 데이터 중 현재 풍선 띄워진 유저 정보 전달 */
+              userId={previewRankingData[balloonIndex].userId}
+              userName={previewRankingData[balloonIndex].name}
+              onClose={() => {
+                setBalloonIndex(null);
+                setBalloonPosition(null);
+              }}
+              // (userId, userName) 넘겨서 /cheer/write?userId=...&name=... 로 이동
+              onCheerClick={(userId, userName) => {
+                setBalloonIndex(null);
+                setBalloonPosition(null);
+                navigate(`/cheer/write?userId=${userId}&name=${userName}`);
               }}
               onProfileClick={() => {
-                setShowProfilePopup(true);
+                handleProfileClick();
               }}
             />
           )}
         </AnimatePresence>
       </S.ProfileWrapper>
 
-      {showProfilePopup && selectedIndex !== null && (
+      {/* 프로필 팝업 */}
+      {popupIndex !== null && (
         <ProfilePopup
-          isOpen={showProfilePopup}
-          userName={previewRankingData[selectedIndex].name}
-          generationAndPart={`${previewRankingData[selectedIndex].generation}기 ${convertTrackToString(previewRankingData[selectedIndex].track)}`}
-          profileImg={previewRankingData[selectedIndex].profileImageUrl}
-          onClose={() => setShowProfilePopup(false)}
+          isOpen={true}
+          userName={previewRankingData[popupIndex].name}
+          generationAndPart={`${previewRankingData[popupIndex].generation}기 ${convertTrackToString(
+            previewRankingData[popupIndex].track
+          )}`}
+          profileImg={previewRankingData[popupIndex].profileImageUrl}
+          major={previewRankingData[popupIndex].major}
+          githubId={previewRankingData[popupIndex].githubAccount}
+          onClose={() => {
+            setPopupIndex(null);
+          }}
         />
       )}
     </>

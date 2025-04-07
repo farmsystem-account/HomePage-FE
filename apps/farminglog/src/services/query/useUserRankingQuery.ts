@@ -9,6 +9,8 @@ export interface RankUser {
   generation: number;
   track: string;
   totalSeed: number;
+  major: string;
+  githubAccount: string;
 }
 
 export interface UserRankingResponse {
