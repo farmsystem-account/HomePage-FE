@@ -9,8 +9,8 @@ interface CheerBalloonProps {
   x: number;
   y: number;
   /** 랭킹 아이템의 userId, userName 추가 */
-  userId: number;
-  userName: string;
+  userId: number|0;
+  userName: string|'';
 
   isApp: boolean;
   onClose: () => void;
