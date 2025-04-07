@@ -11,6 +11,8 @@ import { useUserInfoQuery } from '@repo/auth/services/query/useUserInfoQuery';
 import { useUpdateUserMutation } from '@repo/auth/services/mutation/useUpdateUserMutation';
 // import { useUserStore } from '@repo/auth/stores/userStore';
 import { usePresignedUrlMutation } from '@/services/mutation/usePresignedUrlMutation'; 
+import { convertTrackToString } from '@/utils/convertTrackToString';
+import { convertRoleToString } from '@/utils/convertRoleToString';
 
 export default function AppView() {
   const [isEditView, setIsEditView] = useState(false);
@@ -145,7 +147,7 @@ export default function AppView() {
           <S.ColumnBox>
             <S.AppName>{userName}</S.AppName>
             <S.RowBox>
-              <S.AppRole>{user?.role}</S.AppRole>
+              <S.AppRole>{user?.role ? convertRoleToString(user.role) : ''}</S.AppRole>
               <S.EditButton onClick={() => setIsEditView(true)}>수정</S.EditButton>
             </S.RowBox>
           </S.ColumnBox>
@@ -154,7 +156,7 @@ export default function AppView() {
 
         <S.AppInfoTable>
           <S.AppInfoRow><span>전공</span><strong>{user?.major}</strong></S.AppInfoRow>
-          <S.AppInfoRow><span>트랙</span><strong>{user?.track}</strong></S.AppInfoRow>
+          <S.AppInfoRow><span>트랙</span><strong>{user?.track ? convertTrackToString(user.track) : ''}</strong></S.AppInfoRow>
           <S.AppInfoRow><span>기수</span><strong>{user?.generation}기</strong></S.AppInfoRow>
           <S.AppInfoRow><span>학번</span><strong>{user?.studentNumber}</strong></S.AppInfoRow>
           <S.AppInfoRow><span>전화번호</span><strong>{user?.phoneNumber}</strong></S.AppInfoRow>
