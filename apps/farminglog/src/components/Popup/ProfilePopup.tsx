@@ -1,7 +1,7 @@
 import * as S from "./profilePopup.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
 import CloseIcon from "../../assets/Icons/close.png";
-import GithubIcon from "../../assets/Icons/github.svg";
+import GithubIcon from "../../assets/Icons/Github.png";
 
 interface PopupProps {
   userName: string;
