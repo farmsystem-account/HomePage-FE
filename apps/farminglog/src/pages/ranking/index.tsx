@@ -136,7 +136,10 @@ export default function Main() {
             userName={rankingData[selectedIndex].name}
             generationAndPart={`${rankingData[selectedIndex].generation}기 ${convertTrackToString(rankingData[selectedIndex].track)}`}
             profileImg={rankingData[selectedIndex].profileImageUrl}
+            major={rankingData[selectedIndex].major}
+            githubId={rankingData[selectedIndex].githubAccount}
             onClose={() => setShowProfilePopup(false)}
+            stopPropagation={(e) => e.stopPropagation()}
           />
         )}
 
