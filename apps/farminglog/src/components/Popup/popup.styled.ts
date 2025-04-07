@@ -78,7 +78,7 @@ export const ProfileCircle = styled.div<{ $isMobile: boolean }>`
   height: ${({ $isMobile }) => ($isMobile ? '50px' : '120px')};
   border-radius: 50%;
   background: #f5f5f5;
-  border: 2px solid #00c37d;
+  border: 2px solid #29D4A7;
   overflow: hidden;
   display: flex;
   align-items: start;
@@ -122,6 +122,7 @@ export const CenteredPopupText = styled.button<{ $isMobile: boolean }>`
   text-align: center;
   width: 100%;
   cursor: pointer;
+  padding: ${({ $isMobile }) => ($isMobile ? '0px' : '8px')};
 `;
 
 export const PopupContainer = styled.div<{ $isMobile: boolean }>`
@@ -160,8 +161,8 @@ export const SubMessage = styled.p<{ $isMobile: boolean }>`
 export const Divider = styled.hr<{ $isMobile: boolean }>`
   width: 100%;
   border: none;
-  border-top: ${({ $isMobile }) => ($isMobile ? '1px' : '2px')} solid #5CD282;
-  margin: ${({ $isMobile }) => ($isMobile ? '16px 0 8px 0' : '32px 0 16px 0')};
+  border-top: ${({ $isMobile }) => ($isMobile ? '1px' : '2px')} solid #29D4A7;
+  margin: ${({ $isMobile }) => ($isMobile ? '12px 0 8px 0' : '32px 0 16px 0')};
 
 `;
 
@@ -181,7 +182,7 @@ export const ConfirmButton = styled.button<{ $isMobile: boolean }>`
 `;
 
 export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
-  width: ${({ $isApp, $isMobile }) => ($isApp ? '220px' : $isMobile ? '400px' : '550px')};
+  width: ${({ $isApp, $isMobile }) => ($isApp ? '300px' : $isMobile ? '400px' : '550px')};
   min-height: ${({ $isApp, $isMobile }) => ($isApp ? '100px' : $isMobile ? '100px' : '130px')};
   flex-shrink: 0;
 
@@ -193,6 +194,7 @@ export const FarmingLogEditorContainerHeader = styled.div<ResponsiveProps>`
 
   display: flex;
   flex-direction: column;
+  padding-bottom: 20px;
 `;
 
 export const HeaderPinContainer = styled.div<ResponsiveProps>`

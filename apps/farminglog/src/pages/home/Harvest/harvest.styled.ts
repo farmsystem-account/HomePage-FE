@@ -121,7 +121,7 @@ export const ParallelogramBox = styled.div<{
   height: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "50px" : $isTablet ? "60px" : "70px"};
   transform: skewX(-10deg);
-  background-color: ${({ $isActive }) => ($isActive ? "#FFA500" : "#FCFCFC")};
+  background-color: ${({ $isActive }) => ($isActive ? "#FFA500" : "#EEE")};
   border-radius: 10px;
   display: flex;
   align-items: center;
