@@ -192,7 +192,7 @@ export const Content = styled.p<ResponsiveProps>`
   width: 100%;
   max-width: 790px;
   min-height: 60px;
-  white-space: normal;
+  white-space: pre-line;
   overflow-wrap: break-word;  /* 긴 단어를 적절히 나눔 */
   word-break: break-all;      /* 필요시 강제로 줄바꿈 */
   color: #2E2E2E;
