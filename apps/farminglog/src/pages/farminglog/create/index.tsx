@@ -77,6 +77,7 @@ export default function Editor() {
   }, [isEditMode, farminglogTitle, farminglogContent, farminglogCategory]);
 
   const handleCreateFarmingLog = () => {
+
     if (dropDownSelected === null) {
       setPopupOpen(true);
       setPopupMessage({ main: '안내', sub: '카테고리를 선택해주세요.' });
@@ -136,7 +137,6 @@ export default function Editor() {
       setPopupOpen(true);
       setPopupMessage({ main: '안내', sub: '파밍로그 작성 완료되었습니다.' });
     }
-
     setIsNeedRefresh(true);
   };
 
@@ -263,7 +263,11 @@ export default function Editor() {
         <S.GoBackButton onClick={handleGoBack} $isApp={isApp}>
           <S.ButtonEnnerText $isApp={isApp} $isMobile={isMobile}>돌아가기</S.ButtonEnnerText>
         </S.GoBackButton>
-        <S.CreateButton onClick={handleCreateFarmingLog} $isApp={isApp}>
+        <S.CreateButton 
+          onClick={!popUpOpen ? handleCreateFarmingLog : undefined}
+          $isApp={isApp}
+          disabled={popUpOpen}
+        >
           <S.ButtonEnnerText $isApp={isApp} $isMobile={isMobile}>작성 완료</S.ButtonEnnerText>
         </S.CreateButton>
       </S.ButtonContainer>
