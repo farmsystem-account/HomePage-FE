@@ -12,11 +12,11 @@ export function convertUrlsToLinks(text: string) {
 
   const elements = words.map((word, index) => {
     if (urlRegex.test(word)) {
-      const href = word.startsWith('http') ? word : `http://${word}`;
+      // const href = word.startsWith('http') ? word : `http://${word}`;
       return (
         <StyledLink
           key={`link-${index}`}
-          href={href}
+          href={word}
           target="_blank"
           rel="noopener noreferrer"
         >

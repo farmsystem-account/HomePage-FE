@@ -44,7 +44,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
     fontColor?: string;
   } | null>(null);
 
-  const isButtonDisabled = contentCount < 20;
+  // const isButtonDisabled = contentCount < 20;
 
   const navigate = useNavigate();
   const { isApp, isMobile, isTablet, isDesktop } = useMediaQueries();
@@ -97,7 +97,6 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
       setPopupOpen(true);
       return;
     }
-
     sendCheer(
       {
         cheererId: user.userId,
@@ -119,7 +118,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
           });
           setPopupOpen(true);
         },
-        onError: (error: any) => {
+        onError: (error: { status?: number; message?: string }) => {
           if (error?.status === 400) {
             setPopupMessage({
               main: '본인이 아닌 다른 사람을 응원해주세요!',
@@ -180,7 +179,12 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
             />
           </S.InputArea>
 
-          <S.SubmitButton $isMobile={isMobile} $isTablet={isTablet} disabled={isButtonDisabled} $disabled={isButtonDisabled} onClick={handleSubmit}>
+          <S.SubmitButton 
+            $isMobile={isMobile} $isTablet={isTablet} 
+            disabled={contentCount < 20 || popupOpen}
+            $disabled={contentCount < 20 || popupOpen} 
+            onClick={!popupOpen ? handleSubmit : undefined}
+          >
             응원하기
           </S.SubmitButton>
         </S.ContentWrapper>
