@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 100px 0 30px;
+  padding: 100px 20px 30px;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -23,9 +23,9 @@ export const NewsPageTitle = styled.h2`
   font-weight: 700;
   line-height: 40px; /* 100% */
 
-  padding: 10px 20px;
+  padding: 10px 0;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1000px;
 `;
 
 export const DescriptionContainer = styled.div`
