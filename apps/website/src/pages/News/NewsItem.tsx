@@ -1,5 +1,5 @@
 import * as S from './NewsItem.styled';
-import { newsData } from '@/models/news';
+import { newsListData } from '@/models/news';
 import PlaceHolder from '@/assets/Images/news/PlaceHolder.png';
 import Logger from '@/utils/Logger';
 import { useNavigate } from 'react-router';
@@ -7,19 +7,22 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 
 const dummyTags = ['태그1'];
 
-export default function NewsItem({ newsData }: { newsData?: newsData }) {
+export default function NewsItem({ newsListData }: { newsListData?: newsListData }) {
   const navigate = useNavigate();
   const isMobile = useMediaQueries().isMobile;
 
-  if (!newsData) {
+  if (!newsListData) {
     return null;
   }
 
-  Logger.log(newsData);
-  const { title = "", content = "" } = newsData;
+  Logger.log(newsListData);
+  const { 
+    title = "", 
+    // content = "",
+    content = "백엔드에서데이터를안주면서디자인상에는 content, 즉 글목록이 있기에 일단 이렇게 아무 텍스트나 채워넣으렵니다. 아무래도 이걸 확인한게 좀 많이 늦은 시간이므로 일단을 이렇게 땜빵하겠습니다. 나중에 커밋로그 다른사람이 뒤져보다 발견하면 그냥 허허 하고 넘어가쇼" 
+  } = newsListData;
   
-  // 아직 썸네일과 태그 정보가 없으므로 placeholder와 dummyTags 사용
-  const thumbnailSrc = PlaceHolder;
+  const thumbnailSrc = newsListData.thumbnailUrl || PlaceHolder;
   const tags = dummyTags;
 
   const maxLength = 200;
@@ -30,7 +33,7 @@ export default function NewsItem({ newsData }: { newsData?: newsData }) {
   return (
     <S.NewsItem 
       $isMobile={isMobile}
-      onClick={() => navigate(`/news/${newsData.newsId}`)}
+      onClick={() => navigate(`/news/${newsListData.newsId}`)}
     >
       <S.Thumbnail src={thumbnailSrc} alt={title} $isMobile={isMobile} />
       <S.NewsContent $isMobile={isMobile}>

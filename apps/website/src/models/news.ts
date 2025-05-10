@@ -6,14 +6,24 @@ interface ApiResponse<T = unknown> {
   data?: T
 }
 
+export interface newsListData {
+  newsId: number;
+  title: string;
+  thumbnailUrl: string;
+  content: string;
+}
+
+// 단일 뉴스 데이터
 export interface newsData {
   newsId: number;
   title: string;
+  thumbnailUrl: string;
   content: string;
+  imageUrls: string[];
 };
 
 // /api/news
-export type NewsGETResponse = ApiResponse<newsData[]>;
+export type NewsGETResponse = ApiResponse<newsListData[]>;
 export type NewsIdGETResponse = ApiResponse<newsData>;
 
 // /api/admin/news
