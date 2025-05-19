@@ -57,7 +57,16 @@ export default function Main() {
   return (
     <WhiteContentContainer title='랭킹' >
 
-        <Sign isApp={isApp} isMobile={isMobile} texts={headerTexts} />
+        <S.PhaseTitle $isMobile={isMobile}>
+           씨앗이 쌓이면, 랭킹이 바로 올라요!
+        </S.PhaseTitle>
+        <S.PhaseDesc $isMobile={isMobile}>
+          · 랭킹은 씨앗을 기준으로 0시간마다 정렬돼요.
+          <br />
+          · 씨앗은 트랙별 우수활동자 심사에 반영돼요.
+          <br />
+          · 친구 프로필을 눌러 응원할 수 있어요!
+        </S.PhaseDesc>
 
         <S.RankingTitle isApp={isApp}>
           <S.RankingTitleText isApp={isApp}>순위</S.RankingTitleText>

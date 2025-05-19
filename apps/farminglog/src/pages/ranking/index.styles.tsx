@@ -286,3 +286,30 @@ export const Balloon = styled.img`
   height: auto;
   z-index: 10;
 `;
+
+
+export const PhaseTitle = styled.div<{$isMobile: boolean }>`
+  font-family: 'Pretendard Variable';
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.24px;
+
+  text-align: center;          /* 가로 중앙 */
+  display: flex;              
+  align-items: center;         /* 세로 중앙 */
+  justify-content: center;
+  margin-bottom: -30px;     
+`;
+
+export const PhaseDesc = styled.div<{ $isMobile: boolean }>`
+  display: inline-flex;
+  margin: 0 auto;
+  justify-content: flex-start;
+  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
+  font-weight: 400;
+  font-family: "Pretendard Variable";
+  line-height: ${({ $isMobile }) => ($isMobile ? '20px' : '30px')};
+  letter-spacing: ${({ $isMobile }) => ($isMobile ? '-0.12px' : '-0.24px')};
+
+`;
