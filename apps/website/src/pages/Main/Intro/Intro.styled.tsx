@@ -233,21 +233,20 @@ export const LogoDescript = styled.div<{ $isMobile: boolean; $isTablet: boolean 
 export const BigDguLogo = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   position: absolute;
   left: 90%;
-  /* 중앙 정렬까지 하고 싶다면 추가 */
+
   transform: translateX(-50%);
 
-  /* 폭만 바꾸고 정사각 비율 고정 */
   width: ${({ $isMobile, $isTablet }) =>
     $isMobile ? "60vw" : $isTablet ? "50vw" : "40vw"};
-  max-width: 900px;   /* PC 한계 */
-  min-width: 300px;   /* 초소형 기기 */
+  max-width: 850px;   
+  min-width: 300px;   
 
-  aspect-ratio: 1 / 1;  /* 정사각형 유지 */
+  aspect-ratio: 1 / 1;  
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: contain;  /* 여백 없이 꽉 채우되 비율 유지 */
+    object-fit: contain;  
     pointer-events: none;
     user-select: none;
   }
