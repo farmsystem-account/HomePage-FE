@@ -169,11 +169,12 @@ export const ColumnBox = styled.div`
 
 export const RankingTitle = styled.div<{ isApp: boolean }>`
   margin-top: 30px;
-  margin-bottom: -30px;
+  margin-bottom: -40px;
   display: flex;
   flex-direction: row;
-  width: 80%;
-  justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
+  left: 2%;
+  width: 82%;
+  justify-content: ${({ isApp }) => (isApp ? 'space-between' : 'space-around')};
   align-items: center;
   border-radius: ${({ isApp }) => (isApp ? '3px' : '10px')};
 `;
@@ -182,6 +183,7 @@ export const RankingTitleText = styled.div<{ isApp: boolean }>`
   width: ${({ isApp }) => (isApp ? '75px' : '90px')};
   font-size: ${({ isApp }) => (isApp ? '9px' : '12px')};
   margin-bottom: 10px;
+  text-align: center;
 `;
 
 
