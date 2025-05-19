@@ -175,6 +175,7 @@ export const RankingTitle = styled.div<{ isApp: boolean }>`
   width: 80%;
   justify-content: ${({ isApp }) => (isApp ? 'space-around' : 'space-around')};
   align-items: center;
+  border-radius: ${({ isApp }) => (isApp ? '3px' : '10px')};
 `;
 
 export const RankingTitleText = styled.div<{ isApp: boolean }>`
