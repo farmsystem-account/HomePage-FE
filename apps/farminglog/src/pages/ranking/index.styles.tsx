@@ -193,6 +193,7 @@ export const RankingList = styled.div`
   gap: 8px;
   width: 100%;
   align-items: center;
+  padding-bottom: 40px;
 `;
 
 export const RankingItem = styled.div<{
