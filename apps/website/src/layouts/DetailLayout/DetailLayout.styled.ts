@@ -1,10 +1,16 @@
 import styled from "styled-components";
 
-export const DetailCard = styled.div`
+interface LayoutProps {
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+  $isDesktop?: boolean;
+}
+
+export const DetailCard = styled.div<LayoutProps>`
   display: flex;
   width: 100%;
   max-width: 1000px;
-  padding: 50px;
+  padding: ${({ $isMobile }) => ($isMobile ? "20px": "50px")};
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
@@ -12,44 +18,45 @@ export const DetailCard = styled.div`
   border-radius: 20px;
   background: var(--FarmSystem_White, #FCFCFC);
   box-shadow: 0px 0px 20px 5px var(--FarmSystem_LightGrey, #E5E5E5);
-  gap: 70px;
+  gap: ${({ $isMobile }) => ($isMobile ? "20px": "70px")};
 `;
 
-export const GoBackContainer = styled.div`
+export const GoBackContainer = styled.div<LayoutProps>`
   display: flex;
   align-items: left;
   align-self: stretch;
 `;
 
-export const GoBackButton = styled.button`
+export const GoBackButton = styled.button<LayoutProps>`
   display: flex;
   align-items: center;
   align-self: stretch;
   cursor: pointer;
 
   color: var(--FarmSystem_Green01, #28723F);
-  font-size: 24px;
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "24px")};
+
   font-style: normal;
   font-weight: 500;
   line-height: 40px; /* 166.667% */
   letter-spacing: -0.24px;
 `;
 
-export const GoBackImg = styled.img`
-  width: 30px;
-  height: 40px;
+export const GoBackImg = styled.img<LayoutProps>`
+  width: ${({ $isMobile }) => ($isMobile ? "20px": "30px")};;
+  height: ${({ $isMobile }) => ($isMobile ? "24px": "40px")};
 `;
 
-export const TitleContainer = styled.div`
+export const TitleContainer = styled.div<LayoutProps>`
   display: flex;
   max-width: 800px;
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
-  gap: 30px;
+  gap: ${({ $isMobile }) => ($isMobile ? "15px": "30px")};
 `;
 
-export const DateAndTagContainer = styled.div`
+export const DateAndTagContainer = styled.div<LayoutProps>`
   display: flex;
   padding: 10px 0px;
   flex-direction: row;
@@ -60,19 +67,19 @@ export const DateAndTagContainer = styled.div`
   width: 100%;
 `;
 
-export const Date = styled.p`
+export const Date = styled.p<LayoutProps>`
   display: flex;
   color: var(--FarmSystem_Black, #191919);
-  font-size: 20px;
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
 `;
 
-export const Tag = styled.p`
+export const Tag = styled.p<LayoutProps>`
   display: flex;
-  height: 40px;
+  height: ${({ $isMobile }) => ($isMobile ? "32px": "40px")};
   padding: 5px 20px;
   justify-content: center;
   align-items: center;
@@ -82,14 +89,14 @@ export const Tag = styled.p`
 
   color: var(--FarmSystem_White, #FCFCFC);
   text-align: center;
-  font-size: 20px;
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 100% */
   letter-spacing: -0.24px;
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h2<LayoutProps>`
   display: flex;
   padding: 10px 0px;
   justify-content: start;
@@ -99,7 +106,7 @@ export const Title = styled.h2`
 
   color: var(--FarmSystem_Black, #191919);
   font-family: "Pretendard Variable";
-  font-size: 32px;
+  font-size: ${({ $isMobile }) => ($isMobile ? "24px": "32px")};
   font-style: normal;
   font-weight: 700;
   line-height: 40px; /* 125% */
@@ -109,16 +116,16 @@ export const Title = styled.h2`
   max-width: 800px;
 `;
 
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<LayoutProps>`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 `;
 
-export const Thumbnail = styled.img`
+export const Thumbnail = styled.img<LayoutProps>`
   width: 827.92px;
-  height: 533px;
+  // height: 533px;
   flex-shrink: 0;
   aspect-ratio: 827.92/533.00;
 
@@ -127,14 +134,14 @@ export const Thumbnail = styled.img`
   background: url(<path-to-image>) lightgray 50% / cover no-repeat;
 `;
 
-export const ContentBox = styled.p`
+export const ContentBox = styled.p<LayoutProps>`
   width: 100%;
   max-width: 800px;
   white-space: pre-wrap;
 
   color: var(--FarmSystem_Black, #191919);
   font-family: "Pretendard Variable";
-  font-size: 20px;
+  font-size: ${({ $isMobile }) => ($isMobile ? "18px": "20px")};;
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 150% */
