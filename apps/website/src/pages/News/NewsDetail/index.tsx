@@ -42,8 +42,8 @@ export default function NewsDetail() {
       <DetailLayout
         title={newsData?.title}
         content={newsData?.content}
-        date={"모름"} // newsData?.createdAt
-        tag={"홍보용"}  // newsData?.tag
+        date={newsData?.createdAt} 
+        tag={newsData?.tags?.join(", ") || "기타"}
         thumbnailUrl={newsData?.thumbnailUrl}
         imageUrls={newsData?.imageUrls}
       />

@@ -5,8 +5,6 @@ import Logger from '@/utils/Logger';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 
-const dummyTags = ['태그1'];
-
 export default function NewsItem({ newsListData }: { newsListData?: newsListData }) {
   const navigate = useNavigate();
   const isMobile = useMediaQueries().isMobile;
@@ -18,17 +16,13 @@ export default function NewsItem({ newsListData }: { newsListData?: newsListData
   Logger.log(newsListData);
   const { 
     title = "", 
-    // content = "",
-    content = "백엔드에서데이터를안주면서디자인상에는 content, 즉 글목록이 있기에 일단 이렇게 아무 텍스트나 채워넣으렵니다. 아무래도 이걸 확인한게 좀 많이 늦은 시간이므로 일단을 이렇게 땜빵하겠습니다. 나중에 커밋로그 다른사람이 뒤져보다 발견하면 그냥 허허 하고 넘어가쇼" 
-  } = newsListData;
-  
+    tags = [],
+    contentPreview  } = newsListData;
   const thumbnailSrc = newsListData.thumbnailUrl || PlaceHolder;
-  const tags = dummyTags;
-
-  const maxLength = 200;
-  const truncatedContent = content.length > maxLength 
-    ? content.slice(0, maxLength) + '...'
-    : content;
+  const maxLength = 800;
+  const truncatedContent = contentPreview.length > maxLength 
+    ? contentPreview.slice(0, maxLength) + '...'
+    : contentPreview;
 
   return (
     <S.NewsItem 

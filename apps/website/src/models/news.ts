@@ -10,7 +10,10 @@ export interface newsListData {
   newsId: number;
   title: string;
   thumbnailUrl: string;
-  content: string;
+  contentPreview: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 // 단일 뉴스 데이터
@@ -20,6 +23,9 @@ export interface newsData {
   thumbnailUrl: string;
   content: string;
   imageUrls: string[];
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 // /api/news

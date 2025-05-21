@@ -14,6 +14,7 @@ export const NewsItem = styled.button<MobileProps>`
   background: #F1F1F1;
   cursor: pointer;
   max-width: 1000px;
+  width: 100%;
 `;
 
 export const Thumbnail = styled.img<MobileProps>`
