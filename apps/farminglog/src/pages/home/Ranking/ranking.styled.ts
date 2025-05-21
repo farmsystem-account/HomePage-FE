@@ -84,7 +84,8 @@ export const Phrase = styled.div<{ isApp: boolean }>`
 export const RankingTitle = styled.div<{ isApp: boolean }>`
   margin-top: 30px;
   display: flex;
-  width: 80%;
+  width: 82%;
+  left: 2%;
   justify-content: ${({ isApp }) => (isApp ? 'space-between' : 'space-around')};
   align-items: center;
 `;

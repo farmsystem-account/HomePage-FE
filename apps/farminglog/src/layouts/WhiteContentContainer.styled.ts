@@ -16,6 +16,8 @@ export const MainContainer = styled.div<ResponsiveProps>`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  
+
 `;
 
 export const ContentContainer = styled.div<ResponsiveProps>`
@@ -31,6 +33,7 @@ export const ContentContainer = styled.div<ResponsiveProps>`
 
   border-radius: 5px;
   background: var(--FarmSystem_White, #FCFCFC);
+  border-radius: ${({ $isMobile }) => ($isMobile ? '3px' : '10px')};
 `;
 
 
@@ -45,6 +48,8 @@ export const ContentContainerHeader = styled.div<ResponsiveProps>`
     background: var(--FarmSystem_White, #FCFCFC);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   `}
+  border-radius: ${({ $isMobile }) =>
+  $isMobile ? '3px 3px 0 0' : '10px 10px 0 0'};
 `;
 
 export const ContentContainerTitle = styled.h1<ResponsiveProps>`

@@ -6,6 +6,7 @@ import Popup from '@/components/Popup/Popup';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { motion } from 'framer-motion';
 import IntroLogo from '../../../assets/Icons/IntroLogo.svg';
+import BigDguLogo from '../../../assets/DGULogo_big.png';
 
 const IS_RECRUIT = false; // 모집 기간 여부
 
@@ -144,16 +145,16 @@ const Intro = () => {
 
   return (
     <S.Container id="about" $isMobile={isMobile} $isTablet={isTablet}>
-      <S.Bud $isMobile={isMobile} $isTablet={isTablet}>🌱</S.Bud>
+      <S.BigDguLogo $isMobile={isMobile} $isTablet={isTablet}>
+        <img src = {BigDguLogo} alt = "" />
+      </S.BigDguLogo>
+      <S.Logo $isMobile={isMobile} $isTablet={isTablet}>
+        <img src = {logo} alt = "" /> </S.Logo>
       <S.Description $isMobile={isMobile} $isTablet={isTablet}>
         미래를 준비하고 성장하는 여정, <br />
         Farm System에서 함께하세요.
       </S.Description>
-      <S.Logo $isMobile={isMobile} $isTablet={isTablet}>
-        <img src = {logo} alt = "" />
-        Farm System
-      </S.Logo>
-
+      <S.LogoDescript $isMobile={isMobile} $isTablet={isTablet}>Farm System</S.LogoDescript>
       <S.TrackList $isMobile={isMobile} $isTablet={isTablet}>
       SW/AI 분야에 관심있는 학생들로 구성된 <a>자율 학습 동아리</a>로, <br/>
       <a>Union · 게임/영상 · 보안/웹 · 사물인터넷/로봇 · 인공지능 · 빅데이터</a>의 <br/>
