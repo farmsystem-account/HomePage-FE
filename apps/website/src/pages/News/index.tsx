@@ -40,7 +40,7 @@ export default function News() {
       {newsData && newsData.length > 0 ? (
         <S.NewsContainer>
           {newsData.map((news, index) => (
-            <NewsItem key={index} newsData={news} />
+            <NewsItem key={index} newsListData={news} />
           ))}
         </S.NewsContainer>
       ) : (

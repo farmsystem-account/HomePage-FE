@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getNews, getNewsById } from '@/services/news';
-import { NewsGETResponse, NewsIdGETResponse, newsData } from '@/models/news';
+import { NewsGETResponse, NewsIdGETResponse, newsData, newsListData } from '@/models/news';
 import { handleApiError } from '@/utils/handleApiError';
 
 /** 소식 목록 불러오기 */
 export const useNewsList = () => {
-  const [data, setData] = useState<newsData[]>([]);
+  const [data, setData] = useState<newsListData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 

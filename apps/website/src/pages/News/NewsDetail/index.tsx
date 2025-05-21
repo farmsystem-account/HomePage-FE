@@ -2,14 +2,16 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { useNewsDetail } from "@/hooks/useNews";
 import Logger from "@/utils/Logger";
+import DetailLayout from "@/layouts/DetailLayout/DetailLayout";
 import * as S from "./index.styled";
-import GoBackArrow from "@/assets/LeftArrow.png";
+import useMediaQueries from "@/hooks/useMediaQueries";
 // import { newsData } from '@/models/news';
 // import PlaceHolder from '@/assets/Images/news/PlaceHolder.png';
 
 export default function NewsDetail() {
   const { newsId } = useParams<{ newsId: string }>();
   const { data: newsData, loading: newsLoading, error: newsError } = useNewsDetail(Number(newsId));
+  const { isMobile, isTablet, isDesktop } = useMediaQueries();
 
   useEffect(() => {
     if (!newsId) return ;
@@ -33,24 +35,18 @@ export default function NewsDetail() {
   }
 
   return (
-    <S.Container>
-      <S.NewsPageTitle>소식</S.NewsPageTitle>
-      <S.NewsDetailCard>
-        <S.GoBackContainer>
-          <S.GoBackButton onClick={() => window.history.back()}>
-            <S.GoBackImg src={GoBackArrow} alt="Go back" />
-            <p>돌아가기</p>
-          </S.GoBackButton>
-        </S.GoBackContainer>
-        <S.TitleContainer>
-          <S.DateAndTagContainer>
-            <S.Date>{/*newsData?.date*/ "(임시)게시일자:  2025년 03월 13일"}</S.Date>
-            <S.Tag>{/*newsData?.tag*/ "(임시) 홍보용"}</S.Tag>
-          </S.DateAndTagContainer>
-          <S.Title>{newsData?.title}</S.Title>
-        </S.TitleContainer>
-        <p>{newsData?.content}</p>
-      </S.NewsDetailCard>
+    <S.Container $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+      <S.NewsPageTitle $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+        소식
+      </S.NewsPageTitle>
+      <DetailLayout
+        title={newsData?.title}
+        content={newsData?.content}
+        date={newsData?.createdAt} 
+        tag={newsData?.tags?.join(", ") || "기타"}
+        thumbnailUrl={newsData?.thumbnailUrl}
+        imageUrls={newsData?.imageUrls}
+      />
     </S.Container>
   );
 }
