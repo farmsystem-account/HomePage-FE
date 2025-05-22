@@ -24,19 +24,6 @@ const ProjectDetail: React.FC = () => {
         
         if (response.data) {
           const projectData = response.data;
-          console.log('Project ID:', projectData.projectId);
-          console.log('Title:', projectData.title);
-          console.log('Introduction:', projectData.introduction);
-          console.log('Content:', projectData.content);
-          console.log('Thumbnail:', projectData.thumbnailImageUrl);
-          console.log('Body Image:', projectData.bodyImageUrl);
-          console.log('Track:', projectData.track);
-          console.log('Participants:', projectData.participants);
-          console.log('Links:', {
-            github: projectData.githubLink,
-            deployment: projectData.deploymentLink,
-            resource: projectData.resourceLink
-          });
           setProject(projectData);
         }
       } catch (err) {
@@ -78,6 +65,7 @@ const ProjectDetail: React.FC = () => {
         tag={getTrackName(project.track)}
         thumbnailUrl={project.thumbnailImageUrl}
         imageUrls={project.bodyImageUrl ? [project.bodyImageUrl] : []}
+        date={project.githubLink}
       />
     </S.Container>
   );
