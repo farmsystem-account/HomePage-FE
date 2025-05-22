@@ -55,7 +55,7 @@ export const FilterTrackButton = styled.button<{$isMobile: boolean; $isTablet: b
   justify-content: space-between;
   font-size: ${(props) => (props.$isMobile ? '12px' : props.$isTablet ? '14px' : '16px')};
   font-weight: 500;
-  width: ${(props) => (props.$isMobile ? '90px' : props.$isTablet ? '110px' : '130px')}; /* 트랙 버튼은 큼 */
+  width: ${(props) => (props.$isMobile ? '120px' : props.$isTablet ? '130px' : '150px')}; /* 트랙 버튼은 큼 */
 `;
 
 /** 기수 드롭다운 */
@@ -77,7 +77,7 @@ export const DropdownTrackMenu = styled.div<{$isMobile: boolean; $isTablet: bool
   position: absolute;
   top: 45px;
   left: 0;
-  width: ${(props) => (props.$isMobile ? '90px' : props.$isTablet ? '110px' : '130px')}; /* 트랙 버튼과 동일한 크기 */
+    width: ${(props) => (props.$isMobile ? '120px' : props.$isTablet ? '130px' : '150px')}; 
   text-align: left;
   background-color: #fff;
   border-radius: 8px;
