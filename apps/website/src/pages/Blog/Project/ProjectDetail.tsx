@@ -3,7 +3,7 @@ import useMediaQueries from '@/hooks/useMediaQueries';
 import { getTrackName } from './ProjectItem';
 import * as S from './ProjectDetail.styles';
 import { useEffect, useState } from 'react';
-import { DetailedProjectResponse, ProjectResponse } from '@/models/project';
+import { DetailedProjectResponse, ProjectDetailResponse } from '@/models/project';
 import { getProjectById } from '@/services/project';
 import DetailLayout from '@/layouts/DetailLayout/DetailLayout';
 import Logger from '@/utils/Logger';

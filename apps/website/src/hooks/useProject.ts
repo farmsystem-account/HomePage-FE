@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { handleApiError } from '@/utils/handleApiError';
 import { getFilteredProjects, getProjectById } from '@/services/project';
-import { Project, ProjectFilterResponse, ProjectFilterApiResponse } from '@/models/project';
+import { Project, ProjectFilterResponse, ProjectFilterApiResponse, ProjectDetailResponse } from '@/models/project';
 import { Track } from '@/models/blog';
 
 /** 필터링된 프로젝트 목록 불러오기 */
@@ -41,7 +41,7 @@ export const useProjectList = (
 
 /** 프로젝트 상세 불러오기 */
 export const useProjectDetail = (projectId: number) => {
-  const [data, setData] = useState<Project | null>(null);
+  const [data, setData] = useState<ProjectDetailResponse['data'] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -50,7 +50,9 @@ export const useProjectDetail = (projectId: number) => {
       setLoading(true);
       try {
         const response = await getProjectById(projectId);
-        setData(response);
+        if (response.data) {
+          setData(response.data);
+        }
       } catch (err) {
         const errorObj = handleApiError(err);
         setError(errorObj);
