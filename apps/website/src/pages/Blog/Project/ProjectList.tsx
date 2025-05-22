@@ -31,7 +31,7 @@ const ProjectList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const pageSize = 6;
 
-  const { data: projects, pageInfo, loading, error } = useProjectList(
+  const { data: projects, loading, error } = useProjectList(
     selectedGrade ? parseInt(selectedGrade) : undefined,
     selectedTrack ? convertTrackToEnum(selectedTrack) : undefined,
     currentPage,
