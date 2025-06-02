@@ -91,12 +91,12 @@ export const Container = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
 export const Logo = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
     display: flex;
     align-items: center;
-    font-size: ${({ $isMobile, $isTablet }) => ($isMobile ? "40px" : $isTablet ? "50px" : "64px")};
+    font-size: ${({ $isMobile, $isTablet }) => ($isMobile ? "40px" : $isTablet ? "50px" : "80px")};
     font-weight: 800;
     margin-bottom: 20px;
-    margin-left: 50px;
+    margin-left: 30px;
     img {
-        width: ${({ $isMobile, $isTablet }) => ($isMobile ? "100px" : $isTablet ? "140px" : "180px")};
+        width: ${({ $isMobile, $isTablet }) => ($isMobile ? "75px" : $isTablet ? "80px" : "100px")};
         height: auto;
     }
 `;
@@ -216,3 +216,38 @@ export const Bud = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
     margin-left: ${({ $isMobile, $isTablet }) => ($isMobile ? "30px" : $isTablet ? "40px" : "50px")};
     top: 116px;
     `;
+
+export const LogoDescript = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
+    display: flex;
+    align-items: center;
+    font-size: ${({ $isMobile, $isTablet }) => ($isMobile ? "40px" : $isTablet ? "50px" : "64px")};
+    font-weight: 800;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    img {
+        width: ${({ $isMobile, $isTablet }) => ($isMobile ? "100px" : $isTablet ? "140px" : "180px")};
+        height: auto;
+    }
+`;
+
+export const BigDguLogo = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
+  position: absolute;
+  left: 90%;
+
+  transform: translateX(-50%);
+
+  width: ${({ $isMobile, $isTablet }) =>
+    $isMobile ? "60vw" : $isTablet ? "50vw" : "40vw"};
+  max-width: 850px;   
+  min-width: 300px;   
+
+  aspect-ratio: 1 / 1;  
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  
+    pointer-events: none;
+    user-select: none;
+  }
+`;

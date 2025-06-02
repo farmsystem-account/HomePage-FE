@@ -98,6 +98,8 @@ export default function RankingPreview() {
           · 랭킹은 씨앗을 기준으로 매일 자정마다 정렬돼요.
           <br />
           · 씨앗은 트랙별 우수활동자 심사에 반영돼요.
+          <br />
+          · 친구 프로필을 눌러 응원할 수 있어요!
         </S.PhaseDesc>
 
         <S.RankingTitle isApp={isApp}>

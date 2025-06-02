@@ -84,7 +84,8 @@ export const Phrase = styled.div<{ isApp: boolean }>`
 export const RankingTitle = styled.div<{ isApp: boolean }>`
   margin-top: 30px;
   display: flex;
-  width: 80%;
+  width: 82%;
+  left: 2%;
   justify-content: ${({ isApp }) => (isApp ? 'space-between' : 'space-around')};
   align-items: center;
 `;
@@ -124,6 +125,7 @@ export const RankingItem = styled.div<{
   align-items: center;
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 12px;
+  cursor: pointer;
 
   border: ${({ isMe }) => (isMe ? '3px solid #29d4a7' : 'none')};
 `;
@@ -173,7 +175,7 @@ export const ProfileIcon = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px;
+  /* padding: 4px; */
 `;
 
 export const ColumnBox = styled.div`

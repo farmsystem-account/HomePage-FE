@@ -4,7 +4,7 @@ enum ApiErrorMessages {
     ALREADY_SUBMITTED = "이미 승인 처리된 블로그입니다.",
   }
 
-  enum Track {
+  export enum Track {
     UNION = "UNION",
     GAMING_VIDEO = "GAMING_VIDEO",
     AI = "AI",

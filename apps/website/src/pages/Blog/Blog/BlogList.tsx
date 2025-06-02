@@ -49,7 +49,7 @@ const BlogList: React.FC = () => {
         </S.SubDescription>
       </S.TableContainer>
 
-      {blogData.length <= 5 ? (
+      {blogData.length <= 7 ? (
           <S.TextContainer $isMobile={isMobile}>
             아직 등록된 글이 없어요.
             <a href="/create">파밍로그를 통해 글을 작성해보세요!</a>
