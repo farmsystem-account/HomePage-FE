@@ -5,7 +5,7 @@ import * as S from './ProjectDetail.styles';
 import { useEffect, useState } from 'react';
 import { DetailedProjectResponse } from '@/models/project';
 import { getProjectById } from '@/services/project';
-import DetailLayout from '@/layouts/DetailLayout/DetailLayout';
+import DetailLayout from '@/layouts/DetailLayout/ProjectDetailLayout';
 import Logger from '@/utils/Logger';
 
 const ProjectDetail: React.FC = () => {
