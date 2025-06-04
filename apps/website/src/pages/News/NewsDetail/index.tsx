@@ -5,6 +5,7 @@ import Logger from "@/utils/Logger";
 import DetailLayout from "@/layouts/DetailLayout/DetailLayout";
 import * as S from "./index.styled";
 import useMediaQueries from "@/hooks/useMediaQueries";
+import { formatKoreanDateTime } from "@/utils/formatKoreanDateTime";
 // import { newsData } from '@/models/news';
 // import PlaceHolder from '@/assets/Images/news/PlaceHolder.png';
 
@@ -42,7 +43,7 @@ export default function NewsDetail() {
       <DetailLayout
         title={newsData?.title}
         content={newsData?.content}
-        date={newsData?.createdAt} 
+        date={newsData?.createdAt ? formatKoreanDateTime(newsData.createdAt) : "게시일자: 알 수 없음"} 
         tag={newsData?.tags?.join(", ") || "기타"}
         thumbnailUrl={newsData?.thumbnailUrl}
         imageUrls={newsData?.imageUrls}
