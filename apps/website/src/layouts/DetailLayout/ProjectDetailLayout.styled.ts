@@ -56,7 +56,7 @@ export const TitleContainer = styled.div<LayoutProps>`
   gap: ${({ $isMobile }) => ($isMobile ? "15px": "30px")};
 `;
 
-export const DateAndTagContainer = styled.div<LayoutProps>`
+export const ParticipantsAndTagContainer = styled.div<LayoutProps>`
   display: flex;
   padding: 10px 0px;
   flex-direction: row;
@@ -67,14 +67,15 @@ export const DateAndTagContainer = styled.div<LayoutProps>`
   width: 100%;
 `;
 
-export const Date = styled.p<LayoutProps>`
+export const Link = styled.a<LayoutProps>`
   display: flex;
   color: var(--FarmSystem_Black, #191919);
-  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
+  font-size: ${({ $isMobile }) => ($isMobile ? "12px": "16px")};
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
+
 `;
 
 export const Tag = styled.p<LayoutProps>`
@@ -93,6 +94,20 @@ export const Tag = styled.p<LayoutProps>`
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 100% */
+  letter-spacing: -0.24px;
+`;
+
+export const Participant = styled.p<LayoutProps>`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  color: var(--FarmSystem_Black, #191919);
+  
+  
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
 `;
 
@@ -141,9 +156,29 @@ export const ContentBox = styled.p<LayoutProps>`
 
   color: var(--FarmSystem_Black, #191919);
   font-family: "Pretendard Variable";
-  font-size: ${({ $isMobile }) => ($isMobile ? "18px": "20px")};;
+  font-size: ${({ $isMobile }) => ($isMobile ? "18px": "20px")};
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
+`;
+
+export const LinkContainer = styled.div<LayoutProps>`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-start;
+  max-width: 800px;
+  width: 100%;
+`;
+
+export const LinkIcon = styled.img<LayoutProps>`
+  width: ${({ $isMobile }) => ($isMobile ? "30px": "50px")};
+  height: ${({ $isMobile }) => ($isMobile ? "30px": "50px")};
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  object-fit: cover;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

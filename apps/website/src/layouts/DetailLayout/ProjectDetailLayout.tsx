@@ -1,24 +1,32 @@
 import * as S from "./ProjectDetailLayout.styled";
 import GoBackArrow from "@/assets/LeftArrow.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
+import GithubIcon from "@/assets/githubLogo.png";
+import DeploymentIcon from "@/assets/home.png";
+import ResourceIcon from "@/assets/resource.png";
 
-interface DetailLayoutProps {
+interface ProjectDetailLayoutProps {
   title?: string;
   content?: string;
-  date?: string;
   tag?: string;
   thumbnailUrl?: string;
   imageUrls?: string[];
+  githubLink?: string;
+  deploymentLink?: string;
+  resourceLink?: string;
+  participants?: string[];
 }
 
 export default function ProjectDetailLayout({
   title = "(임시) 제목",
   content = "(임시) 내용",
-  date = "(임시) 게시일자: 2025년 03월 13일",
   tag = "(임시) 태그",
   thumbnailUrl = "",
-  // imageUrls = [],
-}: DetailLayoutProps) {
+  githubLink = "(임시) 링크",
+  deploymentLink = "(임시) 링크",
+  resourceLink = "(임시) 링크",
+  participants = ["(임시) 참여자1","(임시) 참여자2"],
+}: ProjectDetailLayoutProps) {
   const { isMobile, isTablet, isDesktop } = useMediaQueries();
 
   return (
@@ -37,14 +45,16 @@ export default function ProjectDetailLayout({
           </S.GoBackButton>
         </S.GoBackContainer >
         <S.TitleContainer $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-          <S.DateAndTagContainer  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-            <S.Date  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-              {date}
-            </S.Date>
+          <S.ParticipantsAndTagContainer  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+            <S.Participant  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+              {participants.map((participant, index) => (
+                <span key={index}>{participant}</span>
+              ))}
+            </S.Participant>
             <S.Tag  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
               {tag}
-            </S.Tag>
-          </S.DateAndTagContainer>
+            </S.Tag>            
+          </S.ParticipantsAndTagContainer>
           <S.Title  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
             {title}
           </S.Title>
@@ -56,6 +66,17 @@ export default function ProjectDetailLayout({
             alt={title}
           />
         </S.ImageContainer>
+        <S.LinkContainer $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+            <S.Link  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop} href={githubLink} target="_blank">
+              <S.LinkIcon src={GithubIcon} alt="Github"/>
+            </S.Link>
+            <S.Link  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop} href={resourceLink} target="_blank">
+              <S.LinkIcon src={ResourceIcon} alt="Resource"/>
+            </S.Link>
+            <S.Link  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop} href={deploymentLink} target="_blank">
+              <S.LinkIcon src={DeploymentIcon} alt="Deployment"/>
+            </S.Link>
+        </S.LinkContainer>
         <S.ContentBox  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
           {content}
         </S.ContentBox>

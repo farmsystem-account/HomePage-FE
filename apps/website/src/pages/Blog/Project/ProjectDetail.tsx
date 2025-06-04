@@ -65,7 +65,10 @@ const ProjectDetail: React.FC = () => {
         tag={getTrackName(project.track)}
         thumbnailUrl={project.thumbnailImageUrl}
         imageUrls={project.bodyImageUrl ? [project.bodyImageUrl] : []}
-        date={project.githubLink}
+        githubLink={project.githubLink}
+        deploymentLink={project.deploymentLink}
+        resourceLink={project.resourceLink}
+        participants={project.participants}
       />
     </S.Container>
   );
