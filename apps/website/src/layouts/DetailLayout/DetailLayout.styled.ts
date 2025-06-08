@@ -124,10 +124,11 @@ export const ImageContainer = styled.div<LayoutProps>`
 `;
 
 export const Thumbnail = styled.img<LayoutProps>`
-  width: 827.92px;
+  width: 800px;
+  border-radius: 4px;
   // height: 533px;
   flex-shrink: 0;
-  aspect-ratio: 827.92/533.00;
+  // aspect-ratio: 827.92/533.00;
 
   border-top: 3px solid var(--FarmSystem_DarkGrey, #999);
   border-bottom: 1px solid var(--FarmSystem_DarkGrey, #999);
@@ -146,4 +147,26 @@ export const ContentBox = styled.p<LayoutProps>`
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
+`;
+
+////////////////////// 이미지 ////////////////////////
+export const ImageGallery = styled.div<{ $isMobile?: boolean; $isTablet?: boolean; $isDesktop?: boolean }>`
+  width: 100%;
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 180px));
+  gap: 10px;
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;

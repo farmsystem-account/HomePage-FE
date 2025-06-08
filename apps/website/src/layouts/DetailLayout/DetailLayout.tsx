@@ -1,6 +1,8 @@
 import * as S from "./DetailLayout.styled";
+import { useState } from "react";
 import GoBackArrow from "@/assets/LeftArrow.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
+import ImageModal from './ImageModal';
 
 interface DetailLayoutProps {
   title?: string;
@@ -17,9 +19,10 @@ export default function DetailLayout({
   date = "(임시) 게시일자: 2025년 03월 13일",
   tag = "(임시) 태그",
   thumbnailUrl = "",
-  // imageUrls = [],
+  imageUrls = [],
 }: DetailLayoutProps) {
   const { isMobile, isTablet, isDesktop } = useMediaQueries();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
       <S.DetailCard $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
@@ -56,6 +59,26 @@ export default function DetailLayout({
             alt={title}
           />
         </S.ImageContainer>
+        <S.ImageContainer  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+        {imageUrls && imageUrls.length > 0 && (
+          <S.ImageGallery $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+            {imageUrls.map((url, index) => (
+              <S.Image
+                key={index}
+                src={url}
+                alt={`Image ${index + 1}`}
+                onClick={() => setSelectedImage(url)}
+              />
+            ))}
+          </S.ImageGallery>
+        )}
+        </S.ImageContainer>
+        {selectedImage && (
+          <ImageModal
+            imageUrl={selectedImage}
+            onClose={() => setSelectedImage(null)}
+          />
+        )}
         <S.ContentBox  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
           {content}
         </S.ContentBox>
