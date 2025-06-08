@@ -168,26 +168,3 @@ export const Image = styled.img`
     transform: scale(1.05);
   }
 `;
-
-export const ModalOverlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ModalImage = styled.img`
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 0px;
-  object-fit: contain;
-`;
-
-export const ModalCloseArea = styled.div`
-  position: fixed;
-  inset: 0;
-  cursor: zoom-out;
-`;

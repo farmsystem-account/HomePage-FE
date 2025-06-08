@@ -2,6 +2,7 @@ import * as S from "./DetailLayout.styled";
 import { useState } from "react";
 import GoBackArrow from "@/assets/LeftArrow.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
+import ImageModal from './ImageModal';
 
 interface DetailLayoutProps {
   title?: string;
@@ -71,10 +72,10 @@ export default function DetailLayout({
           </S.ImageGallery>
         )}
         {selectedImage && (
-          <S.ModalOverlay onClick={() => setSelectedImage(null)}>
-            <S.ModalCloseArea />
-            <S.ModalImage src={selectedImage} alt="Enlarged view" />
-          </S.ModalOverlay>
+          <ImageModal
+            imageUrl={selectedImage}
+            onClose={() => setSelectedImage(null)}
+          />
         )}
         <S.ContentBox  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
           {content}
