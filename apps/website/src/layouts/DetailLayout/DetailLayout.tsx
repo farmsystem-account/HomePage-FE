@@ -59,6 +59,7 @@ export default function DetailLayout({
             alt={title}
           />
         </S.ImageContainer>
+        <S.ImageContainer  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
         {imageUrls && imageUrls.length > 0 && (
           <S.ImageGallery $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
             {imageUrls.map((url, index) => (
@@ -71,6 +72,7 @@ export default function DetailLayout({
             ))}
           </S.ImageGallery>
         )}
+        </S.ImageContainer>
         {selectedImage && (
           <ImageModal
             imageUrl={selectedImage}

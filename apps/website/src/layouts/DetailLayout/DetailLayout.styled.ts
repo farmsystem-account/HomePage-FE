@@ -124,7 +124,8 @@ export const ImageContainer = styled.div<LayoutProps>`
 `;
 
 export const Thumbnail = styled.img<LayoutProps>`
-  width: 827.92px;
+  width: 800px;
+  border-radius: 4px;
   // height: 533px;
   flex-shrink: 0;
   // aspect-ratio: 827.92/533.00;
@@ -150,10 +151,11 @@ export const ContentBox = styled.p<LayoutProps>`
 
 ////////////////////// 이미지 ////////////////////////
 export const ImageGallery = styled.div<{ $isMobile?: boolean; $isTablet?: boolean; $isDesktop?: boolean }>`
+  width: 100%;
+  max-width: 800px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 2fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 180px));
   gap: 10px;
-  margin-top: 16px;
 `;
 
 export const Image = styled.img`
