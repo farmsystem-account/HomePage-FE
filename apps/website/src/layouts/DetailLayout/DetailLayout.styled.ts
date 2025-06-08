@@ -127,7 +127,7 @@ export const Thumbnail = styled.img<LayoutProps>`
   width: 827.92px;
   // height: 533px;
   flex-shrink: 0;
-  aspect-ratio: 827.92/533.00;
+  // aspect-ratio: 827.92/533.00;
 
   border-top: 3px solid var(--FarmSystem_DarkGrey, #999);
   border-bottom: 1px solid var(--FarmSystem_DarkGrey, #999);
@@ -146,4 +146,48 @@ export const ContentBox = styled.p<LayoutProps>`
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
+`;
+
+////////////////////// 이미지 ////////////////////////
+export const ImageGallery = styled.div<{ $isMobile?: boolean; $isTablet?: boolean; $isDesktop?: boolean }>`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 2fr));
+  gap: 10px;
+  margin-top: 16px;
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalImage = styled.img`
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 0px;
+  object-fit: contain;
+`;
+
+export const ModalCloseArea = styled.div`
+  position: fixed;
+  inset: 0;
+  cursor: zoom-out;
 `;
