@@ -24,6 +24,8 @@ export const Thumbnail = styled.img<MobileProps>`
   aspect-ratio: ${({ $isMobile }) => ($isMobile ? '16/9' : '311/200')};
   border-radius: 10px;
   // 피그마상 직선인거 아무거나 넣음
+  object-fit: cover;
+  object-position: center;
 `;
 
 export const NewsContent = styled.div<MobileProps>`

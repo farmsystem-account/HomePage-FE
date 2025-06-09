@@ -8,6 +8,7 @@ import NewsItem from './NewsItem';
 export default function News() {
   const { isMobile } = useMediaQueries();
   const { data: newsData, loading: newsLoading, error: newsError } = useNewsList();
+  const newsDataSorted = newsData?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   
   if (newsLoading) {
     return (
@@ -37,9 +38,9 @@ export default function News() {
   return (
     <S.Container>
       <S.NewsPageTitle>소식</S.NewsPageTitle>
-      {newsData && newsData.length > 0 ? (
+      {newsDataSorted && newsDataSorted.length > 0 ? (
         <S.NewsContainer>
-          {newsData.map((news, index) => (
+          {newsDataSorted.map((news, index) => (
             <NewsItem key={index} newsListData={news} />
           ))}
         </S.NewsContainer>

@@ -56,7 +56,7 @@ export const TitleContainer = styled.div<LayoutProps>`
   gap: ${({ $isMobile }) => ($isMobile ? "15px": "30px")};
 `;
 
-export const DateAndTagContainer = styled.div<LayoutProps>`
+export const ParticipantsAndTagContainer = styled.div<LayoutProps>`
   display: flex;
   padding: 10px 0px;
   flex-direction: row;
@@ -67,14 +67,15 @@ export const DateAndTagContainer = styled.div<LayoutProps>`
   width: 100%;
 `;
 
-export const Date = styled.p<LayoutProps>`
+export const Link = styled.a<LayoutProps>`
   display: flex;
   color: var(--FarmSystem_Black, #191919);
-  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
+  font-size: ${({ $isMobile }) => ($isMobile ? "12px": "16px")};
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
+
 `;
 
 export const Tag = styled.p<LayoutProps>`
@@ -93,6 +94,20 @@ export const Tag = styled.p<LayoutProps>`
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 100% */
+  letter-spacing: -0.24px;
+`;
+
+export const Participant = styled.p<LayoutProps>`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  color: var(--FarmSystem_Black, #191919);
+  
+  
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
 `;
 
@@ -124,11 +139,10 @@ export const ImageContainer = styled.div<LayoutProps>`
 `;
 
 export const Thumbnail = styled.img<LayoutProps>`
-  width: 800px;
-  border-radius: 4px;
+  width: 827.92px;
   // height: 533px;
   flex-shrink: 0;
-  // aspect-ratio: 827.92/533.00;
+  aspect-ratio: 827.92/533.00;
 
   border-top: 3px solid var(--FarmSystem_DarkGrey, #999);
   border-bottom: 1px solid var(--FarmSystem_DarkGrey, #999);
@@ -142,31 +156,29 @@ export const ContentBox = styled.p<LayoutProps>`
 
   color: var(--FarmSystem_Black, #191919);
   font-family: "Pretendard Variable";
-  font-size: ${({ $isMobile }) => ($isMobile ? "18px": "20px")};;
+  font-size: ${({ $isMobile }) => ($isMobile ? "18px": "20px")};
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 150% */
   letter-spacing: -0.24px;
 `;
 
-////////////////////// 이미지 ////////////////////////
-export const ImageGallery = styled.div<{ $isMobile?: boolean; $isTablet?: boolean; $isDesktop?: boolean }>`
-  width: 100%;
-  max-width: 800px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 180px));
+export const LinkContainer = styled.div<LayoutProps>`
+  display: flex;
+  flex-direction: row;
   gap: 10px;
+  justify-content: flex-start;
+  max-width: 800px;
+  width: 100%;
 `;
 
-export const Image = styled.img`
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 4px;
+export const LinkIcon = styled.img<LayoutProps>`
+  width: ${({ $isMobile }) => ($isMobile ? "30px": "50px")};
+  height: ${({ $isMobile }) => ($isMobile ? "30px": "50px")};
+  transition: transform 0.2s ease-in-out;
   cursor: pointer;
-  transition: transform 0.2s;
-
+  object-fit: cover;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 `;
