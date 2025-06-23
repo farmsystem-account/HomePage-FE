@@ -78,10 +78,13 @@ export default function ProjectDetailLayout({
               </S.TagContainer>
               <S.ParticipantContainer $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
                 <S.Participant  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+                  {participants.length > 0 && (<>
                   {`참여 팀원:`}
                   {participants.map((participant, index) => (
                     <span key={index}>{participant}</span>
                   ))}
+                  </>
+                )}
                 </S.Participant>
               </S.ParticipantContainer>        
             </S.ParticipantsAndTagContainer>
