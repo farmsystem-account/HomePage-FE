@@ -170,3 +170,63 @@ export const ProjectListContainer = styled.div`
   align-items: flex-start; /* 왼쪽 정렬 */
   margin-top: 30px;
 `;
+
+/** 페이지네이션 컨테이너 */
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
+/** 페이지네이션 버튼 컨테이너 */
+export const PaginationButton = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
+/** 페이지네이션 버튼 텍스트 */
+export const PaginationButtonText = styled.span<{
+  $active?: boolean;
+  $disabled?: boolean;
+}>`
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'pointer')};
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  
+  background-color: ${(props) => {
+    if (props.$disabled) return '#f5f5f5';
+    if (props.$active) return 'var(--FarmSystem_Green06)';
+    return 'transparent';
+  }};
+  
+  color: ${(props) => {
+    if (props.$disabled) return '#ccc';
+    if (props.$active) return '#fff';
+    return '#333';
+  }};
+  
+  border: 1px solid ${(props) => {
+    if (props.$disabled) return '#e0e0e0';
+    if (props.$active) return 'var(--FarmSystem_Green06)';
+    return '#ddd';
+  }};
+  
+  &:hover {
+    ${(props) => !props.$disabled && `
+      background-color: ${props.$active ? 'var(--FarmSystem_Green06)' : '#f0f0f0'};
+      transform: translateY(-1px);
+    `}
+  }
+  
+  &:active {
+    ${(props) => !props.$disabled && `
+      transform: translateY(0);
+    `}
+  }
+`;

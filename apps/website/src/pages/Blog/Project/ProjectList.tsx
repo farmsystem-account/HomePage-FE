@@ -29,9 +29,9 @@ const ProjectList: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<string>('');
   const [selectedTrack, setSelectedTrack] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const pageSize = 6;
+  const pageSize = 12; // 12개씩 페이지네이션
 
-  const { data: projects, loading, error } = useProjectList(
+  const { data: projects, pageInfo, loading, error } = useProjectList(
     selectedGrade ? parseInt(selectedGrade) : undefined,
     selectedTrack ? convertTrackToEnum(selectedTrack) : undefined,
     currentPage,
@@ -55,6 +55,48 @@ const ProjectList: React.FC = () => {
     setSelectedTrack(track);
     setOpenDropdown('');
     setCurrentPage(0); // 필터 변경 시 첫 페이지로 이동
+  };
+
+  // 페이지네이션 핸들러
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePreviousPage = () => {
+    if (pageInfo && pageInfo.hasPreviousPage) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (pageInfo && pageInfo.hasNextPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // 페이지 번호 배열 생성
+  const generatePageNumbers = () => {
+    if (!pageInfo) return [];
+    
+    const totalPages = pageInfo.totalPages;
+    const current = pageInfo.currentPage;
+    const pages: number[] = [];
+    
+    // 최대 7개의 페이지 번호만 표시
+    const maxVisiblePages = 7;
+    let startPage = Math.max(0, current - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
+    
+    // 시작 페이지 조정
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(0, endPage - maxVisiblePages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
   };
 
   if (loading) {
@@ -143,6 +185,35 @@ const ProjectList: React.FC = () => {
             </S.ListContainer>
             
             {/* 페이지네이션 */}
+            {pageInfo && pageInfo.totalPages > 0 && (
+              <S.PaginationContainer>
+                <S.PaginationButton>
+                  <S.PaginationButtonText 
+                    onClick={handlePreviousPage}
+                    $disabled={!pageInfo.hasPreviousPage}
+                  >
+                    ◀
+                  </S.PaginationButtonText>
+                  
+                  {generatePageNumbers().map((pageNum) => (
+                    <S.PaginationButtonText
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      $active={pageNum === pageInfo.currentPage}
+                    >
+                      {pageNum + 1}
+                    </S.PaginationButtonText>
+                  ))}
+                  
+                  <S.PaginationButtonText 
+                    onClick={handleNextPage}
+                    $disabled={!pageInfo.hasNextPage}
+                  >
+                    ▶
+                  </S.PaginationButtonText>
+                </S.PaginationButton>
+              </S.PaginationContainer>
+            )}
           </>
         ) : (
           <S.TextContainer $isMobile={isMobile}>
