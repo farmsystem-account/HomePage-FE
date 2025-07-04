@@ -9,7 +9,7 @@ export const useProjectList = (
   generation?: number,
   track?: Track,
   page: number = 0,
-  size: number = 10
+  size: number = 12
 ) => {
   const [data, setData] = useState<Project[]>([]);
   const [pageInfo, setPageInfo] = useState<ProjectFilterResponse['pageInfo'] | null>(null);
