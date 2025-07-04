@@ -16,9 +16,17 @@ export const TableContainer = styled.div<{$isMobile: boolean; $isTablet: boolean
   gap: 30px;
   width: 100%;
   justify-content: flex-start;
+  flex-direction: column;
   margin-top: ${(props) => (props.$isMobile ? '0px' : props.$isTablet ? '15px' : '60px')};
 `;
 
+export const FilterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  width: 100%;
+  justify-content: flex-start;
+`;
 
 /** 필터 버튼과 드롭다운을 감싸는 컨테이너 */
 export const FilterWrapper = styled.div`
@@ -106,9 +114,10 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
   width: 100%;
   margin: 20px auto;
   min-width: ${(props) => (props.$isMobile ? '240px' : props.$isTablet ? '400px' : '800px')};
-  max-width: ${(props) => (props.$isMobile ? '100%' : props.$isTablet ? '600px' : '1200px')};
+
 
   display: grid;
+
   grid-template-columns: ${(props) => {
     if (props.$isMobile) return '1fr'; // 모바일: 한 컬럼
     if (props.$isTablet) return '1fr'; // 태블릿: 한 컬럼
@@ -120,10 +129,7 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
   
   justify-items: ${(props) => (props.$isMobile || props.$isTablet ? 'start' : 'start')};
   
-  /* 태블릿에서 카드들이 중앙에 정렬되도록 */
-  ${(props) => props.$isTablet && `
-    padding: 0 20px;
-  `}
+  
 `;
 
 /* 비어 있을 떄 출력하는 레이아웃 잡는 컨테이너 */
@@ -155,4 +161,12 @@ export const TextContainer = styled.div<{$isMobile: boolean;}>`
 
 export const Wrapper = styled.div`
   margin-top: 100px;
+`;
+
+export const ProjectListContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* 왼쪽 정렬 */
+  margin-top: 30px;
 `;

@@ -68,6 +68,7 @@ const ProjectList: React.FC = () => {
   return (
     <S.Container>
       <S.TableContainer $isTablet={isTablet} $isMobile={isMobile}>
+        <S.FilterContainer>
         {/* 기수 필터 */}
         <S.FilterWrapper>
           <S.FilterGradeButton 
@@ -119,6 +120,7 @@ const ProjectList: React.FC = () => {
             </S.DropdownTrackMenu>
           )}
         </S.FilterWrapper>
+        </S.FilterContainer>
       </S.TableContainer>
       
       {/* 프로젝트 카드 리스트 */}
