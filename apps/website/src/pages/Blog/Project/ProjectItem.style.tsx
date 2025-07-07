@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 // 스타일 컴포넌트 (블로그랑 같지만, 다를 수 있으니께)
 // 요긴 대충 짜서 해결
-export const Card = styled.div`
-  width: 300px;
-  height: 335px;
+export const Card = styled.div<{$isMobile: boolean; $isTablet: boolean;}>`
+  width: ${(props) => (props.$isMobile ? '130px' : props.$isTablet ? '240px' : '300px')};
+  height: ${(props) => (props.$isMobile ? '205px' : props.$isTablet ? '260px' : '335px')};
 
-  border-radius: 8px;
+  border-radius: ${(props) => (props.$isMobile ? '10px' : '8px')};
   overflow: hidden;
 
   display: flex;
@@ -16,17 +16,16 @@ export const Card = styled.div`
   color: var(--FarmSystem_Black);
 `;
 
-export const Image = styled.div`
+export const Image = styled.div<{$isMobile: boolean; $isTablet: boolean;}>`
   width: 100%;
 
   overflow: hidden;
   border-radius: 8px;
-  height: 200px;
+  height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')};
   background-color: var(--FarmSystem_LightGrey);
 
   img{
-    width: 100%;
-    height: 200px;
+    height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')};
     object-fit: cover;
 }
 `;
@@ -35,15 +34,15 @@ export const Content = styled.div`
   padding: 0px;
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h3<{$isMobile: boolean; $isTablet: boolean;}>`
    margin: 0px;
-   font-size: 24px;
+   font-size: ${(props) => (props.$isMobile ? '12px' : props.$isTablet ? '16px' : '24px')};
    font-weight: 700;
 
 `;
 
-export const Description = styled.p`
-  font-size: 15px;
+export const Description = styled.p<{$isMobile: boolean; $isTablet: boolean;}>`
+  font-size: ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '15px' : '15px')};
   line-height: 20px;
   font-weight: 300;
   
@@ -52,7 +51,7 @@ export const Description = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 40px; /* line-height * 2 */
+  height: ${(props) => (props.$isMobile ? '60px' : props.$isTablet ? '40px' : '40px')}; /* line-height * 2 */
 `;
 
 export const TagContainer = styled.div`
@@ -61,13 +60,13 @@ export const TagContainer = styled.div`
    gap: 10px;
 `;
 
-export const Tag = styled.span`
+export const Tag = styled.span<{$isMobile: boolean; $isTablet: boolean;}>`
    background-color: var(--FarmSystem_Green06);
    color: var(--FarmSystem_White);
 
    padding: 5px 10px;
    border-radius: 15px;
-   font-size: 14px;
+   font-size: ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '12px' : '14px')};
 
    font-weight: 300;
    line-height: 1.2;

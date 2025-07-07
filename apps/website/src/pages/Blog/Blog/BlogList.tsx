@@ -6,6 +6,8 @@ import { useBlogPage } from '@/hooks/useBlog';
 
 import nextArrow_left from '@/assets/Icons/pagenation_2.png';
 import nextArrow_right from '@/assets/Icons/pagenation_2.png';
+import jumpArrow_left from '@/assets/Icons/pagenation_1.png';
+import jumpArrow_right from '@/assets/Icons/pagenation_1.png';
 
 /** 샘플용 더미 데이터 */
 /*
@@ -153,36 +155,58 @@ const BlogList: React.FC = () => {
             </S.ListContainer>   
           </S.DescriptionContainer>
           
-          {/* 페이지네이션 */}
-          {pageInfo && pageInfo.totalPages > 0 && (
-            <S.PaginationContainer>
-              <S.PaginationButton>
-                <S.PaginationButtonText 
-                  onClick={handlePreviousPage}
-                  $disabled={!pageInfo.hasPreviousPage}
-                >
-                  <img src={nextArrow_left} alt="jumpArrow" />
-                </S.PaginationButtonText>
-                
-                {generatePageNumbers().map((pageNum) => (
+              {/* 페이지네이션 */}
+              {pageInfo && pageInfo.totalPages > 0 && (
+              <S.PaginationContainer>
+                <S.PaginationButton>
                   <S.PaginationButtonText
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    $active={pageNum === pageInfo.currentPage}
+                    onClick={() => setCurrentPage(0)}
+                    $disabled={!pageInfo.hasPreviousPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
                   >
-                    {pageNum + 1}
+                    <img src={jumpArrow_left} alt="jumpArrow" />
                   </S.PaginationButtonText>
-                ))}
-                
-                <S.PaginationButtonText 
-                  onClick={handleNextPage}
-                  $disabled={!pageInfo.hasNextPage}
-                >
-                  <img src={nextArrow_right} alt="nextArrow_right" />
-                </S.PaginationButtonText>
-              </S.PaginationButton>
-            </S.PaginationContainer>
-          )}
+                  <S.PaginationButtonText 
+                    onClick={handlePreviousPage}
+                    $disabled={!pageInfo.hasPreviousPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
+                  >
+                    <img src={nextArrow_left} alt="nextArrow" />
+                  </S.PaginationButtonText>
+                  
+                  {generatePageNumbers().map((pageNum) => (
+                    <S.PaginationPageButton
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      $active={pageNum === pageInfo.currentPage}
+                      $isMobile={isMobile}
+                      $isTablet={isTablet}
+                    >
+                      {pageNum + 1}
+                    </S.PaginationPageButton>
+                  ))}
+                  
+                  <S.PaginationButtonText 
+                    onClick={handleNextPage}
+                    $disabled={!pageInfo.hasNextPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
+                  >
+                    <img src={nextArrow_right} alt="nextArrow_right" />
+                  </S.PaginationButtonText>
+                  <S.PaginationButtonText
+                    onClick={() => setCurrentPage(pageInfo.totalPages - 1)}
+                    $disabled={!pageInfo.hasPreviousPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
+                  >
+                    <img src={jumpArrow_right} alt="jumpArrow_right" />
+                  </S.PaginationButtonText>
+                </S.PaginationButton>
+              </S.PaginationContainer>
+            )}
         </>
       ) : (
         <S.TextContainer $isMobile={isMobile}>

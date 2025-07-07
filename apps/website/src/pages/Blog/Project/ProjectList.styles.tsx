@@ -119,13 +119,12 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
   display: grid;
 
   grid-template-columns: ${(props) => {
-    if (props.$isMobile) return '1fr'; // 모바일: 한 컬럼
-    if (props.$isTablet) return '1fr'; // 태블릿: 한 컬럼
+    if (props.$isMobile) return '1fr 1fr'; // 모바일: 2 컬럼
     return 'repeat(auto-fit, 300px)'; // 데스크탑: 자동 너비 조정
   }};
   
   gap: ${(props) => (props.$isMobile ? '15px' : props.$isTablet ? '20px' : '20px')} 
-       ${(props) => (props.$isMobile ? '0px' : props.$isTablet ? '0px' : props.$isBig ? '4vw' : '10vw')};
+       ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '10px' : props.$isBig ? '4vw' : '10vw')};
   
   justify-items: ${(props) => (props.$isMobile || props.$isTablet ? 'start' : 'start')};
   
@@ -183,7 +182,7 @@ export const PaginationContainer = styled.div`
 /** 페이지네이션 버튼 컨테이너 */
 export const PaginationButton = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 `;
 
@@ -191,31 +190,40 @@ export const PaginationButton = styled.div`
 export const PaginationButtonText = styled.span<{
   $active?: boolean;
   $disabled?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
 }>`
-  padding: 8px 12px;
   border-radius: 6px;
   cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'pointer')};
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s ease;
-  
-  background-color: ${(props) => {
-    if (props.$disabled) return '#f5f5f5';
-    if (props.$active) return 'var(--FarmSystem_Green06)';
-    return 'transparent';
-  }};
-  
-  color: ${(props) => {
-    if (props.$disabled) return '#ccc';
-    if (props.$active) return '#fff';
-    return '#333';
-  }};
-  
-  border: 1px solid ${(props) => {
-    if (props.$disabled) return '#e0e0e0';
-    if (props.$active) return 'var(--FarmSystem_Green06)';
-    return '#ddd';
-  }};
+
+  /* 사이즈 조절 */
+  img[alt="nextArrow"]{
+    width: ${(props) => (props.$isMobile ? '6px' : props.$isTablet ? '12px' : '15px')};
+    height: ${(props) => (props.$isMobile ? '12px' : props.$isTablet ? '24px' : '30px')};
+    margin-right: 10px;
+  }
+
+  img[alt="jumpArrow"]{
+    width: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+    height: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+  }
+
+  /* nextArrow 이미지 회전 */
+  img[alt="nextArrow_right"] {
+    width: ${(props) => (props.$isMobile ? '6px' : props.$isTablet ? '12px' : '15px')};
+    height: ${(props) => (props.$isMobile ? '12px' : props.$isTablet ? '24px' : '30px')};
+    transform: rotate(180deg);
+    margin-left: 10px;
+  }
+
+  img[alt="jumpArrow_right"] {
+    width: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+    height: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+    transform: rotate(180deg);
+  }
   
   &:hover {
     ${(props) => !props.$disabled && `
@@ -230,3 +238,26 @@ export const PaginationButtonText = styled.span<{
     `}
   }
 `;
+
+export const PaginationPageButton = styled.span<{
+  $active?: boolean;
+  $disabled?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+}>`
+  width: ${(props) => (props.$isMobile ? '20px' : props.$isTablet ? '26px' : '40px')};
+  height: ${(props) => (props.$isMobile ? '20px' : props.$isTablet ? '26px' : '40px')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '13px' : '20px')};
+  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'pointer')};
+
+  background-color: ${(props) => (props.$active ? 'var(--FarmSystem_Green06)' : 'var(--FarmSystem_DarkGrey)')};
+  color: white;
+  font-size: ${(props) => (props.$isMobile ? '8px' : props.$isTablet ? '12px' : '14px')};
+  font-weight: 500;
+  transition: all 0.2s ease;
+`;
+
+

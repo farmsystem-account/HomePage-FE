@@ -5,6 +5,11 @@ import { useProjectList } from '@/hooks/useProject';
 import ProjectItem from './ProjectItem';
 import { Track } from '@/models/blog';
 
+import jumpArrow_left from '@/assets/Icons/pagenation_1.png';
+import jumpArrow_right from '@/assets/Icons/pagenation_1.png';
+import nextArrow_left from '@/assets/Icons/pagenation_2.png';
+import nextArrow_right from '@/assets/Icons/pagenation_2.png';
+
 /**
  * 드롭다운을 구분하기 위한 타입
  * - "grade" = 기수, "track" = 트랙
@@ -83,7 +88,7 @@ const ProjectList: React.FC = () => {
     const pages: number[] = [];
     
     // 최대 7개의 페이지 번호만 표시
-    const maxVisiblePages = 7;
+    const maxVisiblePages = 3;
     let startPage = Math.max(0, current - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
     
@@ -94,6 +99,7 @@ const ProjectList: React.FC = () => {
     
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
+      console.log("pages", pages);
     }
     
     return pages;
@@ -188,28 +194,50 @@ const ProjectList: React.FC = () => {
             {pageInfo && pageInfo.totalPages > 0 && (
               <S.PaginationContainer>
                 <S.PaginationButton>
+                  <S.PaginationButtonText
+                    onClick={() => setCurrentPage(0)}
+                    $disabled={!pageInfo.hasPreviousPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
+                  >
+                    <img src={jumpArrow_left} alt="jumpArrow" />
+                  </S.PaginationButtonText>
                   <S.PaginationButtonText 
                     onClick={handlePreviousPage}
                     $disabled={!pageInfo.hasPreviousPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
                   >
-                    ◀
+                    <img src={nextArrow_left} alt="nextArrow" />
                   </S.PaginationButtonText>
                   
                   {generatePageNumbers().map((pageNum) => (
-                    <S.PaginationButtonText
+                    <S.PaginationPageButton
                       key={pageNum}
                       onClick={() => handlePageChange(pageNum)}
-                      $active={pageNum === pageInfo.currentPage}
+                      $active={pageNum === pageInfo.currentPage - 1}
+                      $isMobile={isMobile}
+                      $isTablet={isTablet}
                     >
                       {pageNum + 1}
-                    </S.PaginationButtonText>
+                    </S.PaginationPageButton>
                   ))}
                   
                   <S.PaginationButtonText 
                     onClick={handleNextPage}
                     $disabled={!pageInfo.hasNextPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
                   >
-                    ▶
+                    <img src={nextArrow_right} alt="nextArrow_right" />
+                  </S.PaginationButtonText>
+                  <S.PaginationButtonText
+                    onClick={() => setCurrentPage(pageInfo.totalPages - 1)}
+                    $disabled={!pageInfo.hasPreviousPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
+                  >
+                    <img src={jumpArrow_right} alt="jumpArrow_right" />
                   </S.PaginationButtonText>
                 </S.PaginationButton>
               </S.PaginationContainer>

@@ -1,6 +1,7 @@
 import React from 'react';
 import * as S from './BlogItem.styles';
 import { useLinkPreview } from '@/hooks/useLinkPreview';
+import useMediaQueries from '@/hooks/useMediaQueries';
 import BlankImg from '../../../assets/Images/Blog_Project/blank_img.svg';
 
 export enum BlogCategory {
@@ -19,7 +20,7 @@ export interface BlogTag {
 
 export interface BlogItemProps {
   blogUrl: string;
-  tags: BlogTag[];
+  tags: BlogCategory[];
 }
 
 // 카테고리 enum을 텍스트로 매핑
@@ -47,6 +48,7 @@ const getCategoryName = (category: BlogCategory): string => {
 const BlogItem: React.FC<BlogItemProps> = ({ blogUrl, tags }) => {
   // blogUrl을 기반으로 메타데이터를 fetching
   const { metadata, loading} = useLinkPreview(blogUrl);
+  const { isMobile, isTablet } = useMediaQueries();
 
   
   // 메타데이터가 없는 경우 대비 기본값 설정
@@ -57,8 +59,8 @@ const BlogItem: React.FC<BlogItemProps> = ({ blogUrl, tags }) => {
     ? metadata.image
     : BlankImg;
   return (
-    <S.Card href={blogUrl} target="_blank">
-      <S.Image>
+    <S.Card href={blogUrl} target="_blank" $isMobile={isMobile} $isTablet={isTablet}>
+      <S.Image $isMobile={isMobile} $isTablet={isTablet}>
         {loading ? (
           <img src={BlankImg} alt="로딩중..." />
         ) : (
@@ -66,13 +68,13 @@ const BlogItem: React.FC<BlogItemProps> = ({ blogUrl, tags }) => {
         )}
       </S.Image>
       <S.Content>
-        <S.Title>{loading ? '로딩중...' : title}</S.Title>
-        <S.Description>
+        <S.Title $isMobile={isMobile} $isTablet={isTablet}>{loading ? '로딩중...' : title}</S.Title>
+        <S.Description $isMobile={isMobile} $isTablet={isTablet}>
           {loading ? '설명을 불러오는 중입니다...' : description}
         </S.Description>
         <S.TagContainer>
-          {tags.map((tag, index) => (
-            <S.Tag key={index}>{getCategoryName(tag.category)}</S.Tag>
+          {tags.map((category, index) => (
+            <S.Tag key={index} $isMobile={isMobile} $isTablet={isTablet}>{getCategoryName(category)}</S.Tag>
           ))}
         </S.TagContainer>
       </S.Content>

@@ -21,6 +21,7 @@ export const useProjectList = (
       setLoading(true);
       try {
         const response: ProjectFilterApiResponse = await getFilteredProjects(generation, track, page, size);
+        console.log("pageInfo", response.data?.pageInfo);
         if (response.data) {
           setData(response.data.content);
           setPageInfo(response.data.pageInfo);
