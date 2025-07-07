@@ -11,6 +11,7 @@ export const getProjectGeneration = (generation: number): string => {
 // Track enum을 한글명으로 매핑
 export const getTrackName = (track: Track): string => {
   const trackMap: Record<Track, string> = {
+    [Track.ALL]: '전체',
     [Track.UNION]: 'Union',
     [Track.BIGDATA]: '빅데이터',
     [Track.IOT_ROBOTICS]: '사물인터넷/로봇',
