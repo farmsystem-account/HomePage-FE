@@ -9,7 +9,7 @@ export const useProjectList = (
   generation?: number,
   track?: Track,
   page: number = 0,
-  size: number = 10
+  size: number = 12
 ) => {
   const [data, setData] = useState<Project[]>([]);
   const [pageInfo, setPageInfo] = useState<ProjectFilterResponse['pageInfo'] | null>(null);
@@ -21,6 +21,7 @@ export const useProjectList = (
       setLoading(true);
       try {
         const response: ProjectFilterApiResponse = await getFilteredProjects(generation, track, page, size);
+        console.log("pageInfo", response.data?.pageInfo);
         if (response.data) {
           setData(response.data.content);
           setPageInfo(response.data.pageInfo);

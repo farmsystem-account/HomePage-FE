@@ -1,6 +1,7 @@
 import * as S from './ProjectItem.style';
 import { Track } from '@/models/blog';
 import { useNavigate } from 'react-router';
+import useMediaQueries from '@/hooks/useMediaQueries';
 
 // 카테고리 enum을 텍스트 매핑
 export const getProjectGeneration = (generation: number): string => {
@@ -10,6 +11,7 @@ export const getProjectGeneration = (generation: number): string => {
 // Track enum을 한글명으로 매핑
 export const getTrackName = (track: Track): string => {
   const trackMap: Record<Track, string> = {
+    [Track.ALL]: '전체',
     [Track.UNION]: 'Union',
     [Track.BIGDATA]: '빅데이터',
     [Track.IOT_ROBOTICS]: '사물인터넷/로봇',
@@ -35,23 +37,24 @@ export interface ProjectItemProps {
 
 const ProjectItem: React.FC<ProjectItemProps> = ({ projectId, title, description, imageUrl, tags }) => {
   const navigate = useNavigate();
+  const { isMobile, isTablet } = useMediaQueries();
 
   return (
-    <S.Card onClick={() => navigate(`/project/${projectId}`)}>
-      <S.Image><img src={imageUrl} alt={title}></img></S.Image>
+    <S.Card $isMobile={isMobile} $isTablet={isTablet} onClick={() => navigate(`/project/${projectId}`)}>
+      <S.Image $isMobile={isMobile} $isTablet={isTablet}><img src={imageUrl} alt={title}></img></S.Image>
       <S.Content>
-        <S.Title>{title}</S.Title>
-        <S.Description>{description}</S.Description>
+        <S.Title $isMobile={isMobile} $isTablet={isTablet}>{title}</S.Title>
+        <S.Description $isMobile={isMobile} $isTablet={isTablet}>{description}</S.Description>
         <S.TagContainer>
           {tags.map((tag, index) => (
             <>
               {tag.generation.map((gen) => (
-                <S.Tag key={`gen-${index}-${gen}`}>
+                <S.Tag $isMobile={isMobile} $isTablet={isTablet} key={`gen-${index}-${gen}`}>
                   {getProjectGeneration(gen)}
                 </S.Tag>
               ))}
               {tag.track.map((trackItem, tIndex) => (
-                <S.Tag key={`track-${index}-${tIndex}`}>
+                <S.Tag $isMobile={isMobile} $isTablet={isTablet} key={`track-${index}-${tIndex}`}>
                   {getTrackName(trackItem)}
                 </S.Tag>
               ))}
