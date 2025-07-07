@@ -5,6 +5,7 @@ enum ApiErrorMessages {
   }
 
   export enum Track {
+    ALL = "",
     UNION = "UNION",
     GAMING_VIDEO = "GAMING_VIDEO",
     AI = "AI",

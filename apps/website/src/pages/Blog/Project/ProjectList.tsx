@@ -19,6 +19,7 @@ type DropdownType = 'grade' | 'track' | '';
 // 트랙 한글명을 Track enum으로 변환하는 함수
 const convertTrackToEnum = (trackName: string): Track | undefined => {
   const trackMap: Record<string, Track> = {
+    '전체': Track.ALL,
     'Union': Track.UNION,
     '빅데이터': Track.BIGDATA,
     '사물인터넷/로봇': Track.IOT_ROBOTICS,
@@ -50,6 +51,12 @@ const ProjectList: React.FC = () => {
   };
 
   const handleSelectGrade = (grade: string) => {
+    if (grade === '전체') {
+      setSelectedGrade('전체');
+      setOpenDropdown('');
+      setCurrentPage(0);
+      return; 
+    }
     const gradeNumber = grade.replace('기', '');
     setSelectedGrade(gradeNumber);
     setOpenDropdown('');
@@ -128,7 +135,7 @@ const ProjectList: React.FC = () => {
           </S.FilterGradeButton>
           {openDropdown === 'grade' && (
             <S.DropdownGradeMenu $isTablet={isTablet} $isMobile={isMobile}>
-              {['4기', '3기', '2기', '1기'].map((grade) => (
+              {['전체','4기', '3기', '2기', '1기'].map((grade) => (
                 <S.DropdownItem
                   key={grade}
                   onClick={() => handleSelectGrade(grade)}
@@ -153,7 +160,7 @@ const ProjectList: React.FC = () => {
           </S.FilterTrackButton>
           {openDropdown === 'track' && (
             <S.DropdownTrackMenu $isTablet={isTablet} $isMobile={isMobile}>
-              {['Union', '빅데이터', '사물인터넷/로봇', '인공지능', '보안/웹', '게임/영상'].map(
+              {['전체','Union', '빅데이터', '사물인터넷/로봇', '인공지능', '보안/웹', '게임/영상'].map(
                 (track) => (
                   <S.DropdownItem
                     key={track}
