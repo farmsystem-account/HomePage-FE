@@ -22,7 +22,7 @@ export const getFilteredProjects = async (
   generation?: number,
   track?: Track,
   page: number = 0,
-  size: number = 10
+  size: number = 12
 ): Promise<ProjectFilterApiResponse> => {
   let queryString = '';
   if (generation) queryString += `generation=${generation}&`;

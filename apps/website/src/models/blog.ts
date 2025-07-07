@@ -5,6 +5,7 @@ enum ApiErrorMessages {
   }
 
   export enum Track {
+    ALL = "",
     UNION = "UNION",
     GAMING_VIDEO = "GAMING_VIDEO",
     AI = "AI",
@@ -12,6 +13,22 @@ enum ApiErrorMessages {
     IOT_ROBOTICS = "IOT_ROBOTICS",
     BIGDATA = "BIGDATA",
   }
+
+  export interface SortMeta {
+    unsorted: boolean;
+    sorted: boolean;
+    empty: boolean;
+  }
+  
+  export interface PageableMeta {
+    pageNumber: number;
+    pageSize: number;
+    sort: SortMeta;
+    offset: number;
+    unpaged: boolean;
+    paged: boolean;
+  }
+  
 
   interface ApiResponse<T = unknown> {
     status: number;
@@ -27,13 +44,65 @@ enum ApiErrorMessages {
     link : string;
   }
 
-  interface BlogpageResquest {
-    track : string;
-    generation : number;
-    page : number; // 페이징
+  // 블로그 목록 조회 응답 데이터
+  export interface BlogItem {
+    blogId: number;
+    link: string;
+    category: string[];
+    approvalStatus: string;
+  }
+
+  interface BlogListResponse {
+    content: BlogItem[];
+    pageInfo: {
+      pageSize: number;
+      totalElements: number;
+      currentPageElements: number;
+      totalPages: number;
+      currentPage: number;
+      sortBy: string;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    };
+  }
+
+  export interface BlogPage {
+    content: BlogItem[];
+    pageable: PageableMeta;
+  
+    last: boolean;
+    totalElements: number;
+    totalPages: number;
+  
+    sort: SortMeta;
+  
+    first: boolean;
+    number: number;
+    numberOfElements: number;
+    size: number;
+    empty: boolean;
+  }
+  
+  export interface BlogPageInfo {
+    currentPage: number;
+    totalPages: number;
+    totalElements: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  
+    pageSize: number;
+    numberOfElements: number;
+  
+    pageable: PageableMeta;
+    sort: SortMeta;
+  
+    isFirst: boolean;
+    isLast: boolean;
+    isEmpty: boolean;
   }
   
   // blog에 POST 요청, POST 응답, GET요청 
   export type BlogPOSTRequest = ApiRequest;
-  export type BlogGETResponse = BlogpageResquest;
+  export type BlogGETResponse = ApiResponse<BlogListResponse>;
   export type BlogPOSTResponse = ApiResponse<{ blogId: number }>;
+  export type BlogPageResponse = ApiResponse<BlogPage>;
