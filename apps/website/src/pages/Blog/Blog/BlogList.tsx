@@ -141,7 +141,7 @@ const BlogList: React.FC = () => {
       {blogData && blogData.content.length > 0 ? (
         <>
           <S.DescriptionContainer>
-            <S.ListContainer $isTablet={isTablet} $isBig={isBig}>
+            <S.ListContainer $isTablet={isTablet} $isBig={isBig} $isMobile={isMobile}>
               {blogData.content.map((blog, index) => (
                 <BlogItem 
                   key={blog.blogId || index} 
