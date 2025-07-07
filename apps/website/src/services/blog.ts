@@ -4,6 +4,7 @@ import {
   BlogGETResponse,
   BlogPOSTRequest,
   BlogPOSTResponse,
+  BlogPage
 } from "@/models/blog";
 
 /**
@@ -33,4 +34,25 @@ export const postBlog = async (
 export const getApprovedBlogList = async (): Promise<BlogPOSTResponse> => {
     const response = await apiConfig.get("blogs/approved");
     return response.data;
+};
+
+/**
+ * 페이지 블로그 목록 조회
+ * 엔드포인트: GET /blogs/page
+ */
+export const getBlogPageList = async (
+  page: number,
+  size: number,
+): Promise<BlogPage> => {
+  let queryString = '';
+  // 페이지네이션 파라미터 추가
+  queryString += `page=${page}&size=${size}`;
+
+  const url = `blogs/page?${queryString}`;
+  
+  console.log('API Request URL:', url);
+  console.log('Request Parameters:', { page, size });
+
+  const response = await apiConfig.get<BlogPage>(url);
+  return response.data;
 };
