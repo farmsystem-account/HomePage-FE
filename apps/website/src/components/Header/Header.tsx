@@ -113,8 +113,8 @@ export default function Header() {
               <S.NavItem 
                 $isTablet={isTablet} 
                 $isMobile={isMobile} 
-                onClick={() => handleNavItemClick('/blog')} 
-                isActive={location.pathname === '/blog'}
+                onClick={() => handleNavItemClick('/project')} 
+                isActive={location.pathname === '/project'}
               >
                 블로그 / 프로젝트
               </S.NavItem>
