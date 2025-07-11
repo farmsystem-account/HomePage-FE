@@ -80,14 +80,15 @@ export const Content = styled.p<MobileProps>`
 
 export const DateAndTagBox = styled.div<MobileProps>`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: ${({ $isMobile }) => ($isMobile ? 'flex-start' : 'center')};
+  justify-content: ${({ $isMobile }) => ($isMobile ? 'flex-start' : 'space-between')};
   width: 100%;
+  flex-direction: ${({ $isMobile }) => ($isMobile ? 'column' : 'row')};
 `;
 
 export const Date = styled.p<MobileProps>`
   color: var(--FarmSystem_Black, #191919);
-  font-size: 16px;
+  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 187.5% */
