@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",          // 기존 웹사이트 tsconfig가 있다면 이어받기
+    "compilerOptions": {
+      "module": "NodeNext",               // ESM + CJS 자동 판별
+      "moduleResolution": "NodeNext",
+      "target": "ES2022",
+      "outDir": "dist",                   // 선택
+      "declaration": false
+    },
+    "include": ["api/**/*.ts"]
+  }
+  
