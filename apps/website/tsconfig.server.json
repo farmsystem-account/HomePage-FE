@@ -7,6 +7,6 @@
       "outDir": "dist",                   // 선택
       "declaration": false
     },
-    "include": ["api/**/*.ts"]
+    "include": ["api/**/*.ts", "api/og.js"]
   }
   
