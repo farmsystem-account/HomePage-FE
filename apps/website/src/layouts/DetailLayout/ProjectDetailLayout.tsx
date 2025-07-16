@@ -2,7 +2,7 @@ import * as S from "./ProjectDetailLayout.styled";
 import GoBackArrow from "@/assets/LeftArrow.png";
 import useMediaQueries from "@/hooks/useMediaQueries";
 import GithubIcon from "@/assets/githubLogo.png";
-import DeploymentIcon from "@/assets/black_link.png";
+import DeploymentIcon from "@/assets/Icons/deploy_Icon.png";
 import ResourceIcon from "@/assets/pink_link.png";
 
 interface ProjectDetailLayoutProps {

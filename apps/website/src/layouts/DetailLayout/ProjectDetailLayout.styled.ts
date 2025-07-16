@@ -151,7 +151,7 @@ export const Introduction = styled.p<LayoutProps>`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  width: 50%;
+  width: 66%;
   max-width: 800px;
 `;
 
