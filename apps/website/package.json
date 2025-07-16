@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "type-check": "tsc --noEmit",
-    "build": "pnpm -r exec tsc -p tsconfig.server.json && vite build",
+    "build": "tsc -p tsconfig.server.json && vite build",
     "build:api": "tsc -p tsconfig.server.json",
     "build:client": "vite build",
     "lint": "eslint .",
