@@ -15,8 +15,8 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           token: ${{ secrets.AUTO_ACTIONS }}
+          fetch-depth: 0
 
       - name: Determine target branch
         id: vars
@@ -26,7 +26,7 @@ jobs:
 
       - name: Add remote-url
         run: |
-          git remote add forked-repo https://farmsystem-account://x-access-token:${{ secrets.AUTO_ACTIONS }}@github.com/farmsystem-account/HomePage-FE
+          git remote add forked-repo https://farmsystem-account:${{ secrets.AUTO_ACTIONS }}@github.com/farmsystem-account/HomePage-FE
           git config user.name farmsystem-account
           git config user.email ${{ secrets.EMAIL }}
 
