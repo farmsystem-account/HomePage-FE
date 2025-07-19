@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite --host",
     "type-check": "tsc --noEmit",
-    "build": "tsc -p tsconfig.server.json && vite build",
-    "build:api": "tsc -p tsconfig.server.json",
+    "build": "tsc -b && vite build",
+    "build:api": "tsc -b",
     "build:client": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
