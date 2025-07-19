@@ -69,7 +69,7 @@ export const useLinkPreview = (
       try {
         const res = fetcher ? await fetcher(endpoint) : await defaultFetcher(endpoint);
         if (!isMounted.current) return;
-        setMetadata(isValidResponse(res) ? res : null);
+        setMetadata(res);
       } catch (err) {
         if (!isMounted.current) return;
         setError(handleApiError(err));

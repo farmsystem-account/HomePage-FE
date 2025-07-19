@@ -1,30 +1,67 @@
+import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
+
 export default async function handler(req, res) {
-    const { url } = req.query;
-    if (!url || typeof url !== 'string') {
-      res.status(400).json({ error: 'url query parameter is required' });
-      return;
-    }
-  
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
-      }
-      const html = await response.text();
-  
-      const extract = (property) => {
-        const metaTag = new RegExp(`<meta[^>]+(?:property|name)=\"${property}\"[^>]*content=\"([^\"]+)\"`, 'i');
-        const match = html.match(metaTag);
-        return match ? match[1] : null;
-      };
-  
-      const title = extract('og:title') || extract('title');
-      const description = extract('og:description') || extract('description');
-      const image = extract('og:image');
-  
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.status(200).json({ title, description, image });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch og tags' });
-    }
+  const { url } = req.query;
+  if (typeof url !== 'string' || !/^https?:\/\//i.test(url)) {
+    res.status(400).json({ error: 'url query parameter is required (absolute http/https URL)' });
+    return;
   }
+
+  const isProd = !!process.env.VERCEL;      // Vercel = true, 로컬 = false
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: { width: 1200, height: 630 },
+    executablePath: isProd ? await chromium.executablePath() : undefined,
+    headless: true,
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle0', timeout: 15_000 });
+
+    const data = await page.evaluate(() => {
+      // <head> 안의 메타 태그 우선순위 검색
+      const pick = (...selectors) =>
+        selectors
+          .map((s) => document.querySelector(s)?.content)
+          .find(Boolean) || null;
+
+      const title =
+        pick('meta[property="og:title"]', 'meta[name="twitter:title"]', 'title') ||
+        document.title ||
+        null;
+
+      const description =
+        pick(
+          'meta[property="og:description"]',
+          'meta[name="description"]',
+          'meta[name="twitter:description"]',
+          'description'
+        );
+
+      let image =
+        pick(
+          'meta[property="og:image"]',
+          'meta[name="twitter:image"]',
+          'image'
+        ) ||
+        document.querySelector('link[rel="image_src"]')?.href ||
+        null;
+
+      // 상대 경로 → 절대 URL
+      if (image && image.startsWith('/')) {
+        image = new URL(image, location.origin).href;
+      }
+
+      return { title, description, image };
+    });
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err?.message || 'failed' });
+  } finally {
+    await browser.close();
+  }
+}
