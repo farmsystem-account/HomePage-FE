@@ -1,4 +1,5 @@
-import chromium from '@sparticuz/chromium';
+// api/og.js ─ Node 22.x (Vercel)용
+import chromium from '@sparticuz/chromium-min';
 import puppeteer from 'puppeteer-core';
 
 export default async function handler(req, res) {
@@ -8,12 +9,12 @@ export default async function handler(req, res) {
     return;
   }
 
-  const isProd = !!process.env.VERCEL;      // Vercel = true, 로컬 = false
+  // Vercel·로컬 모두 chromium‑min 쓰도록 통일
   const browser = await puppeteer.launch({
+    executablePath: await chromium.executablePath(), // min 빌드 위치
     args: chromium.args,
-    defaultViewport: { width: 1200, height: 630 },
-    executablePath: isProd ? await chromium.executablePath() : undefined,
-    headless: true,
+    headless: chromium.headless,          // 'new' 모드 포함
+    defaultViewport: { width: 1200, height: 630 }
   });
 
   try {
@@ -21,44 +22,26 @@ export default async function handler(req, res) {
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 15_000 });
 
     const data = await page.evaluate(() => {
-      // <head> 안의 메타 태그 우선순위 검색
-      const pick = (...selectors) =>
-        selectors
-          .map((s) => document.querySelector(s)?.content)
-          .find(Boolean) || null;
+      const pick = (...sel) => sel.map(s => document.querySelector(s)?.content).find(Boolean) || null;
 
-      const title =
-        pick('meta[property="og:title"]', 'meta[name="twitter:title"]', 'title') ||
-        document.title ||
-        null;
+      const title = pick('meta[property="og:title"]', 'meta[name="twitter:title"]') ||
+                    document.title || null;
 
-      const description =
-        pick(
-          'meta[property="og:description"]',
-          'meta[name="description"]',
-          'meta[name="twitter:description"]',
-          'description'
-        );
+      const description = pick(
+        'meta[property="og:description"]',
+        'meta[name="description"]'
+      );
 
-      let image =
-        pick(
-          'meta[property="og:image"]',
-          'meta[name="twitter:image"]',
-          'image'
-        ) ||
-        document.querySelector('link[rel="image_src"]')?.href ||
-        null;
+      let image = pick(
+        'meta[property="og:image"]'
+      ) || document.querySelector('link[rel="image_src"]')?.href || null;
 
-      // 상대 경로 → 절대 URL
-      if (image && image.startsWith('/')) {
-        image = new URL(image, location.origin).href;
-      }
-
+      if (image && image.startsWith('/')) image = new URL(image, location.origin).href;
       return { title, description, image };
     });
 
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.json(data);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: err?.message || 'failed' });
   } finally {
