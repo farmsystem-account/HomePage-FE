@@ -1,12 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "outputDirectory": "dist",
+
   "functions": {
     "api/og.js": {
-      "runtime": "nodejs22.x",
       "memory": 1024,
       "maxDuration": 30,
-      "includeFiles": "node_modules/@sparticuz/chromium-min/bin/**"
+      "includeFiles": "node_modules/@sparticuz/chromium/**"
     }
   },
   "rewrites": [
