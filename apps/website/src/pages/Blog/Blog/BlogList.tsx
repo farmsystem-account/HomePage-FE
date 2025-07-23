@@ -1,49 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './BlogList.styles';
 import BlogItem, { BlogCategory } from './BlogItem';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import { useBlogPage } from '@/hooks/useBlog';
+import { useLinkPreviewStore } from '@/stores/useLinkPreviewStore';
 
 import nextArrow_left from '@/assets/Icons/pagenation_2.png';
 import nextArrow_right from '@/assets/Icons/pagenation_2.png';
 import jumpArrow_left from '@/assets/Icons/pagenation_1.png';
 import jumpArrow_right from '@/assets/Icons/pagenation_1.png';
-
-/** 샘플용 더미 데이터 */
-/*
-let blogData: BlogItemProps[];
-// 개발 모드에서만 보이게 수정했습니다.
-if (import.meta.env.MODE === 'development' || window.location.hostname.startsWith('dev.')) {
-  blogData = [
-    {
-      blogUrl: 'https://velog.io/',
-      tags: [{ category: BlogCategory.SEMINAR }],
-    },
-    {
-      blogUrl: 'https://blog.naver.com/educds/222797324049',
-      tags: [{ category: BlogCategory.PROJECT }],
-    },
-    {
-      blogUrl: 'https://blog.encrypted.gg/',
-      tags: [{ category: BlogCategory.STUDY }],
-    },
-    {
-      blogUrl: 'https://www.github.com',
-      tags: [{ category: BlogCategory.HACKATHON }],
-    },
-    {
-      blogUrl: 'https://ludeno-studying.tistory.com/82',
-      tags: [{ category: BlogCategory.REVIEW }],
-    },
-    {
-      blogUrl: 'https://toss.im/',
-      tags: [{ category: BlogCategory.LECTURE }],
-    },
-  ];
-} else {
-  blogData = [];
-}
-*/
 
 // 문자열을 BlogCategory로 변환하는 함수
 const convertStringToBlogCategory = (categoryStr: string): BlogCategory => {
@@ -78,6 +43,24 @@ const BlogList: React.FC = () => {
     page: currentPage,
     size: pageSize,
   });
+
+  // zustand store
+  const getPreviewBatch = useLinkPreviewStore(state => state.getPreviewBatch);
+  const previewMap = useLinkPreviewStore(state => state.previewMap);
+  const loadingMap = useLinkPreviewStore(state => state.loadingMap);
+
+  // 3개씩 배치로 LinkPreview 요청
+  useEffect(() => {
+    if (!blogData?.content) return;
+    const urls = blogData.content.map(blog => blog.link);
+    const batchSize = 3;
+    const runBatches = async () => {
+      for (let i = 0; i < urls.length; i += batchSize) {
+        await getPreviewBatch(urls.slice(i, i + batchSize));
+      }
+    };
+    runBatches();
+  }, [blogData, getPreviewBatch]);
 
   // 페이지네이션 핸들러
   const handlePageChange = (page: number) => {
@@ -150,63 +133,65 @@ const BlogList: React.FC = () => {
                     ? blog.category.map(categoryStr => convertStringToBlogCategory(categoryStr))
                     : [BlogCategory.ETC]
                   }
+                  metadata={previewMap.get(blog.link) || undefined}
+                  loading={loadingMap.get(blog.link) || false}
                 />
               ))}
             </S.ListContainer>   
           </S.DescriptionContainer>
           
-              {/* 페이지네이션 */}
-              {pageInfo && pageInfo.totalPages > 0 && (
-              <S.PaginationContainer>
-                <S.PaginationButton>
-                  <S.PaginationButtonText
-                    onClick={() => setCurrentPage(0)}
-                    $disabled={!pageInfo.hasPreviousPage}
+          {/* 페이지네이션 */}
+          {pageInfo && pageInfo.totalPages > 0 && (
+            <S.PaginationContainer>
+              <S.PaginationButton>
+                <S.PaginationButtonText
+                  onClick={() => setCurrentPage(0)}
+                  $disabled={!pageInfo.hasPreviousPage}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={jumpArrow_left} alt="jumpArrow" />
+                </S.PaginationButtonText>
+                <S.PaginationButtonText 
+                  onClick={handlePreviousPage}
+                  $disabled={!pageInfo.hasPreviousPage}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={nextArrow_left} alt="nextArrow" />
+                </S.PaginationButtonText>
+                
+                {generatePageNumbers().map((pageNum) => (
+                  <S.PaginationPageButton
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    $active={pageNum === pageInfo.currentPage}
                     $isMobile={isMobile}
                     $isTablet={isTablet}
                   >
-                    <img src={jumpArrow_left} alt="jumpArrow" />
-                  </S.PaginationButtonText>
-                  <S.PaginationButtonText 
-                    onClick={handlePreviousPage}
-                    $disabled={!pageInfo.hasPreviousPage}
-                    $isMobile={isMobile}
-                    $isTablet={isTablet}
-                  >
-                    <img src={nextArrow_left} alt="nextArrow" />
-                  </S.PaginationButtonText>
-                  
-                  {generatePageNumbers().map((pageNum) => (
-                    <S.PaginationPageButton
-                      key={pageNum}
-                      onClick={() => handlePageChange(pageNum)}
-                      $active={pageNum === pageInfo.currentPage}
-                      $isMobile={isMobile}
-                      $isTablet={isTablet}
-                    >
-                      {pageNum + 1}
-                    </S.PaginationPageButton>
-                  ))}
-                  
-                  <S.PaginationButtonText 
-                    onClick={handleNextPage}
-                    $disabled={!pageInfo.hasNextPage}
-                    $isMobile={isMobile}
-                    $isTablet={isTablet}
-                  >
-                    <img src={nextArrow_right} alt="nextArrow_right" />
-                  </S.PaginationButtonText>
-                  <S.PaginationButtonText
-                    onClick={() => setCurrentPage(pageInfo.totalPages - 1)}
-                    $disabled={!pageInfo.hasPreviousPage}
-                    $isMobile={isMobile}
-                    $isTablet={isTablet}
-                  >
-                    <img src={jumpArrow_right} alt="jumpArrow_right" />
-                  </S.PaginationButtonText>
-                </S.PaginationButton>
-              </S.PaginationContainer>
-            )}
+                    {pageNum + 1}
+                  </S.PaginationPageButton>
+                ))}
+                
+                <S.PaginationButtonText 
+                  onClick={handleNextPage}
+                  $disabled={!pageInfo.hasNextPage}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={nextArrow_right} alt="nextArrow_right" />
+                </S.PaginationButtonText>
+                <S.PaginationButtonText
+                  onClick={() => setCurrentPage(pageInfo.totalPages - 1)}
+                  $disabled={!pageInfo.hasNextPage}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={jumpArrow_right} alt="jumpArrow_right" />
+                </S.PaginationButtonText>
+              </S.PaginationButton>
+            </S.PaginationContainer>
+          )}
         </>
       ) : (
         <S.TextContainer $isMobile={isMobile}>

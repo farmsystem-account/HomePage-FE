@@ -89,6 +89,13 @@ export const useLinkPreview = (
   return { metadata, loading, error };
 };
 
+export const fetchLinkPreview = async (url: string): Promise<APIResponse | null> => {
+  const apiOrigin = resolveApiOrigin();
+  const base = apiOrigin ? `${apiOrigin}/api/og?url=` : "/api/og?url=";
+  const endpoint = `${base}${encodeURIComponent(url)}`;
+  return defaultFetcher(endpoint);
+};
+
 /* ------------------------------------------------------------------ */
 /* 기본 fetcher – serverless JSON                                      */
 /* ------------------------------------------------------------------ */
