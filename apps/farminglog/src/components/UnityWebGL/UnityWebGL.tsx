@@ -9,7 +9,7 @@ interface UnityWebGLProps {
 
 const UnityWebGL: React.FC<UnityWebGLProps> = ({
   width = '100%',
-  height = '600px',
+  height = '1000px',
   className
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
