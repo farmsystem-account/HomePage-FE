@@ -4,7 +4,7 @@ export const GameContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  min-height: 100vh;
+  min-height: 1000px;
 `;
 
 export const GameTitle = styled.h1`
