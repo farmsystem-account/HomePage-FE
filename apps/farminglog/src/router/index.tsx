@@ -13,6 +13,7 @@ import Create from "@/pages/farminglog/create";
 import Mypage from "@/pages/myPage";
 import Ranking from "@/pages/home/Ranking/ranking";
 import RankingDetail from "@/pages/ranking";
+import Game from "@/pages/game";
 import Error from "@/pages/error";
 
 export const router = createBrowserRouter([
@@ -68,6 +69,11 @@ export const router = createBrowserRouter([
         path: "/rankingDetail",
         loader: protectedLoader,
         element: <RankingDetail />,
+      },
+      {
+        path: "/game",
+        loader: protectedLoader,
+        element: <Game />,
       },
     ],
   },

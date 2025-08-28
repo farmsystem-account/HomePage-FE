@@ -30,8 +30,8 @@ export default function SocialRedirect() {
       try {
         await socialLogin({ code, socialType: provider });
         navigate('/home');
-      } catch (error: any) {
-        const status = error?.status;
+      } catch (error: unknown) {
+        const status = (error as { status?: number })?.status;
 
         if (status === 404) {
           setErrorTitle(

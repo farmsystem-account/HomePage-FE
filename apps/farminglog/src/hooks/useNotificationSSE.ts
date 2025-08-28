@@ -35,6 +35,7 @@ export const useNotificationSSE = () => {
           .getReader();
 
         let buffer = '';
+        // eslint-disable-next-line no-constant-condition
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
@@ -54,8 +55,8 @@ export const useNotificationSSE = () => {
 
           buffer = lines[lines.length - 1];
         }
-      } catch (err: any) {
-        if (err.name === 'AbortError') {
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') {
           console.log('SSE 연결 중단됨');
         } else {
           console.error('SSE 연결 오류:', err);
