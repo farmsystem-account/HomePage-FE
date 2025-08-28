@@ -13,18 +13,8 @@ const UnityGame: React.FC = () => {
       
       <UnityWebGL 
         width="100%"
-        height="100%"
+        height="1000px"
       />
-      
-      <div style={{ marginTop: '20px', fontSize: '14px', color: '#666' }}>
-        <p><strong>게임 조작법:</strong></p>
-        <ul>
-          <li>마우스: 카메라 시점 조작</li>
-          <li>WASD: 캐릭터 이동</li>
-          <li>스페이스바: 점프</li>
-          <li>ESC: 메뉴 열기</li>
-        </ul>
-      </div>
     </GameContainer>
   );
 };
