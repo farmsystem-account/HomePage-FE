@@ -7,6 +7,7 @@ import mainIcon from "@/assets/logos/logo.basic.png"; // 메인 아이콘
 import crownIcon from "@/assets/Icons/tabler_crown.png"; // 랭킹 아이콘
 import pencilIcon from "@/assets/Icons/edit-3.png"; // 파밍 아이콘
 import thumbsUpIcon from "@/assets/Icons/goodgood.png"; // 응원 아이콘
+import gameIcon from "@/assets/Icons/Seed.png"; // 게임 아이콘 (씨앗 아이콘 사용)
 
 import useMediaQueries from "@/hooks/useMediaQueries";
 import Popup from "@/components/Popup/popup";
@@ -17,6 +18,7 @@ const navItems = [
   { label: "홈", path: "/home" },
   { label: "응원", path: "/cheer" },
   { label: "파밍로그", path: "/farminglog/view" },
+  { label: "게임", path: "/game" },
   { label: "랭킹", path: "/rankingDetail" },
 ];
 
@@ -148,6 +150,16 @@ export default function Header() {
                     transform: isMenuOpen ? "scale(1)" : "scale(0.5)",
                   } as React.CSSProperties}
                   onClick={() => handleNavigation("/farminglog/view")}
+                />
+                <S.MobileNavButton
+                  style={{
+                    top: "50px",
+                    right: "50px",
+                    backgroundImage: `url(${gameIcon})`,
+                    opacity: isMenuOpen ? 1 : 0,
+                    transform: isMenuOpen ? "scale(1)" : "scale(0.5)",
+                  } as React.CSSProperties}
+                  onClick={() => handleNavigation("/game")}
                 />
               </>
             )}
