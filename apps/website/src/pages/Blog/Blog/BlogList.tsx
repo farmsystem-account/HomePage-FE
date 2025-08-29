@@ -47,19 +47,21 @@ if (import.meta.env.MODE === 'development' || window.location.hostname.startsWit
 
 // 문자열을 BlogCategory로 변환하는 함수
 const convertStringToBlogCategory = (categoryStr: string): BlogCategory => {
-  switch (categoryStr.toLowerCase()) {
-    case 'seminar':
+  switch (categoryStr) {
+    case 'SEMINAR':
       return BlogCategory.SEMINAR;
-    case 'project':
+    case 'PROJECT':
       return BlogCategory.PROJECT;
-    case 'study':
+    case 'STUDY':
       return BlogCategory.STUDY;
-    case 'hackathon':
+    case 'HACKATHON':
       return BlogCategory.HACKATHON;
-    case 'review':
+    case 'REVIEW':
       return BlogCategory.REVIEW;
-    case 'lecture':
+    case 'LECTURE':
       return BlogCategory.LECTURE;
+    case 'ETC':
+      return BlogCategory.ETC;
     default:
       return BlogCategory.ETC;
   }
@@ -147,7 +149,7 @@ const BlogList: React.FC = () => {
                   key={blog.blogId || index} 
                   blogUrl={blog.link}
                   tags={blog.category && blog.category.length > 0 
-                    ? blog.category.map(categoryStr => convertStringToBlogCategory(categoryStr))
+                    ? blog.category.map(str=> convertStringToBlogCategory(str))
                     : [BlogCategory.ETC]
                   }
                 />
