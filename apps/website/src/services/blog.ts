@@ -51,6 +51,5 @@ export const getBlogPageList = async (
   const url = `blogs/page?${queryString}`;
 
   const response = await apiConfig.get<BlogPage>(url);
-  console.log('response', response.data?.content);
   return response.data;
 };
