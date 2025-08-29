@@ -49,9 +49,6 @@ export const getBlogPageList = async (
   queryString += `page=${page}&size=${size}`;
 
   const url = `blogs/page?${queryString}`;
-  
-  console.log('API Request URL:', url);
-  console.log('Request Parameters:', { page, size });
 
   const response = await apiConfig.get<BlogPage>(url);
   return response.data;
