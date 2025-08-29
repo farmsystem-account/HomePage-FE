@@ -49,20 +49,28 @@ if (import.meta.env.MODE === 'development' || window.location.hostname.startsWit
 const convertStringToBlogCategory = (categoryStr: string): BlogCategory => {
   switch (categoryStr) {
     case 'SEMINAR':
+      console.log('SEMINAR');
       return BlogCategory.SEMINAR;
     case 'PROJECT':
+      console.log('PROJECT');
       return BlogCategory.PROJECT;
     case 'STUDY':
+      console.log('STUDY');
       return BlogCategory.STUDY;
     case 'HACKATHON':
+      console.log('HACKATHON');
       return BlogCategory.HACKATHON;
     case 'REVIEW':
+      console.log('REVIEW');
       return BlogCategory.REVIEW;
     case 'LECTURE':
+      console.log('LECTURE');
       return BlogCategory.LECTURE;
-    case 'ETC':
+    case 'ETC': 
+      console.log('ETC');
       return BlogCategory.ETC;
     default:
+      console.log('기타');
       return BlogCategory.ETC;
   }
 };
@@ -148,8 +156,8 @@ const BlogList: React.FC = () => {
                 <BlogItem 
                   key={blog.blogId || index} 
                   blogUrl={blog.link}
-                  tags={blog.category && blog.category.length > 0 
-                    ? blog.category.map(str=> convertStringToBlogCategory(str))
+                  tags={blog.categories && blog.categories.length > 0 
+                    ? blog.categories.map(str=> convertStringToBlogCategory(str))
                     : [BlogCategory.ETC]
                   }
                 />
