@@ -5,13 +5,13 @@ import BlankImg from '../../../assets/Images/Blog_Project/blank_img.svg';
 import { APIResponse } from '@/hooks/useLinkPreview';
 
 export enum BlogCategory {
-  SEMINAR,
-  PROJECT,
-  STUDY,
-  HACKATHON,
-  REVIEW,
-  LECTURE,
-  ETC,
+  SEMINAR = "SEMINAR",
+  PROJECT = "PROJECT",
+  STUDY = "STUDY",
+  HACKATHON = "HACKATHON",
+  REVIEW = "REVIEW",
+  LECTURE = "LECTURE",
+  ETC = "ETC",
 }
 
 export interface BlogTag {
