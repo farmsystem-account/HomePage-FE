@@ -2,6 +2,7 @@ import * as S from './ProjectItem.style';
 import { Track } from '@/models/blog';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
+import BlankImg from '@/assets/Images/Blog_Project/blank_img.svg';
 
 // 카테고리 enum을 텍스트 매핑
 export const getProjectGeneration = (generation: number): string => {
@@ -41,7 +42,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ projectId, title, description
 
   return (
     <S.Card $isMobile={isMobile} $isTablet={isTablet} onClick={() => navigate(`/project/${projectId}`)}>
-      <S.Image $isMobile={isMobile} $isTablet={isTablet}><img src={imageUrl} alt={title}></img></S.Image>
+      <S.Image $isMobile={isMobile} $isTablet={isTablet}><img src={imageUrl || BlankImg} alt={title}></img></S.Image>
       <S.Content>
         <S.Title $isMobile={isMobile} $isTablet={isTablet}>{title}</S.Title>
         <S.Description $isMobile={isMobile} $isTablet={isTablet}>{description}</S.Description>
