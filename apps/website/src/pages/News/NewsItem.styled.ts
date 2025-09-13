@@ -105,7 +105,7 @@ export const TagBox = styled.div<MobileProps>`
 export const Tag = styled.div<MobileProps>`
   display: flex;
   height: ${({ $isMobile }) => ($isMobile ? '25px' : '30px')};
-  padding: ${({ $isMobile }) => ($isMobile ? '3px 10px' : '5px 15px')};
+  padding: ${({ $isMobile }) => ($isMobile ? '2px 6px' : '5px 15px')};
   justify-content: center;
   align-items: center;
   gap: ${({ $isMobile }) => ($isMobile ? '5px' : '10px')};
@@ -115,7 +115,7 @@ export const Tag = styled.div<MobileProps>`
   color: var(--FarmSystem_White, #FCFCFC);
   text-align: center;
 
-  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '9px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: ${({ $isMobile }) => ($isMobile ? '16px' : '20px')};
