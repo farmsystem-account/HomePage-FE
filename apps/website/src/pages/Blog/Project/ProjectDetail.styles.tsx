@@ -45,13 +45,64 @@ export const LoadingContainer = styled.div`
   color: var(--FarmSystem_Black);
 `;
 
-export const ErrorContainer = styled.div`
+export const ErrorContainer = styled.div<ContainerProps>`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 400px;
-  font-size: 18px;
-  color: var(--FarmSystem_Red);
+  padding: ${({ $isMobile }) => ($isMobile ? "20px": "40px")};
+  text-align: center;
+  gap: 20px;
+`;
+
+export const ErrorIcon = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: white;
+  margin-bottom: 10px;
+`;
+
+export const ErrorTitle = styled.h2<ContainerProps>`
+  font-size: ${({ $isMobile }) => ($isMobile ? "24px": "32px")};
+  font-weight: 700;
+  color: var(--FarmSystem_Black);
+  margin: 0;
+`;
+
+export const ErrorMessage = styled.p<ContainerProps>`
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "18px")};
+  color: var(--FarmSystem_DarkGrey);
+  margin: 0;
+  line-height: 1.5;
+`;
+
+export const RetryButton = styled.button<ContainerProps>`
+  padding: ${({ $isMobile }) => ($isMobile ? "12px 24px": "16px 32px")};
+  background: var(--FarmSystem_Green01);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: ${({ $isMobile }) => ($isMobile ? "14px": "16px")};
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+
+  &:hover {
+    background: var(--FarmSystem_Green02);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 export const Section = styled.section`
@@ -112,5 +163,49 @@ export const LinkButton = styled.a`
 
   &:hover {
     background-color: var(--FarmSystem_Green02);
+  }
+`;
+
+// 간단한 스켈레톤 컨테이너
+export const SkeletonContainer = styled.div<ContainerProps>`
+  padding: ${({ $isMobile }) => ($isMobile ? "100px 8px": "100px 20px")};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  color: var(--FarmSystem_Black);
+  font-size: 18px;
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+  }
+`;
+
+// 스켈레톤 레이아웃 카드
+export const SkeletonDetailCard = styled.div<ContainerProps>`
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  padding: ${({ $isMobile }) => ($isMobile ? "20px": "50px")};
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  box-shadow: 0px 0px 20px 5px var(--FarmSystem_LightGrey, #E5E5E5);
+  gap: ${({ $isMobile }) => ($isMobile ? "20px": "70px")};
+  min-height: 600px;
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
   }
 `; 

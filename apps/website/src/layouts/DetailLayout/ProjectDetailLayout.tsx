@@ -4,6 +4,7 @@ import useMediaQueries from "@/hooks/useMediaQueries";
 import GithubIcon from "@/assets/githubLogo.png";
 import DeploymentIcon from "@/assets/Icons/deploy_Icon.png";
 import ResourceIcon from "@/assets/pink_link.png";
+import BlankThumbnailImg from "@/assets/Images/Blog_Project/blank_img_project.png";
 
 interface ProjectDetailLayoutProps {
   title?: string;
@@ -23,7 +24,7 @@ export default function ProjectDetailLayout({
   content = "(임시) 내용",
   introduction = "(임시) 소개",
   tag = "(임시) 태그",
-  thumbnailUrl = "",
+  thumbnailUrl = BlankThumbnailImg,
   githubLink = "(임시) 링크",
   deploymentLink = "(임시) 링크",
   resourceLink = "(임시) 링크",
@@ -92,7 +93,7 @@ export default function ProjectDetailLayout({
         <S.ImageContainer  $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
           <S.Thumbnail
             $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}
-            src={thumbnailUrl}
+            src={thumbnailUrl || BlankThumbnailImg}
             alt={title}
           />
         </S.ImageContainer>
