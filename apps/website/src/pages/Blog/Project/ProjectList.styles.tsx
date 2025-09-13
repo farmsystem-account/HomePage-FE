@@ -108,7 +108,6 @@ export const DropdownItem = styled.div<{$isMobile: boolean; $isTablet: boolean;}
   }
 `;
 
-/** 프로젝트 리스트(카드)들을 감싸는 컨테이너 */
 
 export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $isMobile: boolean;}>`
   width: 100%;

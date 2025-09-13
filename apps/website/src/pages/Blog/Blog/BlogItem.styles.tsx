@@ -25,9 +25,16 @@ export const Image = styled.div<{$isMobile: boolean; $isTablet: boolean;}>`
   height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')};
   background-color: var(--FarmSystem_LightGrey);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   img{
-    height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')};
+    /* height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')}; */
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 `;
 
