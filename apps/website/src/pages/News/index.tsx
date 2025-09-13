@@ -57,9 +57,14 @@ export default function News() {
 
   if (newsLoading) {
     return (
-      <S.Container>
-        <S.Message $isMobile={isMobile}>Loading...</S.Message>
-      </S.Container>
+      <S.SkeletonContainer>
+        <S.NewsPageTitle>소식</S.NewsPageTitle>
+        <S.SkeletonNewsContainer $isMobile={isMobile}>
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <S.SkeletonNewsItem key={idx} $isMobile={isMobile} />
+          ))}
+        </S.SkeletonNewsContainer>
+      </S.SkeletonContainer>
     );
   }
 
