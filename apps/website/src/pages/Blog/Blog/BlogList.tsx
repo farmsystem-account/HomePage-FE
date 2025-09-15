@@ -12,19 +12,21 @@ import jumpArrow_right from '@/assets/Icons/pagenation_1.png';
 
 // 문자열을 BlogCategory로 변환하는 함수
 const convertStringToBlogCategory = (categoryStr: string): BlogCategory => {
-  switch (categoryStr.toLowerCase()) {
-    case 'seminar':
+  switch (categoryStr) {
+    case 'SEMINAR':
       return BlogCategory.SEMINAR;
-    case 'project':
+    case 'PROJECT':
       return BlogCategory.PROJECT;
-    case 'study':
+    case 'STUDY':
       return BlogCategory.STUDY;
-    case 'hackathon':
+    case 'HACKATHON':
       return BlogCategory.HACKATHON;
-    case 'review':
+    case 'REVIEW':
       return BlogCategory.REVIEW;
-    case 'lecture':
+    case 'LECTURE':
       return BlogCategory.LECTURE;
+    case 'ETC':
+      return BlogCategory.ETC;
     default:
       return BlogCategory.ETC;
   }
@@ -90,7 +92,7 @@ const BlogList: React.FC = () => {
     // 최대 7개의 페이지 번호만 표시
     const maxVisiblePages = 3;
     let startPage = Math.max(0, current - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
+    const endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
     
     // 시작 페이지 조정
     if (endPage - startPage < maxVisiblePages - 1) {
@@ -105,7 +107,22 @@ const BlogList: React.FC = () => {
   };
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return (
+      <S.Container>
+        <S.TableContainer $isTablet={isTablet} $isMobile={isMobile}>
+          <S.SubDescription $isMobile={isMobile}>
+            * 블로그 클릭 시 외부 링크로 연결돼요.
+          </S.SubDescription>
+        </S.TableContainer>
+        <S.DescriptionContainer>
+          <S.SkeletonListContainer $isTablet={isTablet} $isBig={isBig} $isMobile={isMobile}>
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <S.SkeletonCard key={idx} $isMobile={isMobile} />
+            ))}
+          </S.SkeletonListContainer>
+        </S.DescriptionContainer>
+      </S.Container>
+    );
   }
 
   if (error) {
@@ -121,7 +138,7 @@ const BlogList: React.FC = () => {
       </S.TableContainer>
 
       {/* 블로그 카드 리스트 */}
-      {blogData && blogData.content.length > 0 ? (
+      {blogData?.content && blogData.content.length > 0 ? (
         <>
           <S.DescriptionContainer>
             <S.ListContainer $isTablet={isTablet} $isBig={isBig} $isMobile={isMobile}>
@@ -129,8 +146,8 @@ const BlogList: React.FC = () => {
                 <BlogItem 
                   key={blog.blogId || index} 
                   blogUrl={blog.link}
-                  tags={blog.category && blog.category.length > 0 
-                    ? blog.category.map(categoryStr => convertStringToBlogCategory(categoryStr))
+                  tags={blog.categories && blog.categories.length > 0 
+                    ? blog.categories.map(str=> convertStringToBlogCategory(str))
                     : [BlogCategory.ETC]
                   }
                   metadata={previewMap.get(blog.link) || undefined}

@@ -48,7 +48,7 @@ enum ApiErrorMessages {
   export interface BlogItem {
     blogId: number;
     link: string;
-    category: string[];
+    categories: string[];
     approvalStatus: string;
   }
 

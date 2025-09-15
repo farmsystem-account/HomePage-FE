@@ -97,7 +97,7 @@ const ProjectList: React.FC = () => {
     // 최대 7개의 페이지 번호만 표시
     const maxVisiblePages = 3;
     let startPage = Math.max(0, current - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
+    const endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
     
     // 시작 페이지 조정
     if (endPage - startPage < maxVisiblePages - 1) {
@@ -113,7 +113,29 @@ const ProjectList: React.FC = () => {
   };
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return (
+      <S.Container>
+        <S.TableContainer $isTablet={isTablet} $isMobile={isMobile}>
+          <S.FilterContainer>
+            <S.FilterWrapper>
+              <S.FilterGradeButton $isTablet={isTablet} $isMobile={isMobile}>
+                <a>기수</a> <a>▾</a>
+              </S.FilterGradeButton>
+            </S.FilterWrapper>
+            <S.FilterWrapper>
+              <S.FilterTrackButton $isTablet={isTablet} $isMobile={isMobile}>
+                <a>트랙</a> <a>▾</a>
+              </S.FilterTrackButton>
+            </S.FilterWrapper>
+          </S.FilterContainer>
+        </S.TableContainer>
+        <S.SkeletonListContainer $isTablet={isTablet} $isBig={isBig} $isMobile={isMobile}>
+          {Array.from({ length: 8 }).map((_, idx) => (
+            <S.SkeletonCard key={idx} $isMobile={isMobile} />
+          ))}
+        </S.SkeletonListContainer>
+      </S.Container>
+    );
   }
 
   if (error) {

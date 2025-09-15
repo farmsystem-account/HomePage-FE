@@ -108,7 +108,6 @@ export const DropdownItem = styled.div<{$isMobile: boolean; $isTablet: boolean;}
   }
 `;
 
-/** 프로젝트 리스트(카드)들을 감싸는 컨테이너 */
 
 export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $isMobile: boolean;}>`
   width: 100%;
@@ -129,6 +128,22 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
   justify-items: ${(props) => (props.$isMobile || props.$isTablet ? 'start' : 'start')};
   
   
+`;
+
+export const SkeletonListContainer = styled(ListContainer)``;
+
+export const SkeletonCard = styled.div<{$isMobile: boolean;}>`
+  width: 300px;
+  height: ${(props) => (props.$isMobile ? '170px' : '200px')};
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+  }
 `;
 
 /* 비어 있을 떄 출력하는 레이아웃 잡는 컨테이너 */

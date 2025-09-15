@@ -173,4 +173,53 @@ export const PaginationPageButton = styled.span<{
   transition: all 0.2s ease;
 `;
 
+// 스켈레톤 컴포넌트들
+export const SkeletonContainer = styled.div`
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+`;
+
+export const SkeletonTitle = styled.div<{$isMobile: boolean;}>`
+  width: ${({ $isMobile }) => ($isMobile ? '120px' : '200px')};
+  height: ${({ $isMobile }) => ($isMobile ? '24px' : '40px')};
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '4px' : '8px')};
+  margin-bottom: ${({ $isMobile }) => ($isMobile ? '40px' : '70px')};
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+  }
+`;
+
+export const SkeletonNewsContainer = styled.div<{$isMobile: boolean;}>`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ $isMobile }) => ($isMobile ? '15px' : '20px')};
+  width: 100%;
+  max-width: 1000px;
+  margin-top: ${({ $isMobile }) => ($isMobile ? '40px' : '70px')};
+`;
+
+export const SkeletonNewsItem = styled.div<{$isMobile: boolean;}>`
+  width: 100%;
+  height: ${({ $isMobile }) => ($isMobile ? '80px' : '120px')};
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '6px' : '8px')};
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+  }
+`;
+
 

@@ -31,11 +31,6 @@ const ProjectDetail: React.FC = () => {
         Logger.error(err);
       } finally {
         setLoading(false);
-        return(
-          <S.Container $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-          로딩에 실패했습니다.
-        </S.Container>
-        )
       }
     };
 
@@ -45,15 +40,36 @@ const ProjectDetail: React.FC = () => {
   if (loading) {
     return (
       <S.Container $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-        로딩 중...
+        <S.ProjectPageTitle $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+          프로젝트
+        </S.ProjectPageTitle>
+        <S.SkeletonDetailCard $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop} />
       </S.Container>
     );
   }
 
-  if (error || !project) {
+  if ((error || !project)) {
     return (
       <S.Container $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
-        에러가 발생했습니다: {error?.message}
+        <S.ProjectPageTitle $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+          프로젝트
+        </S.ProjectPageTitle>
+        <S.ErrorContainer $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+          <S.ErrorTitle $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+            프로젝트를 불러올 수 없습니다
+          </S.ErrorTitle>
+          <S.ErrorMessage $isMobile={isMobile} $isTablet={isTablet} $isDesktop={isDesktop}>
+            {error?.message || '프로젝트 정보를 찾을 수 없습니다.'}
+          </S.ErrorMessage>
+          <S.RetryButton 
+            $isMobile={isMobile} 
+            $isTablet={isTablet} 
+            $isDesktop={isDesktop}
+            onClick={() => window.location.reload()}
+          >
+            다시 시도
+          </S.RetryButton>
+        </S.ErrorContainer>
       </S.Container>
     );
   }
