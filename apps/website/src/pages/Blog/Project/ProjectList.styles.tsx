@@ -133,9 +133,10 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
 export const SkeletonListContainer = styled(ListContainer)``;
 
 export const SkeletonCard = styled.div<{$isMobile: boolean;}>`
-  width: 300px;
-  height: ${(props) => (props.$isMobile ? '170px' : '200px')};
-  border-radius: 16px;
+  width: 100%;
+  /* 반응형 높이: 최소 150px, 화면 커지면 증가, 최대 200px */
+  height: clamp(150px, 14vw, 200px);
+  border-radius: ${(props) => (props.$isMobile ? '10px' : '16px')};
   background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
   background-size: 400% 100%;
   animation: skeleton-shimmer 1.2s ease-in-out infinite;
