@@ -109,7 +109,7 @@ export default function CheerMessageEditor({ searchedUser }: CheerMessageEditorP
           await queryClient.invalidateQueries({ queryKey: ['cheerList'] });
           await queryClient.invalidateQueries({ queryKey: ['user', 'today-seed'] });
 
-          const updatedSeed = queryClient.getQueryData<any>(['user', 'today-seed']);
+          const updatedSeed = queryClient.getQueryData<{ isCheer?: boolean }>(['user', 'today-seed']);
           const isFirstCheer = !todaySeed?.isCheer && updatedSeed?.isCheer;
 
           setPopupMessage({

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 // 스타일 컴포넌트 (블로그랑 같지만, 다를 수 있으니께)
 // 요긴 대충 짜서 해결
 export const Card = styled.a<{$isMobile: boolean; $isTablet: boolean;}>`
-  width: ${(props) => (props.$isMobile ? '130px' : props.$isTablet ? '240px' : '300px')};
-  height: ${(props) => (props.$isMobile ? '205px' : props.$isTablet ? '260px' : '335px')};
+  width: ${(props) => (props.$isMobile ? '130px' : props.$isTablet ? '240px' : '250px')};
+  height: ${(props) => (props.$isMobile ? '205px' : props.$isTablet ? '260px' : '279px')};
 
   border-radius: ${(props) => (props.$isMobile ? '10px' : '8px')};
   overflow: hidden;
@@ -22,12 +22,19 @@ export const Image = styled.div<{$isMobile: boolean; $isTablet: boolean;}>`
 
   overflow: hidden;
   border-radius: 8px;
-  height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')};
+  height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '167px')};
   background-color: var(--FarmSystem_LightGrey);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   img{
-    height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')};
+    /* height: ${(props) => (props.$isMobile ? '87px' : props.$isTablet ? '150px' : '200px')}; */
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 `;
 

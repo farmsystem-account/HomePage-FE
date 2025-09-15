@@ -151,7 +151,7 @@ export const Introduction = styled.p<LayoutProps>`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  width: 50%;
+  width: 66%;
   max-width: 800px;
 `;
 
@@ -163,14 +163,71 @@ export const ImageContainer = styled.div<LayoutProps>`
 `;
 
 export const Thumbnail = styled.img<LayoutProps>`
-  width: 827.92px;
-  // height: 533px;
+  width: 100%;
+  max-width: 827.92px;
   flex-shrink: 0;
   aspect-ratio: 827.92/533.00;
 
-  border-top: 3px solid var(--FarmSystem_DarkGrey, #999);
+  border-top: 1px solid var(--FarmSystem_DarkGrey, #999);
   border-bottom: 1px solid var(--FarmSystem_DarkGrey, #999);
   background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+`;
+
+//프로젝트 디테일 시 이미지 없어서 그냥 맞추어서 작업
+export const PlaceholderImage = styled.div<LayoutProps>`
+  width: 100%;
+  max-width: 827.92px;
+  flex-shrink: 0;
+  aspect-ratio: 827.92/533.00;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: var(--FarmSystem_LightGrey, #E5E5E5);
+  border-top: 3px solid var(--FarmSystem_DarkGrey, #999);
+  border-bottom: 1px solid var(--FarmSystem_DarkGrey, #999);
+  
+  color: var(--FarmSystem_DarkGrey, #999);
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
+  font-weight: 500;
+`;
+
+// 예쁜 기본 썸네일
+export const DefaultThumbnail = styled.div<LayoutProps>`
+  width: 100%;
+  max-width: 827.92px;
+  flex-shrink: 0;
+  aspect-ratio: 827.92/533.00;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-top: 3px solid var(--FarmSystem_DarkGrey, #999);
+  border-bottom: 1px solid var(--FarmSystem_DarkGrey, #999);
+  
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    transform: translateY(-2px);
+  }
+`;
+
+export const DefaultThumbnailIcon = styled.div`
+  font-size: 48px;
+  opacity: 0.7;
+`;
+
+export const DefaultThumbnailText = styled.div<LayoutProps>`
+  font-size: ${({ $isMobile }) => ($isMobile ? "16px": "20px")};
+  font-weight: 500;
+  color: var(--FarmSystem_DarkGrey, #6c757d);
+  text-align: center;
 `;
 
 export const ContentBox = styled.p<LayoutProps>`

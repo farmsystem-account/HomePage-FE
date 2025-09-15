@@ -23,6 +23,10 @@
         ".env.local",
         ".env.production",
         ".env"
+      ],
+      "outputs": [
+        "dist/**",
+        ".vitepress/dist/**"
       ]
     },
     "lint": {

@@ -28,9 +28,10 @@ const useButtonStore = create<ButtonStore>()(
       name: "button-active-states", // localStorage 키로 사용됨
       version: 1,
       // migrate 함수에서 마지막 업데이트 시간이 오늘과 다르면 기본값으로 초기화
-      migrate: (persistedState: any) => {
+      migrate: (persistedState: unknown) => {
         const now = new Date();
-        const lastUpdate = new Date(persistedState.lastUpdate);
+        const state = persistedState as { lastUpdate?: string };
+        const lastUpdate = new Date(state.lastUpdate || '');
         if (
           now.getFullYear() !== lastUpdate.getFullYear() ||
           now.getMonth() !== lastUpdate.getMonth() ||

@@ -1,8 +1,8 @@
 import React from 'react';
 import * as S from './BlogItem.styles';
-import { useLinkPreview } from '@/hooks/useLinkPreview';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import BlankImg from '../../../assets/Images/Blog_Project/blank_img.svg';
+import { APIResponse } from '@/hooks/useLinkPreview';
 
 export enum BlogCategory {
   SEMINAR = "SEMINAR",
@@ -21,6 +21,8 @@ export interface BlogTag {
 export interface BlogItemProps {
   blogUrl: string;
   tags: BlogCategory[];
+  metadata?: APIResponse;
+  loading?: boolean;
 }
 
 // 카테고리 enum을 텍스트로 매핑
@@ -45,19 +47,16 @@ const getCategoryName = (category: BlogCategory): string => {
   }
 };
 
-const BlogItem: React.FC<BlogItemProps> = ({ blogUrl, tags }) => {
-  // blogUrl을 기반으로 메타데이터를 fetching
-  const { metadata, loading} = useLinkPreview(blogUrl);
+const BlogItem: React.FC<BlogItemProps> = ({ blogUrl, tags, metadata, loading }) => {
   const { isMobile, isTablet } = useMediaQueries();
 
-  
   // 메타데이터가 없는 경우 대비 기본값 설정
   const title = metadata?.title || '제목이 없습니다';
   const description = metadata?.description || '설명이 없습니다';
   const previewImage =
-  metadata?.image && metadata?.image !== 'null' && !metadata.image.startsWith('/')
-    ? metadata.image
-    : BlankImg;
+    metadata?.image && metadata?.image !== 'null' && !metadata.image.startsWith('/')
+      ? metadata.image
+      : BlankImg;
   return (
     <S.Card href={blogUrl} target="_blank" $isMobile={isMobile} $isTablet={isTablet}>
       <S.Image $isMobile={isMobile} $isTablet={isTablet}>

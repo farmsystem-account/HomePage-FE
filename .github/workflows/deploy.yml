@@ -30,6 +30,14 @@ jobs:
           git config user.name farmsystem-account
           git config user.email ${{ secrets.EMAIL }}
 
+      # 게임 애들꺼 push 제외
+      - name: Exclude Unity WebGL build (deploy-only)
+        run: |
+          # Remove from index if present, but do not fail if missing
+          git rm -r --cached --ignore-unmatch apps/farminglog/public/WebGLBuild || true
+          # Create a temporary commit only in the workflow context
+          git commit -m "chore(ci): exclude apps/farminglog/public/WebGLBuild from deploy sync" || echo "No changes to commit"
+
       - name: Push changes to forked-repo
         run: |
           git push -f forked-repo ${{ env.TARGET_BRANCH }}

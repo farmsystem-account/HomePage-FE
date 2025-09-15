@@ -36,8 +36,8 @@ const handleNext = () => {
           setErrorMessage('회원 인증에 실패했습니다.');
         }
       },
-      onError: (err: any) => {
-        if (err.status === 401 || err.status === 404) {
+      onError: (err: unknown) => {
+        if ((err as { status?: number })?.status === 401 || (err as { status?: number })?.status === 404) {
           setStep('not-member');
         } else {
           setErrorMessage('서버 오류입니다. 운영진에게 문의해주세요.');

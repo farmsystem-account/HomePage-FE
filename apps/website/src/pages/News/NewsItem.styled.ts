@@ -2,10 +2,13 @@ import styled from 'styled-components';
 
 interface MobileProps {
   $isMobile?: boolean;
+  $isTablet?: boolean;
+  $isDesktop?: boolean;
 }
 
 export const NewsItem = styled.button<MobileProps>`
   display: flex;
+  flex-direction: ${({ $isMobile, $isTablet }) => ($isMobile ? 'column' : $isTablet ? 'row' : 'row')};
   padding: ${({ $isMobile }) => ($isMobile ? '10px 15px' : '20px 30px')};
   align-items: center;
   gap: ${({ $isMobile }) => ($isMobile ? '15px' : '30px')};
@@ -18,7 +21,7 @@ export const NewsItem = styled.button<MobileProps>`
 `;
 
 export const Thumbnail = styled.img<MobileProps>`
-  width: ${({ $isMobile }) => ($isMobile ? '30%' : '311px')};
+  width: ${({ $isMobile }) => ($isMobile ? 'auto' : '311px')};
   height: ${({ $isMobile }) => ($isMobile ? 'auto' : '200px')};
   flex-shrink: 0;
   aspect-ratio: ${({ $isMobile }) => ($isMobile ? '16/9' : '311/200')};
@@ -75,6 +78,23 @@ export const Content = styled.p<MobileProps>`
   text-overflow: ellipsis;
 `;
 
+export const DateAndTagBox = styled.div<MobileProps>`
+  display: flex;
+  align-items: ${({ $isMobile }) => ($isMobile ? 'flex-start' : 'center')};
+  justify-content: ${({ $isMobile }) => ($isMobile ? 'flex-start' : 'space-between')};
+  width: 100%;
+  flex-direction: ${({ $isMobile }) => ($isMobile ? 'column' : 'row')};
+`;
+
+export const Date = styled.p<MobileProps>`
+  color: var(--FarmSystem_Black, #191919);
+  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 187.5% */
+  letter-spacing: -0.24px;
+`;
+
 export const TagBox = styled.div<MobileProps>`
   display: flex;
   align-items: center;
@@ -85,7 +105,7 @@ export const TagBox = styled.div<MobileProps>`
 export const Tag = styled.div<MobileProps>`
   display: flex;
   height: ${({ $isMobile }) => ($isMobile ? '25px' : '30px')};
-  padding: ${({ $isMobile }) => ($isMobile ? '3px 10px' : '5px 15px')};
+  padding: ${({ $isMobile }) => ($isMobile ? '2px 6px' : '5px 15px')};
   justify-content: center;
   align-items: center;
   gap: ${({ $isMobile }) => ($isMobile ? '5px' : '10px')};
@@ -95,7 +115,7 @@ export const Tag = styled.div<MobileProps>`
   color: var(--FarmSystem_White, #FCFCFC);
   text-align: center;
 
-  font-size: ${({ $isMobile }) => ($isMobile ? '14px' : '16px')};
+  font-size: ${({ $isMobile }) => ($isMobile ? '9px' : '16px')};
   font-style: normal;
   font-weight: 400;
   line-height: ${({ $isMobile }) => ($isMobile ? '16px' : '20px')};

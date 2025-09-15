@@ -81,3 +81,145 @@ export const Line = styled.hr`
   max-width: 1100px;
   margin: 30px 0;
 `;
+
+
+/** 페이지네이션 컨테이너 */
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
+/** 페이지네이션 버튼 컨테이너 */
+export const PaginationButton = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
+
+/** 페이지네이션 버튼 텍스트 */
+export const PaginationButtonText = styled.span<{
+  $active?: boolean;
+  $disabled?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+}>`
+  border-radius: 6px;
+  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'pointer')};
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  /* 사이즈 조절 */
+  img[alt="nextArrow"]{
+    width: ${(props) => (props.$isMobile ? '6px' : props.$isTablet ? '12px' : '15px')};
+    height: ${(props) => (props.$isMobile ? '12px' : props.$isTablet ? '24px' : '30px')};
+    margin-right: 10px;
+  }
+
+  img[alt="jumpArrow"]{
+    width: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+    height: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+  }
+
+  /* nextArrow 이미지 회전 */
+  img[alt="nextArrow_right"] {
+    width: ${(props) => (props.$isMobile ? '6px' : props.$isTablet ? '12px' : '15px')};
+    height: ${(props) => (props.$isMobile ? '12px' : props.$isTablet ? '24px' : '30px')};
+    transform: rotate(180deg);
+    margin-left: 10px;
+  }
+
+  img[alt="jumpArrow_right"] {
+    width: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+    height: ${(props) => (props.$isMobile ? '24px' : props.$isTablet ? '48px' : '60px')};
+    transform: rotate(180deg);
+  }
+  
+  &:hover {
+    ${(props) => !props.$disabled && `
+      background-color: ${props.$active ? 'var(--FarmSystem_Green06)' : '#f0f0f0'};
+      transform: translateY(-1px);
+    `}
+  }
+  
+  &:active {
+    ${(props) => !props.$disabled && `
+      transform: translateY(0);
+    `}
+  }
+`;
+
+export const PaginationPageButton = styled.span<{
+  $active?: boolean;
+  $disabled?: boolean;
+  $isMobile?: boolean;
+  $isTablet?: boolean;
+}>`
+  width: ${(props) => (props.$isMobile ? '20px' : props.$isTablet ? '26px' : '40px')};
+  height: ${(props) => (props.$isMobile ? '20px' : props.$isTablet ? '26px' : '40px')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '13px' : '20px')};
+  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'pointer')};
+
+  background-color: ${(props) => (props.$active ? 'var(--FarmSystem_Green06)' : 'var(--FarmSystem_DarkGrey)')};
+  color: white;
+  font-size: ${(props) => (props.$isMobile ? '8px' : props.$isTablet ? '12px' : '14px')};
+  font-weight: 500;
+  transition: all 0.2s ease;
+`;
+
+// 스켈레톤 컴포넌트들
+export const SkeletonContainer = styled.div`
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+`;
+
+export const SkeletonTitle = styled.div<{$isMobile: boolean;}>`
+  width: ${({ $isMobile }) => ($isMobile ? '120px' : '200px')};
+  height: ${({ $isMobile }) => ($isMobile ? '24px' : '40px')};
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '4px' : '8px')};
+  margin-bottom: ${({ $isMobile }) => ($isMobile ? '40px' : '70px')};
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+  }
+`;
+
+export const SkeletonNewsContainer = styled.div<{$isMobile: boolean;}>`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ $isMobile }) => ($isMobile ? '15px' : '20px')};
+  width: 100%;
+  max-width: 1000px;
+  margin-top: ${({ $isMobile }) => ($isMobile ? '40px' : '70px')};
+`;
+
+export const SkeletonNewsItem = styled.div<{$isMobile: boolean;}>`
+  width: 100%;
+  height: ${({ $isMobile }) => ($isMobile ? '80px' : '120px')};
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  border-radius: ${({ $isMobile }) => ($isMobile ? '6px' : '8px')};
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+  }
+`;
+
+
