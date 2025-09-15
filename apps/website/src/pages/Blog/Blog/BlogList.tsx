@@ -45,6 +45,8 @@ const BlogList: React.FC = () => {
     page: currentPage,
     size: pageSize,
   });
+  // 디버깅 로그: 환경/페이지/사이즈/데이터 길이
+  console.log('[BlogList] env', import.meta.env.MODE, 'page', currentPage, 'size', pageSize, 'len', blogData?.content?.length);
 
   // zustand store
   const getPreviewBatch = useLinkPreviewStore(state => state.getPreviewBatch);
@@ -53,16 +55,32 @@ const BlogList: React.FC = () => {
 
   // 3개씩 배치로 LinkPreview 요청
   useEffect(() => {
-    if (!blogData?.content) return;
+    if (!blogData?.content) {
+      console.log('[BlogList] preview-skip: no content');
+      return;
+    }
     const urls = blogData.content.map(blog => blog.link);
     const batchSize = 3;
+    console.log('[BlogList] preview-start', { total: urls.length, batchSize, sample: urls.slice(0, 3) });
     const runBatches = async () => {
       for (let i = 0; i < urls.length; i += batchSize) {
-        await getPreviewBatch(urls.slice(i, i + batchSize));
+        const slice = urls.slice(i, i + batchSize);
+        console.log('[BlogList] preview-batch', { from: i, to: i + slice.length, slice });
+        try {
+          await getPreviewBatch(slice);
+        } catch (e) {
+          console.error('[BlogList] preview-batch-error', e);
+        }
       }
+      console.log('[BlogList] preview-done');
     };
     runBatches();
   }, [blogData, getPreviewBatch]);
+
+  // 디버깅: 로딩/에러 상태 변화 추적
+  useEffect(() => {
+    console.log('[BlogList] state', { loading, error: error?.message, pageInfo });
+  }, [loading, error, pageInfo]);
 
   // 페이지네이션 핸들러
   const handlePageChange = (page: number) => {
