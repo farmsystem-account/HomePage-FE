@@ -122,8 +122,8 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
     return 'repeat(auto-fit, 300px)'; // 데스크탑: 자동 너비 조정
   }};
   
-  gap: ${(props) => (props.$isMobile ? '15px' : props.$isTablet ? '20px' : '20px')} 
-       ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '10px' : props.$isBig ? '4vw' : '10vw')};
+  /* 블로그 카드와 동일, gap을 clamp로 반응형 설정? clamp 싱기싱기 */
+  gap: clamp(10px, 2vw, 24px) clamp(10px, 1vw, 16px);
   
   justify-items: ${(props) => (props.$isMobile || props.$isTablet ? 'start' : 'start')};
   
@@ -149,8 +149,9 @@ export const SkeletonCard = styled.div<{$isMobile: boolean;}>`
 /* 비어 있을 떄 출력하는 레이아웃 잡는 컨테이너 */
 export const DescriptionContainer = styled.div`
   width: 100%;
-  margin: 20px;
-  display: block;
+  margin: 20px auto;
+  display: flex;
+  margin-bottom: 100px; 
 `;
 
 /* 텍스트 컨테이너*/
