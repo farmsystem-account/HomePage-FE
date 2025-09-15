@@ -129,7 +129,7 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
 
   grid-template-columns: ${(props) => {
     if (props.$isMobile) return '1fr 1fr'; // 모바일: 2 컬럼
-    return 'repeat(auto-fit, 300px)'; // 데스크탑: 자동 너비 조정
+    return 'repeat(auto-fit, minmax(240px, 1fr))'; // 데스크탑: 유동 폭 컬럼
   }};
   
   /* 프로젝트 카드와 동일, gap을 clamp */
