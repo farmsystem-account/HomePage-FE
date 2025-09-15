@@ -51,7 +51,8 @@ export const getBlogPageList = async (
   const url = `blogs/page?${queryString}`;
 
 
-  const response = await apiConfig.get<{ data: BlogPage }>(url);
-  console.log(response.data.data);
-  return response.data.data;
+  const response = await apiConfig.get(url);
+  // 왜 달라 무슨 일익 있는거야   data: BlogPage or BlogPage??
+  const payload = (response?.data && response.data.data) ? response.data.data : response.data;
+  return payload as BlogPage;
 };
