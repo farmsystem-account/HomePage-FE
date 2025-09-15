@@ -132,8 +132,8 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
     return 'repeat(auto-fit, 300px)'; // 데스크탑: 자동 너비 조정
   }};
   
-  gap: ${(props) => (props.$isMobile ? '15px' : props.$isTablet ? '20px' : '20px')} 
-       ${(props) => (props.$isMobile ? '10px' : props.$isTablet ? '10px' : props.$isBig ? '4vw' : '10vw')};
+  /* 프로젝트 카드와 동일, gap을 clamp */
+  gap: clamp(10px, 2vw, 24px) clamp(10px, 1vw, 16px);
   
   justify-items: ${(props) => (props.$isMobile || props.$isTablet ? 'start' : 'start')};
   
@@ -143,9 +143,10 @@ export const ListContainer = styled.div<{$isTablet: boolean; $isBig: boolean; $i
 export const SkeletonListContainer = styled(ListContainer)``;
 
 export const SkeletonCard = styled.div<{$isMobile: boolean;}>`
-  width: 300px;
-  height: ${(props) => (props.$isMobile ? '170px' : '200px')};
-  border-radius: 16px;
+  width: 100%;
+  /* 반응형 높이: 최소 150px, 화면 커지면 증가, 최대 200px */
+  height: clamp(150px, 14vw, 200px);
+  border-radius: ${(props) => (props.$isMobile ? '10px' : '16px')};
   background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
   background-size: 400% 100%;
   animation: skeleton-shimmer 1.2s ease-in-out infinite;
