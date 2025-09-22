@@ -42,7 +42,6 @@ import apiConfig from '../config/apiConfig';
 import { ApiResponse, STATUS, Tokens } from '../models/api';
 import { getClientSideTokens } from '../utils/getClientSideTokens';
 import { useReissueAccessTokenMutation } from "../services/mutation/useReissueAccessTokenMutation"; 
-import Cookies from 'js-cookie';
 
 
 export function usePrivateApi() {
