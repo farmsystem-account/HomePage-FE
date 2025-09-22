@@ -42,6 +42,7 @@ import apiConfig from '../config/apiConfig';
 import { ApiResponse, STATUS, Tokens } from '../models/api';
 import { getClientSideTokens } from '../utils/getClientSideTokens';
 import { useReissueAccessTokenMutation } from "../services/mutation/useReissueAccessTokenMutation"; 
+import Cookies from 'js-cookie';
 
 
 export function usePrivateApi() {
@@ -60,14 +61,13 @@ export function usePrivateApi() {
       }
 
       try {
+        const authHeader = tokens ? { Authorization: `Bearer ${tokens.accessToken}` } : {};
         const response = await apiConfig.request<ApiResponse<T>>({
           url: uri,
           method: options.method,
           data: options.json,
           params: options.searchParams,
-          headers: {
-            Authorization: tokens ? `Bearer ${tokens.accessToken}` : "",
-          },
+          headers: authHeader,
         });
 
         return response.data;
@@ -89,20 +89,18 @@ export function usePrivateApi() {
                 // 토큰 재발급 실패시
               }
             }
-
-            navigate("/?toast=401");
-            throw error; // ✅ 여기서도 원래 에러 던짐
+            throw error; // 여기서도 원래 에러 던짐
           }
 
           if (status === STATUS.NOT_FOUND) {
             navigate("/404");
-            throw error; // ✅ 상태코드 유지
+            throw error; // 상태코드 유지
           }
 
-          throw error; // ✅ 기타 상태 코드 (400 포함)
+          throw error; // 기타 상태 코드 (400 포함)
         }
 
-        throw error; // ✅ 네트워크 오류 등
+        throw error; // 네트워크 오류 등
       }
     },
     [navigate, reissueToken]
