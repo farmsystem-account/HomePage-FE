@@ -15,7 +15,10 @@
         "VITE_KAKAO_REDIRECT_URI",
         "VITE_GOOGLE_REDIRECT_URI",
         "VITE_BASE_DEV_URL",
-        "VITE_KAKAO_LOCAL_REDIRECT_URI"
+        "VITE_KAKAO_LOCAL_REDIRECT_URI",
+        "VITE_UNION_VIEWER_ID",
+        "VITE_UNION_VIEWER_PW",
+        "VITE_UNION_VIEWER_NUM"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
