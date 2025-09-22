@@ -9,6 +9,7 @@ import { useAttendMutation } from "../../../services/mutation/useAttendMutation"
 import { useTodaySeedQuery } from "../../../services/query/useTodaySeedQuery";
 import Popup from "@/components/Popup/popup";
 import Info from "@/assets/Icons/info.png";
+import Cookies from "js-cookie";
 
 interface StageProps {
   text: string;
@@ -32,6 +33,7 @@ const { data: todaySeed, refetch } = useTodaySeedQuery();
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isAlready, setIsAlready] = useState(false);
   const [showAnimationAfterModal, setShowAnimationAfterModal] = useState<number | null>(null);
+  const [isLimitedPopup, setIsLimitedPopup] = useState(false);
 
   const buttonRefs = [
     useRef<HTMLDivElement>(null),
@@ -77,6 +79,11 @@ const { data: todaySeed, refetch } = useTodaySeedQuery();
   };
 
   const handleButtonClick = async (index: number, link?: string) => {
+    const isLimited = Cookies.get("limitWrite") === "true";
+    if (isLimited) {
+      setIsLimitedPopup(true);
+      return;
+    }
     const isCompleted = todaySeed
       ? index === 0
         ? todaySeed.isAttendance
@@ -255,6 +262,14 @@ const { data: todaySeed, refetch } = useTodaySeedQuery();
         variant="MESSAGE"
         mainMessage="출석을 완료 했어요!"
         subMessage="내일 다시 와주세요!"
+        confirmLabel="확인"
+      />
+      <Popup
+        isOpen={isLimitedPopup}
+        onClose={() => setIsLimitedPopup(false)}
+        variant="MESSAGE"
+        mainMessage="제한 계정은 이용할 수 없습니다."
+        subMessage="관리자에게 문의해주세요."
         confirmLabel="확인"
       />
     </>
