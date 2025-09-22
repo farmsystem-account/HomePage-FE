@@ -36,6 +36,7 @@ export const useAuthStore = create(
         setErrorMessage: (msg: string | null) => set({ errorMessage: msg }),
         setErrorTitle: (title: string | null) => set({ errorTitle: title }),
         setToken: (token: string) => set({ accessToken: token }),
+        setTokens: (accessToken: string, _refreshToken: string) => set({ accessToken }),
         reset: () =>
           set({
             step: "start",

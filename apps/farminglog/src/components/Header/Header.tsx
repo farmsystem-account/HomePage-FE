@@ -13,6 +13,7 @@ import useMediaQueries from "@/hooks/useMediaQueries";
 import Popup from "@/components/Popup/popup";
 import { useUserInfoQuery } from "@repo/auth/services/query/useUserInfoQuery";
 import { convertTrackToString } from "@/utils/convertTrackToString";
+import Cookies from "js-cookie";
 
 const navItems = [
   { label: "홈", path: "/home" },
@@ -32,10 +33,11 @@ export default function Header() {
   const { isMobile, isTablet } = useMediaQueries();
 
   const { data: user } = useUserInfoQuery();
+  const isLimited = Cookies.get("limitWrite") === "true";
 
-  const name = user?.name;
-  const profileImageUrl = user?.profileImageUrl;
-  const totalSeed = user?.totalSeed;
+  const name = isLimited ? "" : user?.name;
+  const profileImageUrl = isLimited ? undefined : user?.profileImageUrl;
+  const totalSeed = isLimited ? 0 : user?.totalSeed;
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -64,6 +66,7 @@ export default function Header() {
       <S.ProfileContainer
         $isMobile={isMobile}
         onClick={(e) => {
+          if (isLimited) return; // 제한 모드에서는 팝업 비활성화
           e.stopPropagation();
           setProfilePopupOpen(true);
         }}
@@ -75,10 +78,12 @@ export default function Header() {
         />
         <S.ProfileName $isMobile={isMobile}>{name || ""}</S.ProfileName>
       </S.ProfileContainer>
-      <S.RecordCount $isMobile={isMobile} $isTablet={isTablet}>
-        <span className="seed-text">내 씨앗</span>
-        <span className="seed-count">{totalSeed ?? 0}</span>
-      </S.RecordCount>
+      {!isLimited && (
+        <S.RecordCount $isMobile={isMobile} $isTablet={isTablet}>
+          <span className="seed-text">내 씨앗</span>
+          <span className="seed-count">{totalSeed ?? 0}</span>
+        </S.RecordCount>
+      )}
     </S.ProfileAndSeedContainer>
   );
 
@@ -171,19 +176,21 @@ export default function Header() {
       </S.HeaderContainer>
 
       {/* 프로필 팝업 */}
-      <Popup
-        isOpen={isProfilePopupOpen}
-        onClose={() => setProfilePopupOpen(false)}
-        variant="MYPAGE"
-        userName={user?.name}
-        generationAndPart={
-          user?.generation && user?.track
-            ? `${user.generation}기 ${convertTrackToString(user.track)}`
-            : "기수 정보 없음"
-        }
-        profileImg={user?.profileImageUrl}
-        hasLogout={true}
-      />
+      {!isLimited && (
+        <Popup
+          isOpen={isProfilePopupOpen}
+          onClose={() => setProfilePopupOpen(false)}
+          variant="MYPAGE"
+          userName={user?.name}
+          generationAndPart={
+            user?.generation && user?.track
+              ? `${user.generation}기 ${convertTrackToString(user.track)}`
+              : "기수 정보 없음"
+          }
+          profileImg={user?.profileImageUrl}
+          hasLogout={true}
+        />
+      )}
     </>
   );
 }
