@@ -128,10 +128,9 @@ export const LandingHero = styled.div<{
   $bgDesktop: string;
   $bgMobile?: string;
 }>`
-  width: 100%;
-  max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
-  height: 59760px;
+  height: 35000px;
 
 
   background: ${({ $bgDesktop }) => `url(${$bgDesktop}) center / contain no-repeat`};
@@ -149,8 +148,8 @@ export const LandingHero = styled.div<{
 
 export const UpButton = styled.div`
   position: fixed;
-  bottom: 100px;
-  right: 100px;
+  bottom: 70px;
+  right: 70px;
   width: 150px;
   height: 150px;
   border-radius: 50%;
