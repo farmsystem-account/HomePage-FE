@@ -122,3 +122,42 @@ export const StartButton = styled.button`
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 `;
+
+// 랜딩 페이지용 배경 히어로 
+export const LandingHero = styled.div<{
+  $bgDesktop: string;
+  $bgMobile?: string;
+}>`
+  width: 1200px;
+  margin: 0 auto;
+  height: 35000px;
+
+
+  background: ${({ $bgDesktop }) => `url(${$bgDesktop}) center / contain no-repeat`};
+
+
+  // 모바일에선 잘모르겠음 일단 때리쳐!
+  @media (max-width: 768px) {
+    aspect-ratio: 750 / 2237;
+    background-image: ${({ $bgDesktop, $bgMobile }) =>
+      `url(${($bgMobile && $bgMobile.length > 0) ? $bgMobile : $bgDesktop})`};
+    background-size: contain;
+    background-position: center;
+  }
+`;
+
+export const UpButton = styled.div`
+  position: fixed;
+  bottom: 70px;
+  right: 70px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+export const UpButtonImage = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: fill;
+`;
