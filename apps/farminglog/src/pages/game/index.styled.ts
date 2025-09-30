@@ -128,11 +128,12 @@ export const LandingHero = styled.div<{
   $bgDesktop: string;
   $bgMobile?: string;
 }>`
-  width: 100%;
-  height: 59760px;
+  width: 1200px;
+  margin: 0 auto;
+  height: 35000px;
 
 
-  background: ${({ $bgDesktop }) => `url(${$bgDesktop}) center / cover no-repeat`};
+  background: ${({ $bgDesktop }) => `url(${$bgDesktop}) center / contain no-repeat`};
 
 
   // 모바일에선 잘모르겠음 일단 때리쳐!
@@ -140,15 +141,15 @@ export const LandingHero = styled.div<{
     aspect-ratio: 750 / 2237;
     background-image: ${({ $bgDesktop, $bgMobile }) =>
       `url(${($bgMobile && $bgMobile.length > 0) ? $bgMobile : $bgDesktop})`};
-    background-size: cover;
+    background-size: contain;
     background-position: center;
   }
 `;
 
 export const UpButton = styled.div`
   position: fixed;
-  bottom: 100px;
-  right: 100px;
+  bottom: 70px;
+  right: 70px;
   width: 150px;
   height: 150px;
   border-radius: 50%;
