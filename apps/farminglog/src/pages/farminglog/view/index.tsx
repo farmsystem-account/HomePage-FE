@@ -1,29 +1,32 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import {useEffect, useState } from 'react';
 import * as S from './index.styled';
 import Card from './Card';
 import { useNavigate } from 'react-router';
 import useMediaQueries from '@/hooks/useMediaQueries';
 import WhiteContentContainer from '@/layouts/WhiteContentContainer';
-import { useFarmingLogsInfiniteQuery } from '@/services/query/useFarmingLogInfiniteQuery';
+import { useFarmingLogQuery } from '@/services/query/useFarmingLogInQuery';
 import useFarmingLogStore from '@/stores/farminglogStore';
 import CardSkeleton from './CardSkeleton';
+
+
+import jumpArrow_left from '@/assets/Icons/pagenation_1.png';
+import jumpArrow_right from '@/assets/Icons/pagenation_1.png';
+import nextArrow_left from '@/assets/Icons/pagenation_2.png';
+import nextArrow_right from '@/assets/Icons/pagenation_2.png';
 
 import EditImage from '@/assets/Icons/edit-3.png';
 
 export default function View() {
   const navigate = useNavigate();
-  const { isApp, isMobile, isDesktop } = useMediaQueries();
+  const { isApp, isMobile, isDesktop, isTablet } = useMediaQueries();
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const {
     data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isFetching,
     isLoading,
     error,
     refetch
-  } = useFarmingLogsInfiniteQuery();
+  } = useFarmingLogQuery(currentPage, 10); // 10개씩 페이지네이션
   const { isNeedRefresh, setIsNeedRefresh } = useFarmingLogStore();
 
   useEffect(() => {
@@ -33,22 +36,48 @@ export default function View() {
     }
   }, [isNeedRefresh, refetch, setIsNeedRefresh]);
 
-  // 마지막 카드 요소를 관찰하여 다음 페이지를 불러오기 위한 IntersectionObserver
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const lastLogRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (isFetchingNextPage) return;
-      if (observerRef.current) observerRef.current.disconnect();
 
-      observerRef.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
-        }
-      });
-      if (node) observerRef.current.observe(node);
-    },
-    [isFetchingNextPage, fetchNextPage, hasNextPage]
-  );
+  // 페이지 번호 배열 생성
+  const generatePageNumbers = () => {
+    if (!data) return [];
+      
+    const totalPages = data.totalPages;
+    const current = data.number; // 현재 페이지 번호 (0시작)
+    const pages: number[] = [];
+      
+    // 최대 5개의 페이지 번호만 표시
+    const maxVisiblePages = 5;
+    let startPage = Math.max(0, current - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
+      
+    // 시작 페이지 조정
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(0, endPage - maxVisiblePages + 1);
+    }
+      
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+      
+    return pages;
+  };
+
+  // 페이지네이션 핸들러
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePreviousPage = () => {
+    if (data && !data.first) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (data && !data.last) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   // 로딩 또는 에러 상태 처리
   if (isLoading) return (
@@ -80,37 +109,64 @@ export default function View() {
           $isMobile={isMobile}
           $isDesktop={isDesktop}
         >
-          {data.pages.map((page, pageIndex) => (
-            <React.Fragment key={pageIndex}>
-              {page.content.map((log, idx) => {
-                // 마지막 페이지의 마지막 요소에 ref 적용
-                const isLastItem =
-                  pageIndex === data.pages.length - 1 &&
-                  idx === page.content.length - 1;
-                return (
-                  <div
-                    key={log.farmingLogId}
-                    ref={isLastItem ? lastLogRef : null}
-                  >
-                    <Card data={log} />
-                  </div>
-                );
-              })}
-            </React.Fragment>
+          {data?.content.map((log) => (
+            <div key={log.farmingLogId}>
+              <Card data={log} />
+            </div>
           ))}
+          {/* 페이지네이션 */}
+          {data && data.content.length > 0 && (
+            <S.PaginationContainer>
+              <S.PaginationButton>
+                <S.PaginationButtonText
+                  onClick={() => setCurrentPage(0)}
+                  $disabled={data?.first}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={jumpArrow_left} alt="jumpArrow" />
+                </S.PaginationButtonText>
+                <S.PaginationButtonText 
+                  onClick={handlePreviousPage}
+                  $disabled={data?.first}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={nextArrow_left} alt="nextArrow" />
+                </S.PaginationButtonText>
+                
+                {generatePageNumbers().map((pageNum) => (
+                  <S.PaginationPageButton
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    $active={pageNum === currentPage}
+                    $isMobile={isMobile}
+                    $isTablet={isTablet}
+                  >
+                    {pageNum + 1}
+                  </S.PaginationPageButton>
+                ))}
+                
+                <S.PaginationButtonText 
+                  onClick={handleNextPage}
+                  $disabled={data?.last}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={nextArrow_right} alt="nextArrow_right" />
+                </S.PaginationButtonText>
+                <S.PaginationButtonText
+                  onClick={() => setCurrentPage(data.totalPages - 1)}
+                  $disabled={data?.last}
+                  $isMobile={isMobile}
+                  $isTablet={isTablet}
+                >
+                  <img src={jumpArrow_right} alt="jumpArrow_right" />
+                </S.PaginationButtonText>
+                </S.PaginationButton>
+              </S.PaginationContainer>
+            )}
         </S.FarmingLogCardContainer>
-        {isFetchingNextPage && <div>로딩중...</div>}
-        {!hasNextPage && !isFetching && (
-          <S.EndOfList>
-            <S.EndOfListText
-              $isApp={isApp}
-              $isMobile={isMobile}
-              $isDesktop={isDesktop}
-            >
-              더 이상 글이 없습니다.
-            </S.EndOfListText>
-          </S.EndOfList>
-        )}
         <S.FarmingLogWriteButton
           $isApp={isApp}
           $isMobile={isMobile}
