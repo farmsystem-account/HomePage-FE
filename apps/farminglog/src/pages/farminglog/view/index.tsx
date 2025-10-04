@@ -21,7 +21,7 @@ export default function View() {
   const { isApp, isMobile, isDesktop, isTablet } = useMediaQueries();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   };
 
   const {
