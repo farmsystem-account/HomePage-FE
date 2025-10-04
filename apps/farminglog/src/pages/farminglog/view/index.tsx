@@ -20,6 +20,9 @@ export default function View() {
   const navigate = useNavigate();
   const { isApp, isMobile, isDesktop, isTablet } = useMediaQueries();
   const [currentPage, setCurrentPage] = useState<number>(0);
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const {
     data,
@@ -65,6 +68,7 @@ export default function View() {
   // 페이지네이션 핸들러
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    handleScrollTop(); //위로 올라가라잇
   };
 
   const handlePreviousPage = () => {
