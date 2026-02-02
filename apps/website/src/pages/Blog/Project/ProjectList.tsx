@@ -94,8 +94,8 @@ const ProjectList: React.FC = () => {
     const current = pageInfo.currentPage;
     const pages: number[] = [];
     
-    // 최대 7개의 페이지 번호만 표시
-    const maxVisiblePages = 3;
+    // 최대 5개의 페이지 번호만 표시
+    const maxVisiblePages = 5;
     let startPage = Math.max(0, current - Math.floor(maxVisiblePages / 2));
     const endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
     
@@ -106,7 +106,6 @@ const ProjectList: React.FC = () => {
     
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
-      console.log("pages", pages);
     }
     
     return pages;

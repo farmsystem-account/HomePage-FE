@@ -8,8 +8,9 @@ import { GameContainer, StartButton, StartContainer, LandingHero, UpButton, UpBu
 const Game: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const { isMobile } = useMediaQueries();
-  const landingImage = 'https://farmsystem-bucket.s3.ap-northeast-2.amazonaws.com/game/DetailGameLanding.png';
-  const upButtonImage = 'https://farmsystem-bucket.s3.ap-northeast-2.amazonaws.com/game/UpGameButton.png';
+  const s3BaseUrl = import.meta.env.VITE_S3_BASE_URL || 'https://dk-farmsystem-bucket.s3.ap-northeast-2.amazonaws.com';
+  const landingImage = `${s3BaseUrl}/game/DetailGameLanding.png`;
+  const upButtonImage = `${s3BaseUrl}/game/UpGameButton.png`;
   const isTallPage = useTallPage(3000);
   const gameContainerRef = useRef<HTMLDivElement | null>(null);
   const [isGameContainerInView, setIsGameContainerInView] = useState(false);
