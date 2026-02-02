@@ -44,7 +44,6 @@ export default function Header() {
     setMenuOpen(false); // 이동 후 메뉴 닫기
   };
 
-  // ✅ 메뉴 외 클릭 시 메뉴 닫기
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -121,7 +120,7 @@ export default function Header() {
           </>
         )}
 
-        {/* ✅ 모바일 네비게이션 버튼 */}
+        {/*  모바일 네비게이션 버튼 */}
         {isMobile && (
           <S.MobileWrapper ref={menuRef}>
             {isMenuOpen && (
