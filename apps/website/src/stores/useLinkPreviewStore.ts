@@ -9,7 +9,7 @@ interface LinkPreviewState {
 }
 
 // 프록시 서버 URL (useLinkPreview와 동일)
-const proxyUrl = 'https://corsproxy.io/?url=';
+const proxyUrl = import.meta.env.VITE_PROXY_URL || 'https://corsproxy.io/?url=';
 
 /**
  * extractMetaContent
